@@ -1,0 +1,70 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Script file="DeadpoolDropDown.lua" />
+	<Button name="DeadpoolDropDownButtonTemplate" inherits="UIDropDownCustomMenuEntryTemplate" virtual="true">
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentShortcutText" parentKey="ShortcutText" inherits="GameFontDisableSmallLeft">
+					<Anchors>
+						<Anchor point="RIGHT" x="-10" y="0" />
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad/>
+			<OnEnter function="DeadpoolDropDownButton_OnEnter" />
+			<OnLeave function="DeadpoolDropDownButton_OnLeave" />
+			<OnClick function="DeadpoolDropDownButton_OnClick" />
+		</Scripts>
+	</Button>
+	<Button name="DeadpoolDropDownButtonTuto" inherits="DeadpoolDropDownButtonTemplate">
+		<Scripts>
+			<OnClick function="DeadpoolDropDownButtonTuto_OnClick" />
+		</Scripts>
+	</Button>
+	<Button name="DeadpoolDropDownButtonSelfBet" inherits="DeadpoolDropDownButtonTemplate" />
+	<Button name="DeadpoolDropDownButtonBet1" inherits="DeadpoolDropDownButtonTemplate" />
+	<Button name="DeadpoolDropDownButtonBet5" inherits="DeadpoolDropDownButtonTemplate">
+		<Frames>
+			<Slider name="$parentBetSlider" parentKey="BetSlider" inherits="OptionsSliderTemplate" valueStep="5">
+				<Anchors>
+					<Anchor point="LEFT" x="65" y="0"/>
+					<Anchor point="RIGHT" x="-50" y="0"/>
+				</Anchors>
+				<HitRectInsets>
+					<AbsInset left="0" right="0" top="0" bottom="0"/>
+				</HitRectInsets>
+				<Scripts>
+					<OnShow>
+						self.Text:SetText("")
+						self.Low:SetText("")
+						self.High:SetText("")
+					</OnShow>
+					<OnEnter>
+						DeadpoolDropDownButton_OnEnter(self:GetParent())
+					</OnEnter>
+					<OnLeave>
+						DeadpoolDropDownButton_OnLeave(self:GetParent())
+					</OnLeave>
+					<OnValueChanged function="DeadpoolDropDownButtonBet5BetSlider_OnValueChanged" />
+				</Scripts>
+			</Slider>
+		</Frames>
+	</Button>
+	<Button name="DeadpoolDropDownButtonBetAll" inherits="DeadpoolDropDownButtonTemplate" />
+	<Button name="DeadpoolDropDownButtonBetRemove" inherits="DeadpoolDropDownButtonTemplate" />
+	<Button name="DeadpoolDropDownButtonUniqueBet" inherits="DeadpoolDropDownButtonTemplate" />
+	<Button name="DeadpoolDropDownButtonBankerBet" inherits="DeadpoolDropDownButtonTemplate" />
+	<Button name="DeadpoolDropDownButtonPlayerChips" inherits="DeadpoolDropDownButtonTemplate" />
+	<Frame name="DeadpoolDropDown" inherits="UIDropDownMenuTemplate">
+		<Scripts>
+			<OnLoad>
+				self.xOffset = 0
+				self.yOffset = 0
+				self.relativePoint = "TOPRIGHT"
+				UIDropDownMenu_Initialize(self, DeadpoolDropDown_Update, "MENU")
+				UIDropDownMenu_OnHide(_G["DropDownList1"])
+			</OnLoad>
+		</Scripts>
+	</Frame>
+</Ui>

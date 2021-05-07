@@ -1,0 +1,31 @@
+﻿- v1.7.2
+	- Fixed: The character model is now properly shown when character line is selected in the mini frame.
+- v1.7.1
+	- Fixed: Results tooltip placement when Deadpool is hidden.
+	- Fixed: The Minimap button hides the mini frame properly.
+	- Fixed: Bosses don't get achievements anymore.
+	- Fixed: Mini frame is properly hidden in combat if this option is selected.
+	- New: Close button on flying models in case they do not fade out.
+	- New: Independant Dead Pool windows positionning.
+	- New: You can define the side where the character who just lost an item of clothing will be displayed.
+- v1.7
+	- New: bet on next boss! (only on your level raid bosses)
+	- Options panel in dialog box.
+	- New death voice-overs: Vesiphone
+	- Fixed: "You are not in a raid group." error.
+- v1.6
+	- New rules for unique bet (only when you have no more money nor element of clothing).
+	- New rules for unique bet (you can get elements of clothing back).
+	- Better visibility on results.
+	- Workaround to prenvent problems with SendCommMessage and other addons.
+	- Non breaking spaces on french localization.
+	- Results shows again when combat stops.
+	- Fix on the showing behaviour of model and durability icon.
+	- English localization fixes.
+	- Fixed: mouseover bet button is now on everyone in party/raid whether the player is far or near.
+- v1.5.3
+	- Lots of UI improvements (menus, tutorial...).
+- v1.5.2
+	- Performance update.
+	- Bug fixes.
+	- Results tooltip fades out after 8 seconds instead of 4.
