@@ -969,11 +969,6 @@
 			<Anchor point="TOPLEFT" x="93" y="-25" />
 		</Anchors>
 	</Texture>
-	<Button name="DeadpoolAlertFrameTemplate" parent="UIParent" hidden="true" frameStrata="DIALOG" virtual="true" inherits="AchievementAlertFrameTemplate">
-		<Scripts>
-			<OnClick function="DeadpoolAlertFrame_OnClick" />
-		</Scripts>
-	</Button>
 	<Button name="DeadpoolBetButton">
 		<Size>
 			<AbsDimension x="12" y="12"/>
