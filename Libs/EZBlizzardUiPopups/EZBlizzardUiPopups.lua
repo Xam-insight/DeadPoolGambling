@@ -71,11 +71,11 @@ local function EZBlizzardUiPopups_AlertFrame_SetUp(frame, achievementID, already
 		--HEY = HEY or { frame.Icon.Texture:GetTexCoord() }
 		frame.Icon.Texture:SetTexture(icon)
 		frame.Icon.Texture:SetTexCoord(0.0, 0.7109375, 0.0, 0.7109375)
-		frame.Background:SetTexture(TexAlert)
+		--frame.Background:SetTexture(TexAlert)
 		--frame.OldAchievement:SetTexture(TexAlertBorders)
 	else
 		frame.Icon.Texture:SetTexCoord(0, 0, 0, 1, 1, 0, 1, 1)
-		frame.Background:SetTexture("Interface\\AchievementFrame\\UI-Achievement-Alert-Background")
+		--frame.Background:SetTexture("Interface\\AchievementFrame\\UI-Achievement-Alert-Background")
 		--frame.OldAchievement:SetTexture("Interface\\AchievementFrame\\UI-Achievement-Borders")
 	end
 end
@@ -90,11 +90,11 @@ function EZBlizzardUiPopups_ToastFakeAchievement(addon, name, baseID, playSound,
 	  end
 
 	  if (not addon.AlertSystem) then
-		--addon.AlertSystem = AlertFrame:AddQueuedAlertFrameSubSystem("AchievementAlertFrameTemplate", EZBlizzardUiPopups_AlertFrame_SetUp, 4, math.huge)
+		addon.AlertSystem = AlertFrame:AddQueuedAlertFrameSubSystem("AchievementAlertFrameTemplate", EZBlizzardUiPopups_AlertFrame_SetUp, 4, math.huge)
 	  end
 
 	  if (not baseID) then  baseID = 5208;  end -- 5208 is "Twin Peaking", chosen because of its thumbs-up texture.
-	  --addon.AlertSystem:AddAlert(baseID, not newEarn, name, delay, toptext, onClick, icon)
+	  addon.AlertSystem:AddAlert(baseID, not newEarn, name, delay, toptext, onClick, icon)
 
 	  if (playSound) then EZBlizzardUiPopups_PlaySound(12891);  end -- UI_Alert_AchievementGained
   end

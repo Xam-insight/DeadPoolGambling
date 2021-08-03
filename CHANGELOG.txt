@@ -1,4 +1,6 @@
-﻿- v1.7.2-tmpfix
+﻿- v1.7.3
+	- Fixed: Nil value error in 9.1.
+- v1.7.2-tmpfix
 	- Temporary fixed: Nil value error in 9.1.
 - v1.7.2
 	- Fixed: The character model is now properly shown when character line is selected in the mini frame.
