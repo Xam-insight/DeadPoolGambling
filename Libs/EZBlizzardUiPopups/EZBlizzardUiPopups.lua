@@ -70,7 +70,7 @@ local function EZBlizzardUiPopups_AlertFrame_SetUp(frame, achievementID, already
 	if (icon) then
 		--HEY = HEY or { frame.Icon.Texture:GetTexCoord() }
 		frame.Icon.Texture:SetTexture(icon)
-		frame.Icon.Texture:SetTexCoord(0.0, 0.7109375, 0.0, 0.7109375)
+		frame.Icon.Texture:SetTexCoord(0.0, 1.0, 0.0, 1.0)
 		--frame.Background:SetTexture(TexAlert)
 		--frame.OldAchievement:SetTexture(TexAlertBorders)
 	else
