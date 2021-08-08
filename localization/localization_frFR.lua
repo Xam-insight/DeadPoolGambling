@@ -154,10 +154,15 @@ L["DEADPOOLTUTO_BOSS"] = "Si tous les joueurs de Dead Pool sont dans votre insta
 
 L["NEW_TITLE_FOR"] = "Nouveau titre pour %s"
 L["DEADPOOL_ACHIEVEMENT_WINS"] = "En veine"
+L["DEADPOOL_ACHIEVEMENT_WINS_DESC"] = "Être le premier à gagner %s fois dans une même partie."
 L["DEADPOOL_ACHIEVEMENT_FIRSTDEATH"] = "Fragile"
+L["DEADPOOL_ACHIEVEMENT_FIRSTDEATH_DESC"] = "Être le premier à mourir en premier %s fois dans une même partie."
 L["DEADPOOL_ACHIEVEMENT_CREDITSBALACE"] = "Nabab"
+L["DEADPOOL_ACHIEVEMENT_CREDITSBALACE_DESC"] = "Être le premier à gagner %s jetons dans une même partie."
 L["DEADPOOL_ACHIEVEMENT_LOSTITEMS"] = "Tout nu"
+L["DEADPOOL_ACHIEVEMENT_LOSTITEMS_DESC"] = "Être le premier à perdre tous ses vêtements dans une même partie."
 L["DEADPOOL_ACHIEVEMENT_SOLEILBET"] = "Profanateur de Soleîl"
+L["DEADPOOL_ACHIEVEMENT_SOLEILBET_DESC"] = "Être le premier à miser %s fois sur la mort de %s et à perdre ainsi %s vêtements en châtiment dans une même partie."
 
 L["MAKE_BANKER_PLAY"] = "Faire miser %s"
 L["BANKER_BET"] = "%s\na misé sur %s."

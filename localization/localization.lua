@@ -154,10 +154,15 @@ L["DEADPOOLTUTO_BOSS"] = "If all Dead Pool players are in your raid instance and
 
 L["NEW_TITLE_FOR"] = "New title for %s"
 L["DEADPOOL_ACHIEVEMENT_WINS"] = "Winning streak"
+L["DEADPOOL_ACHIEVEMENT_WINS_DESC"] = "Be the first to win %s times in the same game."
 L["DEADPOOL_ACHIEVEMENT_FIRSTDEATH"] = "Fragile"
+L["DEADPOOL_ACHIEVEMENT_FIRSTDEATH_DESC"] = "Be the first to die first %s times in the same game."
 L["DEADPOOL_ACHIEVEMENT_CREDITSBALACE"] = "Nabob"
+L["DEADPOOL_ACHIEVEMENT_CREDITSBALACE_DESC"] = "Be the first to earn %s tokens in the same game."
 L["DEADPOOL_ACHIEVEMENT_LOSTITEMS"] = "All naked"
-L["DEADPOOL_ACHIEVEMENT_SOLEILBET"] = "Sole\195\174l sacrilegious"
+L["DEADPOOL_ACHIEVEMENT_LOSTITEMS_DESC"] = "Be the first to lose all of their clothes in the same game."
+L["DEADPOOL_ACHIEVEMENT_SOLEILBET"] = "Soleîl sacrilegious"
+L["DEADPOOL_ACHIEVEMENT_SOLEILBET_DESC"] = "Be the first to bet %s times on the death of %s and thus lose %s clothes as punishment in the same game."
 
 L["MAKE_BANKER_PLAY"] = "Make %s bet"
 L["BANKER_BET"] = "%s\nbet on %s."
