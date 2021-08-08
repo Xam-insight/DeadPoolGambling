@@ -208,6 +208,15 @@ function initDeadpoolBusinessObjects()
 	if not DeadpoolTuto then
 		DeadpoolTuto = {}
 	end
+
+	if CUSTAC then
+		CustAc_UpdateCategory("Deadpool", nil, "Dead Pool Gambling")
+		for k,v in pairs(deadpoolAchievements) do
+			if k ~= DEADPOOL_WINNER then
+				CustAc_UpdateAchievement(k, "Deadpool", v["icon"], nil, v["label"], v["desc"])
+			end
+		end
+	end
 end
 
 function prepareAndSendSimpleDeadpoolDataToRaid(aSession, aCharacter, anInfo, isOptionData)
@@ -609,13 +618,19 @@ function loadReceivedDeadpoolData(messageType)
 					local precAchievementChar = getDeadpoolData(DeadpoolGlobal_SessionId, index, "achiever")
 					if not precAchievementChar or precAchievementChar == "" then
 						if not deadpoolAchievements[index][DEADPOOL_ISBESTACHIVERACHIEVEMENT] then
-							if not DeadpoolOptionsData or not DeadpoolOptionsData["DeadpoolAchievementAnnounceDisabled"] or not (DeadpoolOptionsData["DeadpoolAchievementAnnounceDisabled"] == true) then
-								local noNotif = UnitGUID("boss1") and DeadpoolOptionsData["DeadpoolNotificationsInBossFightsDisabled"]
-								if not noNotif then
-									EZBlizzardUiPopups_ToastFakeAchievement(Deadpool, deadpoolAchievements[index]["label"], 3456, true, 15, string.format(L["NEW_TITLE_FOR"], achievementChar), function()  Deadpool:DeadpoolShow()  end)
-								end
-							else
+							local noNotif = (not DeadpoolOptionsData and not DeadpoolOptionsData["DeadpoolAchievementAnnounceDisabled"] and not (DeadpoolOptionsData["DeadpoolAchievementAnnounceDisabled"] == true))
+								or (UnitGUID("boss1") and DeadpoolOptionsData["DeadpoolNotificationsInBossFightsDisabled"])
+
+								--if not noNotif then
+								--	EZBlizzardUiPopups_ToastFakeAchievement(Deadpool, deadpoolAchievements[index]["label"], 3456, true, 15, string.format(L["NEW_TITLE_FOR"], achievementChar), function()  Deadpool:DeadpoolShow()  end)
+								--end
+							if noNotif then
 								Deadpool:Print(string.format(L["NEW_TITLE_FOR"], achievementChar)..L["SPACE_BEFORE_DOT"]..": "..deadpoolAchievements[index]["label"])
+							end
+							if CUSTAC and Deadpool_isPlayerCharacter(achievementChar) then
+								CustAc_CompleteAchievement(index, nil, noNotif)
+							elseif not noNotif then
+								EZBlizzardUiPopups_ToastFakeAchievement(Deadpool, deadpoolAchievements[index]["label"], 3456, true, 15, string.format(L["NEW_TITLE_FOR"], achievementChar), function()  Deadpool:DeadpoolShow()  end)
 							end
 						else
 							setDeadpoolData(DeadpoolGlobal_SessionId, index, "value", getDeadpoolData(DeadpoolGlobal_SessionId, index, "value", DeadpoolReceivedData))
@@ -961,13 +976,18 @@ function Deadpool_updateStat(aDeadpoolSessionId, aChar, aStat, aValue)
 		if not achiever or achiever == "" then
 			if deadpoolAchievements[aStat] then
 				if statValue >= deadpoolAchievements[aStat]["value"] then
-					if not DeadpoolOptionsData or not DeadpoolOptionsData["DeadpoolAchievementAnnounceDisabled"] or not (DeadpoolOptionsData["DeadpoolAchievementAnnounceDisabled"] == true) then
-						local noNotif = UnitGUID("boss1") and DeadpoolOptionsData["DeadpoolNotificationsInBossFightsDisabled"]
-						if not noNotif then
-							EZBlizzardUiPopups_ToastFakeAchievement(Deadpool, deadpoolAchievements[aStat]["label"], 3456, true, 15, string.format(L["NEW_TITLE_FOR"], aChar), function()  Deadpool:DeadpoolShow()  end)
-						end
-					else
+					local noNotif = (not DeadpoolOptionsData and not DeadpoolOptionsData["DeadpoolAchievementAnnounceDisabled"] and not (DeadpoolOptionsData["DeadpoolAchievementAnnounceDisabled"] == true))
+						or (UnitGUID("boss1") and DeadpoolOptionsData["DeadpoolNotificationsInBossFightsDisabled"])
+						--if not noNotif then
+							--EZBlizzardUiPopups_ToastFakeAchievement(Deadpool, deadpoolAchievements[aStat]["label"], 3456, true, 15, string.format(L["NEW_TITLE_FOR"], aChar), function()  Deadpool:DeadpoolShow()  end)
+						--end
+					if noNotif then
 						Deadpool:Print(string.format(L["NEW_TITLE_FOR"], aChar)..L["SPACE_BEFORE_DOT"]..": "..deadpoolAchievements[aStat]["label"])
+					end
+					if CUSTAC and Deadpool_isPlayerCharacter(aChar) then
+						CustAc_CompleteAchievement(aStat, nil, noNotif)
+					elseif not noNotif then
+						EZBlizzardUiPopups_ToastFakeAchievement(Deadpool, deadpoolAchievements[aStat]["label"], 3456, true, 15, string.format(L["NEW_TITLE_FOR"], aChar), function()  Deadpool:DeadpoolShow()  end)
 					end
 					setDeadpoolData(aDeadpoolSessionId, aStat, "achiever", aChar)
 					achievementPopped = true

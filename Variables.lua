@@ -64,11 +64,11 @@ DEADPOOL_WINNER      = "Winner"
 DEADPOOL_ISBESTACHIVERACHIEVEMENT = "IsBestAchieverAchievement"
 
 deadpoolAchievements = {
-	[DEADPOOL_WINS]        = { ["value"] = 20,                      ["label"] = L["DEADPOOL_ACHIEVEMENT_WINS"]          },
-	[DEADPOOL_FIRSTDEATH]  = { ["value"] = 10,                      ["label"] = L["DEADPOOL_ACHIEVEMENT_FIRSTDEATH"]    },
-	[DEADPOOL_BALANCE]     = { ["value"] = 100,                     ["label"] = L["DEADPOOL_ACHIEVEMENT_CREDITSBALACE"] },
-	[DEADPOOL_LOSTITEMS]   = { ["value"] = DEADPOOL_GARMENT_NUMBER, ["label"] = L["DEADPOOL_ACHIEVEMENT_LOSTITEMS"]     },
-	[DEADPOOL_SOLEILBET]   = { ["value"] = 5,                       ["label"] = L["DEADPOOL_ACHIEVEMENT_SOLEILBET"]     },
+	[DEADPOOL_WINS]        = { ["value"] = 20,                      ["label"] = L["DEADPOOL_ACHIEVEMENT_WINS"]         , ["desc"] = L["DEADPOOL_ACHIEVEMENT_WINS"]         , ["icon"] = 134211 },
+	[DEADPOOL_FIRSTDEATH]  = { ["value"] = 10,                      ["label"] = L["DEADPOOL_ACHIEVEMENT_FIRSTDEATH"]   , ["desc"] = L["DEADPOOL_ACHIEVEMENT_FIRSTDEATH"]   , ["icon"] = 237272 },
+	[DEADPOOL_BALANCE]     = { ["value"] = 100,                     ["label"] = L["DEADPOOL_ACHIEVEMENT_CREDITSBALACE"], ["desc"] = L["DEADPOOL_ACHIEVEMENT_CREDITSBALACE"], ["icon"] = 133785 },
+	[DEADPOOL_LOSTITEMS]   = { ["value"] = DEADPOOL_GARMENT_NUMBER, ["label"] = L["DEADPOOL_ACHIEVEMENT_LOSTITEMS"]    , ["desc"] = L["DEADPOOL_ACHIEVEMENT_LOSTITEMS"]    , ["icon"] = 136047 },
+	[DEADPOOL_SOLEILBET]   = { ["value"] = 5,                       ["label"] = L["DEADPOOL_ACHIEVEMENT_SOLEILBET"]    , ["desc"] = L["DEADPOOL_ACHIEVEMENT_SOLEILBET"]    , ["icon"] = 134909 },
 
 	[DEADPOOL_WINNER]      = { [DEADPOOL_ISBESTACHIVERACHIEVEMENT] = true },
 }
