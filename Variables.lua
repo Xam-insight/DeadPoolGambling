@@ -64,11 +64,11 @@ DEADPOOL_WINNER      = "Winner"
 DEADPOOL_ISBESTACHIVERACHIEVEMENT = "IsBestAchieverAchievement"
 
 deadpoolAchievements = {
-	[DEADPOOL_WINS]        = { ["value"] = 20,                      ["label"] = L["DEADPOOL_ACHIEVEMENT_WINS"]         , ["desc"] = string.format(L["DEADPOOL_ACHIEVEMENT_WINS_DESC"], 20)                          , ["icon"] = 134211 },
-	[DEADPOOL_FIRSTDEATH]  = { ["value"] = 10,                      ["label"] = L["DEADPOOL_ACHIEVEMENT_FIRSTDEATH"]   , ["desc"] = string.format(L["DEADPOOL_ACHIEVEMENT_FIRSTDEATH_DESC"], 10)                    , ["icon"] = 237272 },
-	[DEADPOOL_BALANCE]     = { ["value"] = 100,                     ["label"] = L["DEADPOOL_ACHIEVEMENT_CREDITSBALACE"], ["desc"] = string.format(L["DEADPOOL_ACHIEVEMENT_CREDITSBALACE_DESC"], 100)                , ["icon"] = 133785 },
-	[DEADPOOL_LOSTITEMS]   = { ["value"] = DEADPOOL_GARMENT_NUMBER, ["label"] = L["DEADPOOL_ACHIEVEMENT_LOSTITEMS"]    , ["desc"] = string.format(L["DEADPOOL_ACHIEVEMENT_LOSTITEMS_DESC"], DEADPOOL_GARMENT_NUMBER), ["icon"] = 136047 },
-	[DEADPOOL_SOLEILBET]   = { ["value"] = 5,                       ["label"] = L["DEADPOOL_ACHIEVEMENT_SOLEILBET"]    , ["desc"] = string.format(L["DEADPOOL_ACHIEVEMENT_SOLEILBET_DESC"], 5, DEADPOOL_SOLEIL, 5)  , ["icon"] = 134909 },
+	[DEADPOOL_WINS]        = { ["value"] = 20,                      ["label"] = L["DEADPOOL_ACHIEVEMENT_WINS"]         , ["desc"] = string.format(L["DEADPOOL_ACHIEVEMENT_WINS_DESC"], 20)                          , ["icon"] = 134211, ["points"] = 10 },
+	[DEADPOOL_FIRSTDEATH]  = { ["value"] = 10,                      ["label"] = L["DEADPOOL_ACHIEVEMENT_FIRSTDEATH"]   , ["desc"] = string.format(L["DEADPOOL_ACHIEVEMENT_FIRSTDEATH_DESC"], 10)                    , ["icon"] = 237272, ["points"] = 10 },
+	[DEADPOOL_BALANCE]     = { ["value"] = 100,                     ["label"] = L["DEADPOOL_ACHIEVEMENT_CREDITSBALACE"], ["desc"] = string.format(L["DEADPOOL_ACHIEVEMENT_CREDITSBALACE_DESC"], 100)                , ["icon"] = 133785, ["points"] = 10 },
+	[DEADPOOL_LOSTITEMS]   = { ["value"] = DEADPOOL_GARMENT_NUMBER, ["label"] = L["DEADPOOL_ACHIEVEMENT_LOSTITEMS"]    , ["desc"] = string.format(L["DEADPOOL_ACHIEVEMENT_LOSTITEMS_DESC"], DEADPOOL_GARMENT_NUMBER), ["icon"] = 136047, ["points"] = 10 },
+	[DEADPOOL_SOLEILBET]   = { ["value"] = 5,                       ["label"] = L["DEADPOOL_ACHIEVEMENT_SOLEILBET"]    , ["desc"] = string.format(L["DEADPOOL_ACHIEVEMENT_SOLEILBET_DESC"], 5, DEADPOOL_SOLEIL, 5)  , ["icon"] = 134909, ["points"] = 0  },
 
 	[DEADPOOL_WINNER]      = { [DEADPOOL_ISBESTACHIVERACHIEVEMENT] = true },
 }

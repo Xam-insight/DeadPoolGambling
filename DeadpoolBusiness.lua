@@ -213,7 +213,7 @@ function initDeadpoolBusinessObjects()
 		CustAc_UpdateCategory("Deadpool", nil, "Dead Pool Gambling")
 		for k,v in pairs(deadpoolAchievements) do
 			if k ~= DEADPOOL_WINNER then
-				CustAc_UpdateAchievement(k, "Deadpool", v["icon"], nil, v["label"], v["desc"])
+				CustAc_UpdateAchievement(k, "Deadpool", v["icon"], v["points"], v["label"], v["desc"])
 			end
 		end
 	end
