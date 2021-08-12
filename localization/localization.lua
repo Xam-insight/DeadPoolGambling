@@ -161,7 +161,7 @@ L["DEADPOOL_ACHIEVEMENT_CREDITSBALACE"] = "Nabob"
 L["DEADPOOL_ACHIEVEMENT_CREDITSBALACE_DESC"] = "Be the first to earn %s tokens in the same game."
 L["DEADPOOL_ACHIEVEMENT_LOSTITEMS"] = "All naked"
 L["DEADPOOL_ACHIEVEMENT_LOSTITEMS_DESC"] = "Be the first to lose all of their clothes in the same game."
-L["DEADPOOL_ACHIEVEMENT_SOLEILBET"] = "Soleîl sacrilegious"
+L["DEADPOOL_ACHIEVEMENT_SOLEILBET"] = "SoleÃ®l sacrilegious"
 L["DEADPOOL_ACHIEVEMENT_SOLEILBET_DESC"] = "Be the first to bet %s times on the death of %s and thus lose %s clothes as punishment in the same game."
 
 L["MAKE_BANKER_PLAY"] = "Make %s bet"

@@ -1,4 +1,6 @@
-﻿- v1.8
+﻿- v1.8.1
+	- Added: Tooltip for minimize button.
+- v1.8
 	- Added: Support of achievements saving through Custom Achiever.
 - v1.7.3
 	- Fixed: Nil value error in 9.1.

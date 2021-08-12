@@ -933,7 +933,7 @@ function setDeadpoolUniqueGamble(aSession, aChar, aBetChar)
 				Deadpool_Error(L["UNIT_IN_COMBAT"])
 			elseif aBetChar ~= getDeadpoolData(aSession, aChar, "uniqueGamble") then
 				DeadpoolTuto["chipPiles"] = "done"
-				if DEADPOOL_SOLEIL == aBetChar then
+				if DEADPOOL_SOLEIL == Deadpool_delRealm(aBetChar) then
 					Deadpool_Error(L["DEADPOOL_SOLEILBET"])
 					Deadpool_dropAnItem(aChar, 1, true)
 					Deadpool_updateStat(aSession, aChar, DEADPOOL_SOLEILBET, 1)
@@ -949,7 +949,7 @@ function setDeadpoolUniqueGamble(aSession, aChar, aBetChar)
 end
 
 function saveDeadpoolBets(aSession, aChar, aBetChar, nextDeathBet, afterTransactionCredits)
-	if DEADPOOL_SOLEIL == aBetChar and nextDeathBet > 0 then
+	if DEADPOOL_SOLEIL == Deadpool_delRealm(aBetChar) and nextDeathBet > 0 then
 		Deadpool_Error(L["DEADPOOL_SOLEILBET"])
 		Deadpool_dropAnItem(aChar, 1, true)
 		Deadpool_updateStat(aSession, aChar, DEADPOOL_SOLEILBET, 1)

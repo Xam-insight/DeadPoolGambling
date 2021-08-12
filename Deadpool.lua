@@ -258,6 +258,7 @@ function Deadpool:DeadpoolShow(noMain, mini)
 		DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolShown"] = true
 		DeadpoolFrameSummaryButton_Onclick(not DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolSummaryFrameShown"])
 		tellTutorialText("DEADPOOLTUTO_TUTO1")
+		dpShowHelpTip("DEADPOOLTUTO_MINIMIZE")
 	end
 	if mini then
 		MiniDeadpoolFrame:Show()
