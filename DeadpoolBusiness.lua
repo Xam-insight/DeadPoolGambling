@@ -289,6 +289,7 @@ function getDeadpoolRosterInfo()
 			for index,value in pairs(DeadpoolData[DeadpoolGlobal_SessionId]) do
 				if "Bank" ~= index and "DeadpoolSessionId" ~= index and not deadpoolAchievements[index] then
 					if not deadpoolCharInfo[index] and DEADPOOL_BANKER ~= index then
+						setDeadpoolData(DeadpoolGlobal_SessionId, index, "inCombat", "false")
 						saveBets(DeadpoolGlobal_SessionId, index)
 						saveDressUpModelForReuse(index)
 						if index == selectedDeadpoolCharacter then

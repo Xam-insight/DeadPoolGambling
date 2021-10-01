@@ -1,8 +1,8 @@
-# Interface: 11307
-# Interface: 20501
-## Interface: 90100
+## Interface: 11400
+# Interface: 20502
+# Interface: 90100
 ## Title: Dead Pool |T137008:16|t |cffffffffG|r|cff666666a|r|cffffffffm|r|cff666666b|r|cffffffffl|r|cff666666i|r|cffffffffn|r|cff666666g|r
-## Version: 1.8.1
+## Version: 1.8.2
 ## Notes: Gambling minigame
 ## Author: Xam
 ## SavedVariables: DeadpoolGlobal_SessionId, DeadpoolData, DeadpoolOptionsData, DeadpoolMIcon, DeadpoolTuto, DeadpoolWindow
