@@ -17,7 +17,6 @@ externals:
 	Libs/LibDataBroker-1.1: git://github.com/tekkub/libdatabroker-1-1.git
 	Libs/LibDBIcon-1.0: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
 	Libs/UTF8: https://repos.wowace.com/wow/utf8/trunk
-	../CustomAchiever: https://repos.curseforge.com/wow/custom-achiever/trunk
 
 manual-changelog:
 	filename: CHANGELOG.txt
