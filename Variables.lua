@@ -183,9 +183,8 @@ deathQuotes = {
 	1124067, -- iskar
 	1124380, -- velhar
 	1124453, -- archimonde
-	558409,  -- hputricide
-	3749978, -- Vesiphone
-	3749981,
-	3749978,
-	3749977,
+	558409   -- hputricide
+	--167115, -- Vesiphone -- WoWHead value -- WoWTools value: 3749977
+	--167116,   -- WoWHead value -- WoWTools value: 3749978
+	--167119    -- WoWHead value -- WoWTools value: 3749981
 }
