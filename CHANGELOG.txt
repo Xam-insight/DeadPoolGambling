@@ -1,4 +1,6 @@
-﻿- v1.8.3
+﻿- v1.8.4
+	- TOC for 9.2.
+- v1.8.3
 	- Updated for 9.1.5.
 - v1.8.2
 	- Fixed: When player left while in combat, it is now not considered in combat anymore.
