@@ -1,4 +1,7 @@
-﻿- v1.8.4
+﻿- v1.8.5
+	- TOC for 9.2.7.
+	- Repository URL change for CustomAchiever.
+- v1.8.4
 	- TOC for 9.2.
 - v1.8.3
 	- Updated for 9.1.5.

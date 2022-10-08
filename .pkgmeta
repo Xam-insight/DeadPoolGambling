@@ -1,23 +1,23 @@
 ﻿package-as: Deadpool
 
 externals:
-	Libs/Ace3/AceAddon-3.0: https://repos.wowace.com/wow/ace3/trunk/AceAddon-3.0
-	Libs/Ace3/AceComm-3.0: https://repos.wowace.com/wow/ace3/trunk/AceComm-3.0
-	Libs/Ace3/AceConfig-3.0: https://repos.wowace.com/wow/ace3/trunk/AceConfig-3.0
-	Libs/Ace3/AceConsole-3.0: https://repos.wowace.com/wow/ace3/trunk/AceConsole-3.0
-	Libs/Ace3/AceDB-3.0: https://repos.wowace.com/wow/ace3/trunk/AceDB-3.0
-	Libs/Ace3/AceEvent-3.0: https://repos.wowace.com/wow/ace3/trunk/AceEvent-3.0
-	Libs/Ace3/AceGUI-3.0: https://repos.wowace.com/wow/ace3/trunk/AceGUI-3.0
-	Libs/Ace3/AceLocale-3.0: https://repos.wowace.com/wow/ace3/trunk/AceLocale-3.0
-	Libs/Ace3/AceSerializer-3.0: https://repos.wowace.com/wow/ace3/trunk/AceSerializer-3.0
-	Libs/Ace3/CallbackHandler-1.0: https://repos.wowace.com/wow/ace3/trunk/CallbackHandler-1.0
+	../Ace3/AceAddon-3.0: https://repos.wowace.com/wow/ace3/trunk/AceAddon-3.0
+	../Ace3/AceComm-3.0: https://repos.wowace.com/wow/ace3/trunk/AceComm-3.0
+	../Ace3/AceConfig-3.0: https://repos.wowace.com/wow/ace3/trunk/AceConfig-3.0
+	../Ace3/AceConsole-3.0: https://repos.wowace.com/wow/ace3/trunk/AceConsole-3.0
+	../Ace3/AceDB-3.0: https://repos.wowace.com/wow/ace3/trunk/AceDB-3.0
+	../Ace3/AceEvent-3.0: https://repos.wowace.com/wow/ace3/trunk/AceEvent-3.0
+	../Ace3/AceGUI-3.0: https://repos.wowace.com/wow/ace3/trunk/AceGUI-3.0
+	../Ace3/AceLocale-3.0: https://repos.wowace.com/wow/ace3/trunk/AceLocale-3.0
+	../Ace3/AceSerializer-3.0: https://repos.wowace.com/wow/ace3/trunk/AceSerializer-3.0
+	../Ace3/CallbackHandler-1.0: https://repos.wowace.com/wow/ace3/trunk/CallbackHandler-1.0
 	#Libs/CallbackHandler-1.0: https://repos.wowace.com/wow/callbackhandler/trunk/CallbackHandler-1.0
-	Libs/Ace3/LibStub: https://repos.wowace.com/wow/ace3/trunk/LibStub
+	../Ace3/LibStub: https://repos.wowace.com/wow/ace3/trunk/LibStub
 	#Libs/LibStub: https://repos.wowace.com/wow/libstub/trunk
-	Libs/LibDataBroker-1.1: git://github.com/tekkub/libdatabroker-1-1.git
-	Libs/LibDBIcon-1.0: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
-	Libs/UTF8: https://repos.wowace.com/wow/utf8/trunk
-	../CustomAchiever: https://repos.curseforge.com/wow/custom-achiever/trunk
+	../CustomAchiever/Libs/LibDataBroker-1.1: git://github.com/tekkub/libdatabroker-1-1.git
+	../CustomAchiever/Libs/LibDBIcon-1.0: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
+	../CustomAchiever/Libs/UTF8: https://repos.wowace.com/wow/utf8/trunk
+	../CustomAchiever: git://github.com/Xam-insight/CustomAchiever.git
 
 manual-changelog:
 	filename: CHANGELOG.txt
