@@ -7,9 +7,9 @@
 ## Author: Xam
 ## SavedVariables: DeadpoolGlobal_SessionId, DeadpoolData, DeadpoolOptionsData, DeadpoolMIcon, DeadpoolTuto, DeadpoolWindow
 
-..\Ace3\LibStub\LibStub.lua
-..\Ace3\AceLocale-3.0\AceLocale-3.0.xml
-..\CustomAchiever\Libs\EZBlizzardUiPopups\EZBlizzardUiPopups.xml
+..\EZBlizzardUiPopups\Libs\Ace3\LibStub\LibStub.lua
+..\EZBlizzardUiPopups\Libs\Ace3\AceLocale-3.0\AceLocale-3.0.xml
+..\EZBlizzardUiPopups\EZBlizzardUiPopups\EZBlizzardUiPopups.xml
 
 embeds.xml
 DeadpoolDropDown.xml
