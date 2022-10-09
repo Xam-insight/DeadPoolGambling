@@ -13,10 +13,10 @@ externals:
 	../EZBlizzardUiPopups/Libs/Ace3/AceSerializer-3.0: https://repos.wowace.com/wow/ace3/trunk/AceSerializer-3.0
 	../EZBlizzardUiPopups/Libs/Ace3/CallbackHandler-1.0: https://repos.wowace.com/wow/ace3/trunk/CallbackHandler-1.0
 	../EZBlizzardUiPopups/Libs/Ace3/LibStub: https://repos.wowace.com/wow/ace3/trunk/LibStub
-	../EZBlizzardUiPopups/Libs/LibDataBroker-1.1: git://github.com/tekkub/libdatabroker-1-1.git
+	../EZBlizzardUiPopups/Libs/LibDataBroker-1.1: https://repos.wowace.com/wow/libdatabroker-1-1
 	../EZBlizzardUiPopups/Libs/LibDBIcon-1.0: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
 	../EZBlizzardUiPopups/Libs/UTF8: https://repos.wowace.com/wow/utf8/trunk
-	../CustomAchiever: git://github.com/Xam-insight/CustomAchiever.git
+	../CustomAchiever: https://github.com/Xam-insight/CustomAchiever
 
 manual-changelog:
 	filename: CHANGELOG.txt
