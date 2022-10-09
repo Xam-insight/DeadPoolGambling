@@ -9,7 +9,7 @@
 
 ..\EZBlizzardUiPopups\Libs\Ace3\LibStub\LibStub.lua
 ..\EZBlizzardUiPopups\Libs\Ace3\AceLocale-3.0\AceLocale-3.0.xml
-..\EZBlizzardUiPopups\EZBlizzardUiPopups\EZBlizzardUiPopups.xml
+..\EZBlizzardUiPopups\EZBlizzardUiPopups.xml
 
 embeds.xml
 DeadpoolDropDown.xml
