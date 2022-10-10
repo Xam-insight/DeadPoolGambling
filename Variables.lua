@@ -38,8 +38,8 @@ DEADPOOL_SOLEIL = "Soleîl"
 
 DEADPOOL_BANKER = "GALLYWIX"
 DEADPOOL_BANKER_NAME = ""
-if EZBlizzardUiPopups_npcModels[DEADPOOL_BANKER] then
-	DEADPOOL_BANKER_NAME = EZBlizzardUiPopups_GetNameFromNpcID(EZBlizzardUiPopups_npcModels[DEADPOOL_BANKER]["CreatureId"])
+if EZBlizzUiPop_npcModels[DEADPOOL_BANKER] then
+	DEADPOOL_BANKER_NAME = EZBlizzUiPop_GetNameFromNpcID(EZBlizzUiPop_npcModels[DEADPOOL_BANKER]["CreatureId"])
 end
 
 -- Change an entire string to Title Case

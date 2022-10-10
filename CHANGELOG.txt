@@ -1,4 +1,6 @@
-﻿- v1.8.5
+﻿- v1.8.6
+	- Adaptation to new version of EZBlizzardUiPopups library.
+- v1.8.5
 	- TOC for 9.2.7.
 	- Repository URL change for CustomAchiever.
 - v1.8.4

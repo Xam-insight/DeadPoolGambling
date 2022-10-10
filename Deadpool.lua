@@ -376,7 +376,7 @@ function deadpoolCharacterIsDead(aDeadpoolSessionId, aChar, alternativeName)
 				if not DeadpoolOptionsData or not DeadpoolOptionsData["DeadpoolDeathAnnounceDisabled"] or not (DeadpoolOptionsData["DeadpoolDeathAnnounceDisabled"] == true) then
 					local noNotif = UnitGUID("boss1") and DeadpoolOptionsData["DeadpoolNotificationsInBossFightsDisabled"]
 					if not noNotif then
-						EZBlizzardUiPopups_ToastFakeAchievement(Deadpool, deadpoolLog, 3456, false, 15, "Dead Pool", function()  Deadpool:DeadpoolShow()  end)
+						EZBlizzUiPop_ToastFakeAchievementNew(Deadpool, deadpoolLog, 3456, false, 15, "Dead Pool", function()  Deadpool:DeadpoolShow()  end)
 					end
 				end
 			end
@@ -1698,7 +1698,7 @@ function tellTutorialText(text, force)
 		and not DeadpoolOptionsData["TutoDisabled"]
 			and (not DeadpoolTuto or not DeadpoolTuto[text]) then
 		quotePlayed = Deadpool_PlaySoundFile(text, "Dialog")
-		EZBlizzardUiPopups_npcDialog(DEADPOOL_BANKER, L[text])
+		EZBlizzUiPop_npcDialog(DEADPOOL_BANKER, L[text])
 		DeadpoolTuto[text] = "done"
 	end
 	return quotePlayed
