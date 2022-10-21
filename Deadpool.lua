@@ -173,7 +173,7 @@ end
 function applyDeadpoolWindowOptions(withSummaryFrame)
 	DeadpoolFrame:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
     DeadpoolFrame:SetWidth(DEADPOOL_ALLCOLS_WIDTH + 24 + 30)
-	DeadpoolFrame:SetMinResize(0, 151 + DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolLigneHeight"])
+	DeadpoolFrame:SetResizeBounds(0, 151 + DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolLigneHeight"], nil, GetScreenHeight() - 32)
 	
 	retOK, ret = pcall(callbackDeadpoolWindow, DeadpoolFrame)
     

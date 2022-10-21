@@ -843,7 +843,7 @@ end
 
 function setDeadpoolBets(aSession, aChar, aBetChar, aNextDeathBet)
 	if aSession and aChar and aBetChar and aNextDeathBet then
-		if aChar == aBetChar then
+		if aChar == aBetChar and not DeadpoolGlobal_Debug then
 			tellTutorialText("DEADPOOLTUTO_TUTO4")
 			Deadpool_Error(L["SELF_BET_NOT_ALLOWED"])
 		else

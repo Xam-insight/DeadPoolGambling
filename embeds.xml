@@ -339,7 +339,7 @@
 			</OnDragStop>
 		</Scripts>
 	</Frame>
-	<Frame name="DeadpoolFrameTemplate" inherits="BasicFrameTemplate" virtual="true" hidden="true" toplevel="true" movable="true" resizable="true" frameStrata="BACKGROUND">
+	<Frame name="DeadpoolFrameTemplate" inherits="BasicFrameTemplate" virtual="true" hidden="true" toplevel="true" movable="true" resizable="true" clampedToScreen="true" frameStrata="BACKGROUND">
 		<Size x="600" y="360" />
 		<Anchors>
 			<Anchor point="CENTER" x="0" y="0" />
@@ -398,6 +398,7 @@
 							dpSetHelpTipFramesStrata("LOW")
 							DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolHeight"] = self:GetParent():GetHeight()
 							Deadpool_UpdateScrollFrame(DeadpoolScrollFrame)
+							deadpoolSaveWindowPosition()
 						end
 					</OnMouseUp>
 					<OnEnter>
@@ -516,17 +517,16 @@
 					<Anchor point="BOTTOMRIGHT" x="-5" y="4" />
 				</Anchors>
 				<Frames>
-					<Button name="DeadpoolSummaryFrameTab1" inherits="TabButtonTemplate" id="1">
+					<Button name="DeadpoolSummaryFrameTab1" inherits="PanelTopTabButtonTemplate" id="1">
 						<Anchors>
 							<Anchor point="TOPLEFT" x="0" y="32"/>
 						</Anchors>
 						<Scripts>
-							<OnLoad>
+							<OnShow>
 								self:SetText(Deadpool_GetLocale("DEADPOOLCOLLUMNS_BET"))
 								self:SetHitRectInsets(0, 0, 10, 0)
-								PanelTemplates_TabResize(self, 0)
-								_G[self:GetName().."HighlightTexture"]:SetWidth(self:GetTextWidth() + 31)
-							</OnLoad>
+								PanelTemplates_TabResize(self, 0, nil, 63)
+							</OnShow>
 							<OnClick>
 								PanelTemplates_Tab_OnClick(self, DeadpoolSummaryFrame)
 								DeadpoolSummaryFrame_Update()
@@ -534,7 +534,7 @@
 							</OnClick>
 						</Scripts>
 					</Button>
-					<Button name="DeadpoolSummaryFrameTab2" inherits="TabButtonTemplate" id="2">
+					<Button name="DeadpoolSummaryFrameTab2" inherits="PanelTopTabButtonTemplate" id="2">
 						<Anchors>
 							<Anchor point="LEFT" relativeTo="DeadpoolSummaryFrameTab1" relativePoint="RIGHT">
 								<Offset>
@@ -543,12 +543,11 @@
 							</Anchor>
 						</Anchors>
 						<Scripts>
-							<OnLoad>
+							<OnShow>
 								self:SetText(Deadpool_GetLocale("DEADPOOLCOLLUMNS_MODEL"))
 								self:SetHitRectInsets(0, 0, 10, 0)
-								PanelTemplates_TabResize(self, 0)
-								_G[self:GetName().."HighlightTexture"]:SetWidth(self:GetTextWidth() + 31)
-							</OnLoad>
+								PanelTemplates_TabResize(self, 0, nil, 63)
+							</OnShow>
 							<OnClick>
 								PanelTemplates_Tab_OnClick(self, DeadpoolSummaryFrame)
 								DeadpoolSummaryFrame_Update(true)
@@ -556,7 +555,7 @@
 							</OnClick>
 						</Scripts>
 					</Button>
-					<Button name="DeadpoolSummaryFrameTab3" inherits="TabButtonTemplate" id="3">
+					<Button name="DeadpoolSummaryFrameTab3" inherits="PanelTopTabButtonTemplate" id="3">
 						<Anchors>
 							<Anchor point="LEFT" relativeTo="DeadpoolSummaryFrameTab2" relativePoint="RIGHT">
 								<Offset>
@@ -565,12 +564,11 @@
 							</Anchor>
 						</Anchors>
 						<Scripts>
-							<OnLoad>
+							<OnShow>
 								self:SetText(Deadpool_GetLocale("DEADPOOLCOLLUMNS_STATS"))
 								self:SetHitRectInsets(0, 0, 10, 0)
-								PanelTemplates_TabResize(self, 0)
-								_G[self:GetName().."HighlightTexture"]:SetWidth(self:GetTextWidth() + 31)
-							</OnLoad>
+								PanelTemplates_TabResize(self, 0, nil, 63)
+							</OnShow>
 							<OnClick>
 								PanelTemplates_Tab_OnClick(self, DeadpoolSummaryFrame)
 								DeadpoolSummaryFrame_Update()

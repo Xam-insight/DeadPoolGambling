@@ -3,7 +3,7 @@ local ACD = LibStub("AceConfigDialog-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("Deadpool", true)
 
 local sidesValues = {
-	[0] = RESET_POSITION,
+	[0] = RESET_TO_DEFAULT,
 	["LEFT"] = L["MODEL_POPUP_SIDE_LEFT"],
 	["RIGHT"] = L["MODEL_POPUP_SIDE_RIGHT"],
 }
@@ -299,7 +299,7 @@ function loadDeadpoolOptions()
 						end,
 						set = function(i, v)
 							local newMinHeight = 151 + v
-							DeadpoolFrame:SetMinResize(0, newMinHeight)
+							DeadpoolFrame:SetResizeBounds(0, newMinHeight)
 							DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolLigneHeight"] = v
 							if DeadpoolFrame:GetHeight() < newMinHeight then
 								DeadpoolFrame:SetHeight(newMinHeight)
