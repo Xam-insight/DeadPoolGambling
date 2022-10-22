@@ -9,6 +9,7 @@
 	<Include file="..\EZBlizzardUiPopups\Libs\Ace3\AceConfig-3.0\AceConfigDialog-3.0\AceConfigDialog-3.0.xml" />
 	<Include file="..\EZBlizzardUiPopups\Libs\Ace3\AceComm-3.0\AceComm-3.0.xml" />
 	<Include file="..\EZBlizzardUiPopups\Libs\Ace3\AceSerializer-3.0\AceSerializer-3.0.xml" />
+	<Include file="..\EZBlizzardUiPopups\Libs\LibUIDropDownMenu\LibUIDropDownMenu.xml" />
 	<Script file="..\EZBlizzardUiPopups\Libs\UTF8\utf8data.lua" />
 	<Script file="..\EZBlizzardUiPopups\Libs\UTF8\utf8.lua" />
 	<Script file="..\EZBlizzardUiPopups\Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua" />

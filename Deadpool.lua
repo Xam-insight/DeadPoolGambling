@@ -2,6 +2,7 @@ Deadpool = LibStub("AceAddon-3.0"):NewAddon("Dead Pool", "AceConsole-3.0", "AceE
 local L = LibStub("AceLocale-3.0"):GetLocale("Deadpool", true)
 local AceGUI = LibStub("AceGUI-3.0")
 local ACD = LibStub("AceConfigDialog-3.0")
+local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
 
 DeadpoolGlobal_CommPrefix = "Deadpool"
 
@@ -135,6 +136,13 @@ function Deadpool:OnEnable()
 			DeadpoolBankerButton.Label:SetJustifyH("CENTER")
 		end
 
+		local dropDownframe = LibDD:Create_UIDropDownMenu("DeadpoolDropDown", parent_frame)
+		dropDownframe.xOffset = 0
+		dropDownframe.yOffset = 0
+		dropDownframe.relativePoint = "TOPRIGHT"
+		LibDD:UIDropDownMenu_Initialize(dropDownframe, DeadpoolDropDown_Update, "MENU")
+		--LibDD:UIDropDownMenu_OnHide(_G["L_DropDownList1"])
+										
 		Deadpool:Print(L["DEADPOOL_WELCOME"])
     end
 

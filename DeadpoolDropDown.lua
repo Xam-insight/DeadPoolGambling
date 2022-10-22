@@ -1,4 +1,5 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("Deadpool", true)
+local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
 
 local betSliderInitialValue = 5
 
@@ -13,13 +14,13 @@ function DeadpoolDropDown_Update(self)
 	local playerOffItemsNumber = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "offItemsNumber"))
 	local playerCredits = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "credits"))
 
-	if not DropDownList1.customFrames then
-		DropDownList1.customFrames = {}
+	if not L_DropDownList1.customFrames then
+		L_DropDownList1.customFrames = {}
 	end
 
 	local buttonId = 1
 
-	local info = UIDropDownMenu_CreateInfo()
+	local info = LibDD:UIDropDownMenu_CreateInfo()
 	info.minWidth = 230
 	info.text = "|cFF00FF00"..L["DEADPOOLMENU_BET"]
 	info.isTitle = 1
@@ -27,8 +28,8 @@ function DeadpoolDropDown_Update(self)
 	info.func = nil
 	info.arg1 = nil
 	info.customFrame = nil
-	DeadpoolDownMenu_AddButton(UIDropDownMenu_AddButton, info, buttonId)
-
+	DeadpoolDownMenu_AddButton(info, buttonId)
+	
 	if isPlayer then
 		buttonId = buttonId + 1
 		
@@ -37,7 +38,7 @@ function DeadpoolDropDown_Update(self)
 		info.leftPadding = 10
 		info.disabled = true
 		info.customFrame = DeadpoolDropDownButtonSelfBet
-		DeadpoolDownMenu_AddButton(UIDropDownMenu_AddButton, info, buttonId, nil, L["DEADPOOLTUTO_SELFBET"])
+		DeadpoolDownMenu_AddButton(info, buttonId, nil, L["DEADPOOLTUTO_SELFBET"])
 	else
 		local charItemsToLost = DEADPOOL_GARMENT_NUMBER - playerOffItemsNumber
 		local maxBetToAdd = playerCredits + charItemsToLost * DEADPOOL_GARMENT_REWARD
@@ -54,7 +55,7 @@ function DeadpoolDropDown_Update(self)
 		info.arg2 = "1"
 		info.disabled = maxBetToAdd < 1
 		info.customFrame = DeadpoolDropDownButtonBet1
-		DeadpoolDownMenu_AddButton(UIDropDownMenu_AddButton, info, buttonId, "1"..deadpoolChipTextureString, betTuto.."|n|n"..L["DEADPOOLTUTO_BET1"].."|n|n"..L["DEADPOOLTUTO_BETTOMUCH"])
+		DeadpoolDownMenu_AddButton(info, buttonId, "1"..deadpoolChipTextureString, betTuto.."|n|n"..L["DEADPOOLTUTO_BET1"].."|n|n"..L["DEADPOOLTUTO_BETTOMUCH"])
 
 		buttonId = buttonId + 1
 
@@ -67,7 +68,7 @@ function DeadpoolDropDown_Update(self)
 		info.customFrame = DeadpoolDropDownButtonBet5
 		info.disabled = maxBetToAdd < 5
 
-		DeadpoolDownMenu_AddButton(UIDropDownMenu_AddButton, info, buttonId, "5"..deadpoolChipTextureString, betTuto.."|n|n"..L["DEADPOOLTUTO_BET5"].."|n|n"..L["DEADPOOLTUTO_BETTOMUCH"])
+		DeadpoolDownMenu_AddButton(info, buttonId, "5"..deadpoolChipTextureString, betTuto.."|n|n"..L["DEADPOOLTUTO_BET5"].."|n|n"..L["DEADPOOLTUTO_BETTOMUCH"])
 
 		if maxBetToAdd > 4 then
 			if maxBetToAdd > 5 then
@@ -94,7 +95,7 @@ function DeadpoolDropDown_Update(self)
 		info.arg2 = nil
 		info.customFrame = DeadpoolDropDownButtonBetAll
 		info.disabled = playerCredits < 1
-		DeadpoolDownMenu_AddButton(UIDropDownMenu_AddButton, info, buttonId, playerCredits..deadpoolChipTextureString, betTuto.."|n|n"..L["DEADPOOLTUTO_BETALL"])
+		DeadpoolDownMenu_AddButton(info, buttonId, playerCredits..deadpoolChipTextureString, betTuto.."|n|n"..L["DEADPOOLTUTO_BETALL"])
 
 		buttonId = buttonId + 1
 
@@ -111,13 +112,13 @@ function DeadpoolDropDown_Update(self)
 		if not noPlayerBetOnChar then
 			removeValue = "-"..playerBetOnChar..deadpoolChipTextureString
 		end
-		DeadpoolDownMenu_AddButton(UIDropDownMenu_AddButton, info, buttonId, removeValue, L["DEADPOOLTUTO_BETREMOVE"])
+		DeadpoolDownMenu_AddButton(info, buttonId, removeValue, L["DEADPOOLTUTO_BETREMOVE"])
 
 		local bankCredits = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, "Bank", "credits"))
 		if totalPlayerCredit < 1 then
 			buttonId = buttonId + 1
 			
-			DeadpoolDownMenu_AddButton(UIDropDownMenu_AddSeparator, nil, buttonId)
+			DeadpoolDownMenu_AddSeparator(buttonId)
 		
 			buttonId = buttonId + 1
 
@@ -128,15 +129,15 @@ function DeadpoolDropDown_Update(self)
 			info.arg1 = nil
 			info.arg2 = nil
 			info.customFrame = nil
-			DeadpoolDownMenu_AddButton(UIDropDownMenu_AddButton, info, buttonId)
+			DeadpoolDownMenu_AddButton(info, buttonId)
 
-			BankIconFrame:SetParent(_G["DropDownList1"])
+			BankIconFrame:SetParent(_G["L_DropDownList1"])
 			BankIconFrame:ClearAllPoints()
-			BankIconFrame:SetPoint("TOPRIGHT", _G["DropDownList1Button"..buttonId], "TOPRIGHT", 3, -3)
+			BankIconFrame:SetPoint("TOPRIGHT", _G["L_DropDownList1Button"..buttonId], "TOPRIGHT", 3, -3)
 			BankIconFrameCount:SetText(bankCredits)
 			BankIconFrame:SetFrameLevel(4)
 			BankIconFrame:Show()
-			table.insert(DropDownList1.customFrames, BankIconFrame)
+			table.insert(L_DropDownList1.customFrames, BankIconFrame)
 
 			buttonId = buttonId + 1
 
@@ -148,14 +149,14 @@ function DeadpoolDropDown_Update(self)
 			info.arg2 = "unique"
 			info.customFrame = DeadpoolDropDownButtonUniqueBet
 			info.disabled = bankCredits < 1
-			DeadpoolDownMenu_AddButton(UIDropDownMenu_AddButton, info, buttonId, nil, L["DEADPOOLTUTO_UNIQUEBET"])
+			DeadpoolDownMenu_AddButton(info, buttonId, nil, L["DEADPOOLTUTO_UNIQUEBET"])
 		end
 	end
 
 	if DeadpoolBankerButton then
 		buttonId = buttonId + 1
 		
-		DeadpoolDownMenu_AddButton(UIDropDownMenu_AddSeparator, nil, buttonId)
+		DeadpoolDownMenu_AddSeparator(buttonId)
 
 		buttonId = buttonId + 1
 
@@ -166,11 +167,11 @@ function DeadpoolDropDown_Update(self)
 		info.arg1 = nil
 		info.arg2 = nil
 		info.customFrame = nil
-		DeadpoolDownMenu_AddButton(UIDropDownMenu_AddButton, info, buttonId)
+		DeadpoolDownMenu_AddButton(info, buttonId)
 
 		buttonId = buttonId + 1
-
-		local buttonText = string.gsub(DeadpoolBankerButton:GetText(), "\n", " ")
+		
+		local buttonText = (DeadpoolBankerButton and DeadpoolBankerButton:GetText() and string.gsub(DeadpoolBankerButton:GetText(), "\n", " ")) or ""
 		info.isTitle = nil
 		info.leftPadding = 10
 		if DeadpoolBankerButton:IsEnabled() then
@@ -182,7 +183,7 @@ function DeadpoolDropDown_Update(self)
 			info.arg2 = deadpoolList
 			info.customFrame = DeadpoolDropDownButtonBankerBet
 			info.disabled = false
-			DeadpoolDownMenu_AddButton(UIDropDownMenu_AddButton, info, buttonId, nil, L["DEADPOOLTUTO_BANKER"].."|n|n"..L["DEADPOOLTUTO_BANKERBET"])
+			DeadpoolDownMenu_AddButton(info, buttonId, nil, L["DEADPOOLTUTO_BANKER"].."|n|n"..L["DEADPOOLTUTO_BANKERBET"])
 		else
 			info.text = string.gsub(buttonText, DEADPOOL_BANKER_NAME, "...")
 			info.func = askBankerHisBet
@@ -190,13 +191,13 @@ function DeadpoolDropDown_Update(self)
 			info.arg2 = deadpoolList
 			info.customFrame = DeadpoolDropDownButtonBankerBet
 			info.disabled = true
-			DeadpoolDownMenu_AddButton(UIDropDownMenu_AddButton, info, buttonId, nil, L["DEADPOOLTUTO_BANKER"].."|n|n"..L["DEADPOOLTUTO_BANKERHASBET"])
+			DeadpoolDownMenu_AddButton(info, buttonId, nil, L["DEADPOOLTUTO_BANKER"].."|n|n"..L["DEADPOOLTUTO_BANKERHASBET"])
 		end
 	end
 
 	buttonId = buttonId + 1
 			
-	DeadpoolDownMenu_AddButton(UIDropDownMenu_AddSeparator, nil, buttonId)
+	DeadpoolDownMenu_AddSeparator(buttonId)
 
 	if HelpTip then
 		buttonId = buttonId + 1
@@ -212,7 +213,7 @@ function DeadpoolDropDown_Update(self)
 		info.customFrame = DeadpoolDropDownButtonTuto
 		info.disabled = false
 		info.notCheckable = nil
-		DeadpoolDownMenu_AddButton(UIDropDownMenu_AddButton, info, buttonId, nil, L["ENABLE_TUTO_DESC"])
+		DeadpoolDownMenu_AddButton(info, buttonId, nil, L["ENABLE_TUTO_DESC"])
 	end
 
 	buttonId = buttonId + 1
@@ -228,8 +229,8 @@ function DeadpoolDropDown_Update(self)
 	info.notCheckable = nil
 	info.checked = false
 	info.isNotRadio = nil
-	DeadpoolDownMenu_AddButton(UIDropDownMenu_AddButton, info, buttonId)
-	_G["DropDownList1Button"..buttonId.."UnCheck"]:Hide()
+	DeadpoolDownMenu_AddButton(info, buttonId)
+	_G["L_DropDownList1Button"..buttonId.."UnCheck"]:Hide()
 
 	buttonId = buttonId + 1
 
@@ -249,8 +250,8 @@ function DeadpoolDropDown_Update(self)
 	info.arg2 = nil
 	info.customFrame = nil
 	info.disabled = false
-	DeadpoolDownMenu_AddButton(UIDropDownMenu_AddButton, info, buttonId)
-	_G["DropDownList1Button"..buttonId.."UnCheck"]:Hide()
+	DeadpoolDownMenu_AddButton(info, buttonId)
+	_G["L_DropDownList1Button"..buttonId.."UnCheck"]:Hide()
 
 	if chips then
 		buttonId = buttonId + 1
@@ -263,22 +264,22 @@ function DeadpoolDropDown_Update(self)
 		notCheckable = true,
 		customFrame = DeadpoolDropDownButtonPlayerChips
 		};
-		DeadpoolDownMenu_AddButton(UIDropDownMenu_AddButton, spaceInfo, buttonId, chips)
+		DeadpoolDownMenu_AddButton(spaceInfo, buttonId, chips)
 	end
 
-	DPMenuDurabilityFrame:SetParent(_G["DropDownList1"])
+	DPMenuDurabilityFrame:SetParent(_G["L_DropDownList1"])
 	DPMenuDurabilityFrame:ClearAllPoints()
-	DPMenuDurabilityFrame:SetPoint("BOTTOMRIGHT", _G["DropDownList1Button"..buttonId], "BOTTOMRIGHT", -5, -10)
+	DPMenuDurabilityFrame:SetPoint("BOTTOMRIGHT", _G["L_DropDownList1Button"..buttonId], "BOTTOMRIGHT", -5, -10)
 	DPMenuDurabilityFrame:SetFrameLevel(4)
 	DPMenuDurabilityFrame:Show()
 
-	table.insert(DropDownList1.customFrames, DPMenuDurabilityFrame)
+	table.insert(L_DropDownList1.customFrames, DPMenuDurabilityFrame)
 	DeadpoolDurability("DPMenuDurabilityFrame", playerOffItemsNumber)
 end
 
 function DeadpoolDropDown_Show(self, relativeTo)
 	PlaySound(SOUNDKIT.IG_MAINMENU_OPEN);
-	ToggleDropDownMenu(1, nil, self, relativeTo)
+	LibDD:ToggleDropDownMenu(1, nil, self, relativeTo)
 end
 
 function DeadpoolDropDown_Hide()
@@ -297,16 +298,20 @@ function DeadpoolDropDown_BankerBet(self, aDeadpoolSessionId, deadpoolList)
 	askBankerHisBet(aDeadpoolSessionId, deadpoolList)
 end
 
-function DeadpoolDownMenu_AddButton(func, info, buttonId, fontString, helpTip)
-	func(info)
+function DeadpoolDownMenu_AddButton(info, buttonId, fontString, helpTip)
+	LibDD:UIDropDownMenu_AddButton(info)
 	
 	if buttonId then
-		_G["DropDownList1Button"..buttonId]:SetShown(true)
+		_G["L_DropDownList1Button"..buttonId]:SetShown(true)
 		if info then
-			DeadpoolAddFontString(info, fontString, helpTip, _G["DropDownList1Button"..buttonId])
-			_G["DropDownList1Button"..buttonId]:SetAttribute("checked", info.checked)
+			DeadpoolAddFontString(info, fontString, helpTip, _G["L_DropDownList1Button"..buttonId])
+			_G["L_DropDownList1Button"..buttonId]:SetAttribute("checked", info.checked)
 		end
 	end
+end
+
+function DeadpoolDownMenu_AddSeparator(fontString)
+	LibDD:UIDropDownMenu_AddSeparator(info)
 end
 
 function DeadpoolAddFontString(info, text, helpTip, belowFrame)

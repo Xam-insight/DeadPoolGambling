@@ -56,15 +56,4 @@
 	<Button name="DeadpoolDropDownButtonUniqueBet" inherits="DeadpoolDropDownButtonTemplate" />
 	<Button name="DeadpoolDropDownButtonBankerBet" inherits="DeadpoolDropDownButtonTemplate" />
 	<Button name="DeadpoolDropDownButtonPlayerChips" inherits="DeadpoolDropDownButtonTemplate" />
-	<Frame name="DeadpoolDropDown" inherits="UIDropDownMenuTemplate">
-		<Scripts>
-			<OnLoad>
-				self.xOffset = 0
-				self.yOffset = 0
-				self.relativePoint = "TOPRIGHT"
-				UIDropDownMenu_Initialize(self, DeadpoolDropDown_Update, "MENU")
-				UIDropDownMenu_OnHide(_G["DropDownList1"])
-			</OnLoad>
-		</Scripts>
-	</Frame>
 </Ui>

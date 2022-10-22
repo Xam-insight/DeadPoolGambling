@@ -16,6 +16,7 @@ externals:
 	../EZBlizzardUiPopups/Libs/LibDataBroker-1.1: https://repos.wowace.com/wow/libdatabroker-1-1
 	../EZBlizzardUiPopups/Libs/LibDBIcon-1.0: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
 	../EZBlizzardUiPopups/Libs/UTF8: https://repos.wowace.com/wow/utf8/trunk
+	../EZBlizzardUiPopups/Libs/LibUIDropDownMenu: https://repos.wowace.com/wow/libuidropdownmenu/trunk/LibUIDropDownMenu
 	../CustomAchiever: https://github.com/Xam-insight/CustomAchiever
 
 manual-changelog:

@@ -196,8 +196,8 @@ if HelpTip then
 				offsetY = 0,
 			},
 			["relativeRegion"] = "DeadpoolDropDown",
-			["group"] = "DropDownList1",
-			["parent"] = "DropDownList1"
+			["group"] = "L_DropDownList1",
+			["parent"] = "L_DropDownList1"
 		},
 	}
 end
@@ -257,11 +257,7 @@ end
 
 function dpShowMenuHelpTip(helpTip, force, relativeRegion, offsetX)
 	if HelpTip and not DeadpoolOptionsData["MenuTutoDisabled"] then
-		if offsetX then
-			dpHelpTipsInfo["MENU_HELPTIP"]["info"]["offsetX"] = defaultMenuHelpTipOffsetX + offsetX
-		else
-			dpHelpTipsInfo["MENU_HELPTIP"]["info"]["offsetX"] = defaultMenuHelpTipOffsetX
-		end
+		dpHelpTipsInfo["MENU_HELPTIP"]["info"]["offsetX"] = defaultMenuHelpTipOffsetX + (offsetX or 0)
 		dpHelpTipsInfo["MENU_HELPTIP"]["info"]["text"] = helpTip
 		if (not DeadpoolTuto[helpTip] or force) and _G[dpHelpTipsInfo["MENU_HELPTIP"]["group"]]:IsShown() then
 			DeadpoolHelpTip:Show(_G[dpHelpTipsInfo["MENU_HELPTIP"]["parent"]], dpHelpTipsInfo["MENU_HELPTIP"]["info"], relativeRegion or _G[dpHelpTipsInfo["MENU_HELPTIP"]["relativeRegion"]], force)
@@ -276,5 +272,5 @@ function dpAcknowledgeHelpTip(helpTip)
 end
 
 function closeMenuHelpTip(helpTip)
-	DeadpoolHelpTip:Hide(DropDownList1, helpTip)
+	DeadpoolHelpTip:Hide(L_DropDownList1, helpTip)
 end
