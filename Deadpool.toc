@@ -4,8 +4,9 @@
 ## Title: Dead Pool |T137008:16|t |cffffffffG|r|cff666666a|r|cffffffffm|r|cff666666b|r|cffffffffl|r|cff666666i|r|cffffffffn|r|cff666666g|r
 ## Version: 1.9.0
 ## Notes: Gambling minigame
-## Author: Xam
+## Author: Xam_insight
 ## SavedVariables: DeadpoolGlobal_SessionId, DeadpoolData, DeadpoolOptionsData, DeadpoolMIcon, DeadpoolTuto, DeadpoolWindow
+## Dependencies: EZBlizzardUiPopups
 
 ..\EZBlizzardUiPopups\Libs\Ace3\LibStub\LibStub.lua
 ..\EZBlizzardUiPopups\Libs\Ace3\AceLocale-3.0\AceLocale-3.0.xml
