@@ -263,7 +263,7 @@ function DeadpoolDropDown_Update(self)
 		isUninteractable = true,
 		notCheckable = true,
 		customFrame = DeadpoolDropDownButtonPlayerChips
-		};
+		}
 		DeadpoolDownMenu_AddButton(spaceInfo, buttonId, chips)
 	end
 
@@ -278,7 +278,7 @@ function DeadpoolDropDown_Update(self)
 end
 
 function DeadpoolDropDown_Show(self, relativeTo)
-	PlaySound(SOUNDKIT.IG_MAINMENU_OPEN);
+	PlaySound(SOUNDKIT.IG_MAINMENU_OPEN)
 	LibDD:ToggleDropDownMenu(1, nil, self, relativeTo)
 end
 
@@ -323,7 +323,7 @@ function DeadpoolAddFontString(info, text, helpTip, belowFrame)
 		end
 		info.customFrame:SetAttribute("buttonDisabled", info.disabled)
 		info.customFrame:SetAttribute("belowFrame", belowFrame:GetName())
-		info.customFrame:SetPoint("BOTTOMRIGHT", belowFrame, "BOTTOMRIGHT", 0, 0);
+		info.customFrame:SetPoint("BOTTOMRIGHT", belowFrame, "BOTTOMRIGHT", 0, 0)
 		belowFrame:SetFrameLevel(1)
 		info.customFrame:SetFrameLevel(3)
 	end

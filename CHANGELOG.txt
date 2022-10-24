@@ -1,4 +1,6 @@
-﻿- v1.9.0
+﻿- v1.9.1
+	- [CustomAchiever]Fixed the click on achievement popup.
+- v1.9.0
 	- Updated for Dragonflight.
 - v1.8.6
 	- Adaptation to new version of EZBlizzardUiPopups library.

@@ -331,8 +331,8 @@
 			</OnDragStart>
 			<OnDragStop>
 				if( self.canMove and self.moving ) then
-					self.moving = false;
-					self:StopMovingOrSizing();
+					self.moving = false
+					self:StopMovingOrSizing()
 					self:SetFrameStrata("BACKGROUND")
 					dpSetHelpTipFramesStrata("LOW")
 					deadpoolSaveWindowPosition()
@@ -393,9 +393,9 @@
 					</OnMouseDown>
 					<OnMouseUp>
 						if( self:GetParent().canMove and self:GetParent().moving ) then
-							self:GetParent().moving = false;
+							self:GetParent().moving = false
 							self:GetParent():StopMovingOrSizing()
-							self:GetParent():SetFrameStrata("BACKGROUND");
+							self:GetParent():SetFrameStrata("BACKGROUND")
 							dpSetHelpTipFramesStrata("LOW")
 							DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolHeight"] = self:GetParent():GetHeight()
 							Deadpool_UpdateScrollFrame(DeadpoolScrollFrame)
@@ -677,8 +677,8 @@
 			</OnDragStart>
 			<OnDragStop>
 				if( self.canMove and self.moving ) then
-					self.moving = false;
-					self:StopMovingOrSizing();
+					self.moving = false
+					self:StopMovingOrSizing()
 					self:SetFrameStrata("BACKGROUND")
 					dpSetHelpTipFramesStrata("LOW")
 					deadpoolSaveWindowPosition()

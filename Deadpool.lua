@@ -759,11 +759,11 @@ function createDeadpoolLine(aDeadpoolSessionId, indexCharac, fullName, deadpoolL
 		_G[miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile3Red"]:Hide()
 		_G[miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile4Red"]:Hide()
 		_G[miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile5Red"]:Hide()
-		oddsInfoFrame.Flash1Anim:Stop();
-		oddsInfoFrame.Flash2Anim:Stop();
-		oddsInfoFrame.Flash3Anim:Stop();
-		oddsInfoFrame.Flash4Anim:Stop();
-		oddsInfoFrame.Flash5Anim:Stop();
+		oddsInfoFrame.Flash1Anim:Stop()
+		oddsInfoFrame.Flash2Anim:Stop()
+		oddsInfoFrame.Flash3Anim:Stop()
+		oddsInfoFrame.Flash4Anim:Stop()
+		oddsInfoFrame.Flash5Anim:Stop()
 	end
 	
 	local xValue = betweenObjectsGap
@@ -881,11 +881,11 @@ function createDeadpoolLine(aDeadpoolSessionId, indexCharac, fullName, deadpoolL
 		if not DeadpoolOptionsData["TutoDisabled"]
 			and (not DeadpoolTuto
 				or not DeadpoolTuto["chipPiles"]) then
-			oddsInfoFrame.Flash:Show();
-			oddsInfoFrame.FlashAnim:Play();
+			oddsInfoFrame.Flash:Show()
+			oddsInfoFrame.FlashAnim:Play()
 		else
-			oddsInfoFrame.Flash:Hide();
-			oddsInfoFrame.FlashAnim:Stop();
+			oddsInfoFrame.Flash:Hide()
+			oddsInfoFrame.FlashAnim:Stop()
 		end
 	
 		deadpoolLine:SetWidth(ligneWidth)
@@ -1325,7 +1325,7 @@ function DPTooltips_FadeOut(frame, endAlpha)
 		fadeInfo.startAlpha = frame:GetAlpha()
 		fadeInfo.endAlpha = endAlpha or 0
 		fadeInfo.finishedFunc = function(frame) if frame:GetAlpha() == 0 then frame:Hide() end end
-		fadeInfo.finishedArg1 = frame;
+		fadeInfo.finishedArg1 = frame
 		UIFrameFade(frame, fadeInfo)
 	end
 end
