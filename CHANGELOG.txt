@@ -1,4 +1,6 @@
-﻿- v1.9.2
+﻿- v1.9.3
+	- [EZBlizzardUiPopups]Handeled a problem with the TalkinHeadFrame button.
+- v1.9.2
 	- Adjusted character model popup behavior.
 	- Added death quotes examples in options menu.
 - v1.9.1
