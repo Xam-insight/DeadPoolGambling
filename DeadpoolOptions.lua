@@ -3,7 +3,7 @@ local ACD = LibStub("AceConfigDialog-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("Deadpool", true)
 
 local sidesValues = {
-	[0] = RESET_TO_DEFAULT,
+	[0] = RESET_POSITION,
 	["LEFT"] = L["MODEL_POPUP_SIDE_LEFT"],
 	["RIGHT"] = L["MODEL_POPUP_SIDE_RIGHT"],
 }
@@ -145,6 +145,11 @@ function loadDeadpoolOptions()
 						desc = L["ENABLE_DEATH_QUOTES_DESC"],
 						set = function(info, val) 
 							DeadpoolOptionsData["DeadpoolDeathQuotesDisabled"] = not val
+							if val then
+								if val then
+									Deadpool_PlayRandomSound(deathQuotes, "Dialog")
+								end
+							end
 						end,
 						get = function(info)
 							local enabled = true
