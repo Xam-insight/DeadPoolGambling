@@ -6,6 +6,8 @@ local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
 
 DeadpoolGlobal_CommPrefix = "Deadpool"
 
+--DeadpoolGlobal_Debug = true
+
 deadpoolFramePool = {}
 local deadpoolDressUpModelPool = {}
 local deadpoolDressUpModelPoolForReuse = {}
@@ -1224,12 +1226,15 @@ local oppositeSide = {
 	["RIGHT"] = "LEFT",
 	["LEFT"] = "RIGHT",
 }
+
+DeadpoolGlobal_shownModel = nil
 function dpShowModel(deadpoolCharacter, parentFrame)
 	if not DeadpoolOptionsData["DeadpoolModelPopupDisabled"] then
 		local point = "LEFT"
 		local relativeTo = "RIGHT"
 		local xValue = 0
 		local yValue = 0
+		local lockParentFrame = (parentFrame ~= nil)
 		if not parentFrame then
 			if DeadpoolFrame:IsShown() then
 				parentFrame = DeadpoolFrame
@@ -1256,6 +1261,12 @@ function dpShowModel(deadpoolCharacter, parentFrame)
 			end
 			local deadpoolDressUpModel = Deadpool:generateDressUpModel(nil, deadpoolCharacter, true)
 			if deadpoolDressUpModel then
+				if not lockParentFrame then
+					if DeadpoolGlobal_shownModel then
+						hideDressUpModel(DeadpoolGlobal_shownModel)
+					end
+					DeadpoolGlobal_shownModel = deadpoolDressUpModel
+				end
 				deadpoolDressUpModel.CloseButton:Hide()
 				if (not DeadpoolFrame:IsShown() or not DeadpoolSummaryFramePlayer:IsShown() or selectedDeadpoolCharacter ~= deadpoolCharacter) then
 					if parentFrame ~= UIParent then
@@ -1290,6 +1301,7 @@ function modelFadesOutAfter(seconds, deadpoolCharacter)
 				if not (fadeOutTime[deadpoolCharacter]
 						and timeAfter < fadeOutTime[deadpoolCharacter]) then
 					DPModel_FadeOut(deadpoolDressUpModel)
+					DeadpoolGlobal_shownModel = nil
 				end
 			end
 		end)
@@ -1354,6 +1366,7 @@ function Deadpool:generateDressUpModel(event, aChar, forceModel)
 			else
 				dressUpModel = deadpoolDressUpModelPool[char]["model"]
 			end
+			dressUpModel.char = char
 
 			local groupRank = "player"
 			local isPlayer = Deadpool_isPlayerCharacter(char)

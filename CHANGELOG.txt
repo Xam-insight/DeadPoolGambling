@@ -1,4 +1,7 @@
-﻿- v1.9.1
+﻿- v1.9.2
+	- Adjusted character model popup behavior.
+	- Added death quotes examples in options menu.
+- v1.9.1
 	- [CustomAchiever]Fixed the click on achievement popup.
 - v1.9.0
 	- Updated for Dragonflight.

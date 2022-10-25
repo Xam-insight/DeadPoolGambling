@@ -320,7 +320,9 @@
 				showDeadpoolFrameAfterCombat = false
 				applyMiniDeadpoolWindowOptions()
 				DeadpoolWindow[Deadpool_WindowsOptions]["MiniDeadpoolShown"] = true
+				DeadpoolWindow_OnShow()
 			</OnShow>
+			<OnHide function="DeadpoolWindow_OnHide" />
 			<OnDragStart>
 				if(self.canMove) then
 					self.moving = true
@@ -687,9 +689,11 @@
 			<OnShow>
 				MiniDeadpoolFrame:Hide()
 				DeadpoolWindow[Deadpool_WindowsOptions]["MiniDeadpoolShown"] = nil
+				DeadpoolWindow_OnShow()
 			</OnShow>
 			<OnHide>
 				dpHideAllHelpTips()
+				DeadpoolWindow_OnHide()
 			</OnHide>
 			<OnSizeChanged>
 				Deadpool_UpdateScrollFrame(DeadpoolScrollFrame, true)

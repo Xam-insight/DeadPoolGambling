@@ -1,5 +1,18 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("Deadpool", true)
 
+function DeadpoolWindow_OnShow()
+	if DeadpoolGlobal_shownModel then
+		dpShowModel(DeadpoolGlobal_shownModel.char)
+	end
+end
+
+function DeadpoolWindow_OnHide()
+	if DeadpoolGlobal_shownModel then
+		hideDressUpModel(DeadpoolGlobal_shownModel)
+		dpShowModel(DeadpoolGlobal_shownModel.char)
+	end
+end
+
 function DeadpoolCredits_OnLoad(self, locale, mini)
 	local frame = _G[self:GetName()]
 	local frameLabel = _G[self:GetName().."Name"]
