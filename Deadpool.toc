@@ -2,12 +2,9 @@
 # Interface: 30400
 ## Interface: 100000
 ## Title: Dead Pool |T137008:16|t |cffffffffG|r|cff666666a|r|cffffffffm|r|cff666666b|r|cffffffffl|r|cff666666i|r|cffffffffn|r|cff666666g|r
-## Version: 1.9.6
+## Version: 1.9.7
 ## Notes: Gambling minigame
 ## Author: Xam_insight
 ## SavedVariables: DeadpoolGlobal_SessionId, DeadpoolData, DeadpoolOptionsData, DeadpoolMIcon, DeadpoolTuto, DeadpoolWindow
-## Dependencies: EZBlizzardUiPopups
 
 embeds.xml
-DeadpoolDropDown.xml
-DeadpoolHelpTip.xml

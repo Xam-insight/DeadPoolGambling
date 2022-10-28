@@ -1,5 +1,22 @@
 <Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.blizzard.com/wow/ui/">
-	<Include file="..\EZBlizzardUiPopups\Libs\LibUIDropDownMenu\LibUIDropDownMenu.xml" />
+	<Script file="Libs\Ace3\LibStub\LibStub.lua" />
+	<Include file="Libs\Ace3\AceLocale-3.0\AceLocale-3.0.xml" />
+	<Script file="Libs\EZBlizzardUiPopups\EZBlizzardUiPopups.lua" />
+	<Include file="Libs\Ace3\CallbackHandler-1.0\CallbackHandler-1.0.xml" />
+	<Include file="Libs\Ace3\AceAddon-3.0\AceAddon-3.0.xml" />
+	<Include file="Libs\Ace3\AceConsole-3.0\AceConsole-3.0.xml" />
+	<Include file="Libs\Ace3\AceEvent-3.0\AceEvent-3.0.xml" />
+	<Include file="Libs\Ace3\AceGUI-3.0\AceGUI-3.0.xml" />
+	<Include file="Libs\Ace3\AceDB-3.0\AceDB-3.0.xml" />
+	<Include file="Libs\Ace3\AceConfig-3.0\AceConfigRegistry-3.0\AceConfigRegistry-3.0.xml" />
+	<Include file="Libs\Ace3\AceConfig-3.0\AceConfigDialog-3.0\AceConfigDialog-3.0.xml" />
+	<Include file="Libs\Ace3\AceComm-3.0\AceComm-3.0.xml" />
+	<Include file="Libs\Ace3\AceSerializer-3.0\AceSerializer-3.0.xml" />
+	<Include file="Libs\LibUIDropDownMenu\LibUIDropDownMenu.xml" />
+	<Script file="Libs\UTF8\utf8data.lua" />
+	<Script file="Libs\UTF8\utf8.lua" />
+	<Script file="Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua" />
+	<Script file="Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua" />
 	<Script file="localization\localization.lua" />
 	<Script file="localization\localization_frFR.lua" />
 	<Script file="embeds.lua" />
@@ -11,6 +28,8 @@
 	<Script file="Sharing.lua" />
 	<Script file="Banker.lua" />
 	<Script file="MiniFrame.lua" />
+	<Include file="DeadpoolDropDown.xml" />
+	<Include file="DeadpoolHelpTip.xml" />
 	<Texture name="TANKDeadpoolRoleTextureTemplate" virtual="true" file="Interface\LFGFRAME\UI-LFG-ICON-PORTRAITROLES" alphaMode="ADD">
 		<Size>
 			<AbsDimension x="16" y="16" />
