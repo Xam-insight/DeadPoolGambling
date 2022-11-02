@@ -152,6 +152,18 @@ function Deadpool:OnEnable()
 		deadpoolDressUpModelPool["boss1"] = {}
 		deadpoolDressUpModelPool["boss1"]["model"] = BossModel
 	end
+
+	if not CustomAchiever then
+		LoadAddOn("Deadpool_CustomAchiever")
+	end
+	if CustomAchiever then
+		CustAc_UpdateCategory("Deadpool", nil, "Dead Pool Gambling")
+		for k,v in pairs(deadpoolAchievements) do
+			if k ~= DEADPOOL_WINNER then
+				CustAc_UpdateAchievement(k, "Deadpool", v["icon"], v["points"], v["label"], v["desc"])
+			end
+		end
+	end
 end
 
 --[[

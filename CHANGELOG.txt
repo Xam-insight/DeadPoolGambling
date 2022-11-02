@@ -1,4 +1,6 @@
-﻿- v1.9.7
+﻿- v1.9.8
+	- [CustomAchiever] Fixed loading when main addon is already loaded.
+- v1.9.7
 	- Library import revert to default handling.
 - v1.9.6
 	- [EZBlizzardUiPopups] New models and library import rationalization.
