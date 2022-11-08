@@ -1,4 +1,6 @@
-﻿-v1.9.9
+﻿-v1.9.10
+	- Achievements display duration reduced.
+-v1.9.9
 	- [CustomAchiever] Handled an issue with multiple addons using CustomAchiever.
 - v1.9.8
 	- [CustomAchiever] Fixed loading when main addon is already loaded.
