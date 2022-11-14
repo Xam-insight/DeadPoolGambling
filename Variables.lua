@@ -45,7 +45,7 @@ end
 -- Change an entire string to Title Case
 -- from http://lua-users.org/wiki/StringRecipes
 local function tchelper(first, rest)
-   return first:upper()..rest:lower()
+   return string.utf8upper(first)..string.utf8lower(rest)
 end
 
 if DEADPOOL_BANKER_NAME == "" then

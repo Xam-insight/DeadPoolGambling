@@ -1,9 +1,9 @@
-## Interface: 100000
+## Interface: 100002
 ## Title: Deadpool_CustomAchiever
-## Version: 0.2.9
+## Version: 1.0.1
 ## Notes: Custom Achievements creator
 ## Author: Xam_insight
 ## SavedVariables: CustomAchieverData, CustomAchieverOptionsData
 ## LoadOnDemand: 1
 
-CustomAchieverTab.xml
+embed.xml

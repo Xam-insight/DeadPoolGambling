@@ -1,6 +1,9 @@
-﻿-v1.9.10
+﻿- v1.9.11
+	- TOC for 10.0.2.
+	- [CustomAchiever] v1.0.1 integration.
+- v1.9.10
 	- Achievements display duration reduced.
--v1.9.9
+- v1.9.9
 	- [CustomAchiever] Handled an issue with multiple addons using CustomAchiever.
 - v1.9.8
 	- [CustomAchiever] Fixed loading when main addon is already loaded.

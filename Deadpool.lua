@@ -45,6 +45,10 @@ function Deadpool:OnInitialize()
 	self:RegisterEvent("PLAYER_ALIVE", "OnPlayerAlive")
 	--self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	self:RegisterEvent("BOSS_KILL", "BossKill")
+	
+	--self:RegisterEvent("READY_CHECK", "BetReminder");
+	--self:RegisterEvent("READY_CHECK_FINISHED", "BetReminderClose");
+
 
 	hooksecurefunc("UnitFrame_OnEnter", function()
 		Deadpool:DeadpoolMouseOverUnit()
@@ -157,10 +161,10 @@ function Deadpool:OnEnable()
 		LoadAddOn("Deadpool_CustomAchiever")
 	end
 	if CustomAchiever then
-		CustAc_UpdateCategory("Deadpool", nil, "Dead Pool Gambling")
+		CustAc_CreateOrUpdateCategory("Deadpool", nil, "Dead Pool Gambling")
 		for k,v in pairs(deadpoolAchievements) do
 			if k ~= DEADPOOL_WINNER then
-				CustAc_UpdateAchievement(k, "Deadpool", v["icon"], v["points"], v["label"], v["desc"])
+				CustAc_CreateOrUpdateAchievement(k, "Deadpool", v["icon"], v["points"], v["label"], v["desc"])
 			end
 		end
 	end
@@ -186,6 +190,25 @@ function Deadpool:reloadDeadpoolPortraits(event)
 	end
 end
 --]]
+
+function Deadpool:BetReminder()
+	if not DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolBetReminderDisabled"] and not Deadpool_hasPlayed(DeadpoolGlobal_SessionId, Deadpool_playerCharacter()) then
+		if DeadpoolFrame:IsShown() then 
+			ScriptAnimationUtil.ShakeFrameRandom(DeadpoolFrame, 5, .7, .05)
+		else
+			if not MiniDeadpoolFrame:IsShown() then 
+				MiniDeadpoolFrame:Show()
+			end
+			ScriptAnimationUtil.ShakeFrameRandom(MiniDeadpoolFrame, 5, .7, .05)
+		end
+	end
+end
+
+function Deadpool:BetReminderClose()
+	if not DeadpoolWindow[Deadpool_WindowsOptions]["MiniDeadpoolShown"] then
+		MiniDeadpoolFrame:Hide()
+	end
+end
 
 function Deadpool:OnPlayerAlive()
 	self:UnregisterEvent("PLAYER_ALIVE")
@@ -942,14 +965,20 @@ function getDeadpoolPlayerBetsOnChar(aDeadpoolSessionId, aPlayer, aChar)
 	return playerBetsOnChar
 end
 
-function hasPlayed(aDeadpoolSessionId, aPlayer)
+function Deadpool_hasPlayed(aDeadpoolSessionId, aPlayer)
 	if aDeadpoolSessionId and aPlayer and DeadpoolData
-		and DeadpoolData[aDeadpoolSessionId] and DeadpoolData[aDeadpoolSessionId][aPlayer]
-		and DeadpoolData[aDeadpoolSessionId][aPlayer]["bets"] then
-
-		for key,value in pairs(DeadpoolData[aDeadpoolSessionId][aPlayer]["bets"]) do
-			if Deadpool_tonumberzeroonblankornil(value["nextDeathBet"]) > 0 then
-				return key
+			and DeadpoolData[aDeadpoolSessionId] and DeadpoolData[aDeadpoolSessionId][aPlayer] then
+		if DeadpoolData[aDeadpoolSessionId][aPlayer]["bets"] then
+			for key,value in pairs(DeadpoolData[aDeadpoolSessionId][aPlayer]["bets"]) do
+				if Deadpool_tonumberzeroonblankornil(value["nextDeathBet"]) > 0 then
+					return key
+				end
+			end
+		end
+		if DeadpoolData[aDeadpoolSessionId][aPlayer]["uniqueGamble"] then
+			local uniqueGamble = getDeadpoolData(aDeadpoolSessionId, aPlayer, "uniqueGamble")
+			if uniqueGamble and uniqueGamble ~= "" then
+				return uniqueGamble
 			end
 		end
 	end
@@ -1549,7 +1578,7 @@ function generateDeadpoolTable()
 	end
 
 	if DeadpoolBankerButton then
-		local bankerBet = hasPlayed(DeadpoolGlobal_SessionId, DEADPOOL_BANKER)
+		local bankerBet = Deadpool_hasPlayed(DeadpoolGlobal_SessionId, DEADPOOL_BANKER)
 		local bankerChips = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, DEADPOOL_BANKER, "credits"))
 		if bankerBet then
 			DeadpoolBankerButton.SelectedTexture:SetShown(true)
