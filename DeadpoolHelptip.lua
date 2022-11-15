@@ -271,6 +271,6 @@ function dpAcknowledgeHelpTip(helpTip)
 	end
 end
 
-function closeMenuHelpTip(helpTip)
+function dpCloseMenuHelpTip(helpTip)
 	DeadpoolHelpTip:Hide(L_DropDownList1, helpTip)
 end

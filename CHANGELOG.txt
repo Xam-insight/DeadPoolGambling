@@ -1,4 +1,6 @@
-﻿- v1.9.11
+﻿- v1.9.12
+	- Fixed a compatibility problem with the Custom Achiever menus.
+- v1.9.11
 	- TOC for 10.0.2.
 	- [CustomAchiever] v1.0.1 integration.
 - v1.9.10

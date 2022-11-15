@@ -1211,17 +1211,23 @@
 			</Layer>
 		</Layers>
 	</Frame>
-	<Frame name="DPDurabilityFrame" parent="UIParent" frameStrata="HIGH" inherits="DPDurabilityFrameTemplate">
+	<Frame name="DPDurabilityFrame" parent="UIParent" hidden="true" frameStrata="HIGH" inherits="DPDurabilityFrameTemplate">
 		<Anchors>
 			<Anchor point="BOTTOMRIGHT" relativeTo="$parent" relativePoint="TOPLEFT" x="-10" y="10"/>
 		</Anchors>
 	</Frame>
-	<Frame name="DPMenuDurabilityFrame" parent="UIParent" frameStrata="HIGH" inherits="DPDurabilityFrameTemplate">
+	<Frame name="DPMenuDurabilityFrame" parent="UIParent" hidden="true" frameStrata="HIGH" inherits="UIDropDownCustomMenuEntryTemplate">
+		<Size>
+			<AbsDimension x="60" y="75"/>
+		</Size>
 		<Anchors>
 			<Anchor point="BOTTOMRIGHT" relativeTo="$parent" relativePoint="TOPLEFT" x="-10" y="10"/>
 		</Anchors>
+		<Frames>
+			<Frame name="DPMenuDurabilityArmor" frameStrata="HIGH" inherits="DPDurabilityFrameTemplate" setAllPoints="true"/>
+		</Frames>
 	</Frame>
-	<Button name="BankIconFrame" parent="UIParent" hidden="true">
+	<Button name="BankIconFrame" parent="UIParent" hidden="true" inherits="UIDropDownCustomMenuEntryTemplate">
 		<Size>
 			<AbsDimension x="28" y="28"/>
 		</Size>

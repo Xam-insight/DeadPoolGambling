@@ -137,7 +137,7 @@ function DeadpoolDropDown_Update(self)
 			BankIconFrameCount:SetText(bankCredits)
 			BankIconFrame:SetFrameLevel(4)
 			BankIconFrame:Show()
-			table.insert(L_DropDownList1.customFrames, BankIconFrame)
+			LibDD:UIDropDownMenu_RegisterCustomFrame(L_DropDownList1, BankIconFrame)
 
 			buttonId = buttonId + 1
 
@@ -273,8 +273,8 @@ function DeadpoolDropDown_Update(self)
 	DPMenuDurabilityFrame:SetFrameLevel(4)
 	DPMenuDurabilityFrame:Show()
 
-	table.insert(L_DropDownList1.customFrames, DPMenuDurabilityFrame)
-	DeadpoolDurability("DPMenuDurabilityFrame", playerOffItemsNumber)
+	LibDD:UIDropDownMenu_RegisterCustomFrame(L_DropDownList1, DPMenuDurabilityFrame)
+	DeadpoolDurability("DPMenuDurabilityArmor", playerOffItemsNumber)
 end
 
 function DeadpoolDropDown_Show(self, relativeTo)
@@ -344,7 +344,7 @@ end
 function DeadpoolDropDownButton_OnLeave(self)
 	local helpTip = self:GetAttribute("helpTip")
 	if helpTip then
-		closeMenuHelpTip(helpTip)
+		dpCloseMenuHelpTip(helpTip)
 	end
 	local belowFrame = self:GetAttribute("belowFrame")
 	local buttonDisabled = self:GetAttribute("buttonDisabled")
@@ -376,7 +376,7 @@ function DeadpoolDropDownButtonTuto_OnClick(self)
 			belowFrame:UnlockHighlight()
 			check:Hide()
 			uncheck:Show()
-			closeMenuHelpTip(helpTip)
+			dpCloseMenuHelpTip(helpTip)
 		else
 			belowFrame:LockHighlight()
 			check:Show()
