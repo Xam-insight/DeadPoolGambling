@@ -1,4 +1,6 @@
-﻿- v1.9.12
+﻿- v1.9.13
+	- [CustomAchiever] Fixed an issue due to GetNormalizedRealmName.
+- v1.9.12
 	- Fixed a compatibility problem with the Custom Achiever menus.
 - v1.9.11
 	- TOC for 10.0.2.
