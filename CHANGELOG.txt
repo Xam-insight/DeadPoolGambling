@@ -1,4 +1,6 @@
-﻿- v1.9.13
+﻿- v1.9.14
+	- [CustomAchiever] Fixed another issue due to GetNormalizedRealmName when you first start the game.
+- v1.9.13
 	- [CustomAchiever] Fixed an issue due to GetNormalizedRealmName.
 - v1.9.12
 	- Fixed a compatibility problem with the Custom Achiever menus.
