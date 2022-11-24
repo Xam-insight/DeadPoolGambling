@@ -35,6 +35,9 @@ externals:
 	../Deadpool_CustomAchiever/Libs/LibUIDropDownMenu: https://repos.wowace.com/wow/libuidropdownmenu/trunk/LibUIDropDownMenu
 	../Deadpool_CustomAchiever/Libs/EZBlizzardUiPopups: https://github.com/Xam-insight/EZBlizzardUiPopups
 
+ignore:
+	art/PNG
+
 move-folders:
 	Deadpool/Deadpool_CustomAchiever_toc: ../Deadpool_CustomAchiever
 	

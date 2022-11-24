@@ -40,8 +40,31 @@ local raceID = {
    ["Vulpera"] = 35,
    ["Mag'har Orc"] = 36,
    ["Mechagnome"] = 37,
+   ["Dracthyr"] = 52,
+   ["Dracthyr"] = 70
 }
 
+-- UnitRace returns differently for the following races, so need to include exceptions
+-- Thanks to MogIt authors: Aelobin (The Maelstrom EU) & Lombra (Defias Brotherhood EU)
+raceID["NightElf"] = raceID["Night Elf"]
+raceID["Scourge"] = raceID["Undead"]
+raceID["BloodElf"] = raceID["Blood Elf"]
+raceID["FelOrc"] = raceID["Fel Orc"]
+raceID["Naga_"] = raceID["Naga"]
+raceID["ForestTroll"] = raceID["Forest Troll"]
+raceID["NorthrendSkeleton"] = raceID["Northrend Skeleton"]
+raceID["IceTroll"] = raceID["Ice Troll"]
+raceID["HighmountainTauren"] = raceID["Highmountain Tauren"]
+raceID["VoidElf"] = raceID["Void Elf"]
+raceID["LightforgedDraenei"] = raceID["Lightforged Draenei"]
+raceID["ZandalariTroll"] = raceID["Zandalari Troll"]
+raceID["KulTiran"] = raceID["Kul Tiran"]
+raceID["DarkIronDwarf"] = raceID["Dark Iron Dwarf"]
+raceID["MagharOrc"] = raceID["Mag'har Orc"]
+
+-- https://wowpedia.fandom.com/wiki/InstanceID
+-- https://wowpedia.fandom.com/wiki/DifficultyID
+-- https://wowpedia.fandom.com/wiki/LfgDungeonID
 local dpInstanceIDList = {
 	["249-3"]   = 46,   -- Onyxia's Lair
 	["249-4"]   = 257,  -- Onyxia's Lair
@@ -140,25 +163,13 @@ local dpInstanceIDList = {
 	["2296-14"] = 2095, -- Castle Nathria
 	["2296-15"] = 2094, -- Castle Nathria
 	["2296-16"] = 2093, -- Castle Nathria
+	["2450-15"] = 2226, -- Sanctum of Domination
+	["2450-15"] = 2227, -- Sanctum of Domination
+	["2450-15"] = 2228, -- Sanctum of Domination
+	["2481-15"] = 2288, -- Sepulcher of the First Ones
+	["2481-15"] = 2289, -- Sepulcher of the First Ones
+	["2481-15"] = 2290, -- Sepulcher of the First Ones
 }
-
--- UnitRace returns differently for the following races, so need to include exceptions
--- Thanks to MogIt authors: Aelobin (The Maelstrom EU) & Lombra (Defias Brotherhood EU)
-raceID["NightElf"] = raceID["Night Elf"]
-raceID["Scourge"] = raceID["Undead"]
-raceID["BloodElf"] = raceID["Blood Elf"]
-raceID["FelOrc"] = raceID["Fel Orc"]
-raceID["Naga_"] = raceID["Naga"]
-raceID["ForestTroll"] = raceID["Forest Troll"]
-raceID["NorthrendSkeleton"] = raceID["Northrend Skeleton"]
-raceID["IceTroll"] = raceID["Ice Troll"]
-raceID["HighmountainTauren"] = raceID["Highmountain Tauren"]
-raceID["VoidElf"] = raceID["Void Elf"]
-raceID["LightforgedDraenei"] = raceID["Lightforged Draenei"]
-raceID["ZandalariTroll"] = raceID["Zandalari Troll"]
-raceID["KulTiran"] = raceID["Kul Tiran"]
-raceID["DarkIronDwarf"] = raceID["Dark Iron Dwarf"]
-raceID["MagharOrc"] = raceID["Mag'har Orc"]
 
 local willPlay, soundHandle
 
@@ -275,7 +286,7 @@ function getDeadpoolRosterInfo()
 	clearCharacterDeadpoolData(deadpoolPlayerCharacter)
 
 	-- Cancel the bets from players that left
-	if cancelBetsOnGonePlayers --[[and groupLabel and numGroupMembers > 1]] then
+	if cancelBetsOnGonePlayers --[[and groupLabel and numGroupMembers > 1]] and not dpFakeCharInfo then
 		if DeadpoolData[DeadpoolGlobal_SessionId] then
 			for index,value in pairs(DeadpoolData[DeadpoolGlobal_SessionId]) do
 				if "Bank" ~= index and "DeadpoolSessionId" ~= index and not deadpoolAchievements[index] then
@@ -443,7 +454,7 @@ function setDeadpoolBetLocally(aSession, aChar, aBetChar, aNextDeathBet)
 		setDeadpoolData(aSession, aChar, "uniqueGamble", aNextDeathBet)
 	else
 		local howManyGarmentToLose, afterTransactionCredits, _ = howManyGarmentToLose(aSession, aChar, aBetChar, aNextDeathBet)
-		if howManyGarmentToLose == 0 then
+		if howManyGarmentToLose == 0 or dpFakeCharInfo then
 			local bets = nil
 			if Deadpool_tonumberzeroonblankornil(aNextDeathBet) > 0 then
 				bets = {}

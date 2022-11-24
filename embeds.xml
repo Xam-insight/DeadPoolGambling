@@ -30,6 +30,7 @@
 	<Script file="MiniFrame.lua" />
 	<Include file="DeadpoolDropDown.xml" />
 	<Include file="DeadpoolHelpTip.xml" />
+	<Script file="DeadpoolTests.lua" />
 	<Texture name="TANKDeadpoolRoleTextureTemplate" virtual="true" file="Interface\LFGFRAME\UI-LFG-ICON-PORTRAITROLES" alphaMode="ADD">
 		<Size>
 			<AbsDimension x="16" y="16" />
@@ -967,16 +968,11 @@
 		</Size>
 		<Layers>
 			<Layer level="OVERLAY">
-				<Texture name="$parentTexture" parentKey="texture" />
+				<Texture name="$parentTexture" parentKey="texture" alpha="1" setAllPoints="true" alphaMode="BLEND" file="Interface\AddOns\Deadpool\art\count"/>
+				<Texture name="$parentMiniTexture" parentKey="Minitexture" alpha="1" setAllPoints="true" alphaMode="BLEND" file="Interface\AddOns\Deadpool\art\countmini" hidden="true"/>
 			</Layer>
 		</Layers>
 	</Frame>
-	<Texture file="Interface\Glues\CharacterCreate\UI-CharacterCreatePatchwerk">
-		<Size x="200" y="200" />
-		<Anchors>
-			<Anchor point="TOPLEFT" x="93" y="-25" />
-		</Anchors>
-	</Texture>
 	<Button name="DeadpoolBetButton">
 		<Size>
 			<AbsDimension x="12" y="12"/>
@@ -1242,4 +1238,29 @@
 			</Layer>
 		</Layers>
 	</Button>
+	<Frame name="DeadpoolChipTemplate" frameStrata="MEDIUM" alpha="1" hidden="true" virtual="true">
+		<Size x="32" y="32"/>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Layers>
+			<Layer level="OVERLAY">
+				<FontString parentKey="ChipValue" inherits="GameFontHighlightSmall" justifyH="CENTER" text="20">
+					<Size x="16" />
+					<Anchors>
+						<Anchor point="CENTER" />
+					</Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="ARTWORK">
+				<Texture parentKey="ChipTexture" alpha="1" alphaMode="BLEND" setAllPoints="true" file="Interface\AddOns\Deadpool\art\dpc-1"/>
+				<Texture parentKey="FlippingChipTexture" alpha="1" alphaMode="BLEND" file="Interface\AddOns\Deadpool\art\dpc-flip" setAllPoints="true" hidden="true"/>
+			</Layer>
+		</Layers>
+		<Animations>
+			<AnimationGroup parentKey="FlippingChipLoopAnim" looping="REPEAT" setToFinalAlpha="true">
+				<FlipBook smoothing="NONE" childKey="FlippingChipTexture" duration="1" order="1" flipBookRows="1" flipBookColumns="8" flipBookFrames="8" flipBookFrameWidth="0" flipBookFrameHeight="0"/>
+			</AnimationGroup>
+		</Animations>
+	</Frame>
 </Ui>

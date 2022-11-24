@@ -121,3 +121,20 @@ function DPEnableMouse(frame, enableMouse)
 		end
 	end
 end
+
+function CreateDeadpoolChip()--/run CreateDeadpoolChip()
+	local deadpoolChipFrame = CreateFrame("Frame", "DeadpoolChip", UIParent, "DeadpoolChipTemplate")
+	deadpoolChipFrame:Show()
+	deadpoolChipFrame:SetAttribute("Type", "DeadpoolChip")
+	
+	return deadpoolChipFrame
+end
+
+function FlipDeadpoolChip(chipFrame)--/run FlipDeadpoolChip(DeadpoolChip)
+	if chipFrame and chipFrame:GetAttribute("Type") == "DeadpoolChip" then
+		chipFrame.ChipTexture:Hide()
+		chipFrame.ChipValue:Hide()
+		chipFrame.FlippingChipTexture:Show()
+		chipFrame.FlippingChipLoopAnim:Play()
+	end
+end

@@ -850,17 +850,20 @@ function createDeadpoolLine(aDeadpoolSessionId, indexCharac, fullName, deadpoolL
 				deadpoolBetCount:SetWidth(ligneHeight)
 			end
 			deadpoolBetCount:Show()
-			local deadpoolBetCountTexture = _G[miniLabel.."DeadpoolBetCount"..indexCharac.."_"..i.."Texture"]
-			deadpoolBetCountTexture:SetHeight(ligneHeight)
+			_G[miniLabel.."DeadpoolBetCount"..indexCharac.."_"..i..miniLabel.."Texture"]:Hide()
+			_G[miniLabel.."DeadpoolBetCount"..indexCharac.."_"..i.."Texture"]:Hide()
+			local deadpoolBetCountTexture = _G[miniLabel.."DeadpoolBetCount"..indexCharac.."_"..i..miniLabel.."Texture"]
+			deadpoolBetCountTexture:SetAllPoints(deadpoolBetCount)
 			if i <= nbOf5 then
-				deadpoolBetCountTexture:SetTexture("Interface\\AddOns\\Deadpool\\art\\count5")
+				deadpoolBetCountTexture:SetTexCoord(0.625, 0.750, 0, 1)
 			else
 				if i == nbOf5 + 1 and rest > 0 then
-					deadpoolBetCountTexture:SetTexture("Interface\\AddOns\\Deadpool\\art\\count"..tostring(rest))
+					deadpoolBetCountTexture:SetTexCoord(0 + rest * .125, .125 + rest * .125, 0, 1)
 				else
-					deadpoolBetCount:Hide()
+					deadpoolBetCountTexture:SetTexCoord(0, .125, 0, 1)
 				end
 			end
+			deadpoolBetCountTexture:Show()
 			xValue = xValue + deadpoolBetCount:GetWidth()
 		end
 		xValue = xValue + 3
