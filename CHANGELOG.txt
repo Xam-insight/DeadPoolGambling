@@ -1,4 +1,6 @@
-﻿- v1.9.14
+﻿- v1.9.15
+	- Art update.
+- v1.9.14
 	- [CustomAchiever] Fixed another issue due to GetNormalizedRealmName when you first start the game.
 - v1.9.13
 	- [CustomAchiever] Fixed an issue due to GetNormalizedRealmName.
