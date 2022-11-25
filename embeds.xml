@@ -884,11 +884,8 @@
 		<Layers>
 			<Layer level="OVERLAY">
 				<Texture name="$parent_ChipPile" parentKey="texture" inherits="DeadpoolChipPileTemplate" setAllPoints="true" file="Interface\AddOns\Deadpool\art\ChipPile"/>
-				<Texture name="$parentFlash" file="Interface\Buttons\UI-Panel-Button-Glow" alphaMode="ADD" parentKey="Flash" hidden="true">
-					<Anchors>
-						<Anchor point="TOPLEFT" x="0" y="3"/>
-						<Anchor point="BOTTOMRIGHT" x="9" y="-20"/>
-					</Anchors>
+				<Texture name="$parentFlash" file="Interface\Hud\UIActionBar" alphaMode="BLEND" setAllPoints="true" parentKey="Flash" hidden="true">
+					<TexCoords left="0.71875" right="0.87109375" top="0.630859375" bottom="0.668945313"/>
 				</Texture>
 			</Layer>
 		</Layers>
