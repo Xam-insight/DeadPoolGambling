@@ -6,6 +6,7 @@ function Deadpool:Test(nbPlayers)--/run Deadpool:Test(14) /run Deadpool:TestBetP
 			Deadpool:TestAddPlayers(nbPlayers)
 		end)
 	end
+	generateDeadpoolTable()
 end
 
 function Deadpool:TestAddPlayers(nbPlayers)

@@ -144,8 +144,9 @@ function Deadpool:OnEnable()
 
 		local dropDownframe = LibDD:Create_UIDropDownMenu("DeadpoolDropDown", parent_frame)
 		dropDownframe.xOffset = 0
-		dropDownframe.yOffset = 0
-		dropDownframe.relativePoint = "TOPRIGHT"
+		dropDownframe.yOffset = -1
+		DeadpoolDropDown.point = "TOPLEFT"
+		DeadpoolDropDown.relativePoint = "RIGHT"
 		LibDD:UIDropDownMenu_Initialize(dropDownframe, DeadpoolDropDown_Update, "MENU")
 		--LibDD:UIDropDownMenu_OnHide(_G["L_DropDownList1"])
 										
@@ -779,28 +780,9 @@ function createDeadpoolLine(aDeadpoolSessionId, indexCharac, fullName, deadpoolL
 
 	local oddsInfoFrame = getElementFromDeadpoolFramePool("Button", indexCharac,
 			miniLabel.."DeadpoolOddsInfoFrame"..indexCharac, "DeadpoolBetsOddsInfoTemplate", deadpoolLine:GetName())
-	oddsInfoFrame:SetSize(deadpoolLine:GetHeight(), deadpoolLine:GetHeight())
+	oddsInfoFrame:SetSize(deadpoolLine:GetHeight() - 2, deadpoolLine:GetHeight() - 2)
 	if not resizing then
-		_G[miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile1"]:Hide()
-		_G[miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile2"]:Hide()
-		_G[miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile3"]:Hide()
-		_G[miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile4"]:Hide()
-		_G[miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile5"]:Hide()
-		_G[miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile1Green"]:Hide()
-		_G[miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile2Green"]:Hide()
-		_G[miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile3Green"]:Hide()
-		_G[miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile4Green"]:Hide()
-		_G[miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile5Green"]:Hide()
-		_G[miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile1Red"]:Hide()
-		_G[miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile2Red"]:Hide()
-		_G[miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile3Red"]:Hide()
-		_G[miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile4Red"]:Hide()
-		_G[miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile5Red"]:Hide()
-		oddsInfoFrame.Flash1Anim:Stop()
-		oddsInfoFrame.Flash2Anim:Stop()
-		oddsInfoFrame.Flash3Anim:Stop()
-		oddsInfoFrame.Flash4Anim:Stop()
-		oddsInfoFrame.Flash5Anim:Stop()
+		_G[miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile"]:SetVertexColor(1, 1, 1)
 	end
 	
 	local xValue = betweenObjectsGap
@@ -853,7 +835,6 @@ function createDeadpoolLine(aDeadpoolSessionId, indexCharac, fullName, deadpoolL
 			_G[miniLabel.."DeadpoolBetCount"..indexCharac.."_"..i..miniLabel.."Texture"]:Hide()
 			_G[miniLabel.."DeadpoolBetCount"..indexCharac.."_"..i.."Texture"]:Hide()
 			local deadpoolBetCountTexture = _G[miniLabel.."DeadpoolBetCount"..indexCharac.."_"..i..miniLabel.."Texture"]
-			deadpoolBetCountTexture:SetAllPoints(deadpoolBetCount)
 			if i <= nbOf5 then
 				deadpoolBetCountTexture:SetTexCoord(0.625, 0.750, 0, 1)
 			else
@@ -870,29 +851,32 @@ function createDeadpoolLine(aDeadpoolSessionId, indexCharac, fullName, deadpoolL
 	
 		local odds = deadpoolOdds(totalNextDeathBets, totalNextDeathBetsOnChar)
 		local betsOnCharVstotalBets = odds / Deadpool_nozero(totalNextDeathBets)
-		local chipPileSize = ligneHeight - 4
-		local chipPileToShow = nil
-		if betsOnCharVstotalBets < 0.05 then
-			chipPileToShow = miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile1"
+		local chipPileToShow = _G[miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile"]
+		if isMiniLine then
+			chipPileToShow:SetTexCoord(.875, 1, 0, 1)--Chip
+		elseif betsOnCharVstotalBets < 0.05 then
+			chipPileToShow:SetTexCoord(.125, .25, 0, 1)--1
 		elseif betsOnCharVstotalBets < 0.1 then
-			chipPileToShow = miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile2"
+			chipPileToShow:SetTexCoord(.25, .375, 0, 1)--2
 		elseif betsOnCharVstotalBets < 0.32 then
-			chipPileToShow = miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile3"
+			chipPileToShow:SetTexCoord(.375, .5, 0, 1)--3
 		elseif betsOnCharVstotalBets < 0.49 then
-			chipPileToShow = miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile4"
+			chipPileToShow:SetTexCoord(.5, .625, 0, 1)--4
 		else
-			chipPileToShow = miniLabel.."DeadpoolOddsInfoFrame"..indexCharac.."_ChipPile5"
+			chipPileToShow:SetTexCoord(.625, .75, 0, 1)--5
 		end
 
 		if playerNextDeathBetsOnChar > 0 then
-			_G[chipPileToShow.."Green"]:Show()
-			_G[chipPileToShow.."Green"]:SetSize(chipPileSize, chipPileSize)
-		else
-			_G[chipPileToShow]:Show()
-			_G[chipPileToShow]:SetSize(chipPileSize, chipPileSize)
+			chipPileToShow:SetVertexColor(0.44, 0.86, 0.44)
 		end
+		chipPileToShow:Show()
 
-		oddsInfoFrame:SetPoint("LEFT", xValue, 0)
+		if isMiniLine then
+			oddsInfoFrame:SetPoint("LEFT", -oddsInfoFrame:GetWidth(), 0)
+		else
+			oddsInfoFrame:SetPoint("LEFT", xValue, 0)
+			xValue = xValue + oddsInfoFrame:GetWidth()
+		end
 		oddsInfoFrame:SetAttribute("tooltip", L["DEADPOOLCOLLUMNS_ODDS"])
 		local oddsLib = string.format("%.1f", odds)
 		oddsInfoFrame:SetAttribute("tooltipDetail", { L["DEADPOOLUI_BET"], L["DEADPOOLUI_BET2"]..oddsLib..L["DEADPOOLUI_BET3"] })
@@ -906,13 +890,7 @@ function createDeadpoolLine(aDeadpoolSessionId, indexCharac, fullName, deadpoolL
 
 		local uniqueGamble = getDeadpoolData(aDeadpoolSessionId, playerCharacter, "uniqueGamble")
 		if uniqueGamble and uniqueGamble == fullName then
-			_G[chipPileToShow.."Red"]:Show()
-			_G[chipPileToShow.."Red"]:SetSize(chipPileSize, chipPileSize)
-			oddsInfoFrame.Flash1Anim:Play()
-			oddsInfoFrame.Flash2Anim:Play()
-			oddsInfoFrame.Flash3Anim:Play()
-			oddsInfoFrame.Flash4Anim:Play()
-			oddsInfoFrame.Flash5Anim:Play()
+			chipPileToShow:SetVertexColor(0.86, 0.44, 0.44)
 			oddsInfoFrame:SetAttribute("tooltipDetailRed", { L["DEADPOOLUI_BET6"] })
 		else
 			oddsInfoFrame:SetAttribute("tooltipDetailRed", nil)
@@ -931,7 +909,7 @@ function createDeadpoolLine(aDeadpoolSessionId, indexCharac, fullName, deadpoolL
 		deadpoolLine:SetWidth(ligneWidth)
 	end
 
-	return xValue + oddsInfoFrame:GetWidth() + betweenObjectsGap
+	return xValue + betweenObjectsGap
 end
 
 function deadpoolOdds(totalNextDeathBets, totalNextDeathBetsOnChar)

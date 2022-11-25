@@ -140,7 +140,7 @@ L["DEADPOOLTUTO_TUTO3"] = "Well, well ... I see it did not take long. Check the 
 L["DEADPOOLTUTO_TUTO4"] = "Yes, I forgot. You cannot bet against yourself. It's not a pretty picture!"
 L["DEADPOOLTUTO_TUTO5"] = "Place your bets between combats. I advise you to stay focused, the bank recovers an item of clothing on the clumsy bettors who are killed!"
 L["DEADPOOLTUTO_TUTO6"] = "When you join a group, you join the Dead Pool of that group. Your bets and tokens are reset."
-L["DEADPOOLTUTO_TUTO7"] = "Want to try to burst the Bank? For this bet, you choose only one character. Your other bets remain active though."
+L["DEADPOOLTUTO_TUTO7"] = "Want to try to burst the Bank? For this bet, you choose only one character."
 
 L["DEADPOOLTUTO_MINIMIZE"] = "You can minimize the Dead Pool window."
 L["DEADPOOLTUTO_SELFBET"] = "You cannot bet on yourself, only on other characters in your group."

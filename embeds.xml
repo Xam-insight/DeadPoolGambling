@@ -91,8 +91,6 @@
 			<Anchor point="CENTER" />
 		</Anchors>
 	</Texture>
-	<Texture name="DeadpoolChipPileGreenTemplate" inherits="DeadpoolChipPileTemplate" virtual="true" />
-	<Texture name="DeadpoolChipPileRedTemplate" inherits="DeadpoolChipPileTemplate" virtual="true" />
 	<Button name="PortraitButtonTemplate" virtual="true">
 		<Size x="28" y="28" />
 		<Layers>
@@ -885,41 +883,7 @@
 		</Size>
 		<Layers>
 			<Layer level="OVERLAY">
-				<Texture name="$parent_ChipPile1" parentKey="texture1" inherits="DeadpoolChipPileTemplate" file="Interface\AddOns\Deadpool\art\ChipPile1"/>
-				<Texture name="$parent_ChipPile2" parentKey="texture2" inherits="DeadpoolChipPileTemplate" file="Interface\AddOns\Deadpool\art\ChipPile2"/>
-				<Texture name="$parent_ChipPile3" parentKey="texture3" inherits="DeadpoolChipPileTemplate" file="Interface\AddOns\Deadpool\art\ChipPile3"/>
-				<Texture name="$parent_ChipPile4" parentKey="texture4" inherits="DeadpoolChipPileTemplate" file="Interface\AddOns\Deadpool\art\ChipPile4"/>
-				<Texture name="$parent_ChipPile5" parentKey="texture5" inherits="DeadpoolChipPileTemplate" file="Interface\AddOns\Deadpool\art\ChipPile5"/>
-				<Texture name="$parent_ChipPile1Green" parentKey="texture1Green" inherits="DeadpoolChipPileGreenTemplate" file="Interface\AddOns\Deadpool\art\ChipPile1">
-					<Color r="0.44" g="0.86" b="0.44"/>
-				</Texture>
-				<Texture name="$parent_ChipPile2Green" parentKey="texture2Green" inherits="DeadpoolChipPileGreenTemplate" file="Interface\AddOns\Deadpool\art\ChipPile2">
-					<Color r="0.44" g="0.86" b="0.44"/>
-				</Texture>
-				<Texture name="$parent_ChipPile3Green" parentKey="texture3Green" inherits="DeadpoolChipPileGreenTemplate" file="Interface\AddOns\Deadpool\art\ChipPile3">
-					<Color r="0.44" g="0.86" b="0.44"/>
-				</Texture>
-				<Texture name="$parent_ChipPile4Green" parentKey="texture4Green" inherits="DeadpoolChipPileGreenTemplate" file="Interface\AddOns\Deadpool\art\ChipPile4">
-					<Color r="0.44" g="0.86" b="0.44"/>
-				</Texture>
-				<Texture name="$parent_ChipPile5Green" parentKey="texture5Green" inherits="DeadpoolChipPileGreenTemplate" file="Interface\AddOns\Deadpool\art\ChipPile5">
-					<Color r="0.44" g="0.86" b="0.44"/>
-				</Texture>
-				<Texture name="$parent_ChipPile1Red" parentKey="texture1Red" inherits="DeadpoolChipPileRedTemplate" file="Interface\AddOns\Deadpool\art\ChipPile1">
-					<Color r="0.86" g="0.44" b="0.44"/>
-				</Texture>
-				<Texture name="$parent_ChipPile2Red" parentKey="texture2Red" inherits="DeadpoolChipPileRedTemplate" file="Interface\AddOns\Deadpool\art\ChipPile2">
-					<Color r="0.86" g="0.44" b="0.44"/>
-				</Texture>
-				<Texture name="$parent_ChipPile3Red" parentKey="texture3Red" inherits="DeadpoolChipPileRedTemplate" file="Interface\AddOns\Deadpool\art\ChipPile3">
-					<Color r="0.86" g="0.44" b="0.44"/>
-				</Texture>
-				<Texture name="$parent_ChipPile4Red" parentKey="texture4Red" inherits="DeadpoolChipPileRedTemplate" file="Interface\AddOns\Deadpool\art\ChipPile4">
-					<Color r="0.86" g="0.44" b="0.44"/>
-				</Texture>
-				<Texture name="$parent_ChipPile5Red" parentKey="texture5Red" inherits="DeadpoolChipPileRedTemplate" file="Interface\AddOns\Deadpool\art\ChipPile5">
-					<Color r="0.86" g="0.44" b="0.44"/>
-				</Texture>
+				<Texture name="$parent_ChipPile" parentKey="texture" inherits="DeadpoolChipPileTemplate" setAllPoints="true" file="Interface\AddOns\Deadpool\art\ChipPile"/>
 				<Texture name="$parentFlash" file="Interface\Buttons\UI-Panel-Button-Glow" alphaMode="ADD" parentKey="Flash" hidden="true">
 					<Anchors>
 						<Anchor point="TOPLEFT" x="0" y="3"/>
@@ -943,21 +907,6 @@
 		<Animations>
 			<AnimationGroup parentKey="FlashAnim" looping="BOUNCE">
 				<Alpha childKey="Flash" fromAlpha="0.75" toAlpha="0" duration="1.0" smoothing="IN_OUT" order="1"/>
-			</AnimationGroup>
-			<AnimationGroup parentKey="Flash1Anim" looping="BOUNCE">
-				<Alpha childKey="texture1Red" fromAlpha="1.0" toAlpha="0" duration="1.0" smoothing="IN_OUT" order="1"/>
-			</AnimationGroup>
-			<AnimationGroup parentKey="Flash2Anim" looping="BOUNCE">
-				<Alpha childKey="texture2Red" fromAlpha="1.0" toAlpha="0" duration="1.0" smoothing="IN_OUT" order="1"/>
-			</AnimationGroup>
-			<AnimationGroup parentKey="Flash3Anim" looping="BOUNCE">
-				<Alpha childKey="texture3Red" fromAlpha="1.0" toAlpha="0" duration="1.0" smoothing="IN_OUT" order="1"/>
-			</AnimationGroup>
-			<AnimationGroup parentKey="Flash4Anim" looping="BOUNCE">
-				<Alpha childKey="texture4Red" fromAlpha="1.0" toAlpha="0" duration="1.0" smoothing="IN_OUT" order="1"/>
-			</AnimationGroup>
-			<AnimationGroup parentKey="Flash5Anim" looping="BOUNCE">
-				<Alpha childKey="texture5Red" fromAlpha="1.0" toAlpha="0" duration="1.0" smoothing="IN_OUT" order="1"/>
 			</AnimationGroup>
 		</Animations>
 	</Button>

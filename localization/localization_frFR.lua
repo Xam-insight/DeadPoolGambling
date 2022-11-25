@@ -140,7 +140,7 @@ L["DEADPOOLTUTO_TUTO3"] = "Eh bien, eh bien... Je vois qu'il n'a pas fallu bien 
 L["DEADPOOLTUTO_TUTO4"] = "Oui, j'oubliais. On ne peut pas parier sur soi-même, c'est un manque de savoir vivre\194\160!"
 L["DEADPOOLTUTO_TUTO5"] = "Les paris sont ouverts entre les combats. Je vous conseille de rester concentrés, la banque récupère un vêtement sur les parieurs maladroits qui se font occire\194\160!"
 L["DEADPOOLTUTO_TUTO6"] = "Quand vous entrez dans un groupe, vous rejoignez la Dead Pool de ce groupe. Vos paris et jetons sont réinitialisés."
-L["DEADPOOLTUTO_TUTO7"] = "Vous voulez tenter de faire sauter la banque\194\160? Pour ce pari, vous ne choisissez qu'un seul personnage. Vos autres paris restent actifs cependant."
+L["DEADPOOLTUTO_TUTO7"] = "Vous voulez tenter de faire sauter la banque\194\160? Pour ce pari, vous ne choisissez qu'un seul personnage."
 
 L["DEADPOOLTUTO_MINIMIZE"] = "Vous pouvez minimiser la fenêtre de Dead Pool."
 L["DEADPOOLTUTO_SELFBET"] = "Vous ne pouvez pas parier sur vous-même, seulement sur les autres personnages de votre groupe."
