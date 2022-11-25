@@ -1,6 +1,7 @@
 ﻿- v1.9.15
 	- Art update.
 	- Added an option to remind player to bet during Ready Check.
+	- Added fadeout on raid/group bet button.
 - v1.9.14
 	- [CustomAchiever] Fixed another issue due to GetNormalizedRealmName when you first start the game.
 - v1.9.13

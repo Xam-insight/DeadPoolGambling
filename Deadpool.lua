@@ -1725,7 +1725,20 @@ function Deadpool:DeadpoolMouseOverUnit()
 					DeadpoolBetButton:SetFrameStrata("MEDIUM")
 					DeadpoolBetButton:SetPoint("CENTER", unitFrame, "TOPRIGHT", -1, -1)
 					DeadpoolBetButton:SetAttribute("Character", unitName)
+					DeadpoolBetButton:SetAttribute("stopFadeOutTimer", true)
+					UIFrameFadeRemoveFrame(DeadpoolBetButton)
+					DeadpoolBetButton:SetAlpha(1.0)
 					DeadpoolBetButton:Show()
+					
+					C_Timer.After(3, function()
+						DeadpoolBetButton:SetAttribute("stopFadeOutTimer", nil)
+					end)
+					
+					C_Timer.After(4, function()
+						if not DeadpoolBetButton:GetAttribute("stopFadeOutTimer") then
+							DPTooltips_FadeOut(DeadpoolBetButton, 0.0)
+						end
+					end)
 					
 					if differentUnit and dropDownMenuWasShown then
 						if lastMouseOver and lastMouseOver + 1 >= time() then
