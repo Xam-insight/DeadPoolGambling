@@ -46,11 +46,11 @@ function Deadpool:OnInitialize()
 	--self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	self:RegisterEvent("BOSS_KILL", "BossKill")
 	
-	--self:RegisterEvent("READY_CHECK", "BetReminder");
-	--self:RegisterEvent("READY_CHECK_FINISHED", "BetReminderClose");
+	self:RegisterEvent("READY_CHECK", "BetReminder");
+	self:RegisterEvent("READY_CHECK_FINISHED", "BetReminderClose");
 
 
-	hooksecurefunc("UnitFrame_OnEnter", function()
+	hooksecurefunc("UnitFrame_UpdateTooltip", function()
 		Deadpool:DeadpoolMouseOverUnit()
 	end)
 end
@@ -192,7 +192,7 @@ end
 --]]
 
 function Deadpool:BetReminder()
-	if not DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolBetReminderDisabled"] and not Deadpool_hasPlayed(DeadpoolGlobal_SessionId, Deadpool_playerCharacter()) then
+	if DeadpoolOptionsData["DeadpoolBetReminder"] and not Deadpool_hasPlayed(DeadpoolGlobal_SessionId, Deadpool_playerCharacter()) then
 		if DeadpoolFrame:IsShown() then 
 			ScriptAnimationUtil.ShakeFrameRandom(DeadpoolFrame, 5, .7, .05)
 		else
@@ -1695,28 +1695,51 @@ function DeadpoolFrameTemplate_OnLeave(self)
 end
 
 local mouseOverFrame
+local lastMouseOver
 function Deadpool:DeadpoolMouseOverUnit()
-	local unitFrame = GetMouseFocus()
-	local unitFrameName = unitFrame:GetName()
-	if unitFrameName ~= mouseOverFrame then
-		DeadpoolBetButton:Hide()
-		DeadpoolDropDown_Hide()
-		mouseOverFrame = unitFrameName
-	end
-	if not DeadpoolOptionsData["BetButtonDisabled"] then
+	if not UnitAffectingCombat("player") and not DeadpoolOptionsData["BetButtonDisabled"] then
+		local unitFrame = GetMouseFocus()
+		local unitFrameName = unitFrame:GetName()
+		if not unitFrameName then
+			unitFrameName = unitFrame:GetParent():GetName()
+		end
+		if not unitFrameName then
+			unitFrame = unitFrame:GetParent()
+			unitFrameName = unitFrame:GetParent():GetName()
+		end
+
+		local differentUnit = unitFrameName ~= mouseOverFrame
+		local dropDownMenuWasShown = _G["L_DropDownList1"]:IsShown()
+		if differentUnit then
+			DeadpoolBetButton:Hide()
+			DeadpoolDropDown_Hide()
+			mouseOverFrame = unitFrameName
+		end
+	
 		if unitFrameName then
 			local unitid = unitFrame.unit
-			if unitid and Deadpool_isPartyMember(unitid) and not (UnitAffectingCombat("player") or UnitAffectingCombat(unitid)) then
+			if unitid and Deadpool_isPartyMember(unitid) and not UnitAffectingCombat(unitid) then
 				local unitName = Deadpool_fullName(unitid)
 				if unitName then
 					DeadpoolBetButton:SetParent(unitFrame)
-					DeadpoolBetButton:SetFrameLevel(10)
-					DeadpoolBetButton:SetPoint("TOPRIGHT", unitFrame, "TOPRIGHT", -1, -1)
+					DeadpoolBetButton:SetFrameStrata("MEDIUM")
+					DeadpoolBetButton:SetPoint("CENTER", unitFrame, "TOPRIGHT", -1, -1)
 					DeadpoolBetButton:SetAttribute("Character", unitName)
 					DeadpoolBetButton:Show()
+					
+					if differentUnit and dropDownMenuWasShown then
+						if lastMouseOver and lastMouseOver + 1 >= time() then
+							DeadpoolDropDown:SetAttribute("Character", unitName)
+							LibDD:ToggleDropDownMenu(1, nil, DeadpoolDropDown, "DeadpoolBetButton")
+						end
+					end
 				end
 			end
 		end
+		lastMouseOver = time()
+	else
+		DeadpoolBetButton:Hide()
+		DeadpoolDropDown_Hide()
 	end
 end
 

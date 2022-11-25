@@ -110,7 +110,6 @@ function loadDeadpoolOptions()
 					},
 					enableSound = {
 						type = "toggle", order = 2,
-						width = "full",
 						name = L["ENABLE_SOUND"],
 						desc = L["ENABLE_SOUND_DESC"],
 						set = function(info, val) 
@@ -124,8 +123,19 @@ function loadDeadpoolOptions()
 							return enabled
 						end
 					},
-					enableDeathAnnounce = {
+					enableReminder = {
 						type = "toggle", order = 3,
+						width = "double",
+						name = L["ENABLE_REMINDER"],
+						desc = L["ENABLE_REMINDER_DESC"],
+						set = function(info, val) 
+							DeadpoolOptionsData["DeadpoolBetReminder"] = val
+						end,
+						get = function(info)
+							return DeadpoolOptionsData["DeadpoolBetReminder"]
+						end
+					},enableDeathAnnounce = {
+						type = "toggle", order = 4,
 						name = L["ENABLE_DEATH_ANNOUNCE"],
 						desc = L["ENABLE_DEATH_ANNOUNCE_DESC"],
 						set = function(info, val) 
@@ -140,7 +150,7 @@ function loadDeadpoolOptions()
 						end
 					},
 					enableDeathQuotes = {
-						type = "toggle", order = 4,
+						type = "toggle", order = 5,
 						name = L["ENABLE_DEATH_QUOTES"],
 						desc = L["ENABLE_DEATH_QUOTES_DESC"],
 						set = function(info, val) 
@@ -160,7 +170,7 @@ function loadDeadpoolOptions()
 						end
 					},
 					enableAchievementAnnounce = {
-						type = "toggle", order = 5,
+						type = "toggle", order = 6,
 						name = L["ENABLE_ACHIEVEMENT_ANNOUNCE"],
 						desc = L["ENABLE_ACHIEVEMENT_ANNOUNCE_DESC"],
 						set = function(info, val) 
@@ -175,7 +185,7 @@ function loadDeadpoolOptions()
 						end
 					},
 					enableModelPopup = {
-						type = "toggle", order = 6,
+						type = "toggle", order = 7,
 						name = L["ENABLE_MODEL_POPUP"],
 						desc = L["ENABLE_MODEL_POPUP_DESC"],
 						set = function(info, val) 
@@ -190,7 +200,7 @@ function loadDeadpoolOptions()
 						end
 					},
 					modelPopupSide = {
-						type = "select", order = 7,
+						type = "select", order = 8,
 						name = L["MODEL_POPUP_SIDE"],
 						desc = L["MODEL_POPUP_SIDE_DESC"],
 						disabled = function()

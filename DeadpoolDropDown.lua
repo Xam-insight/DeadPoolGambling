@@ -135,6 +135,15 @@ function DeadpoolDropDown_Update(self)
 			BankIconFrame:ClearAllPoints()
 			BankIconFrame:SetPoint("TOPRIGHT", _G["L_DropDownList1Button"..buttonId], "TOPRIGHT", 3, -3)
 			BankIconFrameCount:SetText(bankCredits)
+			if bankCredits == 0 then
+				BankIconFrameIcon:SetTexCoord(0,.25,0,1)
+			elseif bankCredits >= 100 then
+				BankIconFrameIcon:SetTexCoord(.75,1,0,1)
+			elseif bankCredits >= 50 then
+				BankIconFrameIcon:SetTexCoord(.5,.75,0,1)
+			elseif bankCredits > 0 then
+				BankIconFrameIcon:SetTexCoord(.25,.5,0,1)
+			end
 			BankIconFrame:SetFrameLevel(4)
 			BankIconFrame:Show()
 			LibDD:UIDropDownMenu_RegisterCustomFrame(L_DropDownList1, BankIconFrame)
@@ -257,12 +266,12 @@ function DeadpoolDropDown_Update(self)
 		buttonId = buttonId + 1
 
 		local spaceInfo = {
-		hasArrow = false,
-		dist = 0,
-		isTitle = true,
-		isUninteractable = true,
-		notCheckable = true,
-		customFrame = DeadpoolDropDownButtonPlayerChips
+			hasArrow = false,
+			dist = 0,
+			isTitle = true,
+			isUninteractable = true,
+			notCheckable = true,
+			customFrame = DeadpoolDropDownButtonPlayerChips
 		}
 		DeadpoolDownMenu_AddButton(spaceInfo, buttonId, chips)
 	end
@@ -283,7 +292,7 @@ function DeadpoolDropDown_Show(self, relativeTo)
 end
 
 function DeadpoolDropDown_Hide()
-	HideDropDownMenu(1)
+	LibDD:HideDropDownMenu(1)
 end
 
 function DeadpoolDropDown_Bet(self, char, bet)

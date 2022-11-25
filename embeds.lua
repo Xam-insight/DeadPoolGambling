@@ -4,6 +4,7 @@ function DeadpoolWindow_OnShow()
 	if DeadpoolGlobal_shownModel then
 		dpShowModel(DeadpoolGlobal_shownModel.char)
 	end
+	generateDeadpoolTable()
 end
 
 function DeadpoolWindow_OnHide()

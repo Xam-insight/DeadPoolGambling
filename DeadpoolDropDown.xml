@@ -55,5 +55,7 @@
 	<Button name="DeadpoolDropDownButtonBetRemove" inherits="DeadpoolDropDownButtonTemplate" />
 	<Button name="DeadpoolDropDownButtonUniqueBet" inherits="DeadpoolDropDownButtonTemplate" />
 	<Button name="DeadpoolDropDownButtonBankerBet" inherits="DeadpoolDropDownButtonTemplate" />
-	<Button name="DeadpoolDropDownButtonPlayerChips" inherits="DeadpoolDropDownButtonTemplate" />
+	<Button name="DeadpoolDropDownButtonPlayerChips" inherits="DeadpoolDropDownButtonTemplate">
+		<Size y="15"/>
+	</Button>
 </Ui>

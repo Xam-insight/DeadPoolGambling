@@ -166,7 +166,7 @@
 				<FontString name="$parentCount" inherits="GameFontHighlightRight">
 					<Anchors>
 						<Anchor point="RIGHT" relativeTo="$parentIcon" relativePoint="LEFT">
-							<Offset x="0" y="0"/>
+							<Offset x="-2" y="0"/>
 						</Anchor>
 					</Anchors>
 				</FontString>
@@ -325,7 +325,6 @@
 			<OnShow>
 				showDeadpoolFrameAfterCombat = false
 				applyMiniDeadpoolWindowOptions()
-				DeadpoolWindow[Deadpool_WindowsOptions]["MiniDeadpoolShown"] = true
 				DeadpoolWindow_OnShow()
 			</OnShow>
 			<OnHide function="DeadpoolWindow_OnHide" />
@@ -975,11 +974,11 @@
 	</Frame>
 	<Button name="DeadpoolBetButton">
 		<Size>
-			<AbsDimension x="12" y="12"/>
+			<AbsDimension x="18" y="18"/>
 		</Size>
 		<Layers>
 			<Layer level="OVERLAY">
-				<Texture file="Interface\AddOns\Deadpool\art\ChipPile5" setAllPoints="true" />
+				<Texture file="Interface\AddOns\Deadpool\art\Chip" setAllPoints="true" />
 			</Layer>
 		</Layers>
 		<Scripts>
@@ -1229,7 +1228,12 @@
 		</Size>
 		<Layers>
 			<Layer level="BACKGROUND">
-				<Texture name="$parentIcon" file="Interface\Icons\inv_legion_chest_valajar" />
+				<Texture name="$parentIcon" alpha="1" alphaMode="BLEND" setAllPoints="true" file="Interface\AddOns\Deadpool\art\bank">
+					<Size x="64" y="64"/>
+					<Anchors>
+						<Anchor point="RIGHT" x="-10" y="10"/>
+					</Anchors>
+				</Texture>
 				<FontString name="$parentCount" inherits="NumberFontNormal">
 					<Anchors>
 						<Anchor point="BOTTOMRIGHT" x="-2" y="2"/>

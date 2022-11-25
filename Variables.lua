@@ -73,7 +73,7 @@ deadpoolAchievements = {
 	[DEADPOOL_WINNER]      = { [DEADPOOL_ISBESTACHIVERACHIEVEMENT] = true },
 }
 
-deadpoolChipTextureString = "|TInterface\\AddOns\\Deadpool\\art\\chip:16:16:0:0|t"
+deadpoolChipTextureString = " |TInterface\\AddOns\\Deadpool\\art\\chip:16:16:0:0|t"
 
 deathQuotes = {
 	1799662, -- Bwonsamdi
