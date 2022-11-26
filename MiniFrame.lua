@@ -1,3 +1,5 @@
+local L = LibStub("AceLocale-3.0"):GetLocale("Deadpool", true)
+
 local miniDeadpoolLines = {}
 
 miniDeadpoolLineHeight = 15
@@ -10,6 +12,9 @@ function deadpoolMiniFrame()
 	local fontstring = MiniDeadpoolFrame:CreateFontString("MiniDeadpoolLabel", "ARTWORK", "DeadpoolWindowTitleTemplate")
     fontstring:SetText("Dead Pool")
     fontstring:SetPoint("TOP", 0, -7)
+
+	MiniDeadpoolFrame.Lock:SetAttribute("tooltip", L["LOCKBUTTON_TOOLTIP"])
+	MiniDeadpoolFrame.Lock:SetAttribute("tooltipDetail", { L["LOCKBUTTON_TOOLTIPDETAIL"] })
 
 	for i = 1, DEADPOOL_NUM_LINES do
 		local line = CreateFrame("Button", "MiniDeadpoolLine"..i, MiniDeadpoolFrame.Inset, "DeadpoolLineTemplate")
@@ -57,13 +62,13 @@ end
 
 function applyMiniDeadpoolWindowOptions()
 	MiniDeadpoolFrameInset.Bg:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
-	MiniDeadpoolFrameInsetMaximize:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
-	MiniDeadpoolFrameInsetLock:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
+	MiniDeadpoolFrameMaximize:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
+	MiniDeadpoolFrameLock:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
 
 	retOK, ret = pcall(callbackDeadpoolWindow, MiniDeadpoolFrame)
 
 	local windowLocked = DeadpoolWindow[Deadpool_WindowsOptions]["MiniDeadpoolWindowLocked"]
-	MiniDeadpoolFrameInsetLock:SetChecked(windowLocked)
+	MiniDeadpoolFrameLock:SetChecked(windowLocked)
 	MiniDeadpoolFrame.canMove = not windowLocked
 	DPEnableMouse(MiniDeadpoolFrame, not windowLocked)
 end

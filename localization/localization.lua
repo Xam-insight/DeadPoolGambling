@@ -64,6 +64,9 @@ L["DEADPOOL_SOLEILBET"] = "Sole\195\174l is your goddess. Bet against her makes 
 L["ANNOUNCEDEADPOOLSESSIONBUTTON_TOOLTIP"] = "Results logs"
 L["ANNOUNCEDEADPOOLSESSIONBUTTON_TOOLTIPDETAIL"] = "Shows / hides results logs window."
 
+L["LOCKBUTTON_TOOLTIPDETAIL"] = "Lock"
+L["LOCKBUTTON_TOOLTIPDETAIL"] = "Locks / unlocks the window."
+
 L["NO_SELECTED_CHARACTER"] = "No selected character"
 
 L["MINIMAP_TOOLTIP1"] = "Left click to show/hide Dead Pool."

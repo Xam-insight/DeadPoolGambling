@@ -78,13 +78,6 @@ function DeadpoolResultsTooltip_OnLeave(self)
 	DPTooltips_FadeOut(DeadpoolResultsTooltip, endAlpha)
 end
 
-function DeadpoolFrameMinimize_OnClick()
-	dpAcknowledgeHelpTip("DEADPOOLTUTO_MINIMIZE")
-	Deadpool_PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX", true)
-	hideDeadpoolWindow()
-	Deadpool:DeadpoolShow(true, true)
-end
-
 function DPDressUpModel_OnEnter(self)
 	if self and self:GetParent() == UIParent then
 		self.CloseButton:Show()
@@ -121,6 +114,16 @@ function DPEnableMouse(frame, enableMouse)
 			end
 		end
 	end
+end
+
+function DeadpoolFrameMaximizeMinimizeButton_OnLoad(self)
+	local function OnMinimize(frame)
+		dpAcknowledgeHelpTip("DEADPOOLTUTO_MINIMIZE")
+		hideDeadpoolWindow()
+		Deadpool:DeadpoolShow(true, true)
+	end
+
+	self:SetOnMinimizedCallback(OnMinimize);
 end
 
 function CreateDeadpoolChip()--/run CreateDeadpoolChip()

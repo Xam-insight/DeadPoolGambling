@@ -64,6 +64,9 @@ L["DEADPOOL_SOLEILBET"] = "Soleîl est votre déesse. Parier contre elle vous fa
 L["ANNOUNCEDEADPOOLSESSIONBUTTON_TOOLTIP"] = "Logs de résultats"
 L["ANNOUNCEDEADPOOLSESSIONBUTTON_TOOLTIPDETAIL"] = "Affiche / cache la fenêtre des logs de résultats."
 
+L["LOCKBUTTON_TOOLTIP"] = "Verrouiller"
+L["LOCKBUTTON_TOOLTIPDETAIL"] = "Vérouille / dévérouille la fenêtre."
+
 L["NO_SELECTED_CHARACTER"] = "Aucune sélection"
 
 L["MINIMAP_TOOLTIP1"] = "Clic gauche pour afficher/cacher Dead Pool."

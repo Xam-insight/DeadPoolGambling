@@ -296,8 +296,8 @@ function loadDeadpoolOptions()
 							DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"] = v
 							DeadpoolFrame:SetAlpha(v)
 							MiniDeadpoolFrameInset.Bg:SetAlpha(v)
-							MiniDeadpoolFrameInsetMaximize:SetAlpha(v)
-							MiniDeadpoolFrameInsetLock:SetAlpha(v)
+							MiniDeadpoolFrameMaximize:SetAlpha(v)
+							MiniDeadpoolFrameLock:SetAlpha(v)
 							DeadpoolResultsTooltip:SetAlpha(v)
 							DeadpoolWinnerTooltip:SetAlpha(v)
 						end,

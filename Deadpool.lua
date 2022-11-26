@@ -68,7 +68,7 @@ function Deadpool:OnEnable()
 
 		--NewDeadpoolFrame
 		DeadpoolFrame = CreateFrame("Frame", "DeadpoolFrame", UIParent, "DeadpoolFrameTemplate")
-		DeadpoolFrame.CloseButton:SetScript("OnClick", function(self)
+		DeadpoolFrame.ClosePanelButton:SetScript("OnClick", function(self)
 			hideDeadpoolWindow()
 		end)
 		DeadpoolFrame:SetHitRectInsets(-10, -10, -10, -10)
@@ -76,19 +76,19 @@ function Deadpool:OnEnable()
 		applyDeadpoolWindowOptions()
 		applyMiniDeadpoolWindowOptions()
 		
-		local fontstring = DeadpoolFrame:CreateFontString("DeadpoolLabel", "ARTWORK", "DeadpoolWindowTitleTemplate")
-        fontstring:SetText("Dead Pool")
-        fontstring:SetPoint("TOP", 0, -1)
-        
-        local announceDeadpoolSessionButton = createAnnounceDeadpoolSessionButton(DeadpoolFrame)
-
+		DeadpoolFrame.NineSlice.Text:SetText("Dead Pool");
+		
+		DeadpoolFrame.Lock:SetAttribute("tooltip", L["LOCKBUTTON_TOOLTIP"])
+		DeadpoolFrame.Lock:SetAttribute("tooltipDetail", { L["LOCKBUTTON_TOOLTIPDETAIL"] })
+		
 		local deadpoolOptionsButton = createDeadpoolOptionsButton(DeadpoolFrame)
+        local announceDeadpoolSessionButton = createAnnounceDeadpoolSessionButton(DeadpoolFrame, deadpoolOptionsButton)
         local deadpoolSearchBox = createDeadpoolSearchBox(DeadpoolFrame)
 
 		local columnsTitle1 = CreateFrame("Button", "DeadpoolColumnsTitle1Frame", DeadpoolFrame, "DeadpoolColumnHeaderTemplate")
-		columnsTitle1:SetPoint("TOPLEFT", 2, -23)
+		columnsTitle1:SetPoint("TOPLEFT", 10, -23)
         columnsTitle1:SetText(L["DEADPOOLCOLLUMNS_CHARACTER"])
-		WhoFrameColumn_SetWidth(columnsTitle1, DEADPOOL_COL1_WIDTH + 30)
+		WhoFrameColumn_SetWidth(columnsTitle1, DEADPOOL_COL1_WIDTH + 25)
 		columnsTitle1.sortType = "character"
 
 		local columnsTitle2 = CreateFrame("Button", "DeadpoolColumnsTitle2Frame", DeadpoolFrame, "DeadpoolColumnHeaderTemplate")
@@ -105,7 +105,7 @@ function Deadpool:OnEnable()
 
 		DeadpoolFrameSummaryButton:SetPoint("LEFT", columnsTitle3, "RIGHT", 0, 0)
 
-		DeadpoolFrameInsideFrame:SetWidth(DEADPOOL_ALLCOLS_WIDTH + 16 + 30)
+		DeadpoolFrameInsideFrame:SetWidth(DEADPOOL_ALLCOLS_WIDTH + 13 + 30)
 		local scrollFrame = CreateFrame("ScrollFrame", "DeadpoolScrollFrame",
 			DeadpoolFrameInsideFrame, "FauxScrollFrameTemplate")
 		scrollFrame:SetPoint("TOPLEFT", DeadpoolFrameInsideFrame ,"TOPLEFT", 0, -5)
@@ -847,7 +847,7 @@ function createDeadpoolLine(aDeadpoolSessionId, indexCharac, fullName, deadpoolL
 			deadpoolBetCountTexture:Show()
 			xValue = xValue + deadpoolBetCount:GetWidth()
 		end
-		xValue = xValue + 3
+		xValue = xValue + 10
 	
 		local odds = deadpoolOdds(totalNextDeathBets, totalNextDeathBetsOnChar)
 		local betsOnCharVstotalBets = odds / Deadpool_nozero(totalNextDeathBets)
@@ -1071,15 +1071,13 @@ function DeadpoolFrameSummaryButton_Onclick(hide, manualClick)
 	end
 end
 
-function createAnnounceDeadpoolSessionButton(parent)
+function createAnnounceDeadpoolSessionButton(parent, relativeTo)
 	local name = "SessionTitleButton"
-	local iconPath = "Interface\\BUTTONS\\UI-GuildButton-MOTD-Up"
 	local tooltip = L["ANNOUNCEDEADPOOLSESSIONBUTTON_TOOLTIP"]
 	local tooltipDetail = L["ANNOUNCEDEADPOOLSESSIONBUTTON_TOOLTIPDETAIL"]
 
 	local announceDeadpoolSessionButton = CreateFrame("Button", name, parent, "AnnounceDeadpoolSessionButtonTemplate")
-	announceDeadpoolSessionButton:SetPoint("TOPRIGHT", -89, -3)
-	announceDeadpoolSessionButton:SetNormalTexture(iconPath)
+	announceDeadpoolSessionButton:SetPoint("RIGHT", relativeTo, "LEFT", -2, 0)
 	announceDeadpoolSessionButton:SetAttribute("tooltip", tooltip)
 	announceDeadpoolSessionButton:SetAttribute("tooltipDetail", { tooltipDetail })
 
@@ -1088,13 +1086,11 @@ end
 
 function createDeadpoolOptionsButton(parent)
 	local name = "DeadpoolOptionsButton"
-	local iconPath = "Interface\\GossipFrame\\BinderGossipIcon"
 	local tooltip = L["MENUOPTIONS_TOOLTIP"]
 	local tooltipDetail = L["MENUOPTIONS_TOOLTIPDETAIL"]
 
 	local optionsButton = CreateFrame("Button", name, parent, "DeadpoolOptionsButtonTemplate")
-	optionsButton:SetPoint("TOPRIGHT", -68, -3)
-	optionsButton:SetNormalTexture(iconPath)
+	optionsButton:SetPoint("RIGHT", parent.Lock, "LEFT", 0, -1)
 	optionsButton:SetAttribute("tooltip", tooltip)
 	optionsButton:SetAttribute("tooltipDetail", { tooltipDetail })
 
@@ -1105,10 +1101,10 @@ function createDeadpoolSearchBox(parent)
 	local name = "DeadpoolSearchBox"
 	local searchBox = CreateFrame("EditBox", name, parent, "DeadpoolSearchBoxTemplate")
 	if HelpTip then
-		searchBox:SetPoint("LEFT", DPTutorialButton, "RIGHT", -15, 1)
+		searchBox:SetPoint("LEFT", DPTutorialButton, "RIGHT", -13, 1)
 	else
 		DPTutorialButton:Hide()
-		searchBox:SetPoint("TOPLEFT", 5, -2)
+		searchBox:SetPoint("TOPLEFT", 10, -1)
 	end
 	
 	return searchBox
@@ -1507,6 +1503,8 @@ function generateDeadpoolTable()
 		if callTime < dpLastTableGeneration + 2 then
 			if not dpGenerationPending then
 				dpGenerationPending = true
+				DeadpoolFrame.SearchingSpinner:Show()
+				MiniDeadpoolFrame.SearchingSpinner:Show()
 				C_Timer.After(2 - (callTime - dpLastTableGeneration), function()
 					dpGenerationPending = nil
 					generateDeadpoolTable()
@@ -1580,6 +1578,8 @@ function generateDeadpoolTable()
 			end
 		end
 	end
+	DeadpoolFrame.SearchingSpinner:Hide()
+	MiniDeadpoolFrame.SearchingSpinner:Hide()
 end
 
 function updateDeadpoolList(charInfo, searchBoxText)
@@ -1667,7 +1667,7 @@ function setDeadpoolAlpha(self, enter)
 end
 				
 function DeadpoolFrameTemplate_OnLeave(self)
-	if not MouseIsOver(self) and not MouseIsOver(DeadpoolFrameLock) and not MouseIsOver(DeadpoolFrame.CloseButton) then
+	if not MouseIsOver(self) and not MouseIsOver(DeadpoolFrameLock) and not MouseIsOver(DeadpoolFrame.ClosePanelButton) then
 		setDeadpoolAlpha(self, false)
 	end
 end

@@ -130,6 +130,7 @@
 				DeadpoolIconButtonLeave(self)
 			</OnLeave>
 		</Scripts>
+		<NormalTexture file="Interface\BUTTONS\UI-GuildButton-MOTD-Up" setAllPoints="true"/>
 	</Button>
 	<Button name="DeadpoolOptionsButtonTemplate" virtual="true">
 		<Size x="16" y="16" />
@@ -144,7 +145,60 @@
 				DeadpoolIconButtonLeave(self)
 			</OnLeave>
 		</Scripts>
+		<NormalTexture file="Interface\GossipFrame\BinderGossipIcon" setAllPoints="true"/>
 	</Button>
+	<CheckButton name="DeadpoolLockTemplate" virtual="true">
+		<Size x="16" y="16"/>
+		<Anchors>
+			<Anchor point="RIGHT" relativeKey="$parent.MaximizeMinimizeFrame" relativePoint="LEFT" x="0" y="1"/>
+		</Anchors>
+		<Scripts>
+			<OnLoad>
+				local locked = DeadpoolWindow[Deadpool_WindowsOptions][self:GetParent():GetAttribute("OptionsParam")]
+				self:SetChecked(locked)
+				self:GetParent().canMove = not locked
+				DPEnableMouse(self:GetParent(), not locked)
+				setDeadpoolAlpha(self:GetParent(), not locked)
+				if self:GetParent().SizeDown then
+					if locked then
+						self:GetParent().SizeDown:Hide()
+					else
+						self:GetParent().SizeDown:Show()
+					end
+				end
+			</OnLoad>
+			<OnClick>
+				local locked = self:GetChecked()
+				self:GetParent().canMove = not locked
+				DPEnableMouse(self:GetParent(), not locked)
+				setDeadpoolAlpha(self:GetParent(), not locked)
+				if self:GetParent().SizeDown then
+					if locked then
+						self:GetParent().SizeDown:Hide()
+					else
+						self:GetParent().SizeDown:Show()
+					end
+				end
+				DeadpoolWindow[Deadpool_WindowsOptions][self:GetParent():GetAttribute("OptionsParam")] = locked
+				Deadpool_PlaySound(SOUNDKIT.UI_70_ARTIFACT_FORGE_APPEARANCE_LOCKED, "SFX", true)
+			</OnClick>
+			<OnEnter>
+				DeadpoolIconButtonEnter(self)
+			</OnEnter>
+			<OnLeave>
+				DeadpoolIconButtonLeave(self)
+			</OnLeave>
+		</Scripts>
+		<NormalTexture file="Interface\AddOns\Deadpool\art\lock" setAllPoints="true">
+			<TexCoords left=".5" right="1" top="0" bottom="1" />
+		</NormalTexture>
+		<PushedTexture file="Interface\AddOns\Deadpool\art\lock" setAllPoints="true">
+			<TexCoords left="0" right=".5" top="0" bottom="1" />
+		</PushedTexture>
+		<CheckedTexture file="Interface\AddOns\Deadpool\art\lock" setAllPoints="true">
+			<TexCoords left="0" right=".5" top="0" bottom="1" />
+		</CheckedTexture>
+	</CheckButton>
 	<Button name="DeadpoolCreditsTemplate" virtual="true">
 		<Size>
 			<AbsDimension x="109" y="17"/>
@@ -204,12 +258,23 @@
 	<FontString name="DeadpoolPlayerLabelTemplate" inherits="GameFontHighlightSmall" virtual="true" justifyH="LEFT">
 		<Size x="85" y="20" />
 	</FontString>
-	<Frame name="MiniDeadpoolFrameTemplate" virtual="true" hidden="true" toplevel="true" movable="true" resizable="true" frameStrata="BACKGROUND">
+	<Frame name="DeadpoolSearchingSpinnerTemplate" toplevel="true" inherits="LoadingSpinnerTemplate" virtual="true">
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+	</Frame>
+	<Frame name="MiniDeadpoolFrameTemplate" virtual="true" hidden="true" movable="true" resizable="true" frameStrata="BACKGROUND">
 		<Size x="210" y="210" />
+		<Attributes>
+			<Attribute name="OptionsParam" value="MiniDeadpoolWindowLocked"/>
+		</Attributes>
 		<Anchors>
 			<Anchor point="CENTER" x="0" y="0" />
 		</Anchors>
 		<Frames>
+			<Frame parentKey="SearchingSpinner" inherits="DeadpoolSearchingSpinnerTemplate">
+				<Size x="32" y="32" />
+			</Frame>
 			<Frame name="$parentInset" parentKey="Inset">
 				<Anchors>
 					<Anchor point="TOPLEFT" x="4" y="-26"/>
@@ -221,70 +286,37 @@
 						<Texture parentKey="Bg" file="Interface\FrameGeneral\UI-Background-Marble" horizTile="true" vertTile="true" setAllPoints="true"/>
 					</Layer>
 				</Layers>
-				<Frames>
-					<Button name="$parentMaximize" parentKey="Maximize">
-						<Size x="24" y="24"/>
-						<Anchors>
-							<Anchor point="TOPRIGHT" x="-10" y="20"/>
-						</Anchors>
-						<Scripts>
-							<OnLoad>
-								self:SetHitRectInsets(4, 4, 4, 4)
-							</OnLoad>
-							<OnEnter>
-								self:GetParent().Maximize:SetAlpha(1.0)
-								self:GetParent().Lock:SetAlpha(1.0)
-							</OnEnter>
-							<OnLeave>
-								self:GetParent().Maximize:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
-								self:GetParent().Lock:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
-							</OnLeave>
-							<OnClick>
-								Deadpool_PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX", true)
-								Deadpool:DeadpoolShow()
-							</OnClick>
-						</Scripts>
-						<NormalTexture file="Interface\Buttons\UI-Panel-BiggerButton-Up"/>
-						<PushedTexture file="Interface\Buttons\UI-Panel-BiggerButton-Down"/>
-						<DisabledTexture file="Interface\Buttons\UI-Panel-BiggerButton-Disabled"/>
-						<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
-					</Button>
-					<CheckButton name="$parentLock" parentKey="Lock">
-						<Size x="24" y="24"/>
-						<Anchors>
-							<Anchor point="TOPRIGHT" x="5" y="20"/>
-						</Anchors>
-						<Scripts>
-							<OnLoad>
-								self:SetHitRectInsets(4, 4, 4, 4)
-								local locked = DeadpoolWindow[Deadpool_WindowsOptions]["MiniDeadpoolWindowLocked"]
-								self:SetChecked(locked)
-								self:GetParent():GetParent().canMove = not locked
-								DPEnableMouse(self:GetParent():GetParent(), not locked)
-							</OnLoad>
-							<OnEnter>
-								self:GetParent().Maximize:SetAlpha(1.0)
-								self:GetParent().Lock:SetAlpha(1.0)
-							</OnEnter>
-							<OnLeave>
-								self:GetParent().Maximize:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
-								self:GetParent().Lock:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
-							</OnLeave>
-							<OnClick>
-								local locked = self:GetChecked()
-								self:GetParent():GetParent().canMove = not locked
-								DPEnableMouse(self:GetParent():GetParent(), not locked)
-								DeadpoolWindow[Deadpool_WindowsOptions]["MiniDeadpoolWindowLocked"] = locked
-								Deadpool_PlaySound(SOUNDKIT.UI_70_ARTIFACT_FORGE_APPEARANCE_LOCKED, "SFX", true)
-							</OnClick>
-						</Scripts>
-						<NormalTexture file="Interface\Buttons\LockButton-Unlocked-Up"/>
-						<PushedTexture file="Interface\Buttons\LockButton-Unlocked-Down"/>
-						<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
-						<CheckedTexture file="Interface\Buttons\LockButton-Locked-Up"/>
-					</CheckButton>
-				</Frames>
 			</Frame>
+			<Button name="$parentMaximize" parentKey="MaximizeMinimizeFrame">
+				<Size x="24" y="24"/>
+				<Anchors>
+					<Anchor point="TOPRIGHT" x="-6" y="-6"/>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						self:SetHitRectInsets(4, 4, 4, 4)
+					</OnLoad>
+					<OnEnter>
+						self:SetAlpha(1.0)
+						self:GetParent().Lock:SetAlpha(1.0)
+					</OnEnter>
+					<OnLeave>
+						self:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
+						self:GetParent().Lock:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
+					</OnLeave>
+					<OnClick>
+						Deadpool_PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX", true)
+						Deadpool:DeadpoolShow()
+					</OnClick>
+				</Scripts>
+				<NormalTexture file="Interface\Buttons\UI-Panel-BiggerButton-Up"/>
+				<PushedTexture file="Interface\Buttons\UI-Panel-BiggerButton-Down"/>
+				<DisabledTexture file="Interface\Buttons\UI-Panel-BiggerButton-Disabled"/>
+				<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+			</Button>
+			<CheckButton name="$parentLock" parentKey="Lock" inherits="DeadpoolLockTemplate">
+				<Size x="12" y="12"/>
+			</CheckButton>
 			<Button name="MiniDeadpoolPlayerCredits" parentKey="PlayerCredits" inherits="MiniDeadpoolCreditsTemplate">
 				<Anchors>
 					<Anchor point="BOTTOMLEFT" x="4" y="12" />
@@ -345,8 +377,11 @@
 			</OnDragStop>
 		</Scripts>
 	</Frame>
-	<Frame name="DeadpoolFrameTemplate" inherits="BasicFrameTemplate" virtual="true" hidden="true" toplevel="true" movable="true" resizable="true" clampedToScreen="true" frameStrata="BACKGROUND">
+	<Frame name="DeadpoolFrameTemplate" inherits="SettingsFrameTemplate" virtual="true" hidden="true" movable="true" resizable="true" clampedToScreen="true" frameStrata="BACKGROUND">
 		<Size x="600" y="360" />
+		<Attributes>
+			<Attribute name="OptionsParam" value="DeadpoolWindowLocked"/>
+		</Attributes>
 		<Anchors>
 			<Anchor point="CENTER" x="0" y="0" />
 		</Anchors>
@@ -361,27 +396,18 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name="$parentMinimize">
-				<Size x="32" y="32"/>
+			<Frame name="$parentMinimize" parentKey="MaximizeMinimizeFrame" inherits="MaximizeMinimizeButtonFrameTemplate">
 				<Anchors>
-					<Anchor point="TOPRIGHT" x="-38" y="5"/>
+					<Anchor point="RIGHT" relativeKey="$parent.ClosePanelButton" relativePoint="LEFT" x="0" y="0"/>
 				</Anchors>
-				<Layers>
-					<Layer level="BACKGROUND">
-						<Texture file="Interface\Buttons\LockButton-Border"/>
-					</Layer>
-				</Layers>
 				<Scripts>
-					<OnLoad>
-						self:SetHitRectInsets(5, 5, 5, 5)
-					</OnLoad>
-					<OnClick function="DeadpoolFrameMinimize_OnClick" />
+					<OnLoad function="DeadpoolFrameMaximizeMinimizeButton_OnLoad" inherit="append"/>
+					<OnShow>
+						self.MaximizeButton:Hide();
+						self.MinimizeButton:Show();
+					</OnShow>
 				</Scripts>
-				<NormalTexture file="Interface\Buttons\UI-Panel-SmallerButton-Up"/>
-				<PushedTexture file="Interface\Buttons\UI-Panel-SmallerButton-Down"/>
-				<DisabledTexture file="Interface\Buttons\UI-Panel-SmallerButton-Disabled"/>
-				<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
-			</Button>
+			</Frame>
 			<Button name="$parentSizeDown" parentKey="SizeDown">
 				<Size x="32" y="16"/>
 				<Anchors>
@@ -416,49 +442,7 @@
 				</Scripts>
 				<NormalTexture file="Interface\RaidFrame\Raid-Move-Down"/>
 			</Button>
-			<CheckButton name="$parentLock">
-				<Size x="32" y="32"/>
-				<Anchors>
-					<Anchor point="TOPRIGHT" x="-17" y="5"/>
-				</Anchors>
-				<Layers>
-					<Layer level="BACKGROUND">
-						<Texture file="Interface\Buttons\LockButton-Border"/>
-					</Layer>
-				</Layers>
-				<Scripts>
-					<OnLoad>
-						self:SetHitRectInsets(5, 5, 5, 5)
-						local locked = DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolWindowLocked"]
-						self:SetChecked(locked)
-						self:GetParent().canMove = not locked
-						DPEnableMouse(self:GetParent(), not locked)
-						setDeadpoolAlpha(self:GetParent(), not locked)
-						if locked then
-							self:GetParent().SizeDown:Hide()
-						else
-							self:GetParent().SizeDown:Show()
-						end
-					</OnLoad>
-					<OnClick>
-						local locked = self:GetChecked()
-						self:GetParent().canMove = not locked
-						DPEnableMouse(self:GetParent(), not locked)
-						setDeadpoolAlpha(self:GetParent(), not locked)
-						if locked then
-							self:GetParent().SizeDown:Hide()
-						else
-							self:GetParent().SizeDown:Show()
-						end
-						DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolWindowLocked"] = locked
-						Deadpool_PlaySound(SOUNDKIT.UI_70_ARTIFACT_FORGE_APPEARANCE_LOCKED, "SFX", true)
-					</OnClick>
-				</Scripts>
-				<NormalTexture file="Interface\Buttons\LockButton-Unlocked-Up"/>
-				<PushedTexture file="Interface\Buttons\LockButton-Unlocked-Down"/>
-				<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
-				<CheckedTexture file="Interface\Buttons\LockButton-Locked-Up"/>
-			</CheckButton>
+			<CheckButton name="$parentLock" parentKey="Lock" inherits="DeadpoolLockTemplate"/>
 			<Button name="$parentSummaryButton">
 				<Size x="22" y="22" />
 				<Layers>
@@ -482,13 +466,13 @@
 			</Button>
 			<Frame name="$parentInsideFrame" inherits="InsetFrameTemplate">
 				<Anchors>
-					<Anchor point="TOPLEFT" x="3" y="-46" />
-					<Anchor point="BOTTOMLEFT" x="3" y="64" />
+					<Anchor point="TOPLEFT" x="7" y="-46" />
+					<Anchor point="BOTTOMLEFT" x="0" y="64" />
 				</Anchors>
 			</Frame>
 			<Button name="DeadpoolPlayerCredits" parentKey="PlayerCredits" inherits="DeadpoolCreditsTemplate">
 				<Anchors>
-					<Anchor point="BOTTOMLEFT" x="4" y="4" />
+					<Anchor point="BOTTOMLEFT" x="8" y="4" />
 				</Anchors>
 				<Scripts>
 					<OnLoad>
@@ -517,10 +501,10 @@
 				</Scripts>
 			</Button>
 			<Frame name="DeadpoolSummaryFrame" hidden="true" inherits="InsetFrameTemplate">
-				<Size x="195" />
+				<Size x="193" />
 				<Anchors>
-					<Anchor point="TOPRIGHT" x="-5" y="-46" />
-					<Anchor point="BOTTOMRIGHT" x="-5" y="4" />
+					<Anchor point="TOPRIGHT" x="-3" y="-46"/>
+					<Anchor point="BOTTOMRIGHT" y="4"/>
 				</Anchors>
 				<Frames>
 					<Button name="DeadpoolSummaryFrameTab1" inherits="PanelTopTabButtonTemplate" id="1">
@@ -666,11 +650,11 @@
 					</OnShow>
 				</Scripts>
 			</Frame>
+			<Frame parentKey="SearchingSpinner" toplevel="true" inherits="DeadpoolSearchingSpinnerTemplate"/>
 		</Frames>
 		<Scripts>
 			<OnLoad>
 				self:RegisterForDrag("LeftButton")
-				self.CloseButton:SetHitRectInsets(6, 6, 6, 6)
 			</OnLoad>
 			<OnDragStart>
 				if(self.canMove) then
@@ -1043,7 +1027,7 @@
 			</Button>
 		</Frames>
 	</DressUpModel>
-	<Frame name="DPDurabilityFrameTemplate" frameStrata="HIGH" virtual="true">
+	<Frame name="DPDurabilityFrameTemplate" frameStrata="HIGH" toplevel="true" virtual="true">
 		<Size>
 			<AbsDimension x="60" y="75"/>
 		</Size>

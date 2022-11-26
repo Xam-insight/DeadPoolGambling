@@ -166,7 +166,7 @@ if HelpTip then
 				useParentStrata = true,
 				onAcknowledgeCallback = function() dpAcknowledgeHelpTip("DEADPOOLTUTO_MINIMIZE") end,
 				offsetX = 0,
-				offsetY = -15,
+				offsetY = -5,
 			},
 			["relativeRegion"] = "DeadpoolFrameMinimize",
 			["group"] = "DeadpoolFrame",
