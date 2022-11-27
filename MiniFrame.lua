@@ -8,6 +8,7 @@ DeadpoolGlobal_MiniBetweenObjectsGap = 5
 function deadpoolMiniFrame()
 	--NewMiniDeadpoolFrame
 	MiniDeadpoolFrame = CreateFrame("Frame", "MiniDeadpoolFrame", UIParent, "MiniDeadpoolFrameTemplate")
+	MiniDeadpoolFrame.alphaFunc = setMiniDeadpoolFrameAlpha
 	
 	local fontstring = MiniDeadpoolFrame:CreateFontString("MiniDeadpoolLabel", "ARTWORK", "DeadpoolWindowTitleTemplate")
     fontstring:SetText("Dead Pool")
@@ -61,9 +62,7 @@ function updateMiniDeadpoolFrame()
 end
 
 function applyMiniDeadpoolWindowOptions()
-	MiniDeadpoolFrameInset.Bg:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
-	MiniDeadpoolFrameMaximize:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
-	MiniDeadpoolFrameLock:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
+	setMiniDeadpoolFrameAlpha()
 
 	retOK, ret = pcall(callbackDeadpoolWindow, MiniDeadpoolFrame)
 
@@ -71,4 +70,12 @@ function applyMiniDeadpoolWindowOptions()
 	MiniDeadpoolFrameLock:SetChecked(windowLocked)
 	MiniDeadpoolFrame.canMove = not windowLocked
 	DPEnableMouse(MiniDeadpoolFrame, not windowLocked)
+end
+
+function setMiniDeadpoolFrameAlpha()
+	if MiniDeadpoolFrame and DeadpoolOptionsData and DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"] then
+		MiniDeadpoolFrameInset.Bg:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
+		MiniDeadpoolFrameMaximize:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
+		MiniDeadpoolFrameLock:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
+	end
 end

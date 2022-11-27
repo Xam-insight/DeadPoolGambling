@@ -68,6 +68,8 @@ function Deadpool:OnEnable()
 
 		--NewDeadpoolFrame
 		DeadpoolFrame = CreateFrame("Frame", "DeadpoolFrame", UIParent, "DeadpoolFrameTemplate")
+		DeadpoolFrame.alphaFunc = setDeadpoolFrameAlpha
+		
 		DeadpoolFrame.ClosePanelButton:SetScript("OnClick", function(self)
 			hideDeadpoolWindow()
 		end)
@@ -217,7 +219,7 @@ function Deadpool:OnPlayerAlive()
 end
 
 function applyDeadpoolWindowOptions(withSummaryFrame)
-	DeadpoolFrame:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
+	setDeadpoolFrameAlpha()
     DeadpoolFrame:SetWidth(DEADPOOL_ALLCOLS_WIDTH + 24 + 30)
 	DeadpoolFrame:SetResizeBounds(0, 151 + DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolLigneHeight"], nil, GetScreenHeight() - 32)
 	
@@ -298,7 +300,7 @@ end
 
 function Deadpool:DeadpoolShow(noMain, mini)
 	if not noMain and DeadpoolFrame and not DeadpoolFrame:IsShown() then
-		setDeadpoolAlpha(DeadpoolFrame, false)
+		setDeadpoolFrameAlpha()
 		DeadpoolFrame:Show()
 		DeadpoolShowResults()
 		DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolShown"] = true
@@ -307,6 +309,7 @@ function Deadpool:DeadpoolShow(noMain, mini)
 		dpShowHelpTip("DEADPOOLTUTO_MINIMIZE")
 	end
 	if mini then
+		setMiniDeadpoolFrameAlpha()
 		MiniDeadpoolFrame:Show()
 		DeadpoolShowResults()
 		DeadpoolWindow[Deadpool_WindowsOptions]["MiniDeadpoolShown"] = true
@@ -1649,26 +1652,22 @@ function getPrintableLinesNumber(windowHeight)
 end
 
 function DeadpoolFrameTemplate_OnEnter(self)
-	setDeadpoolAlpha(self, true)
+	if DeadpoolOptionsData
+		and DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"]
+			and DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"] < 0.7 then
+		self:SetAlpha(0.7)
+	end
 end
 
-function setDeadpoolAlpha(self, enter)
-	if enter then
-		if DeadpoolOptionsData
-			and DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"]
-				and DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"] < 0.7 then
-			self:SetAlpha(0.7)
-		end
-	else
-		if DeadpoolOptionsData and DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"] then
-			self:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
-		end
+function setDeadpoolFrameAlpha()
+	if DeadpoolFrame and DeadpoolOptionsData and DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"] then
+		DeadpoolFrame:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
 	end
 end
 				
 function DeadpoolFrameTemplate_OnLeave(self)
 	if not MouseIsOver(self) and not MouseIsOver(DeadpoolFrameLock) and not MouseIsOver(DeadpoolFrame.ClosePanelButton) then
-		setDeadpoolAlpha(self, false)
+		setDeadpoolFrameAlpha()
 	end
 end
 

@@ -154,11 +154,10 @@
 		</Anchors>
 		<Scripts>
 			<OnLoad>
-				local locked = DeadpoolWindow[Deadpool_WindowsOptions][self:GetParent():GetAttribute("OptionsParam")]
+				local locked = DeadpoolWindow[Deadpool_WindowsOptions][self:GetParent():GetAttribute("LockOptionParam")]
 				self:SetChecked(locked)
 				self:GetParent().canMove = not locked
 				DPEnableMouse(self:GetParent(), not locked)
-				setDeadpoolAlpha(self:GetParent(), not locked)
 				if self:GetParent().SizeDown then
 					if locked then
 						self:GetParent().SizeDown:Hide()
@@ -171,7 +170,7 @@
 				local locked = self:GetChecked()
 				self:GetParent().canMove = not locked
 				DPEnableMouse(self:GetParent(), not locked)
-				setDeadpoolAlpha(self:GetParent(), not locked)
+				self:GetParent().alphaFunc()
 				if self:GetParent().SizeDown then
 					if locked then
 						self:GetParent().SizeDown:Hide()
@@ -179,7 +178,7 @@
 						self:GetParent().SizeDown:Show()
 					end
 				end
-				DeadpoolWindow[Deadpool_WindowsOptions][self:GetParent():GetAttribute("OptionsParam")] = locked
+				DeadpoolWindow[Deadpool_WindowsOptions][self:GetParent():GetAttribute("LockOptionParam")] = locked
 				Deadpool_PlaySound(SOUNDKIT.UI_70_ARTIFACT_FORGE_APPEARANCE_LOCKED, "SFX", true)
 			</OnClick>
 			<OnEnter>
@@ -266,7 +265,7 @@
 	<Frame name="MiniDeadpoolFrameTemplate" virtual="true" hidden="true" movable="true" resizable="true" frameStrata="BACKGROUND">
 		<Size x="210" y="210" />
 		<Attributes>
-			<Attribute name="OptionsParam" value="MiniDeadpoolWindowLocked"/>
+			<Attribute name="LockOptionParam" value="MiniDeadpoolWindowLocked"/>
 		</Attributes>
 		<Anchors>
 			<Anchor point="CENTER" x="0" y="0" />
@@ -290,20 +289,12 @@
 			<Button name="$parentMaximize" parentKey="MaximizeMinimizeFrame">
 				<Size x="24" y="24"/>
 				<Anchors>
-					<Anchor point="TOPRIGHT" x="-6" y="-6"/>
+					<Anchor point="BOTTOMRIGHT" relativeKey="$parent.Inset" relativePoint="TOPRIGHT" x="5" y="-2"/>
 				</Anchors>
 				<Scripts>
 					<OnLoad>
 						self:SetHitRectInsets(4, 4, 4, 4)
 					</OnLoad>
-					<OnEnter>
-						self:SetAlpha(1.0)
-						self:GetParent().Lock:SetAlpha(1.0)
-					</OnEnter>
-					<OnLeave>
-						self:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
-						self:GetParent().Lock:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
-					</OnLeave>
 					<OnClick>
 						Deadpool_PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX", true)
 						Deadpool:DeadpoolShow()
@@ -380,7 +371,7 @@
 	<Frame name="DeadpoolFrameTemplate" inherits="SettingsFrameTemplate" virtual="true" hidden="true" movable="true" resizable="true" clampedToScreen="true" frameStrata="BACKGROUND">
 		<Size x="600" y="360" />
 		<Attributes>
-			<Attribute name="OptionsParam" value="DeadpoolWindowLocked"/>
+			<Attribute name="LockOptionParam" value="DeadpoolWindowLocked"/>
 		</Attributes>
 		<Anchors>
 			<Anchor point="CENTER" x="0" y="0" />

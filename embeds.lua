@@ -21,8 +21,10 @@ function DeadpoolCredits_OnLoad(self, locale, mini)
 	if mini then
 		local frameCountLabel = _G[self:GetName().."Count"]
 		local fontName, fontHeight, fontFlags = frameLabel:GetFont()
+		local icon = _G[self:GetName().."Icon"]
 		frameLabel:SetFont(fontName, fontHeight-3, fontFlags)
 		frameCountLabel:SetFont(fontName, fontHeight-3, fontFlags)
+		icon:SetSize(13, 13)
 	else
 		frame:SetAttribute("tooltip", L[locale.."_TOOLTIP"])
 		frame:SetAttribute("tooltipDetail", { L[locale.."_TOOLTIPDETAIL"] })
