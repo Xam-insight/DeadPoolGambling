@@ -163,12 +163,15 @@ local dpInstanceIDList = {
 	["2296-14"] = 2095, -- Castle Nathria
 	["2296-15"] = 2094, -- Castle Nathria
 	["2296-16"] = 2093, -- Castle Nathria
-	["2450-15"] = 2226, -- Sanctum of Domination
+	["2450-14"] = 2226, -- Sanctum of Domination
 	["2450-15"] = 2227, -- Sanctum of Domination
-	["2450-15"] = 2228, -- Sanctum of Domination
-	["2481-15"] = 2288, -- Sepulcher of the First Ones
+	["2450-16"] = 2228, -- Sanctum of Domination
+	["2481-14"] = 2288, -- Sepulcher of the First Ones
 	["2481-15"] = 2289, -- Sepulcher of the First Ones
-	["2481-15"] = 2290, -- Sepulcher of the First Ones
+	["2481-16"] = 2290, -- Sepulcher of the First Ones
+	["2522-14"] = 2390, -- Vault of the Incarnates
+	["2522-15"] = 2389, -- Vault of the Incarnates
+	["2522-16"] = 2388, -- Vault of the Incarnates
 }
 
 local willPlay, soundHandle
@@ -1197,6 +1200,7 @@ function isInstanceAtLevel(level)
 				_, _, _, minLevel, maxLevel, recLevel, minRecLevel, maxRecLevel = GetLFGDungeonInfo(lfgDungeonID)
 			elseif instanceID and difficultyID and dpInstanceIDList[instanceID.."-"..difficultyID] then
 				_, _, _, minLevel, maxLevel, recLevel, minRecLevel, maxRecLevel = GetLFGDungeonInfo(dpInstanceIDList[instanceID.."-"..difficultyID])
+				print(GetLFGDungeonInfo(dpInstanceIDList[instanceID.."-"..difficultyID]))
 			end
 			if maxRecLevel and level <= maxRecLevel then
 				return true

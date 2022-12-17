@@ -1,4 +1,6 @@
-﻿- v1.9.15
+﻿- v1.9.16
+	- Vault of the Incarnates boss bets.
+- v1.9.15
 	- Art update.
 	- Added an option to remind player to bet during Ready Check.
 	- Added fadeout on raid/group bet button.
