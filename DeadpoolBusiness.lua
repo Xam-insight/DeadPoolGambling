@@ -1200,7 +1200,6 @@ function isInstanceAtLevel(level)
 				_, _, _, minLevel, maxLevel, recLevel, minRecLevel, maxRecLevel = GetLFGDungeonInfo(lfgDungeonID)
 			elseif instanceID and difficultyID and dpInstanceIDList[instanceID.."-"..difficultyID] then
 				_, _, _, minLevel, maxLevel, recLevel, minRecLevel, maxRecLevel = GetLFGDungeonInfo(dpInstanceIDList[instanceID.."-"..difficultyID])
-				print(GetLFGDungeonInfo(dpInstanceIDList[instanceID.."-"..difficultyID]))
 			end
 			if maxRecLevel and level <= maxRecLevel then
 				return true

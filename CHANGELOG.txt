@@ -1,4 +1,4 @@
-﻿- v1.9.16
+﻿- v1.9.17
 	- Vault of the Incarnates boss bets.
 - v1.9.15
 	- Art update.
