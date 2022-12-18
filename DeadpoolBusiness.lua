@@ -191,6 +191,8 @@ function initDeadpoolBusinessObjects()
 		playerJoinsDeadpoolSession("DeadpoolSession_"..name, true, true)
 	elseif DeadpoolData[DeadpoolGlobal_SessionId] and not DeadpoolData[DeadpoolGlobal_SessionId][name] then
 		playerJoinsDeadpoolSession(DeadpoolGlobal_SessionId)
+	else
+		setDeadpoolPlayerData(DeadpoolGlobal_SessionId, name, GetAddOnMetadata("Deadpool", "Version"))
 	end
 
 	-- DeadpoolOptionsData
@@ -549,7 +551,7 @@ function playerJoinsDeadpoolSession(aSession, isCreator, keepPlayerData)
 		end
 		DeadpoolGlobal_SessionId = aSession
 		DeadpoolData = {}
-		setInitialDeadpoolPlayerData(aSession, playerCharacter)
+		setInitialDeadpoolPlayerData(aSession, playerCharacter, GetAddOnMetadata("Deadpool", "Version"))
 		setDeadpoolData(aSession, DEADPOOL_BANKER, "credits", DEADPOOL_INITIAL_MONEY)
 		DeadpoolData[aSession]["DeadpoolSessionId"] = aSession
 		if keepPlayerData and playerData then
@@ -561,19 +563,19 @@ function playerJoinsDeadpoolSession(aSession, isCreator, keepPlayerData)
 			prepareAndSendSimpleDeadpoolDataToRaid(aSession, playerCharacter)
 		end
 	elseif DeadpoolData and DeadpoolData[DeadpoolGlobal_SessionId] and not DeadpoolData[DeadpoolGlobal_SessionId][playerCharacter] then
-		setInitialDeadpoolPlayerData(aSession, playerCharacter)
+		setInitialDeadpoolPlayerData(aSession, playerCharacter, GetAddOnMetadata("Deadpool", "Version"))
 	else
-		setDeadpoolPlayerData(aSession, playerCharacter)
+		setDeadpoolPlayerData(aSession, playerCharacter, GetAddOnMetadata("Deadpool", "Version"))
 	end
 end
 
-function setDeadpoolPlayerData(aSession, aChar)
-	setDeadpoolData(aSession, aChar, DEADPOOLDATA_VERSION, GetAddOnMetadata("Deadpool", "Version"))
+function setDeadpoolPlayerData(aSession, aChar, aVersion)
+	setDeadpoolData(aSession, aChar, DEADPOOLDATA_VERSION, aVersion)
 end
 
-function setInitialDeadpoolPlayerData(aSession, aChar)
+function setInitialDeadpoolPlayerData(aSession, aChar, aVersion)
 	setDeadpoolData(aSession, aChar, "credits", DEADPOOL_INITIAL_MONEY)
-	setDeadpoolData(aSession, aChar, DEADPOOLDATA_VERSION, GetAddOnMetadata("Deadpool", "Version"))
+	setDeadpoolData(aSession, aChar, DEADPOOLDATA_VERSION, aVersion)
 end
 
 --[[function isEveryoneDisconnected(aDeadpoolSessionId)
