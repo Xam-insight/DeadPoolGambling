@@ -1,7 +1,6 @@
-﻿- v1.9.18
-	- Fixed: Inifinite loading of boss bets.
-- v1.9.17
+﻿- v1.10
 	- Vault of the Incarnates boss bets.
+	- Fixed: Inifinite loading of boss bets.
 - v1.9.15
 	- Art update.
 	- Added an option to remind player to bet during Ready Check.
