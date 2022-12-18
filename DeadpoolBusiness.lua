@@ -342,7 +342,7 @@ function addCharInList(deadpoolCharInfo, groupRank, name)
 	deadpoolCharInfo[name]["gender"] = (gender_code and gender_code - 2) or 0
 	clearCharacterDeadpoolData(name)
 
-	if groupRank ~= "player" and DeadpoolSavedBets then
+	if not Deadpool_isPlayerCharacter(name) and DeadpoolSavedBets then
 		if DeadpoolSavedBets[deadpoolPlayerCharacter] then
 			if DeadpoolSavedBets[deadpoolPlayerCharacter][name] then
 				local savedBet = DeadpoolSavedBets[deadpoolPlayerCharacter][name]
