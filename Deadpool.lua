@@ -167,7 +167,7 @@ function Deadpool:OnEnable()
 		CustAc_CreateOrUpdateCategory("Deadpool", nil, "Dead Pool Gambling")
 		for k,v in pairs(deadpoolAchievements) do
 			if k ~= DEADPOOL_WINNER then
-				CustAc_CreateOrUpdateAchievement(k, "Deadpool", v["icon"], v["points"], v["label"], v["desc"])
+				CustAc_CreateOrUpdateAchievement(k, "Deadpool", v["icon"], v["points"], v["label"], v["desc"], v["label"], true)
 			end
 		end
 	end
