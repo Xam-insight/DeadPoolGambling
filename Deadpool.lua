@@ -1294,6 +1294,9 @@ function dpShowModel(deadpoolCharacter, parentFrame)
 						local _, _, relativePoint, _, _ = parentFrame:GetPoint()
 						relativeTo = DeadpoolOptionsData["DeadpoolModelPopupSide"] or (relativePoint and sideFromParentRelativePoint[relativePoint])
 						point = oppositeSide[relativeTo]
+						if MiniDeadpoolFrame:IsShown() and point == "RIGHT" then
+							xValue = -15
+						end
 					end
 					deadpoolDressUpModel:ClearAllPoints()
 					deadpoolDressUpModel:SetPoint(point, parentFrame, relativeTo, xValue, yValue)

@@ -1,5 +1,7 @@
 ﻿- v1.10.6
 	- [CustomAchiever] v1.1.10 integration.
+	- Fixed: When in mini frame view, the model durability does not pop over the chips anymore.
+	- Fixed: The english localization for the lock tooltip is now well set.
 - v1.10.5
 	- [CustomAchiever] v1.1.9 integration.
 - v1.10.4
