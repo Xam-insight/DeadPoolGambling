@@ -161,7 +161,8 @@ function Deadpool:OnEnable()
 	end
 
 	if not CustomAchiever then
-		LoadAddOn("Deadpool_CustomAchiever")
+		CustAcAddon = "Deadpool_CustomAchiever"
+		LoadAddOn(CustAcAddon)
 	end
 	if CustomAchiever then
 		CustAc_CreateOrUpdateCategory("Deadpool", nil, "Dead Pool Gambling")
