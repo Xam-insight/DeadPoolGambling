@@ -1,4 +1,6 @@
-﻿- v1.10.8
+﻿- v1.10.9
+	- [CustomAchiever] v1.3 integration.
+- v1.10.8
 	- [CustomAchiever] v1.2 integration.
 - v1.10.7
 	- Fixed: GithubIssue#1 - Lua error. Lua error on Calling For Users in Deadpool_CustomAchiever Addon.
