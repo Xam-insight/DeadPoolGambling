@@ -1,4 +1,7 @@
-﻿- v1.10.9
+﻿- v1.10.10
+	- TOC for 10.0.7.
+	- [CustomAchiever] v1.3.2 integration.
+- v1.10.9
 	- [CustomAchiever] v1.3 integration.
 - v1.10.8
 	- [CustomAchiever] v1.2 integration.
