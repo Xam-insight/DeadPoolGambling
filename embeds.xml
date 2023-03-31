@@ -396,6 +396,9 @@
 					<OnShow>
 						self.MaximizeButton:Hide();
 						self.MinimizeButton:Show();
+						if IsClassic then
+							self:SetPoint("RIGHT", self:GetParent().ClosePanelButton, "LEFT", 10, 0)
+						end
 					</OnShow>
 				</Scripts>
 			</Frame>
@@ -506,7 +509,11 @@
 							<OnShow>
 								self:SetText(Deadpool_GetLocale("DEADPOOLCOLLUMNS_BET"))
 								self:SetHitRectInsets(0, 0, 10, 0)
-								PanelTemplates_TabResize(self, 0, nil, 63)
+								if IsClassic then
+									PanelTemplates_TabResize(self, 0, nil, 20)
+								else
+									PanelTemplates_TabResize(self, 0, nil, 62)
+								end
 							</OnShow>
 							<OnClick>
 								PanelTemplates_Tab_OnClick(self, DeadpoolSummaryFrame)
@@ -527,7 +534,11 @@
 							<OnShow>
 								self:SetText(Deadpool_GetLocale("DEADPOOLCOLLUMNS_MODEL"))
 								self:SetHitRectInsets(0, 0, 10, 0)
-								PanelTemplates_TabResize(self, 0, nil, 63)
+								if IsClassic then
+									PanelTemplates_TabResize(self, 0, nil, 20)
+								else
+									PanelTemplates_TabResize(self, 0, nil, 62)
+								end
 							</OnShow>
 							<OnClick>
 								PanelTemplates_Tab_OnClick(self, DeadpoolSummaryFrame)
@@ -548,7 +559,11 @@
 							<OnShow>
 								self:SetText(Deadpool_GetLocale("DEADPOOLCOLLUMNS_STATS"))
 								self:SetHitRectInsets(0, 0, 10, 0)
-								PanelTemplates_TabResize(self, 0, nil, 63)
+								if IsClassic then
+									PanelTemplates_TabResize(self, 0, nil, 20)
+								else
+									PanelTemplates_TabResize(self, 0, nil, 62)
+								end
 							</OnShow>
 							<OnClick>
 								PanelTemplates_Tab_OnClick(self, DeadpoolSummaryFrame)

@@ -1,0 +1,62 @@
+<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.blizzard.com/wow/ui/">	
+	<Frame name="IsClassic" hidden="true" />
+	<Frame name="FlatPanelBackgroundTemplate" virtual="true">
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture parentKey="BottomLeft">
+					<Anchors>
+						<Anchor point="BOTTOMLEFT"/>
+					</Anchors>
+					<Color a="0.8" r="0.12" g="0.12" b="0.13" />
+				</Texture>
+				<Texture parentKey="BottomRight">
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT"/>
+					</Anchors>
+					<Color a="0.8" r="0.12" g="0.12" b="0.13" />
+				</Texture>
+				<Texture parentKey="BottomEdge">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.BottomLeft" relativePoint="TOPRIGHT"/>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.BottomRight" relativePoint="BOTTOMLEFT"/>
+					</Anchors>
+					<Color a="0.8" r="0.12" g="0.12" b="0.13" />
+				</Texture>
+				<Texture parentKey="TopSection">
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.BottomRight" relativePoint="TOPRIGHT"/>
+					</Anchors>
+					<Color a="0.8" r="0.12" g="0.12" b="0.13" />
+				</Texture>
+			</Layer>
+		</Layers>
+	</Frame>
+	<Frame name="SettingsFrameTemplate" virtual="true">
+		<Frames>
+			<Frame parentKey="Bg" inherits="FlatPanelBackgroundTemplate" frameLevel="0">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="7" y="-18"/>
+					<Anchor point="BOTTOMRIGHT" x="-3" y="3"/>
+				</Anchors>
+			</Frame>
+			<Frame parentKey="NineSlice" useParentLevel="true" inherits="NineSlicePanelTemplate">
+				<KeyValues>
+					<KeyValue key="layoutType" value="ButtonFrameTemplateNoPortrait" type="string"/>
+				</KeyValues>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString parentKey="Text" inherits="GameFontNormal" wordwrap="false">
+							<Anchors>
+								<Anchor point="TOP" x="0" y="-5"/>
+								<Anchor point="LEFT" x="60"/>
+								<Anchor point="RIGHT" x="-60"/>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+			</Frame>
+			<Button parentKey="ClosePanelButton" inherits="UIPanelCloseButtonDefaultAnchors"/>
+		</Frames>
+	</Frame>
+</Ui>
