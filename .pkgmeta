@@ -23,9 +23,7 @@ ignore:
 	- .pkgmeta_retail
 	- art/PNG
 	- sound/OLD
-
-move-folders:
-	Deadpool/Deadpool_CustomAchiever_toc: ../Deadpool_CustomAchiever
+	- Deadpool/Deadpool_CustomAchiever_toc
 	
 manual-changelog:
 	filename: CHANGELOG.txt
