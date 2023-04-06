@@ -65,113 +65,73 @@ raceID["MagharOrc"] = raceID["Mag'har Orc"]
 -- https://wowpedia.fandom.com/wiki/InstanceID
 -- https://wowpedia.fandom.com/wiki/DifficultyID
 -- https://wowpedia.fandom.com/wiki/LfgDungeonID
+
+--[[
+function getDpInstanceIDList()--/run tpotest()
+	dpInstanceIDListTmp = {} -- Add to toc
+	for i = 1, 3000 do
+	local name, typeID, _, _, _, _, _, maxRecLevel, _, _, _, _, _, _, _, _, _, _, _, _, _, lfgMapID = GetLFGDungeonInfo(i)
+		if typeID == 2 then
+			dpInstanceIDListTmp[i] = lfgMapID..";"..maxRecLevel..";"..name
+		end
+		
+	end
+end
+--]]
+
 local dpInstanceIDList = {
-	["249-3"]   = 46,   -- Onyxia's Lair
-	["249-4"]   = 257,  -- Onyxia's Lair
-	["409-9"]   = 48,   -- Molten Core
-	["469-9"]   = 50,   -- Blackwing Lair
-	["509-3"]   = 160,  -- Ahn'Qiraj Ruins
-	["531-9"]   = 161,  -- Ahn'Qiraj Temple
-	["532-3"]   = 175,  -- Karazhan
-	["533-3"]   = 159,  -- Naxxramas
-	["533-4"]   = 227,  -- Naxxramas
-	["534-4"]   = 195,  -- Hyjal Summit
-	["544-4"]   = 176,  -- Magtheridon's Lair
-	["548-4"]   = 194,  -- Serpentshrine Cavern
-	["550-4"]   = 193,  -- Tempest Keep
-	["564-4"]   = 196,  -- Black Temple
-	["565-4"]   = 177,  -- Gruul's Lair
-	["580-4"]   = 199,  -- Sunwell Plateau
-	["603-3"]   = 243,  -- Ulduar
-	["603-4"]   = 244,  -- Ulduar
-	["615-3"]   = 224,  -- The Obsidian Sanctum
-	["615-4"]   = 238,  -- The Obsidian Sanctum
-	["616-3"]   = 223,  -- The Eye of Eternity
-	["616-4"]   = 237,  -- The Eye of Eternity
-	["624-3"]   = 239,  -- Vault of Archavon
-	["624-4"]   = 240,  -- Vault of Archavon
-	["631-3"]   = 279,  -- Icecrown Citadel
-	["631-4"]   = 280,  -- Icecrown Citadel
-	["649-3"]   = 246,  -- Trial of the Crusader
-	["649-4"]   = 248,  -- Trial of the Crusader
-	["649-5"]   = 247,  -- Trial of the Crusader
-	["649-6"]   = 250,  -- Trial of the Crusader
-	["669-3"]   = 313,  -- Blackwing Descent
-	["669-4"]   = 314,  -- Blackwing Descent
-	["671-3"]   = 315,  -- The Bastion of Twilight
-	["671-4"]   = 316,  -- The Bastion of Twilight
-	["720-3"]   = 361,  -- Firelands
-	["720-4"]   = 362,  -- Firelands
-	["724-3"]   = 293,  -- The Ruby Sanctum
-	["724-4"]   = 294,  -- The Ruby Sanctum
-	["754-3"]   = 317,  -- Throne of the Four Winds
-	["754-4"]   = 318,  -- Throne of the Four Winds
-	["757-3"]   = 328,  -- Baradin Hold
-	["757-4"]   = 329,  -- Baradin Hold
-	["967-3"]   = 447,  -- Dragon Soul
-	["967-4"]   = 448,  -- Dragon Soul
-	["996-3"]   = 535,  -- Terrace of Endless Spring
-	["996-4"]   = 536,  -- Terrace of Endless Spring
-	["1008-3"]  = 531,  -- Mogu'shan Vaults
-	["1008-4"]  = 532,  -- Mogu'shan Vaults
-	["1009-3"]  = 533,  -- Heart of Fear
-	["1009-4"]  = 534,  -- Heart of Fear
-	["1098-3"]  = 633,  -- Throne of Thunder
-	["1098-4"]  = 634,  -- Throne of Thunder
-	["1136-14"] = 715,  -- Siege of Orgrimmar
-	["1136-15"] = 714,  -- Siege of Orgrimmar
-	["1136-16"] = 766,  -- Siege of Orgrimmar
-	["1205-14"] = 898,  -- Blackrock Foundry
-	["1205-15"] = 899,  -- Blackrock Foundry
-	["1205-16"] = 900,  -- Blackrock Foundry
-	["1228-14"] = 895,  -- Highmaul
-	["1228-15"] = 896,  -- Highmaul
-	["1228-16"] = 897,  -- Highmaul
-	["1448-14"] = 987,  -- Hellfire Citadel
-	["1448-15"] = 988,  -- Hellfire Citadel
-	["1448-16"] = 989,  -- Hellfire Citadel
-	["1520-14"] = 1348, -- The Emerald Nightmare
-	["1520-15"] = 1349, -- The Emerald Nightmare
-	["1520-16"] = 1350, -- The Emerald Nightmare
-	["1530-14"] = 1351, -- The Nighthold
-	["1530-15"] = 1352, -- The Nighthold
-	["1530-16"] = 1353, -- The Nighthold
-	["1648-14"] = 1437, -- Trial of Valor
-	["1648-15"] = 1439, -- Trial of Valor
-	["1648-16"] = 1438, -- Trial of Valor
-	["1676-14"] = 1525, -- Tomb of Sargeras
-	["1676-15"] = 1526, -- Tomb of Sargeras
-	["1676-16"] = 1527, -- Tomb of Sargeras
-	["1712-14"] = 1640, -- Antorus,  the Burning Throne
-	["1712-15"] = 1641, -- Antorus,  the Burning Throne
-	["1712-16"] = 1642, -- Antorus,  the Burning Throne
-	["1861-14"] = 1889, -- Uldir
-	["1861-15"] = 1888, -- Uldir
-	["1861-16"] = 1887, -- Uldir
-	["2070-14"] = 1942, -- Battle of Dazar'alor
-	["2070-15"] = 1943, -- Battle of Dazar'alor
-	["2070-16"] = 1944, -- Battle of Dazar'alor
-	["2096-14"] = 1952, -- Crucible of Storms
-	["2096-15"] = 1953, -- Crucible of Storms
-	["2096-16"] = 1954, -- Crucible of Storms
-	["2164-14"] = 2014, -- The Eternal Palace
-	["2164-15"] = 2015, -- The Eternal Palace
-	["2164-16"] = 2016, -- The Eternal Palace
-	["2217-14"] = 2033, -- Ny'alotha
-	["2217-15"] = 2034, -- Ny'alotha
-	["2217-16"] = 2035, -- Ny'alotha
-	["2296-14"] = 2095, -- Castle Nathria
-	["2296-15"] = 2094, -- Castle Nathria
-	["2296-16"] = 2093, -- Castle Nathria
-	["2450-14"] = 2226, -- Sanctum of Domination
-	["2450-15"] = 2227, -- Sanctum of Domination
-	["2450-16"] = 2228, -- Sanctum of Domination
-	["2481-14"] = 2288, -- Sepulcher of the First Ones
-	["2481-15"] = 2289, -- Sepulcher of the First Ones
-	["2481-16"] = 2290, -- Sepulcher of the First Ones
-	["2522-14"] = 2390, -- Vault of the Incarnates
-	["2522-15"] = 2389, -- Vault of the Incarnates
-	["2522-16"] = 2388, -- Vault of the Incarnates
+	 [249] = 30, -- Repaire d’Onyxia
+	 [409] = 30, -- Cœur du Magma
+	 [469] = 30, -- Repaire de l’Aile noire
+	 [509] = 30, -- Ruines d'Ahn'Qiraj
+	 [531] = 30, -- Temple d'Ahn'Qiraj
+	 [532] = 30, -- Karazhan
+	 [533] = 30, -- Naxxramas
+	 [534] = 30, -- Passé d’Hyjal
+	 [544] = 30, -- Le repaire de Magtheridon
+	 [548] = 30, -- Caverne du sanctuaire du Serpent
+	 [550] = 30, -- Donjon de la Tempête
+	 [564] = 30, -- Temple noir
+	 [565] = 30, -- Repaire de Gruul
+	 [580] = 30, -- Le Puits de soleil
+	 [603] = 30, -- Ulduar
+	 [615] = 30, -- Le sanctum Obsidien
+	 [616] = 30, -- L’Œil de l’éternité
+	 [624] = 30, -- Caveau d’Archavon
+	 [631] = 30, -- Citadelle de la Couronne de glace
+	 [649] = 30, -- L’épreuve du croisé
+	 [649] = 30, -- L'épreuve du grand croisé
+	 [669] = 35, -- Descente de l’Aile noire
+	 [671] = 35, -- Le bastion du Crépuscule
+	 [720] = 35, -- Terres de Feu
+	 [724] = 30, -- Le sanctum Rubis
+	 [754] = 35, -- Trône des quatre vents
+	 [757] = 35, -- Bastion de Baradin
+	 [870] = 35, -- Ordos
+	 [870] = 35, -- Astres vénérables
+	 [967] = 35, -- L’Âme des dragons
+	 [996] = 35, -- Terrasse Printanière
+	[1008] = 35, -- Caveaux Mogu’shan
+	[1009] = 35, -- Cœur de la peur
+	[1098] = 35, -- Trône du tonnerre
+	[1136] = 35, -- Siège d’Orgrimmar
+	[1205] = 40, -- Fonderie des Rochenoires
+	[1228] = 40, -- Cognefort
+	[1448] = 40, -- Citadelle des Flammes infernales
+	[1520] = 45, -- Le Cauchemar d’émeraude
+	[1530] = 45, -- Le palais Sacrenuit
+	[1648] = 45, -- Le Jugement des Valeureux
+	[1676] = 45, -- Tombe de Sargeras
+	[1712] = 45, -- Antorus, le Trône ardent
+	[1861] = 50, -- Uldir
+	[2070] = 50, -- Bataille de Dazar’alor
+	[2096] = 50, -- Creuset des Tempêtes
+	[2164] = 50, -- Palais Éternel
+	[2217] = 50, -- Ny’alotha, la cité en éveil
+	[2296] = 60, -- Château Nathria
+	[2450] = 60, -- Sanctum de Domination
+	[2481] = 60, -- Sépulcre des Fondateurs
+	[2522] = 70, -- Caveau des Incarnations
 }
 
 local willPlay, soundHandle
@@ -1197,11 +1157,11 @@ function isInstanceAtLevel(level)
 	if level then
 		local _, instanceType, difficultyID , _, _, _, _, instanceID, _, lfgDungeonID = GetInstanceInfo()
 		if instanceType == "raid" then
-			local _, _, _, minLevel, maxLevel, recLevel, minRecLevel, maxRecLevel
+			local minLevel, maxLevel, recLevel, minRecLevel, maxRecLevel
 			if lfgDungeonID then
 				_, _, _, minLevel, maxLevel, recLevel, minRecLevel, maxRecLevel = GetLFGDungeonInfo(lfgDungeonID)
-			elseif instanceID and difficultyID and dpInstanceIDList[instanceID.."-"..difficultyID] then
-				_, _, _, minLevel, maxLevel, recLevel, minRecLevel, maxRecLevel = GetLFGDungeonInfo(dpInstanceIDList[instanceID.."-"..difficultyID])
+			elseif instanceID and dpInstanceIDList[instanceID] then
+				maxRecLevel = dpInstanceIDList[instanceID]
 			end
 			if maxRecLevel and level <= maxRecLevel then
 				return true

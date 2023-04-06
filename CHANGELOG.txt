@@ -1,5 +1,6 @@
 ﻿- v1.10.11
 	- Classic WotLK support.
+	- Fixed: Boss vote in Firelands.
 - v1.10.10
 	- TOC for 10.0.7.
 	- [CustomAchiever] v1.3.2 integration.
