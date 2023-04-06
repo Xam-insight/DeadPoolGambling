@@ -1,6 +1,6 @@
 # Interface: 11403
-## Interface: 30401
-# Interface: 100007
+# Interface: 30401
+## Interface: 100007
 ## Title: Dead Pool |T137008:16|t |cffffffffG|r|cff666666a|r|cffffffffm|r|cff666666b|r|cffffffffl|r|cff666666i|r|cffffffffn|r|cff666666g|r
 ## Version: 1.10.11
 ## Notes: Gambling minigame
@@ -8,5 +8,5 @@
 ## SavedVariables: DeadpoolGlobal_SessionId, DeadpoolData, DeadpoolOptionsData, DeadpoolMIcon, DeadpoolTuto, DeadpoolWindow
 ## SavedVariables: Deadpool_CustomAchieverData, Deadpool_CustomAchieverOptionsData
 
-embeds_classic.xml
+#embeds_classic.xml
 embeds.xml

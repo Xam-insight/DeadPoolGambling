@@ -38,6 +38,7 @@ externals:
 ignore:
 	- .pkgmeta_classic
 	- .pkgmeta_retail
+	- embeds_classic.xml
 	- art/PNG
 	- sound/OLD
 
