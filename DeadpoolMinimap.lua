@@ -34,13 +34,7 @@ eventFrame:SetScript("OnEvent", function(self, event, addon)
 		tocname = "Deadpool",
 		OnClick = function(self, button)
 			if button == "LeftButton" then
-				if DeadpoolFrame:IsShown() or MiniDeadpoolFrame:IsShown() then
-					hideDeadpoolWindow()
-					MiniDeadpoolFrame:Hide()
-					DeadpoolWindow[Deadpool_WindowsOptions]["MiniDeadpoolShown"] = nil
-				else
-					Deadpool:DeadpoolShow(DeadpoolWindow[Deadpool_WindowsOptions]["MiniDeadpoolShown"], DeadpoolWindow[Deadpool_WindowsOptions]["MiniDeadpoolShown"])
-				end
+				Deadpool_ToggleFrame()
 			else
 				DeadpoolOptionsButtonClick(self)
 			end

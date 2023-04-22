@@ -298,6 +298,38 @@ function Deadpool:DeadpoolChatCommand(input)
 	Deadpool:DeadpoolShow(DeadpoolWindow[Deadpool_WindowsOptions]["MiniDeadpoolShown"], DeadpoolWindow[Deadpool_WindowsOptions]["MiniDeadpoolShown"])
 end
 
+function Deadpool_CompartmentFunc(addon, clickButton)
+	if clickButton == "RightButton" then
+		Deadpool_OpenOptions()
+	else
+		Deadpool_ToggleFrame()
+	end
+end
+
+function Deadpool_CompartmentFuncOnEnter(addon, button)
+	local tooltip = GetAddOnMetadata("Deadpool", "Title")
+	local tooltipDetail = L["MINIMAP_TOOLTIP1"]
+	local tooltipDetail2 = L["MINIMAP_TOOLTIP2"]
+	
+	button:SetAttribute("tooltip", tooltip)
+	button:SetAttribute("tooltipDetail", { tooltipDetail, tooltipDetail2 })
+	CustomAchieverButtonEnter(button, "LEFT")
+end
+
+function Deadpool_CompartmentFuncOnLeave()
+	CustomAchieverTooltip:Hide()
+end
+
+function Deadpool_ToggleFrame()
+	if DeadpoolFrame:IsShown() then
+		hideDeadpoolWindow()
+	elseif MiniDeadpoolFrame:IsShown() then
+		MiniDeadpoolFrame:Hide()
+	else
+		Deadpool:DeadpoolShow(DeadpoolWindow[Deadpool_WindowsOptions]["MiniDeadpoolShown"], DeadpoolWindow[Deadpool_WindowsOptions]["MiniDeadpoolShown"])
+	end
+end
+				
 function Deadpool_OpenOptions()
 	ACD:Open("Dead Pool")
 end

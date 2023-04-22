@@ -1,4 +1,6 @@
-﻿- v1.12.2
+﻿- v1.12.3
+	- Better Addon compartment management.
+- v1.12.2
 	- [CustomAchiever] v1.3.4 integration.
 - v1.12.1
 	- TOC for 10.1.0.
