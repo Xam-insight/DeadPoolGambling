@@ -1,4 +1,6 @@
-﻿- v1.12.1
+﻿- v1.12.2
+	- [CustomAchiever] v1.3.4 integration.
+- v1.12.1
 	- TOC for 10.1.0.
 - v1.12
 	- Classic WotLK support.
