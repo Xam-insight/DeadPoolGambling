@@ -1,4 +1,6 @@
-﻿- v1.12
+﻿- v1.12.1
+	- TOC for 10.1.0.
+- v1.12
 	- Classic WotLK support.
 	- Fixed: Boss vote in Firelands.
 - v1.10.10

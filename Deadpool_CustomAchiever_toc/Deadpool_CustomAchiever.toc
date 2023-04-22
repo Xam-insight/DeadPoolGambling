@@ -1,9 +1,11 @@
-## Interface: 100007
+## Interface: 100100
 ## Title: Deadpool_CustomAchiever
-## Version: 1.3.2
+## IconTexture: Interface\Icons\inv_inscription_tradeskill01.blp
+## AddonCompartmentFunc: CustomAchiever_OpenOptions
+## Version: 1.3.3
 ## Notes: Custom Achievements creator
 ## Author: Xam_insight
-## SavedVariables: CustomAchieverData, CustomAchieverOptionsData, CustomAchieverLastManualCall
+## SavedVariables: CustomAchieverData, CustomAchieverDataBackup, CustomAchieverOptionsData, CustomAchieverLastManualCall
 ## LoadOnDemand: 1
 
 embed.xml

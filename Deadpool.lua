@@ -298,6 +298,9 @@ function Deadpool:DeadpoolChatCommand(input)
 	Deadpool:DeadpoolShow(DeadpoolWindow[Deadpool_WindowsOptions]["MiniDeadpoolShown"], DeadpoolWindow[Deadpool_WindowsOptions]["MiniDeadpoolShown"])
 end
 
+function Deadpool_OpenOptions()
+	ACD:Open("Dead Pool")
+end
 
 function Deadpool:DeadpoolShow(noMain, mini)
 	if not noMain and DeadpoolFrame and not DeadpoolFrame:IsShown() then
@@ -615,7 +618,7 @@ function DeadpoolDurabilityColor(alpha)
 end
 
 function DeadpoolOptionsButtonClick(self)
-	ACD:Open("Dead Pool")
+	Deadpool_OpenOptions()
 end
 
 function AnnounceDeadpoolSessionButton_OnClick()
