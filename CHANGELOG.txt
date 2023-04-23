@@ -1,4 +1,6 @@
-﻿- v1.12.3
+﻿- v1.12.4
+	- [CustomAchiever] v1.3.6 integration.
+- v1.12.3
 	- Better Addon compartment management.
 - v1.12.2
 	- [CustomAchiever] v1.3.4 integration.
