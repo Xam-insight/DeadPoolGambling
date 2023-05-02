@@ -1,4 +1,6 @@
-﻿- v1.12.5
+﻿- v1.12.6
+	- Fixed: Addon Compartment error when standalone CustomAchiever is installed.
+- v1.12.5
 	- [CustomAchiever] v1.3.6 integration.
 - v1.12.3
 	- Better Addon compartment management.
