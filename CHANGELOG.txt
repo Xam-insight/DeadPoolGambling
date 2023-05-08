@@ -1,4 +1,4 @@
-﻿- v1.12.7
+﻿- v1.13
 	- Added: Aberrus support.
 - v1.12.6
 	- Fixed: Addon Compartment error when standalone CustomAchiever is installed.
