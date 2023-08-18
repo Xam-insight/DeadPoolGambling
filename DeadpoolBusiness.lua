@@ -970,6 +970,7 @@ function Deadpool_prepareStats()
 	local gainsStats = ""
 	local firstDeathStats = ""
 	local deathsStats = ""
+	local deathsOnBossStats = ""
 	local lostItemsStats = ""
 	local earningsStats = ""
 	local lossesStats = ""
@@ -992,6 +993,10 @@ function Deadpool_prepareStats()
 		if stat > 0 then
 			deathsStats = deathsStats.."  "..playerNameOrBankerName(index)..L["SPACE_BEFORE_DOT"]..": "..stat.."|n"
 		end
+		stat = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, index, DEADPOOL_DEATHSONBOSS))
+		if stat > 0 then
+			deathsOnBossStats = deathsOnBossStats.."  "..playerNameOrBankerName(index)..L["SPACE_BEFORE_DOT"]..": "..stat.."|n"
+		end
 		stat = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, index, DEADPOOL_LOSTITEMS))
 		if stat > 0 then
 			lostItemsStats = lostItemsStats.."  "..playerNameOrBankerName(index)..L["SPACE_BEFORE_DOT"]..": "..stat.."|n"
@@ -1013,6 +1018,8 @@ function Deadpool_prepareStats()
 	stats = stats..firstDeathStats
 	stats = stats.."|n|cFF00FF00"..L["DEADPOOLCOLLUMNS_STATS_DEATHS"].."|r|n"
 	stats = stats..deathsStats
+	stats = stats.."|n|cFF00FF00"..L["DEADPOOLCOLLUMNS_STATS_DEATHSONBOSS"].."|r|n"
+	stats = stats..deathsOnBossStats
 	stats = stats.."|n|cFF00FF00"..L["DEADPOOLCOLLUMNS_STATS_LOSTITEMS"].."|r|n"
 	stats = stats..lostItemsStats
 	stats = stats.."|n|cFF00FF00"..L["DEADPOOLCOLLUMNS_STATS_EARNINGS"].."|r|n"

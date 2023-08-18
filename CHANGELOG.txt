@@ -1,4 +1,8 @@
-﻿- v1.13
+﻿- v1.13.1
+	- TOC for 10.1.5.
+	- Added deaths info to odds tooltip.
+	- Fixed: Dropped deprecated method: dressUpModel.SetCustomRace
+- v1.13
 	- Added: Aberrus support.
 - v1.12.6
 	- Fixed: Addon Compartment error when standalone CustomAchiever is installed.

@@ -416,6 +416,9 @@ local dpCharacterDied
 function deadpoolCharacterIsDead(aDeadpoolSessionId, aChar, alternativeName)
 	DeadpoolSavedBets = {}
 	Deadpool_updateStat(aDeadpoolSessionId, aChar, DEADPOOL_DEATHS, 1)
+	if UnitGUID("boss1") then
+		Deadpool_updateStat(aDeadpoolSessionId, aChar, DEADPOOL_DEATHSONBOSS, 1)
+	end
 	local totalNextDeathBets, nbNextDeathBets = getDeadpoolTotalBets(aDeadpoolSessionId, "nextDeathBet")
 	local totalUniqueGambleOnChar, totalUniqueGamble = getDeadpoolTotalUniqueGamble(aDeadpoolSessionId, aChar)
 	if totalNextDeathBets > 0 or totalUniqueGamble > 0 then
@@ -669,6 +672,7 @@ function DeadpoolIconButtonEnter(self)
 	local tooltipDetail = self:GetAttribute("tooltipDetail")
 	local tooltipDetailGreen = self:GetAttribute("tooltipDetailGreen")
 	local tooltipDetailRed = self:GetAttribute("tooltipDetailRed")
+	local tooltipDetailBlue = self:GetAttribute("tooltipDetailBlue")
 	DeadpoolTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
 	if tooltip then
 		DeadpoolTooltip:SetText(tooltip)
@@ -685,6 +689,12 @@ function DeadpoolIconButtonEnter(self)
 		if tooltipDetailRed then
 			for index,value in pairs(tooltipDetailRed) do
 				DeadpoolTooltip:AddLine(value, 1.0, 0.0, 0.0)
+			end
+		end
+		if tooltipDetailBlue then
+			for index,value in pairs(tooltipDetailBlue) do
+				local leftText, rightText = strsplit("#", value, 2)
+				DeadpoolTooltip:AddDoubleLine(leftText, rightText, 0.25, 0.78, 0.92, 0.25, 0.78, 0.92)
 			end
 		end
 		DeadpoolTooltip:Show()
@@ -934,6 +944,13 @@ function createDeadpoolLine(aDeadpoolSessionId, indexCharac, fullName, deadpoolL
 		else
 			oddsInfoFrame:SetAttribute("tooltipDetailRed", nil)
 		end
+		oddsInfoFrame:SetAttribute("tooltipDetailBlue",
+			{
+				L["DEADPOOLCOLLUMNS_STATS_FIRSTDEATH"].."#"..Deadpool_tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_FIRSTDEATH)),
+				L["DEADPOOLCOLLUMNS_STATS_DEATHS"].."#"..Deadpool_tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_DEATHS)),
+				L["DEADPOOLCOLLUMNS_STATS_DEATHSONBOSS"].."#"..Deadpool_tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_DEATHSONBOSS))
+			}
+		)
 
 		if not DeadpoolOptionsData["TutoDisabled"]
 			and (not DeadpoolTuto
@@ -1454,8 +1471,8 @@ function Deadpool:generateDressUpModel(event, aChar, forceModel)
 				elseif not event and not deadpoolDressUpModelPool[char]["set"] then
 					dressUpModel:SetUnit("player")
 					--dressUpModel:SetBarberShopAlternateForm()
-					dressUpModel:SetCustomRace(
-						getDeadpoolCharInfo(char, "race"), getDeadpoolCharInfo(char, "gender"))
+					--dressUpModel:SetCustomRace(
+					--	getDeadpoolCharInfo(char, "race"), getDeadpoolCharInfo(char, "gender"))
 					deadpool_customDressing(dressUpModel)
 				end
 			end

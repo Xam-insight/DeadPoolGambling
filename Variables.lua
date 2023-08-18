@@ -52,14 +52,15 @@ if DEADPOOL_BANKER_NAME == "" then
 	DEADPOOL_BANKER_NAME = string.gsub(DEADPOOL_BANKER, "(%a)([%w_']*)", tchelper)
 end
 
-DEADPOOL_WINS        = "Wins"
-DEADPOOL_FIRSTDEATH  = "FirstDeath"
-DEADPOOL_CREDITSGAIN = "CreditsGain"
-DEADPOOL_LOSTITEMS   = "LostItems"
-DEADPOOL_SOLEILBET   = "SoleilBet"
-DEADPOOL_DEATHS      = "Deaths"
-DEADPOOL_BALANCE     = "Balance"
-DEADPOOL_WINNER      = "Winner"
+DEADPOOL_WINS         = "Wins"
+DEADPOOL_FIRSTDEATH   = "FirstDeath"
+DEADPOOL_CREDITSGAIN  = "CreditsGain"
+DEADPOOL_LOSTITEMS    = "LostItems"
+DEADPOOL_SOLEILBET    = "SoleilBet"
+DEADPOOL_DEATHS       = "Deaths"
+DEADPOOL_DEATHSONBOSS = "DeathsOnBoss"
+DEADPOOL_BALANCE      = "Balance"
+DEADPOOL_WINNER       = "Winner"
 
 DEADPOOL_ISBESTACHIVERACHIEVEMENT = "IsBestAchieverAchievement"
 
