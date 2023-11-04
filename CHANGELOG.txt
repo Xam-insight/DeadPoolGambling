@@ -1,4 +1,7 @@
-﻿- v1.13.2
+﻿- v1.13.3
+	- TOC for 10.2.0.
+	- Added: Amirdrassil support.
+- v1.13.2
 	- TOC for 10.1.5.
 	- Added deaths info to odds tooltip.
 	- Fixed: Dropped deprecated method: dressUpModel.SetCustomRace

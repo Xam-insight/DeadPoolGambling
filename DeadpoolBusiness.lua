@@ -130,6 +130,7 @@ local dpInstanceIDList = {
 	[2481] = 60, -- Sepulcher of the First Ones
 	[2522] = 70, -- Vault of the Incarnates
 	[2569] = 70, -- Aberrus, the Shadowed Crucible
+	[2549] = 70, -- Amirdrassil, the Dream's Hope
 }
 
 local willPlay, soundHandle
