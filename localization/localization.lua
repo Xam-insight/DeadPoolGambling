@@ -155,8 +155,8 @@ L["DEADPOOLTUTO_BETTOMUCH"] = "If you do not have enough chips, Dead Pool will o
 L["DEADPOOLTUTO_BETALL"] = "You can bet all your remaining chips on this character at once."
 L["DEADPOOLTUTO_BETREMOVE"] = "You can withdraw your bet on this character."
 L["DEADPOOLTUTO_UNIQUEBET"] = "You have no more chips or clothes but you can burst the bank!|n|nThis bet is free but you can only choose one character.|n|nYou earn what is in the bank in the form of clothes and chips."
-L["DEADPOOLTUTO_BANKER"] = "Gallywix can participate in betting."
-L["DEADPOOLTUTO_BANKERBET"] = "Ask him to bet, he will choose which character he wants to bet on."
+L["DEADPOOLTUTO_BANKER"] = "Gallywix and also Dungeon followers can participate in betting."
+L["DEADPOOLTUTO_BANKERBET"] = "Ask them to bet, they will choose which character they want to bet on."
 L["DEADPOOLTUTO_BANKERHASBET"] = "He has already chosen his bet, the die is cast!"
 L["DEADPOOLTUTO_BOSS"] = "If all Dead Pool players are in your raid instance and that raid is at your level, you can bet on the death of the next boss!"
 
@@ -173,6 +173,7 @@ L["DEADPOOL_ACHIEVEMENT_SOLEILBET"] = "Soleîl sacrilegious"
 L["DEADPOOL_ACHIEVEMENT_SOLEILBET_DESC"] = "Be the first to bet %s times on the death of %s and thus lose %s clothes as punishment in the same game."
 
 L["MAKE_BANKER_PLAY"] = "Make %s bet"
+L["MAKE_FOLLOWERS_PLAY"] = "and the followers"
 L["BANKER_BET"] = "%s\nbet on %s."
 L["BANKER_NO_CHIPS"] = "%s\nhas no more chips."
 

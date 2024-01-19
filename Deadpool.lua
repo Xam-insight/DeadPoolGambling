@@ -355,15 +355,18 @@ function Deadpool:DeadpoolShow(noMain, mini)
 	--dpInitializeHelp()
 end
 
-function Deadpool:CheckDeath(event, aChar)
-	if aChar then
-		if Deadpool_isPartyMember(aChar) then
-			local name = Deadpool_fullName(aChar)
-			local online = UnitIsConnected(aChar)
-			local isDead = UnitIsDeadOrGhost(aChar)
-			if name then
-				local isAlreadyDead = getDeadpoolData(DeadpoolGlobal_SessionId, name, "isAlreadyDead")
-				deadpoolUpdateStatus(name, aChar, online, isDead, isAlreadyDead)
+function Deadpool:CheckDeath(event, unitId)
+	if unitId then
+		if Deadpool_isPartyMember(unitId) then
+			local playerId = UnitIsPlayer(unitId) and Deadpool_fullName(unitId)
+			if not playerId then
+				_, _, _, _, _, playerId = strsplit("-", UnitGUID(unitId))
+			end
+			local online = UnitIsConnected(unitId)
+			local isDead = UnitIsDeadOrGhost(unitId)
+			if playerId then
+				local isAlreadyDead = getDeadpoolData(DeadpoolGlobal_SessionId, playerId, "isAlreadyDead")
+				deadpoolUpdateStatus(playerId, unitId, online, isDead, isAlreadyDead)
 			end
 		end
 	else
@@ -371,42 +374,42 @@ function Deadpool:CheckDeath(event, aChar)
 		if numGroupMembers > 0 then
 			for i = 1, numGroupMembers do
 				local name, _, _, _, _, _, _, online, isDead, _, _ = GetRaidRosterInfo(i)
-				name = Deadpool_addRealm(name)
-				isDead = isDead or (getDeadpoolCharInfo(name, "groupRank") and UnitIsGhost(getDeadpoolCharInfo(name, "groupRank")))
-				local isAlreadyDead = getDeadpoolData(DeadpoolGlobal_SessionId, name, "isAlreadyDead")
-				local groupRank = getDeadpoolCharInfo(name, "groupRank")
-				deadpoolUpdateStatus(name, groupRank, online, isDead, isAlreadyDead)
+				local playerId = DeadpoolFollowersId[name] or Deadpool_addRealm(name)
+				isDead = isDead or (getDeadpoolCharInfo(playerId, "groupRank") and UnitIsGhost(getDeadpoolCharInfo(playerId, "groupRank")))
+				local isAlreadyDead = getDeadpoolData(DeadpoolGlobal_SessionId, playerId, "isAlreadyDead")
+				local groupRank = getDeadpoolCharInfo(playerId, "groupRank")
+				deadpoolUpdateStatus(playerId, groupRank, online, isDead, isAlreadyDead)
 			end
 		else
-			local name = Deadpool_playerCharacter()
-			if name then
+			local playerId = Deadpool_playerCharacter()
+			if playerId then
 				local isDead = UnitIsDeadOrGhost("player")
-				local isAlreadyDead = getDeadpoolData(DeadpoolGlobal_SessionId, name, "isAlreadyDead")
-				deadpoolUpdateStatus(name, "player", true, isDead, isAlreadyDead)
+				local isAlreadyDead = getDeadpoolData(DeadpoolGlobal_SessionId, playerId, "isAlreadyDead")
+				deadpoolUpdateStatus(playerId, "player", true, isDead, isAlreadyDead)
 			end
 		end
 	end
 end
 
-function deadpoolUpdateStatus(name, groupRank, online, isDead, isAlreadyDead)
-	if name then
+function deadpoolUpdateStatus(playerId, groupRank, online, isDead, isAlreadyDead)
+	if playerId then
 		if isDead then
-			setDeadpoolData(DeadpoolGlobal_SessionId, name, "isDead", "true")
+			setDeadpoolData(DeadpoolGlobal_SessionId, playerId, "isDead", "true")
 			if not isAlreadyDead or isAlreadyDead == "false" then
-				setDeadpoolData(DeadpoolGlobal_SessionId, name, "isAlreadyDead", "true")
-				deadpoolCharacterIsDead(DeadpoolGlobal_SessionId, name)
+				setDeadpoolData(DeadpoolGlobal_SessionId, playerId, "isAlreadyDead", "true")
+				deadpoolCharacterIsDead(DeadpoolGlobal_SessionId, playerId)
 			end
 		else
-			setDeadpoolData(DeadpoolGlobal_SessionId, name, "isDead", "false")
+			setDeadpoolData(DeadpoolGlobal_SessionId, playerId, "isDead", "false")
 			if online then
-				setDeadpoolData(DeadpoolGlobal_SessionId, name, "isAlreadyDead", "false")
+				setDeadpoolData(DeadpoolGlobal_SessionId, playerId, "isAlreadyDead", "false")
 			end
 		end
 		if groupRank then
 			if UnitAffectingCombat(groupRank) then
-				setDeadpoolData(DeadpoolGlobal_SessionId, name, "inCombat", "true")
+				setDeadpoolData(DeadpoolGlobal_SessionId, playerId, "inCombat", "true")
 			else
-				setDeadpoolData(DeadpoolGlobal_SessionId, name, "inCombat", "false")
+				setDeadpoolData(DeadpoolGlobal_SessionId, playerId, "inCombat", "false")
 			end
 		end
 	end
@@ -452,7 +455,7 @@ function deadpoolCharacterIsDead(aDeadpoolSessionId, aChar, alternativeName)
 		local dataTime = tostring(Deadpool_getTimeUTCinMS())
 		if aDeadpoolSessionId and aChar and DeadpoolData
 			and DeadpoolData[aDeadpoolSessionId] then
-			local shortName = alternativeName or Deadpool_delRealm(aChar)
+			local shortName = alternativeName or getDeadpoolCharInfo(aChar, "localName")
 			local gender = Deadpool_tonumberzeroonblankornil(getDeadpoolCharInfo(aChar, "gender"))
 			deadpoolLog = shortName..L["DEADPOOLLOGS_DIED"..gender]
 			if alternativeName then
@@ -474,7 +477,7 @@ function deadpoolCharacterIsDead(aDeadpoolSessionId, aChar, alternativeName)
 			local winnerValue = nil
 			for k1 in pairs(DeadpoolData[aDeadpoolSessionId]) do
 				if "Bank" ~= k1 and "DeadpoolSessionId" ~= k1 and not deadpoolAchievements[k1] then
-					shortName = Deadpool_delRealm(playerNameOrBankerName(k1))
+					shortName = getDeadpoolCharInfo(k1, "localName")
 					local bets = DeadpoolData[aDeadpoolSessionId][k1]["bets"]
 					uniqueGamble = getDeadpoolData(aDeadpoolSessionId, k1, "uniqueGamble")
 					local playerBets = 0
@@ -544,7 +547,7 @@ function deadpoolCharacterIsDead(aDeadpoolSessionId, aChar, alternativeName)
 					-- Loose > Drop item
 					if aChar == k1 and playerBets > 0 then
 						Deadpool_dropAnItem(aChar, 1, true)
-						deadpoolLog = string.format(L["DEADPOOLLOGS_HASBETANDDIED"], Deadpool_delRealm(aChar))
+						deadpoolLog = string.format(L["DEADPOOLLOGS_HASBETANDDIED"], getDeadpoolCharInfo(aChar, "localName"))
 						Deadpool:Print(deadpoolLog)
 						table.insert(tooltipDetailRed, deadpoolLog)
 					end
@@ -845,7 +848,7 @@ function createDeadpoolLine(aDeadpoolSessionId, indexCharac, fullName, deadpoolL
 	local fontstring = getFontStringFromDeadpoolFramePool(indexCharac, fontstringLabel, "DeadpoolPlayerLabelTemplate", deadpoolLine)
 	local color = RAID_CLASS_COLORS[(getDeadpoolCharInfo(fullName, "classFileName") or "ROGUE")]
 	fontstring:SetTextColor(color.r, color.g, color.b, 1.0)
-	local charName = Deadpool_delRealm(fullName)
+	local charName = getDeadpoolCharInfo(fullName, "localName")
 	local isDead = getDeadpoolData(aDeadpoolSessionId, fullName, "isDead")
 	if isDead == "true" then
 		local height = 14
@@ -1170,7 +1173,7 @@ function createDeadpoolRoleButton(aDeadpoolSessionId, fullName, indexCharac, xVa
 	local portraitButton = getElementFromDeadpoolFramePool("Button", indexCharac,
 		"DeadpoolPortrait"..indexCharac, "PortraitButtonTemplate", deadpoolLine:GetName())
 	if fullName ~= "boss" then
-		portraitButton:SetAttribute("tooltip", fullName)
+		portraitButton:SetAttribute("tooltip", playerNameOrBankerName(fullName))
 	else
 		portraitButton:SetAttribute("tooltip", L["NEXT_BOSS"])
 	end
@@ -1229,9 +1232,8 @@ end
 function DeadpoolSummaryFrame_Update(forceModel)
 	if DeadpoolSummaryFrame and DeadpoolSummaryFrame:IsShown() then
 		local selectedTab = PanelTemplates_GetSelectedTab(DeadpoolSummaryFrame)
-		local characterName = selectedDeadpoolCharacter
+		local characterName = playerNameOrBankerName(selectedDeadpoolCharacter)
 		if selectedDeadpoolCharacter == "boss" then
-			characterName = L["NEXT_BOSS"]
 			if selectedTab == 2 then
 				selectedTab = 3
 			end
@@ -1424,7 +1426,10 @@ function Deadpool:generateDressUpModel(event, aChar, forceModel)
 	if not event or Deadpool_isPartyMember(aChar) then
 		local char = aChar
 		if event then
-			char = Deadpool_fullName(char)
+			char = UnitIsPlayer(aChar) and Deadpool_fullName(aChar)
+			if not char then
+				_, _, _, _, _, char = strsplit("-", UnitGUID(aChar))
+			end
 			forceModel = forceModel or char == selectedDeadpoolCharacter
 		end
 
@@ -1622,14 +1627,19 @@ function generateDeadpoolTable()
 			DeadpoolBankerButton.SelectedTexture:SetShown(true)
 			local shortBankerBetName = L["NEXT_BOSS"]
 			if bankerBet ~= "boss" then
-				shortBankerBetName = Deadpool_delRealm(bankerBet)
+				shortBankerBetName = getDeadpoolCharInfo(bankerBet, "localName")
 			end
 			DeadpoolBankerButton:SetText(string.format(L["BANKER_BET"], DEADPOOL_BANKER_NAME, shortBankerBetName))
 			DeadpoolBankerButton:Disable()
 		else
 			DeadpoolBankerButton.SelectedTexture:SetShown(false)
 			if bankerChips > 0 then
-				DeadpoolBankerButton:SetText(string.format(L["MAKE_BANKER_PLAY"], DEADPOOL_BANKER_NAME))
+				local gamblerName = DEADPOOL_BANKER_NAME
+				local _, _, difficultyID = GetInstanceInfo()
+				if difficultyID == 205 then -- Followers dungeon
+					gamblerName = gamblerName.."|n"..L["MAKE_FOLLOWERS_PLAY"]
+				end
+				DeadpoolBankerButton:SetText(string.format(L["MAKE_BANKER_PLAY"], gamblerName))
 				DeadpoolBankerButton:Enable()
 			else
 				DeadpoolBankerButton:SetText(string.format(L["BANKER_NO_CHIPS"], DEADPOOL_BANKER_NAME))
@@ -1648,7 +1658,7 @@ function updateDeadpoolList(charInfo, searchBoxText)
 		local charNames = {}
 		for k in pairs(charInfo) do
 			if (not playerFirst or not Deadpool_isPlayerCharacter(k)) and k ~= "boss" then
-				charNames[ #charNames + 1 ] = k
+				charNames[ #charNames + 1 ] = charInfo[k]["localName"].."#"..k
 			end
 		end
 		table.sort(charNames)
@@ -1667,9 +1677,11 @@ function updateDeadpoolList(charInfo, searchBoxText)
 		end
 
 		for k,v in pairs(charNames) do
-			if not searchBoxText or searchBoxText == ""
-				or string.find(Deadpool_upperCase(Deadpool_delRealm(v)), searchBoxText) then -- Search box result
-				table.insert(deadpoolList, v)
+			local charName, charId = strsplit("#", v, 2)
+			if charId ~= DEADPOOL_BANKER 
+				and (not searchBoxText or searchBoxText == ""
+					or string.find(Deadpool_upperCase(charName), searchBoxText)) then -- Search box result
+				table.insert(deadpoolList, charId)
 			end
 		end
 	end
@@ -1752,12 +1764,15 @@ function Deadpool:DeadpoolMouseOverUnit()
 		if unitFrameName then
 			local unitid = unitFrame.unit
 			if unitid and Deadpool_isPartyMember(unitid) and not UnitAffectingCombat(unitid) then
-				local unitName = Deadpool_fullName(unitid)
-				if unitName then
+				local playerId = UnitIsPlayer(unitid) and Deadpool_fullName(unitid)
+				if not playerId then
+					_, _, _, _, _, playerId = strsplit("-", UnitGUID(unitid))
+				end
+				if playerId then
 					DeadpoolBetButton:SetParent(unitFrame)
 					DeadpoolBetButton:SetFrameStrata("MEDIUM")
 					DeadpoolBetButton:SetPoint("CENTER", unitFrame, "TOPRIGHT", -1, -1)
-					DeadpoolBetButton:SetAttribute("Character", unitName)
+					DeadpoolBetButton:SetAttribute("Character", playerId)
 					DeadpoolBetButton:SetAttribute("stopFadeOutTimer", true)
 					UIFrameFadeRemoveFrame(DeadpoolBetButton)
 					DeadpoolBetButton:SetAlpha(1.0)

@@ -1,4 +1,6 @@
-﻿- v1.13.6
+﻿- v1.14.0
+	- Added: Dungeon follower bets.
+- v1.13.6
 	- TOC for 10.2.5.
 	- Workaround in LibUIDropDownMenu.
 	- Fixed: Fatal error when trying to get dungeon follower model.

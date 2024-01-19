@@ -183,6 +183,11 @@ function initDeadpoolBusinessObjects()
 	if not DeadpoolTuto then
 		DeadpoolTuto = {}
 	end
+
+	-- Followers ids by name
+	if not DeadpoolFollowersId then
+		DeadpoolFollowersId = {}
+	end
 end
 
 function prepareAndSendSimpleDeadpoolDataToRaid(aSession, aCharacter, anInfo, isOptionData)
@@ -205,6 +210,10 @@ end
 local groupLabel
 function getDeadpoolRosterInfo()
 	deadpoolCharInfo = {}
+	
+	deadpoolCharInfo[DEADPOOL_BANKER] = {}
+	deadpoolCharInfo[DEADPOOL_BANKER]["localName"] = DEADPOOL_BANKER_NAME
+	deadpoolCharInfo[DEADPOOL_BANKER]["isAPlayer"] = false
 
 	local deadpoolPlayerCharacter = Deadpool_playerCharacter() or UNKNOWNOBJECT
 	local deadpoolPlayerVersion = getDeadpoolMainVersion(GetAddOnMetadata("Deadpool", "Version"))
@@ -224,15 +233,23 @@ function getDeadpoolRosterInfo()
     if groupLabel then
 		Deadpool_maxBets = floor(numGroupMembers / 2)
         for i = 1, numGroupMembers do
-			if UnitExists(groupLabel..i) then
-                local name = Deadpool_fullName(groupLabel..i)
-				if name then
-					local isDeadpoolPlayer = getDeadpoolData(DeadpoolGlobal_SessionId, name, "credits")
-					local isDeadpoolPlayerUpToDate = deadpoolPlayerVersion == getDeadpoolMainVersion(getDeadpoolData(DeadpoolGlobal_SessionId, name, DEADPOOLDATA_VERSION))
-					addCharInList(deadpoolCharInfo, groupLabel..i, name)
-					local _, _, _, instanceIDChar = UnitPosition(groupLabel..i)
-					if isDeadpoolPlayer and everyoneIsHere and UnitIsConnected(groupLabel..i)
-							and (not isDeadpoolPlayerUpToDate or instanceIDChar ~= instanceID or not isInstanceAtLevel(UnitLevel(groupLabel..i))) then
+			local memberGroupLabel = groupLabel..i
+			if UnitExists(memberGroupLabel) then
+                local playerId = UnitIsPlayer(memberGroupLabel) and Deadpool_fullName(memberGroupLabel)
+				if not playerId then
+					_, _, _, _, _, playerId = strsplit("-", UnitGUID(memberGroupLabel))
+				end
+				if playerId then
+					local isDeadpoolPlayer = getDeadpoolData(DeadpoolGlobal_SessionId, playerId, "credits")
+					if not isDeadpoolPlayer and not UnitIsPlayer(memberGroupLabel) then
+						setInitialDeadpoolPlayerData(DeadpoolGlobal_SessionId, playerId, GetAddOnMetadata("Deadpool", "Version"))
+						isDeadpoolPlayer = true
+					end
+					local isDeadpoolPlayerUpToDate = deadpoolPlayerVersion == getDeadpoolMainVersion(getDeadpoolData(DeadpoolGlobal_SessionId, playerId, DEADPOOLDATA_VERSION))
+					addCharInList(deadpoolCharInfo, memberGroupLabel, playerId)
+					local _, _, _, instanceIDChar = UnitPosition(memberGroupLabel)
+					if isDeadpoolPlayer and everyoneIsHere and UnitIsConnected(memberGroupLabel)
+							and (not isDeadpoolPlayerUpToDate or instanceIDChar ~= instanceID or not isInstanceAtLevel(UnitLevel(memberGroupLabel))) then
 						everyoneIsHere = false
 					end
 				else
@@ -286,38 +303,43 @@ function getDeadpoolMainVersion(version)
 	return mainVersion
 end
 
-function addCharInList(deadpoolCharInfo, groupRank, name)
+function addCharInList(deadpoolCharInfo, groupRank, playerId)
 	local deadpoolPlayerCharacter = Deadpool_playerCharacter() or UNKNOWNOBJECT
 	local _, englishClass = UnitClass(groupRank)
 	local _, raceEn = UnitRace(groupRank)
 	local gender_code = UnitSex(groupRank)
-	deadpoolCharInfo[name] = {}
-	deadpoolCharInfo[name]["classFileName"] = englishClass
-	deadpoolCharInfo[name]["groupRank"] = groupRank
+	deadpoolCharInfo[playerId] = {}
+	deadpoolCharInfo[playerId]["isAPlayer"] = UnitIsPlayer(groupRank)
+	if not deadpoolCharInfo[playerId]["isAPlayer"] then
+		DeadpoolFollowersId[UnitNameUnmodified(groupRank)] = playerId
+	end
+	deadpoolCharInfo[playerId]["localName"] = UnitNameUnmodified(groupRank)
+	deadpoolCharInfo[playerId]["classFileName"] = englishClass
+	deadpoolCharInfo[playerId]["groupRank"] = groupRank
 	local role = 'NONE'
 	if UnitGroupRolesAssigned then
 		role = UnitGroupRolesAssigned(groupRank)
 	end
-	deadpoolCharInfo[name]["groupRole"] = role
-	deadpoolCharInfo[name]["race"] = (raceEn and raceID[raceEn]) or 1
-	deadpoolCharInfo[name]["gender"] = (gender_code and gender_code - 2) or 0
-	clearCharacterDeadpoolData(name)
+	deadpoolCharInfo[playerId]["groupRole"] = role
+	deadpoolCharInfo[playerId]["race"] = (raceEn and raceID[raceEn]) or 1
+	deadpoolCharInfo[playerId]["gender"] = (gender_code and gender_code - 2) or 0
+	clearCharacterDeadpoolData(playerId)
 
-	if not Deadpool_isPlayerCharacter(name) and DeadpoolSavedBets then
+	if not Deadpool_isPlayerCharacter(playerId) and DeadpoolSavedBets then
 		if DeadpoolSavedBets[deadpoolPlayerCharacter] then
-			if DeadpoolSavedBets[deadpoolPlayerCharacter][name] then
-				local savedBet = DeadpoolSavedBets[deadpoolPlayerCharacter][name]
+			if DeadpoolSavedBets[deadpoolPlayerCharacter][playerId] then
+				local savedBet = DeadpoolSavedBets[deadpoolPlayerCharacter][playerId]
 				if savedBet then
-					DeadpoolSavedBets[deadpoolPlayerCharacter][name] = nil
-					setDeadpoolBets(DeadpoolGlobal_SessionId, deadpoolPlayerCharacter, name, savedBet)
+					DeadpoolSavedBets[deadpoolPlayerCharacter][playerId] = nil
+					setDeadpoolBets(DeadpoolGlobal_SessionId, deadpoolPlayerCharacter, playerId, savedBet)
 				end
 			end
-			if DeadpoolSavedBets[deadpoolPlayerCharacter]["uniqueGamble"] and DeadpoolSavedBets[deadpoolPlayerCharacter]["uniqueGamble"] == name then
+			if DeadpoolSavedBets[deadpoolPlayerCharacter]["uniqueGamble"] and DeadpoolSavedBets[deadpoolPlayerCharacter]["uniqueGamble"] == playerId then
 				DeadpoolSavedBets[deadpoolPlayerCharacter]["uniqueGamble"] = nil
-				setDeadpoolUniqueGamble(DeadpoolGlobal_SessionId, deadpoolPlayerCharacter, name)
+				setDeadpoolUniqueGamble(DeadpoolGlobal_SessionId, deadpoolPlayerCharacter, playerId)
 			end
 		end
-		loadBets(DeadpoolGlobal_SessionId, name)
+		loadBets(DeadpoolGlobal_SessionId, playerId)
 	end
 end
 
@@ -466,7 +488,10 @@ end
 function Deadpool_fullName(unit)
 	local fullName = nil
 	if unit then
-		local playerName, playerRealm = UnitFullName(unit)
+		local playerName, playerRealm = UnitNameUnmodified(unit)
+		if not UnitIsPlayer(unit) then
+			return playerName
+		end
 		if playerName and playerName ~= "" and playerName ~= UNKNOWNOBJECT then
 			if not playerRealm or playerRealm == "" then
 				playerRealm = GetNormalizedRealmName()
@@ -479,21 +504,20 @@ function Deadpool_fullName(unit)
 	return fullName
 end
 
-
-function Deadpool_delRealm(aName)
-	if aName and string.match(aName, "-") then
-		aName = strsplit("-", aName)
-	end
-	return aName
-end
-
 function playerNameOrBankerName(fullName)
-	if fullName == DEADPOOL_BANKER then
-		return DEADPOOL_BANKER_NAME
-	elseif fullName == "boss" then
-		return L["NEXT_BOSS"]
-	else
+	if getDeadpoolCharInfo(fullName, "isAPlayer") then
 		return fullName
+	elseif getDeadpoolCharInfo(fullName, "localName") then
+		return getDeadpoolCharInfo(fullName, "localName")
+	elseif fullName == "boss" then
+		return RAID_BOSSES
+	else
+		local npcName = EZBlizzUiPop_GetNameFromNpcID(fullName)
+		if npcName and npcName ~= "" then
+			return npcName
+		else
+			return fullName
+		end
 	end
 end
 
@@ -900,7 +924,7 @@ function setDeadpoolUniqueGamble(aSession, aChar, aBetChar)
 				Deadpool_Error(L["UNIT_IN_COMBAT"])
 			elseif aBetChar ~= getDeadpoolData(aSession, aChar, "uniqueGamble") then
 				DeadpoolTuto["chipPiles"] = "done"
-				if DEADPOOL_SOLEIL == Deadpool_delRealm(aBetChar) then
+				if DEADPOOL_SOLEIL == getDeadpoolCharInfo(aChar, "localName") then
 					Deadpool_Error(L["DEADPOOL_SOLEILBET"])
 					Deadpool_dropAnItem(aChar, 1, true)
 					Deadpool_updateStat(aSession, aChar, DEADPOOL_SOLEILBET, 1)
@@ -916,7 +940,7 @@ function setDeadpoolUniqueGamble(aSession, aChar, aBetChar)
 end
 
 function saveDeadpoolBets(aSession, aChar, aBetChar, nextDeathBet, afterTransactionCredits)
-	if DEADPOOL_SOLEIL == Deadpool_delRealm(aBetChar) and nextDeathBet > 0 then
+	if DEADPOOL_SOLEIL == getDeadpoolCharInfo(aChar, "localName") and nextDeathBet > 0 then
 		Deadpool_Error(L["DEADPOOL_SOLEILBET"])
 		Deadpool_dropAnItem(aChar, 1, true)
 		Deadpool_updateStat(aSession, aChar, DEADPOOL_SOLEILBET, 1)
@@ -1151,8 +1175,8 @@ function Deadpool_PlayRandomSound(soundFileIdBank, channel, forcePlay)
 	return Deadpool_PlaySoundFileId(soundFileIdBank[sound], channel)
 end
 
-function Deadpool_isPartyMember(aChar)
-	return aChar == "player" or UnitInParty(aChar) or UnitInRaid(aChar)
+function Deadpool_isPartyMember(unitId)
+	return unitId == "player" or UnitInParty(unitId) or UnitInRaid(unitId)
 end
 
 function SimpleRound (val, valStep)

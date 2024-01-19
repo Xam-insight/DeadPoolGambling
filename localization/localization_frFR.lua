@@ -155,8 +155,8 @@ L["DEADPOOLTUTO_BETTOMUCH"] = "Si vous n'avez pas assez de jetons, Dead Pool vou
 L["DEADPOOLTUTO_BETALL"] = "Vous pouvez miser d'un coup tous vos jetons restants sur ce personnage."
 L["DEADPOOLTUTO_BETREMOVE"] = "Vous pouvez retirer votre mise sur ce personnage."
 L["DEADPOOLTUTO_UNIQUEBET"] = "Vous n'avez plus ni jetons ni vêtements mais vous pouvez faire sauter la banque\194\160!|n|nCe pari est gratuit mais vous ne pouvez choisir qu'un seul personnage.|n|nVous gagnez ce qu'il y a dans la banque sous forme de vêtements et de jetons."
-L["DEADPOOLTUTO_BANKER"] = "Gallywix peut participer aux paris."
-L["DEADPOOLTUTO_BANKERBET"] = "Demandez-lui de miser, il choisira sur quel personnage il veut parier."
+L["DEADPOOLTUTO_BANKER"] = "Gallywix ainsi que les sujets de donjons peuvent participer aux paris."
+L["DEADPOOLTUTO_BANKERBET"] = "Demandez-leur de miser, ils choisiront sur quel personnage il veulent parier."
 L["DEADPOOLTUTO_BANKERHASBET"] = "Il a déjà choisi son pari, les jeux sont faits\194\160!"
 L["DEADPOOLTUTO_BOSS"] = "Si tous les joueurs de Dead Pool sont dans votre instance de raid et que ce raid est de votre niveau, vous pouvez parier sur la mort du prochain boss !"
 
@@ -173,6 +173,7 @@ L["DEADPOOL_ACHIEVEMENT_SOLEILBET"] = "Profanateur de Soleîl"
 L["DEADPOOL_ACHIEVEMENT_SOLEILBET_DESC"] = "Être le premier à miser %s fois sur la mort de %s et à perdre ainsi %s vêtements en châtiment dans une même partie."
 
 L["MAKE_BANKER_PLAY"] = "Faire miser %s"
+L["MAKE_FOLLOWERS_PLAY"] = "et les sujets"
 L["BANKER_BET"] = "%s\na misé sur %s."
 L["BANKER_NO_CHIPS"] = "%s\nn'a plus de jetons."
 
