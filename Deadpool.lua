@@ -1465,7 +1465,7 @@ function Deadpool:generateDressUpModel(event, aChar, forceModel)
 				if groupRank then
 					NotifyInspect(groupRank)
 				end
-				if modelCanSet and (not deadpoolDressUpModelPool[char]["set"] or forceModel) then
+				if modelCanDraw and modelCanSet and (not deadpoolDressUpModelPool[char]["set"] or forceModel) then
 					dressUpModel:SetUnit(groupRank)
 					deadpoolDressUpModelPool[char]["set"] = true
 				elseif not event and not deadpoolDressUpModelPool[char]["set"] then

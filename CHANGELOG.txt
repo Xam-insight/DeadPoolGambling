@@ -1,4 +1,8 @@
-﻿- v1.13.5
+﻿- v1.13.6
+	- TOC for 10.2.5.
+	- Workaround in LibUIDropDownMenu.
+	- Fixed: Fatal error when trying to get dungeon follower model.
+- v1.13.5
 	- Workaround in LibUIDropDownMenu.
 - v1.13.3
 	- TOC for 10.2.0.
