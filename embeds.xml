@@ -262,7 +262,7 @@
 			<Anchor point="CENTER"/>
 		</Anchors>
 	</Frame>
-	<Frame name="MiniDeadpoolFrameTemplate" virtual="true" hidden="true" movable="true" resizable="true" frameStrata="BACKGROUND">
+	<Frame name="MiniDeadpoolFrameTemplate" virtual="true" hidden="true" movable="true" resizable="true" clampedToScreen="true" frameStrata="BACKGROUND">
 		<Size x="210" y="210" />
 		<Attributes>
 			<Attribute name="LockOptionParam" value="MiniDeadpoolWindowLocked"/>

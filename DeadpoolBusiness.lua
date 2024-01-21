@@ -663,10 +663,9 @@ function loadReceivedDeadpoolData(messageType)
 
 									if index2 == "trulyUnequipItems" then
 										local receivedValue, _ = strsplit("|", newData, 2)
-										local actualValue, _ = strsplit("|", actualData, 2)
 										local myValue, _ = strsplit("|", getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "trulyUnequipItems") or "", 2)
 										if receivedValue == "true" then
-											if not myValue then
+											if not myValue or myValue == "" then
 												StaticPopup_Show("TRULY_UNEQUIP_ITEMS", index)
 											end
 										end
