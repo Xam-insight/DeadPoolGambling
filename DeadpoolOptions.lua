@@ -73,8 +73,28 @@ function loadDeadpoolOptions()
 				name = L["RULES_SECTION"],
 				inline = true,
 				args = {
-					savingDataAfterLeavingGroup = {
+					unequipItems = {
 						type = "toggle", order = 1,
+						width = "double",
+						name = L["ENABLE_TRULY_UNEQUIP_ITEMS"],
+						desc = L["ENABLE_TRULY_UNEQUIP_ITEMS_DESC"],
+						set = function(info, val)
+							local playerCharacter = Deadpool_playerCharacter()
+							setDeadpoolData(DeadpoolGlobal_SessionId, playerCharacter, "trulyUnequipItems", val)
+							if val then
+								prepareAndSendSimpleDeadpoolDataToRaid(DeadpoolGlobal_SessionId, playerCharacter)
+								Deadpool:UnequipLostItems()
+							else
+								Deadpool:ReequipLostItems()
+							end
+						end,
+						get = function(info)
+							local val = getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "trulyUnequipItems")
+							return val and val == "true"
+						end
+					},
+					savingDataAfterLeavingGroup = {
+						type = "toggle", order = 2,
 						width = "double",
 						name = L["ENABLE_SAVING_DATA_AFTER_LEAVING_GROUP"],
 						desc = L["ENABLE_SAVING_DATA_AFTER_LEAVING_GROUP_DESC"],
@@ -333,7 +353,7 @@ function loadDeadpoolOptions()
 
 	ACR:RegisterOptionsTable("Dead Pool", DeadpoolOptions)
 	ACD:AddToBlizOptions("Dead Pool", "Dead Pool")
-	ACD:SetDefaultSize("Dead Pool", 600, 600)
+	ACD:SetDefaultSize("Dead Pool", 600, 625)
 end
 
 function deadpoolSetTuto(on, resetTuto, menuType)

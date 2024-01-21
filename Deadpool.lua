@@ -42,13 +42,15 @@ function Deadpool:OnInitialize()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "DeadpoolPlayerLeavesCombat")
 	--self:RegisterEvent("PARTY_MEMBER_ENABLE", "generateDressUpModel")
 	self:RegisterEvent("UNIT_PORTRAIT_UPDATE", "generateDressUpModel") -- reloadDeadpoolPortraits
-	self:RegisterEvent("PLAYER_ALIVE", "OnPlayerAlive")
+	--self:RegisterEvent("PLAYER_ALIVE", "OnPlayerAlive")
 	--self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	self:RegisterEvent("BOSS_KILL", "BossKill")
 	
 	self:RegisterEvent("READY_CHECK", "BetReminder");
 	self:RegisterEvent("READY_CHECK_FINISHED", "BetReminderClose");
 
+	self:RegisterEvent("PLAYER_ALIVE", "UnequipLostItems");
+	self:RegisterEvent("PLAYER_UNGHOST", "UnequipLostItems");
 
 	hooksecurefunc("UnitFrame_UpdateTooltip", function()
 		Deadpool:DeadpoolMouseOverUnit()
@@ -214,8 +216,9 @@ function Deadpool:BetReminderClose()
 	end
 end
 
-function Deadpool:OnPlayerAlive()
-	self:UnregisterEvent("PLAYER_ALIVE")
+function Deadpool:OnPlayerAlive(event)
+	--self:UnregisterEvent("PLAYER_ALIVE")
+	self:UnequipLostItems(event)
 	self:DeadpoolShow(not DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolShown"], DeadpoolWindow[Deadpool_WindowsOptions]["MiniDeadpoolShown"])
 end
 
@@ -1822,6 +1825,7 @@ function Deadpool:DeadpoolPlayerEntersCombat(event)
 end
 
 function Deadpool:DeadpoolPlayerLeavesCombat(event)
+	self:UnequipLostItems(event)
 	if showDeadpoolFrameAfterCombat and not DeadpoolFrame:IsShown() then
 		Deadpool:DeadpoolShow()
 		showDeadpoolFrameAfterCombat = false
@@ -1859,5 +1863,38 @@ function Deadpool:BossKill(event, encounterID, encounterName)
 	local totalNextDeathBetsOnChar = getDeadpoolTotalBets(DeadpoolGlobal_SessionId, "nextDeathBet", "boss")
 	if totalUniqueGambleOnChar > 0 or totalNextDeathBetsOnChar > 0 then
 		deadpoolCharacterIsDead(DeadpoolGlobal_SessionId, "boss", encounterName)
+	end
+end
+
+function Deadpool:UnequipLostItems(event)
+	if DeadpoolOptionsData["TrulyUnequipItems"] then
+		local deadpoolEquipmentSetID = C_EquipmentSet.GetEquipmentSetID("Dead Pool save")
+		if not deadpoolEquipmentSetID then
+			local setname = "Dead Pool save"
+			local setIcon = 237272
+			C_EquipmentSet.CreateEquipmentSet(setname, setIcon)
+			self:RegisterEvent("EQUIPMENT_SWAP_FINISHED", "EquipmentSwapped")
+		end		
+		
+		Deadpool_UnequipItems()
+	end
+end
+
+function Deadpool:ReequipLostItems()
+	Deadpool_deleteDeadpoolEquipmentSet(true)
+end
+
+function Deadpool:EquipmentSwapped()
+	self:UnregisterEvent("EQUIPMENT_SWAP_FINISHED")
+	Deadpool_deleteDeadpoolEquipmentSet(false)
+end
+
+function Deadpool_deleteDeadpoolEquipmentSet(reequipFirst)
+	local deadpoolEquipmentSetID = C_EquipmentSet.GetEquipmentSetID("Dead Pool save")
+	if deadpoolEquipmentSetID then
+		if reequipFirst then
+			C_EquipmentSet.UseEquipmentSet(deadpoolEquipmentSetID)
+		end
+		C_EquipmentSet.DeleteEquipmentSet(deadpoolEquipmentSetID)
 	end
 end

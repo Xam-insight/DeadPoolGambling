@@ -1,7 +1,9 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("Deadpool", true)
 
+local Deadpool_logo = "Dead Pool |T137008:16|t |cffffffffG|r|cff666666a|r|cffffffffm|r|cff666666b|r|cffffffffl|r|cff666666i|r|cffffffffn|r|cff666666g|r"
+
 StaticPopupDialogs["NOT_ENOUGH_CREDITS"] = {
-	text = L["NOT_ENOUGH_CREDITS"],
+	text = Deadpool_logo.."|n|n"..L["NOT_ENOUGH_CREDITS"],
 	button1 = ACCEPT,
 	button2 = CANCEL,
 	OnAccept = function (self, data)
@@ -9,6 +11,22 @@ StaticPopupDialogs["NOT_ENOUGH_CREDITS"] = {
 		if enoughItems then
 			saveDeadpoolBets(data["session"], data["char"], data["betChar"], data["nextDeathBet"], data["afterTransactionCredits"] + newCredits)
 		end
+	end,
+	timeout = 0,
+	whileDead = true,
+	hideOnEscape = true,
+	preferredIndex = 3,  -- avoid some UI taint, see http://www.wowace.com/announcements/how-to-avoid-some-ui-taint/
+}
+
+StaticPopupDialogs["TRULY_UNEQUIP_ITEMS"] = {
+	text = Deadpool_logo.."|n|n"..L["TRULY_UNEQUIP_ITEMS"],
+	button1 = YES,
+	button2 = NO,
+	OnAccept = function (self)
+		setDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "trulyUnequipItems", "true")
+	end,
+	OnCancel = function (self)
+		setDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "trulyUnequipItems", "false")
 	end,
 	timeout = 0,
 	whileDead = true,

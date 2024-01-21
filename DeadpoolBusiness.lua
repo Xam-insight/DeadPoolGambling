@@ -656,9 +656,21 @@ function loadReceivedDeadpoolData(messageType)
 								end
 								local newData = tostring(DeadpoolReceivedData[DeadpoolGlobal_SessionId][index][index2])
 								if actualData == nil or actualData ~= newData then
+									--Deadpool:Print(time().." - Processing new data.", index2, newData)
 									if index2 == "offItemsNumber" and (not actualData or newData > actualData) then
 										dpShowModel(index)
-									end 
+									end
+
+									if index2 == "trulyUnequipItems" then
+										local receivedValue, _ = strsplit("|", newData, 2)
+										local actualValue, _ = strsplit("|", actualData, 2)
+										local myValue, _ = strsplit("|", getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "trulyUnequipItems") or "", 2)
+										if receivedValue == "true" then
+											if not myValue then
+												StaticPopup_Show("TRULY_UNEQUIP_ITEMS", index)
+											end
+										end
+									end
 									local newValue, myValueWasObsolete = Deadpool_getMostRecentTimedValue(actualData, newData, true)
 									setDeadpoolData(DeadpoolGlobal_SessionId, index, index2, newValue)
 									if not myValueWasObsolete and actualData ~= newData then
@@ -1054,6 +1066,48 @@ function Deadpool_prepareStats()
 	return stats
 end
 
+local InventorySlotsToUnequip = { INVSLOT_TABARD }
+
+function Deadpool_updateInventorySlotsToUnequip()
+	local slotsToUnequipNb = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "offItemsNumber"))
+	InventorySlotsToUnequip = { INVSLOT_TABARD }
+	for i = 1, slotsToUnequipNb do
+		tinsert(InventorySlotsToUnequip, deadpoolUndressingOrder[i]["slot"])
+		if i > 6 then
+			tinsert(InventorySlotsToUnequip, INVSLOT_BODY)
+			tinsert(InventorySlotsToUnequip, INVSLOT_BACK)
+		end
+	end
+end
+
+-- Code by SDPhantom - https://www.wowinterface.com/forums/member.php?u=34145
+function Deadpool_UnequipItems()
+	Deadpool_updateInventorySlotsToUnequip()
+		
+    if #InventorySlotsToUnequip<=0 then return end -- Sanity check
+    local slotindex=1
+ 
+    ClearCursor() -- Make sure the cursor isn't holding anything, otherwise we might accidentally issue an item swap instead of an unequip
+    for bag=NUM_BAG_SLOTS or NUM_TOTAL_EQUIPPED_BAG_SLOTS,0,-1 do -- CE and Wrath use NUM_BAG_SLOTS, DF uses NUM_TOTAL_EQUIPPED_BAG_SLOTS
+        local free,type=(C_Container or _G).GetContainerNumFreeSlots(bag) -- C_Container is used in Wrath and DF, CE still has this in _G
+        free=(type==0 and free or 0) -- Uses a quirk with this style of condition, only process bags with no item type restriction with fallback to zero if no bag is there (if free is nil, it'll fallback to zero even if the condition is true)
+ 
+        for _=1,free do -- Variable is unused, we just need to loop for every free slot we see
+            local invslot=InventorySlotsToUnequip[slotindex] -- Cache slot mapped to current index
+            while not GetInventoryItemID("player",invslot) do -- Loop if no item in slot and until we find one
+                if slotindex<#InventorySlotsToUnequip then slotindex=slotindex+1 else return end-- Increment to next index or stop when we have no more inventory slots to process
+                invslot=InventorySlotsToUnequip[slotindex] -- Update to new slot
+            end
+ 
+			-- This pair is a complete operation, cursor is expected to be clear by the time both of these lines have run
+            PickupInventoryItem(invslot);
+            (bag==0 and PutItemInBackpack or PutItemInBag)((C_Container or _G).ContainerIDToInventoryID(bag)) -- First set of parenthesis chooses function to run before calling it, PutItemInBackpack() doesn't accept any args, so ContainerIDToInventoryID() is safe to run regardless
+ 
+            if slotindex<#InventorySlotsToUnequip then slotindex=slotindex+1 else return end -- Increment to next index or stop when we have no more inventory slots to process
+        end
+    end
+end
+
 function Deadpool_dropAnItem(aChar, numberOfItems, getNoNewCredits)
 	local enoughItems = true
 	local newCredits = 0
@@ -1067,6 +1121,9 @@ function Deadpool_dropAnItem(aChar, numberOfItems, getNoNewCredits)
 			newCredits = DEADPOOL_GARMENT_REWARD * numberOfItems
 		end
 		setDeadpoolData(DeadpoolGlobal_SessionId, aChar, "offItemsNumber", offItemsNumber + numberOfItems)
+		
+		Deadpool_UnequipItems()
+		
 		Deadpool_updateStat(DeadpoolGlobal_SessionId, aChar, DEADPOOL_LOSTITEMS, numberOfItems)
 		setDeadpoolData(DeadpoolGlobal_SessionId, aChar, "credits", credits + newCredits)
 		DeadpoolSummaryFrame_Update()
