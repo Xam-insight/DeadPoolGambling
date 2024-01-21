@@ -1,6 +1,7 @@
 ﻿- v1.14.0
 	- Added: Dungeon follower bets.
 	- Added: 'Truly unequip items' mode.
+	- Removed: Workaround in LibUIDropDownMenu.
 - v1.13.6
 	- TOC for 10.2.5.
 	- Workaround in LibUIDropDownMenu.
