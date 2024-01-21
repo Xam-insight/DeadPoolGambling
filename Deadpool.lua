@@ -1089,10 +1089,10 @@ function Deadpool_playerCharacter()
 	return Deadpool_pc
 end
 
-function ValidateDeadpoolBetButton_Onclick()
+function ValidateDeadpoolBetButton_Onclick(self)
 	local aSession = DeadpoolGlobal_SessionId
 	local aChar = Deadpool_playerCharacter()
-	local aBetChar = DeadpoolSummaryFrameTargetTitleText:GetText()
+	local aBetChar = self:GetAttribute("characteriD")
 	local aBet = DeadpoolSummaryFrameTargetNextDeathBet:GetText()
 
 	if aChar then
@@ -1248,6 +1248,7 @@ function DeadpoolSummaryFrame_Update(forceModel)
 			DeadpoolSummaryFrameStats:Hide()
 			if selectedDeadpoolCharacter then
 				DeadpoolSummaryFrameTargetTitleText:SetText(characterName)
+				ValidateBetButton:SetAttribute("characteriD", selectedDeadpoolCharacter)
 				local nextDeathBet = getDeadpoolBets(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), selectedDeadpoolCharacter)
 				if not GetCurrentKeyBoardFocus() or not (DeadpoolSummaryFrameTargetNextDeathBet == GetCurrentKeyBoardFocus()) then
 					DeadpoolSummaryFrameTargetNextDeathBet:SetText(nextDeathBet)
@@ -1867,7 +1868,8 @@ function Deadpool:BossKill(event, encounterID, encounterName)
 end
 
 function Deadpool:UnequipLostItems(event)
-	if DeadpoolOptionsData["TrulyUnequipItems"] then
+	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "trulyUnequipItems")
+	if trulyUnequipItems and trulyUnequipItems == "true" then
 		local deadpoolEquipmentSetID = C_EquipmentSet.GetEquipmentSetID("Dead Pool save")
 		if not deadpoolEquipmentSetID then
 			local setname = "Dead Pool save"
@@ -1877,6 +1879,8 @@ function Deadpool:UnequipLostItems(event)
 		end		
 		
 		Deadpool_UnequipItems()
+	else
+		Deadpool:ReequipLostItems()
 	end
 end
 
@@ -1892,9 +1896,12 @@ end
 function Deadpool_deleteDeadpoolEquipmentSet(reequipFirst)
 	local deadpoolEquipmentSetID = C_EquipmentSet.GetEquipmentSetID("Dead Pool save")
 	if deadpoolEquipmentSetID then
+		local setEquipped = true
 		if reequipFirst then
-			C_EquipmentSet.UseEquipmentSet(deadpoolEquipmentSetID)
+			setEquipped = C_EquipmentSet.UseEquipmentSet(deadpoolEquipmentSetID)
 		end
-		C_EquipmentSet.DeleteEquipmentSet(deadpoolEquipmentSetID)
+		if not reequipFirst or setEquipped then
+			C_EquipmentSet.DeleteEquipmentSet(deadpoolEquipmentSetID)
+		end
 	end
 end

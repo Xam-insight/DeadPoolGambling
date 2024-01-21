@@ -1082,30 +1082,33 @@ end
 
 -- Code by SDPhantom - https://www.wowinterface.com/forums/member.php?u=34145
 function Deadpool_UnequipItems()
-	Deadpool_updateInventorySlotsToUnequip()
-		
-    if #InventorySlotsToUnequip<=0 then return end -- Sanity check
-    local slotindex=1
- 
-    ClearCursor() -- Make sure the cursor isn't holding anything, otherwise we might accidentally issue an item swap instead of an unequip
-    for bag=NUM_BAG_SLOTS or NUM_TOTAL_EQUIPPED_BAG_SLOTS,0,-1 do -- CE and Wrath use NUM_BAG_SLOTS, DF uses NUM_TOTAL_EQUIPPED_BAG_SLOTS
-        local free,type=(C_Container or _G).GetContainerNumFreeSlots(bag) -- C_Container is used in Wrath and DF, CE still has this in _G
-        free=(type==0 and free or 0) -- Uses a quirk with this style of condition, only process bags with no item type restriction with fallback to zero if no bag is there (if free is nil, it'll fallback to zero even if the condition is true)
- 
-        for _=1,free do -- Variable is unused, we just need to loop for every free slot we see
-            local invslot=InventorySlotsToUnequip[slotindex] -- Cache slot mapped to current index
-            while not GetInventoryItemID("player",invslot) do -- Loop if no item in slot and until we find one
-                if slotindex<#InventorySlotsToUnequip then slotindex=slotindex+1 else return end-- Increment to next index or stop when we have no more inventory slots to process
-                invslot=InventorySlotsToUnequip[slotindex] -- Update to new slot
-            end
- 
-			-- This pair is a complete operation, cursor is expected to be clear by the time both of these lines have run
-            PickupInventoryItem(invslot);
-            (bag==0 and PutItemInBackpack or PutItemInBag)((C_Container or _G).ContainerIDToInventoryID(bag)) -- First set of parenthesis chooses function to run before calling it, PutItemInBackpack() doesn't accept any args, so ContainerIDToInventoryID() is safe to run regardless
- 
-            if slotindex<#InventorySlotsToUnequip then slotindex=slotindex+1 else return end -- Increment to next index or stop when we have no more inventory slots to process
-        end
-    end
+	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "trulyUnequipItems")
+	if trulyUnequipItems and trulyUnequipItems == "true" then
+		Deadpool_updateInventorySlotsToUnequip()
+			
+		if #InventorySlotsToUnequip<=0 then return end -- Sanity check
+		local slotindex=1
+	 
+		ClearCursor() -- Make sure the cursor isn't holding anything, otherwise we might accidentally issue an item swap instead of an unequip
+		for bag=NUM_BAG_SLOTS or NUM_TOTAL_EQUIPPED_BAG_SLOTS,0,-1 do -- CE and Wrath use NUM_BAG_SLOTS, DF uses NUM_TOTAL_EQUIPPED_BAG_SLOTS
+			local free,type=(C_Container or _G).GetContainerNumFreeSlots(bag) -- C_Container is used in Wrath and DF, CE still has this in _G
+			free=(type==0 and free or 0) -- Uses a quirk with this style of condition, only process bags with no item type restriction with fallback to zero if no bag is there (if free is nil, it'll fallback to zero even if the condition is true)
+	 
+			for _=1,free do -- Variable is unused, we just need to loop for every free slot we see
+				local invslot=InventorySlotsToUnequip[slotindex] -- Cache slot mapped to current index
+				while not GetInventoryItemID("player",invslot) do -- Loop if no item in slot and until we find one
+					if slotindex<#InventorySlotsToUnequip then slotindex=slotindex+1 else return end-- Increment to next index or stop when we have no more inventory slots to process
+					invslot=InventorySlotsToUnequip[slotindex] -- Update to new slot
+				end
+	 
+				-- This pair is a complete operation, cursor is expected to be clear by the time both of these lines have run
+				PickupInventoryItem(invslot);
+				(bag==0 and PutItemInBackpack or PutItemInBag)((C_Container or _G).ContainerIDToInventoryID(bag)) -- First set of parenthesis chooses function to run before calling it, PutItemInBackpack() doesn't accept any args, so ContainerIDToInventoryID() is safe to run regardless
+	 
+				if slotindex<#InventorySlotsToUnequip then slotindex=slotindex+1 else return end -- Increment to next index or stop when we have no more inventory slots to process
+			end
+		end
+	end
 end
 
 function Deadpool_dropAnItem(aChar, numberOfItems, getNoNewCredits)
