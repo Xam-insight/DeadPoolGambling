@@ -41,6 +41,7 @@ ignore:
 	- embeds_classic.xml
 	- art/PNG
 	- sound/OLD
+	- ../Deadpool_CustomAchiever/CustomAchiever.toc
 
 move-folders:
 	Deadpool/Deadpool_CustomAchiever_toc: ../Deadpool_CustomAchiever
