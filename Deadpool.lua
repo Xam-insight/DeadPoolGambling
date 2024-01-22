@@ -1889,10 +1889,10 @@ function Deadpool:ReequipLostItems()
 end
 
 function Deadpool:EquipmentSwapped(event, result, setID)
-	self:UnregisterEvent("EQUIPMENT_SWAP_FINISHED")
 	local deadpoolEquipmentSetID = C_EquipmentSet.GetEquipmentSetID("Dead Pool save")
 	if deadpoolEquipmentSetID and setID ~= deadpoolEquipmentSetID then
 		Deadpool_deleteDeadpoolEquipmentSet(false)
+		self:UnregisterEvent("EQUIPMENT_SWAP_FINISHED")
 	end
 end
 
