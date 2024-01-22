@@ -47,10 +47,10 @@ function Deadpool:OnInitialize()
 	self:RegisterEvent("BOSS_KILL", "BossKill")
 	
 	self:RegisterEvent("READY_CHECK", "BetReminder");
-	self:RegisterEvent("READY_CHECK_FINISHED", "BetReminderClose");
+	self:RegisterEvent("READY_CHECK_FINISHED", "BetReminderClose")
 
-	self:RegisterEvent("PLAYER_ALIVE", "UnequipLostItems");
-	self:RegisterEvent("PLAYER_UNGHOST", "UnequipLostItems");
+	self:RegisterEvent("PLAYER_ALIVE", "UnequipLostItems")
+	self:RegisterEvent("PLAYER_UNGHOST", "UnequipLostItems")
 
 	hooksecurefunc("UnitFrame_UpdateTooltip", function()
 		Deadpool:DeadpoolMouseOverUnit()
@@ -1875,8 +1875,8 @@ function Deadpool:UnequipLostItems(event)
 			local setname = "Dead Pool save"
 			local setIcon = 237272
 			C_EquipmentSet.CreateEquipmentSet(setname, setIcon)
-			self:RegisterEvent("EQUIPMENT_SWAP_FINISHED", "EquipmentSwapped")
 		end		
+		self:RegisterEvent("EQUIPMENT_SWAP_FINISHED", "EquipmentSwapped")
 		
 		Deadpool_UnequipItems()
 	else
@@ -1888,9 +1888,12 @@ function Deadpool:ReequipLostItems()
 	Deadpool_deleteDeadpoolEquipmentSet(true)
 end
 
-function Deadpool:EquipmentSwapped()
+function Deadpool:EquipmentSwapped(event, result, setID)
 	self:UnregisterEvent("EQUIPMENT_SWAP_FINISHED")
-	Deadpool_deleteDeadpoolEquipmentSet(false)
+	local deadpoolEquipmentSetID = C_EquipmentSet.GetEquipmentSetID("Dead Pool save")
+	if deadpoolEquipmentSetID and setID ~= deadpoolEquipmentSetID then
+		Deadpool_deleteDeadpoolEquipmentSet(false)
+	end
 end
 
 function Deadpool_deleteDeadpoolEquipmentSet(reequipFirst)
