@@ -1201,4 +1201,216 @@
 			</AnimationGroup>
 		</Animations>
 	</Frame>
+	
+	<Button name="DeadpoolTrulyUnequipTemplate" mixin="TalentButtonArtMixin" virtual="true">
+		<KeyValues>
+			<KeyValue key="GetEdgeDiameterOffset" value="TalentButtonArtMixin.GetCircleEdgeDiameterOffset" type="global"/>
+			<KeyValue key="artSet" value="TalentButtonArtMixin.ArtSet.Circle" type="global"/>
+		</KeyValues>
+		<Size x="40" y="40"/>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture parentKey="Shadow">
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER">
+				<Texture parentKey="Icon" file="Interface\Icons\inv_10_specialization_tailoring2_outerwear_color2.blp">
+					<Size x="36" y="36"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER" textureSubLevel="1">
+				<Texture parentKey="DisabledOverlay" hidden="true">
+					<Size x="36" y="36"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<Color r="0" g="0" b="0" a="1"/>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<Texture parentKey="StateBorder" texelSnappingBias="0.0" snapToPixelGrid="false">
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="StateBorderHover" texelSnappingBias="0.0" snapToPixelGrid="false" alphaMode="ADD" hidden="true">
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY" textureSubLevel="2">
+				<FontString parentKey="SpendText" inherits="SystemFont16_Shadow_ThickOutline" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="BOTTOM" x="11" y="4"/>
+					</Anchors>
+				</FontString>
+				<Texture parentKey="SelectableIcon" atlas="talents-icon-learnableplus" useAtlasSize="true" hidden="true">
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" x="-3" y="-3"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK" textureSubLevel="1">
+				<FontString parentKey="SpendTextShadow1" inherits="SystemFont16_Shadow_ThickOutline" justifyH="CENTER" parentArray="spendTextShadows">
+					<Color r="0" g="0" b="0"/>
+					<Anchors>
+						<Anchor point="CENTER" relativeKey="$parent.SpendText" relativePoint="CENTER" x="-1" y="1"/>
+					</Anchors>
+				</FontString>
+				<FontString parentKey="SpendTextShadow2" inherits="SystemFont16_Shadow_ThickOutline" justifyH="CENTER" parentArray="spendTextShadows">
+					<Color r="0" g="0" b="0"/>
+					<Anchors>
+							<Anchor point="CENTER" relativeKey="$parent.SpendText" relativePoint="CENTER" x="1" y="1"/>
+					</Anchors>
+				</FontString>
+				<FontString parentKey="SpendTextShadow3" inherits="SystemFont16_Shadow_ThickOutline" justifyH="CENTER" parentArray="spendTextShadows">
+					<Color r="0" g="0" b="0"/>
+					<Anchors>
+							<Anchor point="CENTER" relativeKey="$parent.SpendText" relativePoint="CENTER" x="-1" y="-1"/>
+					</Anchors>
+				</FontString>
+				<FontString parentKey="SpendTextShadow4" inherits="SystemFont16_Shadow_ThickOutline" justifyH="CENTER" parentArray="spendTextShadows">
+					<Color r="0" g="0" b="0"/>
+					<Anchors>
+							<Anchor point="CENTER" relativeKey="$parent.SpendText" relativePoint="CENTER" x="1" y="-1"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="OVERLAY" textureSubLevel="3">
+				<MaskTexture parentKey="IconMask" hWrapMode="CLAMPTOBLACKADDITIVE" vWrapMode="CLAMPTOBLACKADDITIVE">
+					<Size x="36" y="36"/>
+					<Anchors>
+						<Anchor point="CENTER" relativeKey="$parent.Icon" relativePoint="CENTER"/>
+					</Anchors>
+					<MaskedTextures>
+						<MaskedTexture childKey="Icon"/>
+					</MaskedTextures>
+				</MaskTexture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<MaskTexture parentKey="DisabledOverlayMask" atlas="UI-Frame-IconMask" hWrapMode="CLAMPTOBLACKADDITIVE" vWrapMode="CLAMPTOBLACKADDITIVE">
+					<Size x="36" y="36"/>
+					<Anchors>
+						<Anchor point="CENTER" relativeKey="$parent.DisabledOverlay" relativePoint="CENTER"/>
+					</Anchors>
+					<MaskedTextures>
+						<MaskedTexture childKey="DisabledOverlay"/>
+					</MaskedTextures>
+				</MaskTexture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture parentKey="Glow" hidden="true" alphaMode="ADD" atlas="talents-node-square-greenglow">
+					<Size x="62" y="62"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<Animations>
+						<AnimationGroup parentKey="Anim" looping="REPEAT" setToFinalAlpha="true">
+							<Alpha fromAlpha="0" toAlpha="1" duration="0.36" order="1" smoothing="OUT"/>
+							<Alpha fromAlpha="1" toAlpha="0" duration="0.36" order="2" smoothing="IN"/>
+						</AnimationGroup>
+					</Animations>
+					<Scripts>
+						<OnShow>
+							self.Anim:Play();
+						</OnShow>
+						<OnHide>
+							self.Anim:Stop();
+						</OnHide>
+					</Scripts>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture parentKey="Ghost" texelSnappingBias="0.0" snapToPixelGrid="false" alpha="0.8" hidden="true">
+					<Size x="48" y="48"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Frame parentKey="SearchIcon" hidden="true">
+				<Size x="63" y="63"/>
+				<Anchors>
+					<Anchor point="CENTER" relativeKey="$parent.Icon" relativePoint="TOPRIGHT"/>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY" textureSubLevel="3">
+						<Texture parentKey="Icon" atlas="talents-search-match" useAtlasSize="true"/>
+						<Texture parentKey="OverlayIcon" atlas="talents-search-match" alphaMode="ADD"/>
+						<Texture parentKey="Mouseover">
+							<Size x="18" y="18"/>
+							<Anchors>
+								<Anchor point="CENTER"/>
+							</Anchors>
+							<Color r="0" g="0" b="0" a="0"/>
+							<Scripts>
+								<OnLeave function="GameTooltip_Hide"/>
+							</Scripts>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Animations>
+					<AnimationGroup parentKey="GlowAnim" looping="REPEAT" setToFinalAlpha="true">
+						<Alpha childKey="OverlayIcon" fromAlpha="0" toAlpha=".5" duration="1" order="1" smoothing="NONE"/>
+						<Alpha childKey="OverlayIcon" fromAlpha=".5" toAlpha="0" duration="1" order="2" smoothing="NONE"/>
+					</AnimationGroup>
+				</Animations>
+				<Scripts>
+					<OnShow>
+						self.GlowAnim:Play();
+					</OnShow>
+					<OnHide>
+						self.GlowAnim:Stop();
+					</OnHide>
+				</Scripts>
+			</Frame>
+			<Cooldown name="$parentCooldown" parentKey="Cooldown" inherits="CooldownFrameTemplate">
+				<SwipeTexture file="Interface\PVPFrame\PVP-Separation-Circle-Cooldown-overlay">
+					<Color r="0" g="0" b="0" a="0.8"/>
+				</SwipeTexture>
+				<Scripts>
+					<OnCooldownDone>
+						C_Timer.After(1.5, function()
+							deadpoolNotifyChangeToOptions()
+						end)
+					</OnCooldownDone>
+				</Scripts>
+			</Cooldown>
+		</Frames>
+		<Scripts>
+			<OnLoad method="OnLoad" />
+			<OnEnter>
+				self:OnEnterVisuals()
+				DeadpoolIconButtonEnter(self)
+			</OnEnter>
+			<OnLeave>
+				self:OnLeaveVisuals()
+				DeadpoolIconButtonLeave(self)
+			</OnLeave>
+			<OnClick>
+				if self.Cooldown:GetCooldownDuration() == 0 then
+					setUnequipItemsValue(not self:GetAttribute("value"))
+					DeadpoolTrulyUnequip_UpdateCooldown(self)
+				end
+			</OnClick>
+		</Scripts>
+	</Button>
+	
+	<Button name="DeadpoolTrulyUnequipSwitch" parent="UIParent" inherits="DeadpoolTrulyUnequipTemplate">
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Scripts>
+			<OnShow function="DeadpoolTrulyUnequip_OnLoad" />
+		</Scripts>
+	</Button>
 </Ui>

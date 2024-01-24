@@ -198,6 +198,7 @@ end
 --]]
 
 function Deadpool:BetReminder()
+	DeadpoolTrulyUnequip_Glow(DeadpoolTrulyUnequipSwitch)
 	if DeadpoolOptionsData["DeadpoolBetReminder"] and not Deadpool_hasPlayed(DeadpoolGlobal_SessionId, Deadpool_playerCharacter()) then
 		if DeadpoolFrame:IsShown() then 
 			ScriptAnimationUtil.ShakeFrameRandom(DeadpoolFrame, 5, .7, .05)

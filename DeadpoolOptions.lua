@@ -78,15 +78,11 @@ function loadDeadpoolOptions()
 						width = "double",
 						name = L["ENABLE_TRULY_UNEQUIP_ITEMS"],
 						desc = L["ENABLE_TRULY_UNEQUIP_ITEMS_DESC"],
+						disabled = function()
+							return DeadpoolTrulyUnequipSwitch.Cooldown:GetCooldownDuration() ~= 0
+						end,
 						set = function(info, val)
-							local playerCharacter = Deadpool_playerCharacter()
-							setDeadpoolData(DeadpoolGlobal_SessionId, playerCharacter, "trulyUnequipItems", val)
-							if val then
-								prepareAndSendSimpleDeadpoolDataToRaid(DeadpoolGlobal_SessionId, playerCharacter)
-								Deadpool:UnequipLostItems()
-							else
-								Deadpool:ReequipLostItems()
-							end
+							setUnequipItemsValue(val)
 						end,
 						get = function(info)
 							local val = getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "trulyUnequipItems")
@@ -373,4 +369,22 @@ function deadpoolGetTuto(menuType)
 		tuto = menuType..tuto
 	end
 	return not DeadpoolOptionsData or not DeadpoolOptionsData[tuto]
+end
+
+function setUnequipItemsValue(value)
+	local playerCharacter = Deadpool_playerCharacter()
+	setDeadpoolData(DeadpoolGlobal_SessionId, playerCharacter, "trulyUnequipItems", value)
+	if value then
+		prepareAndSendSimpleDeadpoolDataToRaid(DeadpoolGlobal_SessionId, playerCharacter)
+		Deadpool:UnequipLostItems()
+	else
+		Deadpool:ReequipLostItems()
+	end
+	DeadpoolTrulyUnequip_UpdtateStatus(DeadpoolTrulyUnequipSwitch)
+	DeadpoolTrulyUnequip_UpdateCooldown(DeadpoolTrulyUnequipSwitch)
+	deadpoolNotifyChangeToOptions()
+end
+
+function deadpoolNotifyChangeToOptions()
+	ACR:NotifyChange("Dead Pool")
 end

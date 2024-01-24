@@ -144,3 +144,40 @@ function FlipDeadpoolChip(chipFrame)--/run FlipDeadpoolChip(DeadpoolChip)
 		chipFrame.FlippingChipLoopAnim:Play()
 	end
 end
+
+function DeadpoolTrulyUnequip_OnLoad(self)
+	self:SetAttribute("tooltip", L["ENABLE_TRULY_UNEQUIP_ITEMS"])
+	self:SetAttribute("tooltipDetail", { L["ENABLE_TRULY_UNEQUIP_ITEMS_TOOLTIP"] })
+	
+	DeadpoolTrulyUnequip_UpdtateStatus(self)
+end
+
+function DeadpoolTrulyUnequip_UpdtateStatus(self)
+	local player = Deadpool_playerCharacter()
+	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, player, "trulyUnequipItems")
+	trulyUnequipItems = trulyUnequipItems and trulyUnequipItems == "true"
+	
+	self:SetAttribute("value", trulyUnequipItems)
+	if trulyUnequipItems then
+		self:ApplyVisualState(TalentButtonUtil.BaseVisualState.Normal)
+	else
+		self:ApplyVisualState(TalentButtonUtil.BaseVisualState.Disabled)
+	end
+end
+
+function DeadpoolTrulyUnequip_UpdateCooldown(self)
+	local cooldown = self.Cooldown;
+	CooldownFrame_Set(cooldown, GetTime(), 4, true, true);
+	if ( duration and duration > 0 and enable == 0 ) then
+		SetItemButtonTextureVertexColor(button, 0.4, 0.4, 0.4);
+	end
+end
+
+function DeadpoolTrulyUnequip_Glow(self) -- /run DeadpoolTrulyUnequip_Glow(DeadpoolTrulyUnequipSwitch)
+	self.shouldGlow = true;
+	self:UpdateNonStateVisuals()
+	C_Timer.After(1.44, function()
+		self.shouldGlow = false
+		self:UpdateNonStateVisuals()
+	end)
+end

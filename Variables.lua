@@ -23,11 +23,11 @@ StaticPopupDialogs["TRULY_UNEQUIP_ITEMS"] = {
 	button1 = YES,
 	button2 = NO,
 	OnAccept = function (self)
-		setDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "trulyUnequipItems", "true")
+		setUnequipItemsValue(true)
 		Deadpool:UnequipLostItems()
 	end,
 	OnCancel = function (self)
-		setDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "trulyUnequipItems", "false")
+		setUnequipItemsValue(false)
 	end,
 	timeout = 0,
 	whileDead = true,
