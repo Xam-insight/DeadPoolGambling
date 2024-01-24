@@ -8,6 +8,7 @@ DeadpoolGlobal_MiniBetweenObjectsGap = 5
 function deadpoolMiniFrame()
 	--NewMiniDeadpoolFrame
 	MiniDeadpoolFrame = CreateFrame("Frame", "MiniDeadpoolFrame", UIParent, "MiniDeadpoolFrameTemplate")
+	MiniDeadpoolFrame:SetScale(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolScale"] or 1.0)
 	MiniDeadpoolFrame.alphaFunc = setMiniDeadpoolFrameAlpha
 	
 	local fontstring = MiniDeadpoolFrame:CreateFontString("MiniDeadpoolLabel", "ARTWORK", "DeadpoolWindowTitleTemplate")

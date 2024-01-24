@@ -341,6 +341,22 @@ function loadDeadpoolOptions()
 						min = 20,
 						max = 30,
 						step = 2,
+					},
+					deadpoolScale = {
+						type = "range", order = 6,
+						width = "full", descStyle = "",
+						name = UI_SCALE,
+						get = function(i)
+							return DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolScale"] or 1.0
+						end,
+						set = function(i, v)
+							DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolScale"] = v
+							DeadpoolFrame:SetScale(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolScale"])
+							MiniDeadpoolFrame:SetScale(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolScale"])
+						end,
+						min = 0.7,
+						max = 1.0,
+						step = .01,
 					}
 				}
 			}
@@ -349,7 +365,7 @@ function loadDeadpoolOptions()
 
 	ACR:RegisterOptionsTable("Dead Pool", DeadpoolOptions)
 	ACD:AddToBlizOptions("Dead Pool", "Dead Pool")
-	ACD:SetDefaultSize("Dead Pool", 600, 625)
+	ACD:SetDefaultSize("Dead Pool", 600, 675)
 end
 
 function deadpoolSetTuto(on, resetTuto, menuType)

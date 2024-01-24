@@ -1,6 +1,19 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("Deadpool", true)
 
-function DeadpoolWindow_OnShow()
+function DeadpoolWindow_OnShow(self)
+	DeadpoolTrulyUnequipSwitch:Hide()
+	DeadpoolTrulyUnequipSwitch:SetParent(self)
+	DeadpoolTrulyUnequipSwitch:ClearAllPoints()
+	if self == MiniDeadpoolFrame then
+		DeadpoolTrulyUnequipSwitch:SetScale(0.8)
+		DeadpoolTrulyUnequipSwitch:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 35, -30)
+		DeadpoolTrulyUnequipSwitch:SetAlpha(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolFrameAlpha"])
+	else
+		DeadpoolTrulyUnequipSwitch:SetScale(1.0)
+		DeadpoolTrulyUnequipSwitch:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 55, 2)
+		DeadpoolTrulyUnequipSwitch:SetAlpha(1.0)
+	end
+	DeadpoolTrulyUnequipSwitch:Show()
 	if DeadpoolGlobal_shownModel then
 		dpShowModel(DeadpoolGlobal_shownModel.char)
 	end

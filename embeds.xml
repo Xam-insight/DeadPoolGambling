@@ -346,7 +346,7 @@
 			<OnShow>
 				showDeadpoolFrameAfterCombat = false
 				applyMiniDeadpoolWindowOptions()
-				DeadpoolWindow_OnShow()
+				DeadpoolWindow_OnShow(self)
 			</OnShow>
 			<OnHide function="DeadpoolWindow_OnHide" />
 			<OnDragStart>
@@ -680,7 +680,7 @@
 			<OnShow>
 				MiniDeadpoolFrame:Hide()
 				DeadpoolWindow[Deadpool_WindowsOptions]["MiniDeadpoolShown"] = nil
-				DeadpoolWindow_OnShow()
+				DeadpoolWindow_OnShow(self)
 			</OnShow>
 			<OnHide>
 				dpHideAllHelpTips()
@@ -1405,7 +1405,7 @@
 		</Scripts>
 	</Button>
 	
-	<Button name="DeadpoolTrulyUnequipSwitch" parent="UIParent" inherits="DeadpoolTrulyUnequipTemplate">
+	<Button name="DeadpoolTrulyUnequipSwitch" parent="UIParent" inherits="DeadpoolTrulyUnequipTemplate" hidden="true">
 		<Anchors>
 			<Anchor point="CENTER"/>
 		</Anchors>

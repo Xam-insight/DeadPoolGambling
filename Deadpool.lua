@@ -70,6 +70,7 @@ function Deadpool:OnEnable()
 
 		--NewDeadpoolFrame
 		DeadpoolFrame = CreateFrame("Frame", "DeadpoolFrame", UIParent, "DeadpoolFrameTemplate")
+		DeadpoolFrame:SetScale(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolScale"] or 1.0)
 		DeadpoolFrame.alphaFunc = setDeadpoolFrameAlpha
 		
 		DeadpoolFrame.ClosePanelButton:SetScript("OnClick", function(self)
@@ -198,6 +199,10 @@ end
 --]]
 
 function Deadpool:BetReminder()
+	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "trulyUnequipItems")
+	if trulyUnequipItems and trulyUnequipItems == "true" then
+		DeadpoolTrulyUnequip_Glow(DeadpoolTrulyUnequipSwitch)
+	end
 	DeadpoolTrulyUnequip_Glow(DeadpoolTrulyUnequipSwitch)
 	if DeadpoolOptionsData["DeadpoolBetReminder"] and not Deadpool_hasPlayed(DeadpoolGlobal_SessionId, Deadpool_playerCharacter()) then
 		if DeadpoolFrame:IsShown() then 
@@ -212,6 +217,10 @@ function Deadpool:BetReminder()
 end
 
 function Deadpool:BetReminderClose()
+	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "trulyUnequipItems")
+	if trulyUnequipItems and trulyUnequipItems == "true" then
+		DeadpoolTrulyUnequip_Glow(DeadpoolTrulyUnequipSwitch)
+	end
 	if not DeadpoolWindow[Deadpool_WindowsOptions]["MiniDeadpoolShown"] then
 		MiniDeadpoolFrame:Hide()
 	end
@@ -1871,6 +1880,7 @@ end
 function Deadpool:UnequipLostItems(event)
 	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "trulyUnequipItems")
 	if trulyUnequipItems and trulyUnequipItems == "true" then
+		DeadpoolTrulyUnequip_Glow(DeadpoolTrulyUnequipSwitch)
 		local deadpoolEquipmentSetID = C_EquipmentSet.GetEquipmentSetID("Dead Pool save")
 		if not deadpoolEquipmentSetID then
 			local setname = "Dead Pool save"
