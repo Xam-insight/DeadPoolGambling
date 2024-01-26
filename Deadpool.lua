@@ -203,7 +203,6 @@ function Deadpool:BetReminder()
 	if trulyUnequipItems and trulyUnequipItems == "true" then
 		DeadpoolTrulyUnequip_Glow(DeadpoolTrulyUnequipSwitch)
 	end
-	DeadpoolTrulyUnequip_Glow(DeadpoolTrulyUnequipSwitch)
 	if DeadpoolOptionsData["DeadpoolBetReminder"] and not Deadpool_hasPlayed(DeadpoolGlobal_SessionId, Deadpool_playerCharacter()) then
 		if DeadpoolFrame:IsShown() then 
 			ScriptAnimationUtil.ShakeFrameRandom(DeadpoolFrame, 5, .7, .05)
@@ -1893,6 +1892,7 @@ function Deadpool:UnequipLostItems(event)
 	else
 		Deadpool:ReequipLostItems()
 	end
+	DeadpoolTrulyUnequip_UpdateStatus(DeadpoolTrulyUnequipSwitch)
 end
 
 function Deadpool:ReequipLostItems()
@@ -1913,6 +1913,7 @@ function Deadpool_deleteDeadpoolEquipmentSet(reequipFirst)
 		local setEquipped = true
 		if reequipFirst then
 			setEquipped = C_EquipmentSet.UseEquipmentSet(deadpoolEquipmentSetID)
+			DeadpoolTrulyUnequip_UpdateCooldown(DeadpoolTrulyUnequipSwitch)
 		end
 		if not reequipFirst or setEquipped then
 			C_EquipmentSet.DeleteEquipmentSet(deadpoolEquipmentSetID)

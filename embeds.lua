@@ -162,10 +162,10 @@ function DeadpoolTrulyUnequip_OnLoad(self)
 	self:SetAttribute("tooltip", L["ENABLE_TRULY_UNEQUIP_ITEMS"])
 	self:SetAttribute("tooltipDetail", { L["ENABLE_TRULY_UNEQUIP_ITEMS_TOOLTIP"] })
 	
-	DeadpoolTrulyUnequip_UpdtateStatus(self)
+	DeadpoolTrulyUnequip_UpdateStatus(self)
 end
 
-function DeadpoolTrulyUnequip_UpdtateStatus(self)
+function DeadpoolTrulyUnequip_UpdateStatus(self)
 	local player = Deadpool_playerCharacter()
 	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, player, "trulyUnequipItems")
 	trulyUnequipItems = trulyUnequipItems and trulyUnequipItems == "true"

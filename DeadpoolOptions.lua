@@ -396,8 +396,7 @@ function setUnequipItemsValue(value)
 	else
 		Deadpool:ReequipLostItems()
 	end
-	DeadpoolTrulyUnequip_UpdtateStatus(DeadpoolTrulyUnequipSwitch)
-	DeadpoolTrulyUnequip_UpdateCooldown(DeadpoolTrulyUnequipSwitch)
+	DeadpoolTrulyUnequip_UpdateStatus(DeadpoolTrulyUnequipSwitch)
 	deadpoolNotifyChangeToOptions()
 end
 

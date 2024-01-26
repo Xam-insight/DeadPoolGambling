@@ -550,6 +550,7 @@ function playerJoinsDeadpoolSession(aSession, isCreator, keepPlayerData)
 	else
 		setDeadpoolPlayerData(aSession, playerCharacter, GetAddOnMetadata("Deadpool", "Version"))
 	end
+	Deadpool:UnequipLostItems()
 end
 
 function setDeadpoolPlayerData(aSession, aChar, aVersion)
