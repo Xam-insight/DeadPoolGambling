@@ -15,6 +15,7 @@ externals:
 	Libs/LibDataBroker-1.1: https://repos.wowace.com/wow/libdatabroker-1-1
 	Libs/LibDBIcon-1.0: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
 	Libs/UTF8: https://repos.wowace.com/wow/utf8/trunk
+	Libs/LibUIDropDownMenu: https://repos.wowace.com/wow/libuidropdownmenu/trunk/LibUIDropDownMenu
 	Libs/EZBlizzardUiPopups: https://github.com/Xam-insight/EZBlizzardUiPopups
 	../Deadpool_CustomAchiever: https://github.com/Xam-insight/CustomAchiever
 	../Deadpool_CustomAchiever/Libs/Ace3/AceAddon-3.0: https://repos.wowace.com/wow/ace3/trunk/AceAddon-3.0
@@ -40,6 +41,7 @@ ignore:
 	- embeds_classic.xml
 	- art/PNG
 	- sound/OLD
+	- ../Deadpool_CustomAchiever/CustomAchiever.toc
 
 move-folders:
 	Deadpool/Deadpool_CustomAchiever_toc: ../Deadpool_CustomAchiever

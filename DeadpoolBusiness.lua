@@ -201,11 +201,22 @@ function prepareAndSendSimpleDeadpoolDataToRaid(aSession, aCharacter, anInfo, is
 	encodeAndSendSimpleDeadpoolData(Temp_DeadpoolData)
 end
 
+local deadpoolVersionSignaled
+local function signalDeadpoolVersion()
+	if not deadpoolVersionSignaled then
+		deadpoolVersionSignaled = true
+		C_Timer.After(5, function()
+			Deadpool_Error(string.format(L["DEADPOOL_VERSION_UPDATE"], Deadpool_logo))
+			Deadpool:Print(string.format(L["DEADPOOL_VERSION_UPDATE_DESC"], Deadpool_logo))		
+		end)
+	end
+end
+
 -- Get Roster Info
 local groupLabel
 function getDeadpoolRosterInfo()
 	deadpoolCharInfo = {}
-
+	
 	local deadpoolPlayerCharacter = Deadpool_playerCharacter() or UNKNOWNOBJECT
 	local deadpoolPlayerVersion = getDeadpoolMainVersion(GetAddOnMetadata("Deadpool", "Version"))
 
@@ -228,7 +239,11 @@ function getDeadpoolRosterInfo()
                 local name = Deadpool_fullName(groupLabel..i)
 				if name then
 					local isDeadpoolPlayer = getDeadpoolData(DeadpoolGlobal_SessionId, name, "credits")
-					local isDeadpoolPlayerUpToDate = deadpoolPlayerVersion == getDeadpoolMainVersion(getDeadpoolData(DeadpoolGlobal_SessionId, name, DEADPOOLDATA_VERSION))
+					local charVersion = getDeadpoolMainVersion(getDeadpoolData(DeadpoolGlobal_SessionId, playerId, DEADPOOLDATA_VERSION))
+					local isDeadpoolPlayerUpToDate = deadpoolPlayerVersion == charVersion
+					if charVersion > deadpoolPlayerVersion then
+						signalDeadpoolVersion()
+					end
 					addCharInList(deadpoolCharInfo, groupLabel..i, name)
 					local _, _, _, instanceIDChar = UnitPosition(groupLabel..i)
 					if isDeadpoolPlayer and everyoneIsHere and UnitIsConnected(groupLabel..i)

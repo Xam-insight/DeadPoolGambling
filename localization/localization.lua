@@ -60,6 +60,8 @@ L["UNIT_IN_COMBAT"] = "This character is in combat, wait for him to sort of figh
 L["SELF_BET_NOT_ALLOWED"] = "You cannot bet on yourself."
 L["EMPTY_BANK"] = "The Bank is empty. You cannot burst it."
 L["DEADPOOL_SOLEILBET"] = "Sole\195\174l is your goddess. Bet against her makes you lose a item of clothing."
+L["DEADPOOL_VERSION_UPDATE"] = "Please update %s: New Rules."
+L["DEADPOOL_VERSION_UPDATE_DESC"] = "The new version of %s brings a change to the rules. Update to ensure it works properly."
 
 L["ANNOUNCEDEADPOOLSESSIONBUTTON_TOOLTIP"] = "Results logs"
 L["ANNOUNCEDEADPOOLSESSIONBUTTON_TOOLTIPDETAIL"] = "Shows / hides results logs window."
