@@ -239,7 +239,7 @@ function getDeadpoolRosterInfo()
                 local name = Deadpool_fullName(groupLabel..i)
 				if name then
 					local isDeadpoolPlayer = getDeadpoolData(DeadpoolGlobal_SessionId, name, "credits")
-					local charVersion = getDeadpoolMainVersion(getDeadpoolData(DeadpoolGlobal_SessionId, playerId, DEADPOOLDATA_VERSION))
+					local charVersion = getDeadpoolMainVersion(getDeadpoolData(DeadpoolGlobal_SessionId, name, DEADPOOLDATA_VERSION))
 					local isDeadpoolPlayerUpToDate = deadpoolPlayerVersion == charVersion
 					if charVersion > deadpoolPlayerVersion then
 						signalDeadpoolVersion()
