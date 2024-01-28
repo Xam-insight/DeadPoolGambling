@@ -4,6 +4,8 @@
 	- Added: Dead Pool Interface scaling option.
 	- Removed: Workaround in LibUIDropDownMenu.
 	- [CustomAchiever] v1.3.12 integration.
+- v1.13.7
+	- Added: Signaling outdated Dead Pool version.
 - v1.13.6
 	- TOC for 10.2.5.
 	- Workaround in LibUIDropDownMenu.
