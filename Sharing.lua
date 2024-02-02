@@ -98,7 +98,7 @@ function Deadpool:CallForDeadpoolData(event, isInitialLogin, partyGUID)
 					if partyGUID then
 						guid = "-"..partyGUID
 					end
-					local pc = Deadpool_playerCharacter() or UNKNOWNOBJECT
+					local pc = Deadpool_playerCharacter() or UNKNOWN
 					playerJoinsDeadpoolSession("DeadpoolSession_"..pc..guid, true)
 				end
 				DEADPOOL_GROUPJOINED = true

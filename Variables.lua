@@ -24,6 +24,7 @@ StaticPopupDialogs["TRULY_UNEQUIP_ITEMS"] = {
 	button2 = NO,
 	OnAccept = function (self)
 		setUnequipItemsValue(true)
+		DeadpoolTrulyUnequip_UpdateCooldown(DeadpoolTrulyUnequipSwitch)
 		Deadpool:UnequipLostItems()
 	end,
 	OnCancel = function (self)
@@ -75,6 +76,7 @@ DEADPOOL_WINS         = "Wins"
 DEADPOOL_FIRSTDEATH   = "FirstDeath"
 DEADPOOL_CREDITSGAIN  = "CreditsGain"
 DEADPOOL_LOSTITEMS    = "LostItems"
+DEADPOOL_TRULYUNEQUIP = "trulyUnequipItems"
 DEADPOOL_SOLEILBET    = "SoleilBet"
 DEADPOOL_DEATHS       = "Deaths"
 DEADPOOL_DEATHSONBOSS = "DeathsOnBoss"

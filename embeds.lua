@@ -167,7 +167,7 @@ end
 
 function DeadpoolTrulyUnequip_UpdateStatus(self)
 	local player = Deadpool_playerCharacter()
-	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, player, "trulyUnequipItems")
+	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, player, DEADPOOL_TRULYUNEQUIP)
 	trulyUnequipItems = trulyUnequipItems and trulyUnequipItems == "true"
 	
 	self:SetAttribute("value", trulyUnequipItems)

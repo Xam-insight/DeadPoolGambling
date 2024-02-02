@@ -51,11 +51,22 @@ function Deadpool:OnInitialize()
 
 	self:RegisterEvent("PLAYER_ALIVE", "UnequipLostItems")
 	self:RegisterEvent("PLAYER_UNGHOST", "UnequipLostItems")
+	
+	self:RegisterEvent("UNIT_FORM_CHANGED")
 
 	hooksecurefunc("UnitFrame_UpdateTooltip", function()
 		Deadpool:DeadpoolMouseOverUnit()
 	end)
 end
+
+function Deadpool:UNIT_FORM_CHANGED(event, unitTarget)
+	if unitTarget == "player" then
+		local player = Deadpool_playerCharacter()
+		setDeadpoolData(DeadpoolGlobal_SessionId, player, "ShouldUseNativeFormInModelScene", PlayerUtil.ShouldUseNativeFormInModelScene())
+		prepareAndSendSimpleDeadpoolDataToRaid(DeadpoolGlobal_SessionId, player, "ShouldUseNativeFormInModelScene")
+	end
+end
+
 
 function Deadpool:OnEnable()
 	-- Called when the addon is enabled
@@ -199,7 +210,7 @@ end
 --]]
 
 function Deadpool:BetReminder()
-	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "trulyUnequipItems")
+	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), DEADPOOL_TRULYUNEQUIP)
 	if trulyUnequipItems and trulyUnequipItems == "true" then
 		DeadpoolTrulyUnequip_Glow(DeadpoolTrulyUnequipSwitch)
 	end
@@ -216,7 +227,7 @@ function Deadpool:BetReminder()
 end
 
 function Deadpool:BetReminderClose()
-	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "trulyUnequipItems")
+	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), DEADPOOL_TRULYUNEQUIP)
 	if trulyUnequipItems and trulyUnequipItems == "true" then
 		DeadpoolTrulyUnequip_Glow(DeadpoolTrulyUnequipSwitch)
 	end
@@ -688,6 +699,7 @@ function DeadpoolIconButtonEnter(self)
 	local tooltipDetailGreen = self:GetAttribute("tooltipDetailGreen")
 	local tooltipDetailRed = self:GetAttribute("tooltipDetailRed")
 	local tooltipDetailBlue = self:GetAttribute("tooltipDetailBlue")
+	local tooltipDetailPurple = self:GetAttribute("tooltipDetailPurple")
 	DeadpoolTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
 	if tooltip then
 		DeadpoolTooltip:SetText(tooltip)
@@ -710,6 +722,12 @@ function DeadpoolIconButtonEnter(self)
 			for index,value in pairs(tooltipDetailBlue) do
 				local leftText, rightText = strsplit("#", value, 2)
 				DeadpoolTooltip:AddDoubleLine(leftText, rightText, 0.25, 0.78, 0.92, 0.25, 0.78, 0.92)
+			end
+		end
+		if tooltipDetailPurple then
+			for index,value in pairs(tooltipDetailPurple) do
+				local leftText, rightText = strsplit("#", value, 2)
+				DeadpoolTooltip:AddDoubleLine(leftText, rightText, 0.74, 0.50, 0.99, 0.74, 0.50, 0.99)
 			end
 		end
 		DeadpoolTooltip:Show()
@@ -941,7 +959,7 @@ function createDeadpoolLine(aDeadpoolSessionId, indexCharac, fullName, deadpoolL
 			oddsInfoFrame:SetPoint("LEFT", xValue, 0)
 			xValue = xValue + oddsInfoFrame:GetWidth()
 		end
-		oddsInfoFrame:SetAttribute("tooltip", L["DEADPOOLCOLLUMNS_ODDS"])
+		oddsInfoFrame:SetAttribute("tooltip", string.format(L["DEADPOOLCOLLUMNS_WHOM_ODDS"], getDeadpoolCharInfo(playerCharacter, "localName")))
 		local oddsLib = string.format("%.1f", odds)
 		oddsInfoFrame:SetAttribute("tooltipDetail", { L["DEADPOOLUI_BET"], L["DEADPOOLUI_BET2"]..oddsLib..L["DEADPOOLUI_BET3"] })
 		if playerNextDeathBetsOnChar > 0 then
@@ -964,6 +982,12 @@ function createDeadpoolLine(aDeadpoolSessionId, indexCharac, fullName, deadpoolL
 				L["DEADPOOLCOLLUMNS_STATS_FIRSTDEATH"].."#"..Deadpool_tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_FIRSTDEATH)),
 				L["DEADPOOLCOLLUMNS_STATS_DEATHS"].."#"..Deadpool_tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_DEATHS)),
 				L["DEADPOOLCOLLUMNS_STATS_DEATHSONBOSS"].."#"..Deadpool_tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_DEATHSONBOSS))
+			}
+		)
+		local trulyUnequipItems = getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_TRULYUNEQUIP)
+		oddsInfoFrame:SetAttribute("tooltipDetailPurple",
+			{
+				trulyUnequipItems and trulyUnequipItems == "true" and L["ENABLE_TRULY_UNEQUIP_ITEMS_ENABLED"].."#"..(getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_LOSTITEMS) or "0")
 			}
 		)
 
@@ -1468,13 +1492,13 @@ function Deadpool:generateDressUpModel(event, aChar, forceModel)
 			if not isPlayer then
 				groupRank = getDeadpoolCharInfo(char, "groupRank")
 			end
-			local modelCanDraw = nil
+			-- Allways returns nill -- local modelCanDraw = nil
 			local modelCanSet = nil
 			if not isPlayer and groupRank then
-				modelCanDraw = dressUpModel:CanSetUnit(groupRank)
+				-- Allways returns nill -- modelCanDraw = dressUpModel:CanSetUnit(groupRank)
 				modelCanSet = dressUpModelDrawingTrial:SetUnit(groupRank)
 			end
-			if isPlayer or modelCanDraw then
+			if isPlayer then -- Allways returns nill -- or modelCanDraw then
 				if groupRank and (not deadpoolDressUpModelPool[char]["rendered"] or forceModel) then
 					dressUpModel:SetUnit(groupRank)
 					deadpoolDressUpModelPool[char]["rendered"] = true
@@ -1483,8 +1507,9 @@ function Deadpool:generateDressUpModel(event, aChar, forceModel)
 				if groupRank then
 					NotifyInspect(groupRank)
 				end
-				if modelCanDraw and modelCanSet and (not deadpoolDressUpModelPool[char]["set"] or forceModel) then
-					dressUpModel:SetUnit(groupRank)
+				if UnitIsPlayer(groupRank) and modelCanSet and (not deadpoolDressUpModelPool[char]["set"] or forceModel) then
+					local shouldUseNativeFormInModelScene = getDeadpoolData(DeadpoolGlobal_SessionId, char, "ShouldUseNativeFormInModelScene")
+					dressUpModel:SetUnit(groupRank, false, shouldUseNativeFormInModelScene == "true")
 					deadpoolDressUpModelPool[char]["set"] = true
 				elseif not event and not deadpoolDressUpModelPool[char]["set"] then
 					dressUpModel:SetUnit("player")
@@ -1534,6 +1559,12 @@ function markDressUpModelsAsUnrendered(onlyThisOne)
 		elseif deadpoolDressUpModelPool[onlyThisOne] then
 			deadpoolDressUpModelPool[onlyThisOne]["rendered"] = false
 		end
+	end
+end
+
+function Deadpool_unsetModel(aChar)
+	if deadpoolDressUpModelPool[aChar] then
+		deadpoolDressUpModelPool[aChar]["set"] = nil
 	end
 end
 
@@ -1642,7 +1673,7 @@ function generateDeadpoolTable()
 			if bankerBet ~= "boss" then
 				shortBankerBetName = getDeadpoolCharInfo(bankerBet, "localName")
 			end
-			DeadpoolBankerButton:SetText(string.format(L["BANKER_BET"], DEADPOOL_BANKER_NAME, shortBankerBetName))
+			DeadpoolBankerButton:SetText(string.format(L["BANKER_BET"], DEADPOOL_BANKER_NAME, shortBankerBetName or UNKNOWN))
 			DeadpoolBankerButton:Disable()
 		else
 			DeadpoolBankerButton.SelectedTexture:SetShown(false)
@@ -1877,7 +1908,7 @@ function Deadpool:BossKill(event, encounterID, encounterName)
 end
 
 function Deadpool:UnequipLostItems(event)
-	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "trulyUnequipItems")
+	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), DEADPOOL_TRULYUNEQUIP)
 	if trulyUnequipItems and trulyUnequipItems == "true" then
 		DeadpoolTrulyUnequip_Glow(DeadpoolTrulyUnequipSwitch)
 		local deadpoolEquipmentSetID = C_EquipmentSet.GetEquipmentSetID("Dead Pool save")

@@ -85,7 +85,7 @@ function loadDeadpoolOptions()
 							setUnequipItemsValue(val)
 						end,
 						get = function(info)
-							local val = getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "trulyUnequipItems")
+							local val = getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), DEADPOOL_TRULYUNEQUIP)
 							return val and val == "true"
 						end
 					},
@@ -248,7 +248,7 @@ function loadDeadpoolOptions()
 						name = L["LOCAL_WINDOW_OPTIONS"],
 						desc = L["LOCAL_WINDOW_OPTIONS_DESC"],
 						set = function(info, val)
-							local pc = Deadpool_playerCharacter() or UNKNOWNOBJECT
+							local pc = Deadpool_playerCharacter() or UNKNOWN
 							if val then
 								Deadpool_WindowsOptions = pc
 								DeadpoolWindow[pc] = {}
@@ -263,7 +263,7 @@ function loadDeadpoolOptions()
 							end
 						end,
 						get = function(info)
-							local pc = Deadpool_playerCharacter() or UNKNOWNOBJECT
+							local pc = Deadpool_playerCharacter() or UNKNOWN
 							return DeadpoolWindow[pc] ~= nil
 						end
 					},
@@ -389,7 +389,7 @@ end
 
 function setUnequipItemsValue(value)
 	local playerCharacter = Deadpool_playerCharacter()
-	setDeadpoolData(DeadpoolGlobal_SessionId, playerCharacter, "trulyUnequipItems", value)
+	setDeadpoolData(DeadpoolGlobal_SessionId, playerCharacter, DEADPOOL_TRULYUNEQUIP, value)
 	if value then
 		prepareAndSendSimpleDeadpoolDataToRaid(DeadpoolGlobal_SessionId, playerCharacter)
 		Deadpool:UnequipLostItems()

@@ -142,7 +142,7 @@ Deadpool_WindowsOptions = "All"
 -- Initialize Deadpools Objects
 function initDeadpoolBusinessObjects()
 	-- DeadpoolData
-	local name = Deadpool_playerCharacter() or UNKNOWNOBJECT
+	local name = Deadpool_playerCharacter() or UNKNOWN
 	if not DeadpoolData then
 		DeadpoolData = {}
 	end
@@ -226,7 +226,7 @@ function getDeadpoolRosterInfo()
 	deadpoolCharInfo[DEADPOOL_BANKER]["localName"] = DEADPOOL_BANKER_NAME
 	deadpoolCharInfo[DEADPOOL_BANKER]["isAPlayer"] = false
 
-	local deadpoolPlayerCharacter = Deadpool_playerCharacter() or UNKNOWNOBJECT
+	local deadpoolPlayerCharacter = Deadpool_playerCharacter() or UNKNOWN
 	local deadpoolPlayerVersion = getDeadpoolMainVersion(GetAddOnMetadata("Deadpool", "Version"))
 
 	addCharInList(deadpoolCharInfo, "player", deadpoolPlayerCharacter)
@@ -319,7 +319,7 @@ function getDeadpoolMainVersion(version)
 end
 
 function addCharInList(deadpoolCharInfo, groupRank, playerId)
-	local deadpoolPlayerCharacter = Deadpool_playerCharacter() or UNKNOWNOBJECT
+	local deadpoolPlayerCharacter = Deadpool_playerCharacter() or UNKNOWN
 	local _, englishClass = UnitClass(groupRank)
 	local _, raceEn = UnitRace(groupRank)
 	local gender_code = UnitSex(groupRank)
@@ -328,7 +328,7 @@ function addCharInList(deadpoolCharInfo, groupRank, playerId)
 	if not deadpoolCharInfo[playerId]["isAPlayer"] then
 		DeadpoolFollowersId[UnitNameUnmodified(groupRank)] = playerId
 	end
-	deadpoolCharInfo[playerId]["localName"] = UnitNameUnmodified(groupRank)
+	deadpoolCharInfo[playerId]["localName"] = UnitNameUnmodified(groupRank) or UNKNOWN
 	deadpoolCharInfo[playerId]["classFileName"] = englishClass
 	deadpoolCharInfo[playerId]["groupRank"] = groupRank
 	local role = 'NONE'
@@ -493,7 +493,7 @@ function Deadpool_addRealm(aName, aRealm)
 		if aRealm and aRealm ~= "" then
 			aName = aName.."-"..aRealm
 		else
-			local realm = GetNormalizedRealmName() or UNKNOWNOBJECT
+			local realm = GetNormalizedRealmName() or UNKNOWN
 			aName = aName.."-"..realm
 		end
 	end
@@ -507,7 +507,7 @@ function Deadpool_fullName(unit)
 		if not UnitIsPlayer(unit) then
 			return playerName
 		end
-		if playerName and playerName ~= "" and playerName ~= UNKNOWNOBJECT then
+		if playerName and playerName ~= "" and playerName ~= UNKNOWN then
 			if not playerRealm or playerRealm == "" then
 				playerRealm = GetNormalizedRealmName()
 			end
@@ -537,7 +537,7 @@ function playerNameOrBankerName(fullName)
 end
 
 function playerJoinsDeadpoolSession(aSession, isCreator, keepPlayerData)
-	local playerCharacter = Deadpool_playerCharacter() or UNKNOWNOBJECT
+	local playerCharacter = Deadpool_playerCharacter() or UNKNOWN
 	if not DeadpoolGlobal_SessionId or DeadpoolGlobal_SessionId ~= aSession or isCreator then
 		local playerData = nil
 		local bankerData = nil
@@ -677,15 +677,20 @@ function loadReceivedDeadpoolData(messageType)
 										dpShowModel(index)
 									end
 
-									if index2 == "trulyUnequipItems" then
+									if index2 == DEADPOOL_TRULYUNEQUIP then
 										local receivedValue, _ = strsplit("|", newData, 2)
-										local myValue, _ = strsplit("|", getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "trulyUnequipItems") or "", 2)
+										local myValue, _ = strsplit("|", getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), DEADPOOL_TRULYUNEQUIP) or "", 2)
 										if receivedValue == "true" then
 											if not myValue or myValue == "" then
 												StaticPopup_Show("TRULY_UNEQUIP_ITEMS", index)
 											end
 										end
 									end
+									
+									if index2 == "ShouldUseNativeFormInModelScene" then
+										Deadpool_unsetModel(index)
+									end
+									
 									local newValue, myValueWasObsolete = Deadpool_getMostRecentTimedValue(actualData, newData, true)
 									setDeadpoolData(DeadpoolGlobal_SessionId, index, index2, newValue)
 									if not myValueWasObsolete and actualData ~= newData then
@@ -1097,7 +1102,7 @@ end
 
 -- Code by SDPhantom - https://www.wowinterface.com/forums/member.php?u=34145
 function Deadpool_UnequipItems()
-	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "trulyUnequipItems")
+	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), DEADPOOL_TRULYUNEQUIP)
 	if trulyUnequipItems and trulyUnequipItems == "true" then
 		Deadpool_updateInventorySlotsToUnequip()
 			
