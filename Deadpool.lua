@@ -51,22 +51,11 @@ function Deadpool:OnInitialize()
 
 	self:RegisterEvent("PLAYER_ALIVE", "UnequipLostItems")
 	self:RegisterEvent("PLAYER_UNGHOST", "UnequipLostItems")
-	
-	self:RegisterEvent("UNIT_FORM_CHANGED")
-
+		
 	hooksecurefunc("UnitFrame_UpdateTooltip", function()
 		Deadpool:DeadpoolMouseOverUnit()
 	end)
 end
-
-function Deadpool:UNIT_FORM_CHANGED(event, unitTarget)
-	if unitTarget == "player" then
-		local player = Deadpool_playerCharacter()
-		setDeadpoolData(DeadpoolGlobal_SessionId, player, "ShouldUseNativeFormInModelScene", PlayerUtil.ShouldUseNativeFormInModelScene())
-		prepareAndSendSimpleDeadpoolDataToRaid(DeadpoolGlobal_SessionId, player, "ShouldUseNativeFormInModelScene")
-	end
-end
-
 
 function Deadpool:OnEnable()
 	-- Called when the addon is enabled
@@ -1340,6 +1329,23 @@ local oppositeSide = {
 	["LEFT"] = "RIGHT",
 }
 
+--[[ ModelFileID for alternative forms
+Male Worgen form 307454
+Human form 1011653
+Female Worgen form 307453
+Female Human form 1000764
+Male Dracthyr form 4207724
+Male Visage form 4395382
+Female Dracthyr form 4207724
+Female Visage form 4220448
+--]]
+local shouldUseNativeFormInModelScene = {
+	[307454] = true, -- Male Worgen form
+	[307453] = true, -- Female Worgen form
+	[4207724] = true, -- Male Dracthyr form
+	[4207724] = true  -- Female Dracthyr form
+}
+
 DeadpoolGlobal_shownModel = nil
 function dpShowModel(deadpoolCharacter, parentFrame)
 	if not DeadpoolOptionsData["DeadpoolModelPopupDisabled"] then
@@ -1508,8 +1514,10 @@ function Deadpool:generateDressUpModel(event, aChar, forceModel)
 					NotifyInspect(groupRank)
 				end
 				if UnitIsPlayer(groupRank) and modelCanSet and (not deadpoolDressUpModelPool[char]["set"] or forceModel) then
-					local shouldUseNativeFormInModelScene = getDeadpoolData(DeadpoolGlobal_SessionId, char, "ShouldUseNativeFormInModelScene")
 					dressUpModel:SetUnit(groupRank, false, shouldUseNativeFormInModelScene == "true")
+					if shouldUseNativeFormInModelScene[dressUpModel:GetModelFileID()] then
+						dressUpModel:SetUnit(groupRank, false, true)
+					end
 					deadpoolDressUpModelPool[char]["set"] = true
 				elseif not event and not deadpoolDressUpModelPool[char]["set"] then
 					dressUpModel:SetUnit("player")

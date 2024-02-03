@@ -186,7 +186,7 @@ function DeadpoolTrulyUnequip_UpdateCooldown(self)
 	end
 end
 
-function DeadpoolTrulyUnequip_Glow(self) -- /run DeadpoolTrulyUnequip_Glow(DeadpoolTrulyUnequipSwitch)
+function DeadpoolTrulyUnequip_Glow(self)
 	self.shouldGlow = true;
 	self:UpdateNonStateVisuals()
 	C_Timer.After(1.44, function()

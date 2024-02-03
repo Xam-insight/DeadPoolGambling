@@ -676,19 +676,16 @@ function loadReceivedDeadpoolData(messageType)
 									if index2 == "offItemsNumber" and (not actualData or newData > actualData) then
 										dpShowModel(index)
 									end
-
-									if index2 == DEADPOOL_TRULYUNEQUIP then
+									
+									local playerCharacter = Deadpool_playerCharacter()
+									if index2 == DEADPOOL_TRULYUNEQUIP and index ~= playerCharacter then
 										local receivedValue, _ = strsplit("|", newData, 2)
-										local myValue, _ = strsplit("|", getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), DEADPOOL_TRULYUNEQUIP) or "", 2)
+										local myValue, _ = strsplit("|", getDeadpoolData(DeadpoolGlobal_SessionId, playerCharacter, DEADPOOL_TRULYUNEQUIP) or "", 2)
 										if receivedValue == "true" then
 											if not myValue or myValue == "" then
 												StaticPopup_Show("TRULY_UNEQUIP_ITEMS", index)
 											end
 										end
-									end
-									
-									if index2 == "ShouldUseNativeFormInModelScene" then
-										Deadpool_unsetModel(index)
 									end
 									
 									local newValue, myValueWasObsolete = Deadpool_getMostRecentTimedValue(actualData, newData, true)
