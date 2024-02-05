@@ -981,6 +981,8 @@ function createDeadpoolLine(aDeadpoolSessionId, indexCharac, fullName, deadpoolL
 					tooltipDetailPurple
 				}
 			)
+		else
+			oddsInfoFrame:SetAttribute("tooltipDetailPurple", nil)
 		end
 
 		if not DeadpoolOptionsData["TutoDisabled"]
@@ -1261,11 +1263,6 @@ function DeadpoolSummaryFrame_Update(forceModel)
 	if DeadpoolSummaryFrame and DeadpoolSummaryFrame:IsShown() then
 		local selectedTab = PanelTemplates_GetSelectedTab(DeadpoolSummaryFrame)
 		local characterName = playerNameOrBankerName(selectedDeadpoolCharacter)
-		if selectedDeadpoolCharacter == "boss" then
-			if selectedTab == 2 then
-				selectedTab = 3
-			end
-		end
 		if ( selectedTab == 1 ) then
 			hideAllDressUpModels()
 			DeadpoolSummaryFrameTarget:Show()
@@ -1294,7 +1291,7 @@ function DeadpoolSummaryFrame_Update(forceModel)
 			
 			hideAllDressUpModels() -- to prevent alpha reset
 
-			if selectedDeadpoolCharacter then
+			if selectedDeadpoolCharacter and selectedDeadpoolCharacter ~= "boss" then
 				local deadpoolSideDressUpModelTarget = Deadpool:generateDressUpModel(nil, selectedDeadpoolCharacter, forceModel)
 				if deadpoolSideDressUpModelTarget then
 					UIFrameFadeRemoveFrame(deadpoolSideDressUpModelTarget)

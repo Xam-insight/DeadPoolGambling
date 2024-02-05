@@ -84,7 +84,7 @@ end
 
 function Deadpool:CallForDeadpoolData(event, isInitialLogin, partyGUID)
 	if event then
-		if event == "PLAYER_ENTERING_WORLD" and not isInitialLogin then
+		if event == "PLAYER_ENTERING_WORLD" then
 			C_Timer.After(0, function()
 				self:OnPlayerAlive(event)
 			end)
