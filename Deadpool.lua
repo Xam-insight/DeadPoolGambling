@@ -974,11 +974,14 @@ function createDeadpoolLine(aDeadpoolSessionId, indexCharac, fullName, deadpoolL
 			}
 		)
 		local trulyUnequipItems = getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_TRULYUNEQUIP)
-		oddsInfoFrame:SetAttribute("tooltipDetailPurple",
-			{
-				trulyUnequipItems and trulyUnequipItems == "true" and L["ENABLE_TRULY_UNEQUIP_ITEMS_ENABLED"].."#"..(getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_LOSTITEMS) or "0")
-			}
-		)
+		local tooltipDetailPurple = trulyUnequipItems and trulyUnequipItems == "true" and L["ENABLE_TRULY_UNEQUIP_ITEMS_ENABLED"].."#"..(getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_LOSTITEMS) or "0")
+		if tooltipDetailPurple then
+			oddsInfoFrame:SetAttribute("tooltipDetailPurple",
+				{
+					tooltipDetailPurple
+				}
+			)
+		end
 
 		if not DeadpoolOptionsData["TutoDisabled"]
 			and (not DeadpoolTuto
