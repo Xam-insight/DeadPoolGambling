@@ -276,7 +276,7 @@ function getDeadpoolRosterInfo()
 	end
 
 	if everyoneIsHere then
-		addCharInList(deadpoolCharInfo, "boss", "boss")--"|T521748:16:16:0:0|t Prochain boss")--Interface\\Buttons\\UI-Panel-SmallerButton-Up:15:15:0:0:32:32:7:25:8:26
+		addBossInList(deadpoolCharInfo)--"|T521748:16:16:0:0|t Prochain boss")--Interface\\Buttons\\UI-Panel-SmallerButton-Up:15:15:0:0:32:32:7:25:8:26
 	end
 
 	clearCharacterDeadpoolData(deadpoolPlayerCharacter)
@@ -318,28 +318,8 @@ function getDeadpoolMainVersion(version)
 	return mainVersion
 end
 
-function addCharInList(deadpoolCharInfo, groupRank, playerId)
+local function loadPlayerBets(playerId)
 	local deadpoolPlayerCharacter = Deadpool_playerCharacter() or UNKNOWN
-	local _, englishClass = UnitClass(groupRank)
-	local _, raceEn = UnitRace(groupRank)
-	local gender_code = UnitSex(groupRank)
-	deadpoolCharInfo[playerId] = {}
-	deadpoolCharInfo[playerId]["isAPlayer"] = UnitIsPlayer(groupRank)
-	if not deadpoolCharInfo[playerId]["isAPlayer"] then
-		DeadpoolFollowersId[UnitNameUnmodified(groupRank)] = playerId
-	end
-	deadpoolCharInfo[playerId]["localName"] = UnitNameUnmodified(groupRank) or UNKNOWN
-	deadpoolCharInfo[playerId]["classFileName"] = englishClass
-	deadpoolCharInfo[playerId]["groupRank"] = groupRank
-	local role = 'NONE'
-	if UnitGroupRolesAssigned then
-		role = UnitGroupRolesAssigned(groupRank)
-	end
-	deadpoolCharInfo[playerId]["groupRole"] = role
-	deadpoolCharInfo[playerId]["race"] = (raceEn and raceID[raceEn]) or 1
-	deadpoolCharInfo[playerId]["gender"] = (gender_code and gender_code - 2) or 0
-	clearCharacterDeadpoolData(playerId)
-
 	if not Deadpool_isPlayerCharacter(playerId) and DeadpoolSavedBets then
 		if DeadpoolSavedBets[deadpoolPlayerCharacter] then
 			if DeadpoolSavedBets[deadpoolPlayerCharacter][playerId] then
@@ -356,6 +336,45 @@ function addCharInList(deadpoolCharInfo, groupRank, playerId)
 		end
 		loadBets(DeadpoolGlobal_SessionId, playerId)
 	end
+end
+
+function addCharInList(deadpoolCharInfo, groupRank, playerId)
+	local _, englishClass = UnitClass(groupRank)
+	local _, raceEn = UnitRace(groupRank)
+	local gender_code = UnitSex(groupRank)
+	deadpoolCharInfo[playerId] = {}
+	deadpoolCharInfo[playerId]["isAPlayer"] = UnitIsPlayer(groupRank)
+	if not deadpoolCharInfo[playerId]["isAPlayer"] then
+		DeadpoolFollowersId[UnitNameUnmodified(groupRank) or UNKNOWN] = playerId
+	end
+	deadpoolCharInfo[playerId]["localName"] = UnitNameUnmodified(groupRank) or UNKNOWN
+	deadpoolCharInfo[playerId]["classFileName"] = englishClass
+	deadpoolCharInfo[playerId]["groupRank"] = groupRank
+	local role = "NONE"
+	if UnitGroupRolesAssigned then
+		role = UnitGroupRolesAssigned(groupRank)
+	end
+	deadpoolCharInfo[playerId]["groupRole"] = role
+	deadpoolCharInfo[playerId]["race"] = (raceEn and raceID[raceEn]) or 1
+	deadpoolCharInfo[playerId]["gender"] = (gender_code and gender_code - 2) or 0
+	clearCharacterDeadpoolData(playerId)
+
+	loadPlayerBets(playerId)
+end
+
+function addBossInList(deadpoolCharInfo)
+	local BOSS = "boss"
+	deadpoolCharInfo[BOSS] = {}
+	deadpoolCharInfo[BOSS]["isAPlayer"] = false
+	deadpoolCharInfo[BOSS]["localName"] = RAID_BOSSES
+	--deadpoolCharInfo[BOSS]["classFileName"] = "NONE"
+	deadpoolCharInfo[BOSS]["groupRank"] = BOSS
+	deadpoolCharInfo[BOSS]["groupRole"] = "NONE"
+	deadpoolCharInfo[BOSS]["race"] = 1
+	deadpoolCharInfo[BOSS]["gender"] = 0
+	clearCharacterDeadpoolData(BOSS)
+
+	loadPlayerBets(BOSS)
 end
 
 function loadBets(aSession, aChar)
