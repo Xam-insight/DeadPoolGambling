@@ -390,8 +390,8 @@ end
 function setUnequipItemsValue(value)
 	local playerCharacter = Deadpool_playerCharacter()
 	setDeadpoolData(DeadpoolGlobal_SessionId, playerCharacter, DEADPOOL_TRULYUNEQUIP, value)
+	prepareAndSendSimpleDeadpoolDataToRaid(DeadpoolGlobal_SessionId, playerCharacter, DEADPOOL_TRULYUNEQUIP)
 	if value then
-		prepareAndSendSimpleDeadpoolDataToRaid(DeadpoolGlobal_SessionId, playerCharacter)
 		Deadpool:UnequipLostItems()
 	else
 		Deadpool:ReequipLostItems()

@@ -616,6 +616,8 @@ end--]]
 -- Load Received Data
 function loadReceivedDeadpoolData(messageType)
 	local receivedDataWasObsolete = false
+	local playerTrulyUnequipValueChanged = nil
+	local someoneProposedTrulyUnequip = nil
 	--Deadpool:Print(time().." - Processing data.")
 	if DeadpoolReceivedData then
 		if DeadpoolReceivedData["DeadpoolSessionId"] and DeadpoolReceivedData["DeadpoolSessionId"] ~= DeadpoolGlobal_SessionId then
@@ -697,12 +699,17 @@ function loadReceivedDeadpoolData(messageType)
 									end
 									
 									local playerCharacter = Deadpool_playerCharacter()
-									if index2 == DEADPOOL_TRULYUNEQUIP and index ~= playerCharacter then
+									if index2 == DEADPOOL_TRULYUNEQUIP then
 										local receivedValue, _ = strsplit("|", newData, 2)
-										local myValue, _ = strsplit("|", getDeadpoolData(DeadpoolGlobal_SessionId, playerCharacter, DEADPOOL_TRULYUNEQUIP) or "", 2)
-										if receivedValue == "true" then
-											if not myValue or myValue == "" then
-												StaticPopup_Show("TRULY_UNEQUIP_ITEMS", index)
+										if index == playerCharacter then
+											playerTrulyUnequipValueChanged = receivedValue
+										else
+											
+											local myValue, _ = strsplit("|", getDeadpoolData(DeadpoolGlobal_SessionId, playerCharacter, DEADPOOL_TRULYUNEQUIP) or "", 2)
+											if receivedValue == "true" then
+												if not myValue or myValue == "" then
+													someoneProposedTrulyUnequip = index
+												end
 											end
 										end
 									end
@@ -735,6 +742,11 @@ function loadReceivedDeadpoolData(messageType)
 	--Deadpool:Print(time().." - Data processed.")
 	if receivedDataWasObsolete and not messageType == "SimpleData" then
 		encodeAndSendDeadpoolSessionInfo(DeadpoolData[DeadpoolGlobal_SessionId], DeadpoolReceivedData["Sender"], DeadpoolReceivedData["CallTime"])
+	end
+	if playerTrulyUnequipValueChanged then
+		setUnequipItemsValue(playerTrulyUnequipValueChanged == "true")
+	elseif someoneProposedTrulyUnequip then
+		StaticPopup_Show("TRULY_UNEQUIP_ITEMS", someoneProposedTrulyUnequip)
 	end
 	generateDeadpoolTable()
 end

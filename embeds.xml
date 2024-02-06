@@ -879,6 +879,7 @@
 		</Layers>
 		<Scripts>
 			<OnEnter>
+				DeadpoolBetsOddsInfoEnter(self)
 				DeadpoolIconButtonEnter(self)
 			</OnEnter>
 			<OnLeave>

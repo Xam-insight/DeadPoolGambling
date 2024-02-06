@@ -682,6 +682,21 @@ function AnnounceDeadpoolSessionButton_OnClick()
 	end
 end
 
+function DeadpoolBetsOddsInfoEnter(self)
+	local character = self:GetAttribute("Character")
+	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, character, DEADPOOL_TRULYUNEQUIP)
+	local tooltipDetailPurple = trulyUnequipItems and trulyUnequipItems == "true" and L["ENABLE_TRULY_UNEQUIP_ITEMS_ENABLED"].."#"..(getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_LOSTITEMS) or "0")
+	if tooltipDetailPurple then
+		self:SetAttribute("tooltipDetailPurple",
+			{
+				tooltipDetailPurple
+			}
+		)
+	else
+		self:SetAttribute("tooltipDetailPurple", nil)
+	end
+end
+
 function DeadpoolIconButtonEnter(self)
 	local tooltip = self:GetAttribute("tooltip")
 	local tooltipDetail = self:GetAttribute("tooltipDetail")
@@ -973,17 +988,6 @@ function createDeadpoolLine(aDeadpoolSessionId, indexCharac, fullName, deadpoolL
 				L["DEADPOOLCOLLUMNS_STATS_DEATHSONBOSS"].."#"..Deadpool_tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_DEATHSONBOSS))
 			}
 		)
-		local trulyUnequipItems = getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_TRULYUNEQUIP)
-		local tooltipDetailPurple = trulyUnequipItems and trulyUnequipItems == "true" and L["ENABLE_TRULY_UNEQUIP_ITEMS_ENABLED"].."#"..(getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_LOSTITEMS) or "0")
-		if tooltipDetailPurple then
-			oddsInfoFrame:SetAttribute("tooltipDetailPurple",
-				{
-					tooltipDetailPurple
-				}
-			)
-		else
-			oddsInfoFrame:SetAttribute("tooltipDetailPurple", nil)
-		end
 
 		if not DeadpoolOptionsData["TutoDisabled"]
 			and (not DeadpoolTuto
