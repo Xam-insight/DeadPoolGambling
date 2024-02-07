@@ -289,7 +289,6 @@ function getDeadpoolRosterInfo()
 					if not deadpoolCharInfo[index] and DEADPOOL_BANKER ~= index then
 						setDeadpoolData(DeadpoolGlobal_SessionId, index, "inCombat", "false")
 						saveBets(DeadpoolGlobal_SessionId, index)
-						saveDressUpModelForReuse(index)
 						if index == selectedDeadpoolCharacter then
 							selectedDeadpoolLine = nil
 							selectedDeadpoolCharacter = nil

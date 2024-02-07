@@ -2,6 +2,7 @@
 	- Added: Dungeon follower bets.
 	- Added: 'Truly unequip items' mode.
 	- Added: Dead Pool Interface scaling option.
+	- Improved: Model frames management.
 - v1.13.7
 	- Added: Signaling outdated Dead Pool version.
 	- Removed: Workaround in LibUIDropDownMenu.

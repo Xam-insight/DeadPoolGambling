@@ -10,7 +10,6 @@ DeadpoolGlobal_CommPrefix = "Deadpool"
 
 deadpoolFramePool = {}
 local deadpoolDressUpModelPool = {}
-local deadpoolDressUpModelPoolForReuse = {}
 
 DeadpoolGlobal_BetweenObjectsGap = 11
 
@@ -160,11 +159,6 @@ function Deadpool:OnEnable()
 		Deadpool:Print(L["DEADPOOL_WELCOME"])
     end
 
-	if not deadpoolDressUpModelPool["boss1"] or not deadpoolDressUpModelPool["boss1"]["model"] then
-		deadpoolDressUpModelPool["boss1"] = {}
-		deadpoolDressUpModelPool["boss1"]["model"] = BossModel
-	end
-
 	if not CustomAchiever then
 		CustAcAddon = "Deadpool_CustomAchiever"
 		LoadAddOn(CustAcAddon)
@@ -178,27 +172,6 @@ function Deadpool:OnEnable()
 		end
 	end
 end
-
---[[
-function Deadpool:reloadDeadpoolPortraits(event)
-	if not dpFirstPortraitLoad then
-		dpFirstPortraitLoad = time()
-	end
-
-	local time = time()
-	if time > dpFirstPortraitLoad + 5 then
-		self:UnregisterEvent(event)
-		self:RegisterEvent(event, "generateDressUpModel")
-	end
-
-	if DeadpoolWindow and DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolShown"] then
-		Deadpool_UpdateScrollFrame(_G["DeadpoolScrollFrame"])
-	else
-		self:UnregisterEvent(event)
-		self:RegisterEvent(event, "generateDressUpModel")
-	end
-end
---]]
 
 function Deadpool:BetReminder()
 	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), DEADPOOL_TRULYUNEQUIP)
@@ -525,7 +498,6 @@ function deadpoolCharacterIsDead(aDeadpoolSessionId, aChar, alternativeName)
 									garmentsBack = garmentsBack - offItemsNumber
 								end
 								if garmentsBack > 0 then
-									deadpoolDressUpModelPool[k1]["rendered"] = nil
 									setDeadpoolData(aDeadpoolSessionId, k1, "offItemsNumber", offItemsNumber - garmentsBack)
 									setDeadpoolData(aDeadpoolSessionId, k1, "DEADPOOL_LOSTITEMS", offItemsNumber - garmentsBack)
 								end
@@ -602,7 +574,7 @@ function showDeadpoolPlayerDetails(line)
 	if line then
 		selectedDeadpoolCharacter = line:GetAttribute("fullName")
 	end
-	DeadpoolSummaryFrame_Update(true)
+	DeadpoolSummaryFrame_Update()
 end
 
 function deadpoolUndressModel(modelFrame, offItemsNumber)
@@ -1162,7 +1134,7 @@ function DeadpoolFrameSummaryButton_Onclick(hide, manualClick)
 			DeadpoolFrame:SetPoint(point, UIParent, relativePoint, xOffset + frameOffset/2, yOffset)
 			deadpoolSaveWindowPosition()
 		end
-		DeadpoolSummaryFrame_Update(true)
+		DeadpoolSummaryFrame_Update()
 	end
 end
 
@@ -1265,7 +1237,7 @@ function getDeadpoolRoleTexture(role, roleButton, indexCharac, texSize)
 	return texture
 end
 
-function DeadpoolSummaryFrame_Update(forceModel)
+function DeadpoolSummaryFrame_Update()
 	if DeadpoolSummaryFrame and DeadpoolSummaryFrame:IsShown() then
 		local selectedTab = PanelTemplates_GetSelectedTab(DeadpoolSummaryFrame)
 		local characterName = playerNameOrBankerName(selectedDeadpoolCharacter)
@@ -1297,8 +1269,8 @@ function DeadpoolSummaryFrame_Update(forceModel)
 			
 			hideAllDressUpModels() -- to prevent alpha reset
 
+			local deadpoolSideDressUpModelTarget = Deadpool:generateDressUpModel(nil, selectedDeadpoolCharacter, "SideDressUpModel")
 			if selectedDeadpoolCharacter and selectedDeadpoolCharacter ~= "boss" then
-				local deadpoolSideDressUpModelTarget = Deadpool:generateDressUpModel(nil, selectedDeadpoolCharacter, forceModel)
 				if deadpoolSideDressUpModelTarget then
 					UIFrameFadeRemoveFrame(deadpoolSideDressUpModelTarget)
 					deadpoolSideDressUpModelTarget:SetAlpha(1.0)
@@ -1307,6 +1279,8 @@ function DeadpoolSummaryFrame_Update(forceModel)
 					deadpoolSideDressUpModelTarget:SetPoint("TOPLEFT", DeadpoolSummaryFramePlayer, "TOPLEFT", 3, -3)
 					deadpoolSideDressUpModelTarget:SetPoint("BOTTOMRIGHT", DeadpoolSummaryFramePlayer, "BOTTOMRIGHT", -3, 3)
 				end
+			else
+				deadpoolSideDressUpModelTarget:ClearModel()
 			end
 		else
 			hideAllDressUpModels()
@@ -1381,10 +1355,8 @@ function dpShowModel(deadpoolCharacter, parentFrame)
 			end
 		end
 		if parentFrame then
-			if deadpoolDressUpModelPool[deadpoolCharacter] then
-				UIFrameFadeRemoveFrame(deadpoolDressUpModelPool[deadpoolCharacter]["model"])
-			end
-			local deadpoolDressUpModel = Deadpool:generateDressUpModel(nil, deadpoolCharacter, true)
+			UIFrameFadeRemoveFrame(deadpoolDressUpModelPool["model"])
+			local deadpoolDressUpModel = Deadpool:generateDressUpModel(nil, deadpoolCharacter)
 			if deadpoolDressUpModel then
 				if not lockParentFrame then
 					if DeadpoolGlobal_shownModel then
@@ -1412,6 +1384,9 @@ function dpShowModel(deadpoolCharacter, parentFrame)
 					deadpoolDressUpModel:SetParent(DeadpoolSummaryFramePlayer)
 					C_Timer.After(0, function()
 						deadpoolDressUpModel:SetAnimation(83)
+						if deadpoolDressUpModelPool["SideDressUpModel"] and deadpoolDressUpModel.char == deadpoolDressUpModelPool["SideDressUpModel"].char then
+							deadpoolDressUpModelPool["SideDressUpModel"]:SetAnimation(83)
+						end
 					end)
 				end
 			end
@@ -1419,22 +1394,19 @@ function dpShowModel(deadpoolCharacter, parentFrame)
 	end
 end
 
-local fadeOutTime = {}
-function modelFadesOutAfter(seconds, deadpoolCharacter)
-	if deadpoolDressUpModelPool[deadpoolCharacter] then
-		local deadpoolDressUpModel = deadpoolDressUpModelPool[deadpoolCharacter]["model"]
-		C_Timer.After(seconds, function()
-			if deadpoolDressUpModel:GetParent() ~= DeadpoolSummaryFramePlayer then
-				local timeAfter = time()
-				if not (fadeOutTime[deadpoolCharacter]
-						and timeAfter < fadeOutTime[deadpoolCharacter]) then
-					DPModel_FadeOut(deadpoolDressUpModel)
-					DeadpoolGlobal_shownModel = nil
-				end
+local fadeOutTime = nil
+function modelFadesOutAfter(seconds)
+	local deadpoolDressUpModel = deadpoolDressUpModelPool["model"]
+	C_Timer.After(seconds, function()
+		if deadpoolDressUpModel:GetParent() ~= DeadpoolSummaryFramePlayer then
+			local timeAfter = time()
+			if not (fadeOutTime and timeAfter < fadeOutTime) then
+				DPModel_FadeOut(deadpoolDressUpModel)
+				DeadpoolGlobal_shownModel = nil
 			end
-		end)
-		fadeOutTime[deadpoolCharacter] = time() + seconds
-	end
+		end
+	end)
+	fadeOutTime = time() + seconds
 end
 
 function DPModel_FadeIn(frame, alpha)
@@ -1470,8 +1442,8 @@ function DPTooltips_FadeOut(frame, endAlpha)
 	end
 end
 
-function Deadpool:generateDressUpModel(event, aChar, forceModel)
-	local dressUpModel
+function Deadpool:generateDressUpModel(event, aChar, frameName)
+	local dressUpModel = deadpoolDressUpModelPool[frameName or "model"]
 	if not event or Deadpool_isPartyMember(aChar) then
 		local char = aChar
 		if event then
@@ -1479,23 +1451,17 @@ function Deadpool:generateDressUpModel(event, aChar, forceModel)
 			if not char then
 				_, _, _, _, _, char = strsplit("-", UnitGUID(aChar))
 			end
-			forceModel = forceModel or char == selectedDeadpoolCharacter
+			if dressUpModel and dressUpModel.char ~= char then
+				char = nil
+			end
 		end
 
 		if char then
-			if not deadpoolDressUpModelPool[char] then
-				deadpoolDressUpModelPool[char] = {}
-			end
+			local dressUpModelDrawingTrial = createDressUpModel("DrawingTrial")
 
-			if not dressUpModelDrawingTrial then
-				dressUpModelDrawingTrial = createDressUpModel("DrawingTrial")
-			end
-
-			if not deadpoolDressUpModelPool[char]["model"] then
-				dressUpModel = createDressUpModel(char)
-				deadpoolDressUpModelPool[char]["model"] = dressUpModel
-			else
-				dressUpModel = deadpoolDressUpModelPool[char]["model"]
+			if not deadpoolDressUpModelPool[frameName or "model"] then
+				dressUpModel = createDressUpModel(frameName or "Final")
+				deadpoolDressUpModelPool[frameName or "model"] = dressUpModel
 			end
 			dressUpModel.char = char
 
@@ -1504,28 +1470,26 @@ function Deadpool:generateDressUpModel(event, aChar, forceModel)
 			if not isPlayer then
 				groupRank = getDeadpoolCharInfo(char, "groupRank")
 			end
-			-- Allways returns nill -- local modelCanDraw = nil
+			-- Allways returns nil -- local modelCanDraw = nil
 			local modelCanSet = nil
 			if not isPlayer and groupRank then
-				-- Allways returns nill -- modelCanDraw = dressUpModel:CanSetUnit(groupRank)
+				-- Allways returns nil -- modelCanDraw = dressUpModel:CanSetUnit(groupRank)
 				modelCanSet = dressUpModelDrawingTrial:SetUnit(groupRank)
 			end
-			if isPlayer then -- Allways returns nill -- or modelCanDraw then
-				if groupRank and (not deadpoolDressUpModelPool[char]["rendered"] or forceModel) then
+			if isPlayer then -- Allways returns nil -- or modelCanDraw then
+				if groupRank then
 					dressUpModel:SetUnit(groupRank)
-					deadpoolDressUpModelPool[char]["rendered"] = true
 				end
-			elseif not deadpoolDressUpModelPool[char]["rendered"] then
+			else
 				if groupRank then
 					NotifyInspect(groupRank)
 				end
-				if UnitIsPlayer(groupRank) and modelCanSet and (not deadpoolDressUpModelPool[char]["set"] or forceModel) then
+				if UnitIsPlayer(groupRank) and modelCanSet then
 					dressUpModel:SetUnit(groupRank, false, shouldUseNativeFormInModelScene == "true")
 					if shouldUseNativeFormInModelScene[dressUpModel:GetModelFileID()] then
 						dressUpModel:SetUnit(groupRank, false, true)
 					end
-					deadpoolDressUpModelPool[char]["set"] = true
-				elseif not event and not deadpoolDressUpModelPool[char]["set"] then
+				elseif not event then
 					dressUpModel:SetUnit("player")
 					--dressUpModel:SetBarberShopAlternateForm()
 					--dressUpModel:SetCustomRace(
@@ -1543,13 +1507,9 @@ function Deadpool:generateDressUpModel(event, aChar, forceModel)
 	return dressUpModel
 end
 
-function hideAllDressUpModels(exept)
-	for index,value in pairs(deadpoolDressUpModelPool) do
-		if exept ~= index then
-			if value["model"] and value["model"]:GetParent():GetName() == "DeadpoolSummaryFramePlayer" then
-				hideDressUpModel(value["model"])
-			end
-		end
+function hideAllDressUpModels()
+	if deadpoolDressUpModelPool["model"] and deadpoolDressUpModelPool["model"]:GetParent():GetName() == "DeadpoolSummaryFramePlayer" then
+		hideDressUpModel(deadpoolDressUpModelPool["model"])
 	end
 end
 
@@ -1564,40 +1524,14 @@ function hideDressUpModel(model)
 	end
 end
 
-function markDressUpModelsAsUnrendered(onlyThisOne)
-	if deadpoolDressUpModelPool then
-		if not onlyThisOne then
-			for index,value in pairs(deadpoolDressUpModelPool) do
-				value["rendered"] = false
-			end
-		elseif deadpoolDressUpModelPool[onlyThisOne] then
-			deadpoolDressUpModelPool[onlyThisOne]["rendered"] = false
-		end
+function createDressUpModel(aName)
+	local frameName = "DressUpModel-"..aName
+	local frame = _G[frameName]
+	if not frame then
+		frame = CreateFrame("DressUpModel", frameName, UIParent, "DPDressUpModel")
+		frame:SetAttribute("fullName", aName)
 	end
-end
-
-function Deadpool_unsetModel(aChar)
-	if deadpoolDressUpModelPool[aChar] then
-		deadpoolDressUpModelPool[aChar]["set"] = nil
-	end
-end
-
-function createDressUpModel(aChar)
-	local f = tremove(deadpoolDressUpModelPoolForReuse)
-	if not f then
-		f = CreateFrame("DressUpModel", "DressUpModel-"..aChar, UIParent, "DPDressUpModel")
-	end
-	f:SetAttribute("fullName", aChar)
-
-	return f
-end
-
-function saveDressUpModelForReuse(aChar)
-	if deadpoolDressUpModelPool[aChar] and deadpoolDressUpModelPool[aChar]["model"] then
-		hideDressUpModel(deadpoolDressUpModelPool[aChar]["model"])
-		tinsert(deadpoolDressUpModelPoolForReuse, deadpoolDressUpModelPool[aChar]["model"])
-		deadpoolDressUpModelPool[aChar] = nil
-	end
+	return frame
 end
 
 function deadpool_customDressing(aModel)

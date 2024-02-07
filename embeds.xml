@@ -542,7 +542,7 @@
 							</OnShow>
 							<OnClick>
 								PanelTemplates_Tab_OnClick(self, DeadpoolSummaryFrame)
-								DeadpoolSummaryFrame_Update(true)
+								DeadpoolSummaryFrame_Update()
 								Deadpool_PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX", true)
 							</OnClick>
 						</Scripts>
@@ -991,9 +991,6 @@
 				Model_OnLoad(self, MODELFRAME_MAX_PLAYER_ZOOM)
 				self:SetFacing(-math.pi/8)
 			</OnLoad>
-			<OnHide>
-				markDressUpModelsAsUnrendered(self:GetAttribute("fullName"))
-			</OnHide>
 			<OnAnimFinished>
 				self:SetAnimation(0)
 			</OnAnimFinished>
@@ -1009,9 +1006,6 @@
 				Model_OnLoad(self, MODELFRAME_MAX_PLAYER_ZOOM)
 				self:SetFacing(-math.pi/8)
 			</OnLoad>
-			<OnHide>
-				markDressUpModelsAsUnrendered(self:GetAttribute("fullName"))
-			</OnHide>
 			<OnAnimFinished>
 				self:SetAnimation(0)
 			</OnAnimFinished>
