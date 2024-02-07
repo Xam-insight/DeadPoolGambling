@@ -253,7 +253,7 @@ function getDeadpoolRosterInfo()
 				if playerId then
 					local isDeadpoolPlayer = getDeadpoolData(DeadpoolGlobal_SessionId, playerId, "credits")
 					if not isDeadpoolPlayer and not UnitIsPlayer(memberGroupLabel) then
-						setInitialDeadpoolPlayerData(DeadpoolGlobal_SessionId, playerId, GetAddOnMetadata("Deadpool", "Version"))
+						setInitialDeadpoolPlayerData(DeadpoolGlobal_SessionId, playerId)
 						isDeadpoolPlayer = true
 					end
 					local charVersion = getDeadpoolMainVersion(getDeadpoolData(DeadpoolGlobal_SessionId, playerId, DEADPOOLDATA_VERSION))
@@ -568,7 +568,7 @@ function playerJoinsDeadpoolSession(aSession, isCreator, keepPlayerData)
 		end
 		DeadpoolGlobal_SessionId = aSession
 		DeadpoolData = {}
-		setInitialDeadpoolPlayerData(aSession, playerCharacter, GetAddOnMetadata("Deadpool", "Version"))
+		setInitialDeadpoolPlayerData(aSession, playerCharacter)
 		setDeadpoolData(aSession, DEADPOOL_BANKER, "credits", DEADPOOL_INITIAL_MONEY)
 		DeadpoolData[aSession]["DeadpoolSessionId"] = aSession
 		if keepPlayerData and playerData then
@@ -580,9 +580,9 @@ function playerJoinsDeadpoolSession(aSession, isCreator, keepPlayerData)
 			prepareAndSendSimpleDeadpoolDataToRaid(aSession, playerCharacter)
 		end
 	elseif DeadpoolData and DeadpoolData[DeadpoolGlobal_SessionId] and not DeadpoolData[DeadpoolGlobal_SessionId][playerCharacter] then
-		setInitialDeadpoolPlayerData(aSession, playerCharacter, GetAddOnMetadata("Deadpool", "Version"))
+		setInitialDeadpoolPlayerData(aSession, playerCharacter)
 	else
-		setDeadpoolPlayerData(aSession, playerCharacter, GetAddOnMetadata("Deadpool", "Version"))
+		setDeadpoolPlayerData(aSession, playerCharacter)
 	end
 	Deadpool:UnequipLostItems()
 end
@@ -591,9 +591,10 @@ function setDeadpoolPlayerData(aSession, aChar, aVersion)
 	setDeadpoolData(aSession, aChar, DEADPOOLDATA_VERSION, aVersion)
 end
 
-function setInitialDeadpoolPlayerData(aSession, aChar, aVersion)
+function setInitialDeadpoolPlayerData(aSession, aChar)
 	setDeadpoolData(aSession, aChar, "credits", DEADPOOL_INITIAL_MONEY)
-	setDeadpoolData(aSession, aChar, DEADPOOLDATA_VERSION, aVersion)
+	setDeadpoolData(aSession, aChar, DEADPOOL_TRULYUNEQUIP, nil)
+	setDeadpoolData(aSession, aChar, DEADPOOLDATA_VERSION, GetAddOnMetadata("Deadpool", "Version"))
 end
 
 --[[function isEveryoneDisconnected(aDeadpoolSessionId)
@@ -1114,14 +1115,15 @@ function Deadpool_prepareStats()
 	return stats
 end
 
-local InventorySlotsToUnequip = { INVSLOT_TABARD }
+local InventorySlotsToUnequip = {}
 
 function Deadpool_updateInventorySlotsToUnequip()
 	local slotsToUnequipNb = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "offItemsNumber"))
-	InventorySlotsToUnequip = { INVSLOT_TABARD }
+	InventorySlotsToUnequip = {}
 	for i = 1, slotsToUnequipNb do
 		tinsert(InventorySlotsToUnequip, deadpoolUndressingOrder[i]["slot"])
 		if i > 6 then
+			tinsert(InventorySlotsToUnequip, INVSLOT_TABARD)
 			tinsert(InventorySlotsToUnequip, INVSLOT_BODY)
 			tinsert(InventorySlotsToUnequip, INVSLOT_BACK)
 		end

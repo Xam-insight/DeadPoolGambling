@@ -51,7 +51,9 @@ function Deadpool:OnInitialize()
 
 	self:RegisterEvent("PLAYER_ALIVE", "UnequipLostItems")
 	self:RegisterEvent("PLAYER_UNGHOST", "UnequipLostItems")
-		
+	
+	self:RegisterEvent("GROUP_LEFT", "LeaveGroup")
+	
 	hooksecurefunc("UnitFrame_UpdateTooltip", function()
 		Deadpool:DeadpoolMouseOverUnit()
 	end)
@@ -1936,6 +1938,11 @@ function Deadpool:UnequipLostItems(event)
 		Deadpool:ReequipLostItems()
 	end
 	DeadpoolTrulyUnequip_UpdateStatus(DeadpoolTrulyUnequipSwitch)
+end
+
+function Deadpool:LeaveGroup(event)
+	setDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), DEADPOOL_TRULYUNEQUIP, nil)
+	Deadpool:UnequipLostItems(event)
 end
 
 function Deadpool:ReequipLostItems()
