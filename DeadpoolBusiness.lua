@@ -195,7 +195,7 @@ function prepareAndSendSimpleDeadpoolDataToRaid(aSession, aCharacter, anInfo, is
 	if anInfo and not isOptionData then
 		local value, dataTime = getDeadpoolData(aSession, aCharacter, anInfo)
 		Temp_DeadpoolData[aCharacter] = {}
-		local infoToSend = value
+		local infoToSend = value or "nil"
 		if dataTime then
 			infoToSend = infoToSend.."|"..dataTime
 		end
@@ -642,7 +642,7 @@ function loadReceivedDeadpoolData(messageType)
 				elseif deadpoolAchievements[index]
 					and DeadpoolReceivedData[DeadpoolGlobal_SessionId][index]
 						and DeadpoolReceivedData[DeadpoolGlobal_SessionId][index]["achiever"] then
-					local achievementChar = getDeadpoolData(DeadpoolGlobal_SessionId, index, "achiever", DeadpoolReceivedData)
+					local achievementChar = getDeadpoolData(DeadpoolGlobal_SessionId, index, "achiever", DeadpoolReceivedData) or UNKNOWN
 					local precAchievementChar = getDeadpoolData(DeadpoolGlobal_SessionId, index, "achiever")
 					if not precAchievementChar or precAchievementChar == "" then
 						if not deadpoolAchievements[index][DEADPOOL_ISBESTACHIVERACHIEVEMENT] then
@@ -688,7 +688,7 @@ function loadReceivedDeadpoolData(messageType)
 								DeadpoolReceivedData[DeadpoolGlobal_SessionId][index][index2] = nil
 							else
 								local actualData, actualDataTime = getDeadpoolData(DeadpoolGlobal_SessionId, index, index2)
-								if actualDataTime then
+								if actualData and actualDataTime then
 									actualData = actualData.."|"..actualDataTime
 								end
 								local newData = tostring(DeadpoolReceivedData[DeadpoolGlobal_SessionId][index][index2])
@@ -803,6 +803,9 @@ function getDeadpoolData(aSession, aChar, anInfo, aDeadpoolDataObject)
 				value, dataTime = strsplit("|", tostring(value), 2)
 				if dataTime and dataTime == "" then
 					dataTime = nil
+				end
+				if value == "nil" then
+					value = nil
 				end
 			end
 		end
@@ -983,7 +986,7 @@ function setDeadpoolUniqueGamble(aSession, aChar, aBetChar)
 				tellTutorialText("DEADPOOLTUTO_TUTO5")
 				Deadpool_Error(L["UNIT_IN_COMBAT"])
 			elseif aBetChar ~= getDeadpoolData(aSession, aChar, "uniqueGamble") then
-				DeadpoolTuto["chipPiles"] = "done"
+				DeadpoolTuto["chipPiles"] = "Done"
 				if DEADPOOL_SOLEIL == getDeadpoolCharInfo(aChar, "localName") then
 					Deadpool_Error(L["DEADPOOL_SOLEILBET"])
 					Deadpool_dropAnItem(aChar, 1, true)
@@ -1005,7 +1008,7 @@ function saveDeadpoolBets(aSession, aChar, aBetChar, nextDeathBet, afterTransact
 		Deadpool_dropAnItem(aChar, 1, true)
 		Deadpool_updateStat(aSession, aChar, DEADPOOL_SOLEILBET, 1)
 	end
-	DeadpoolTuto["chipPiles"] = "done"
+	DeadpoolTuto["chipPiles"] = "Done"
 	tellTutorialText("DEADPOOLTUTO_TUTO2")
 	local bets = {}
 	bets["dataTime"] = tostring(Deadpool_getTimeUTCinMS())

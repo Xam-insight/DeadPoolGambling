@@ -1841,7 +1841,7 @@ function tellTutorialText(text, force)
 			and (not DeadpoolTuto or not DeadpoolTuto[text]) then
 		quotePlayed = Deadpool_PlaySoundFile(text, "Dialog")
 		EZBlizzUiPop_npcDialog(DEADPOOL_BANKER, L[text])
-		DeadpoolTuto[text] = "done"
+		DeadpoolTuto[text] = "Done"
 	end
 	return quotePlayed
 end
