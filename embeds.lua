@@ -13,7 +13,9 @@ function DeadpoolWindow_OnShow(self)
 		DeadpoolTrulyUnequipSwitch:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 55, 2)
 		DeadpoolTrulyUnequipSwitch:SetAlpha(1.0)
 	end
-	DeadpoolTrulyUnequipSwitch:Show()
+	if not DeadpoolOptionsData["NeverUnequip"] then
+		DeadpoolTrulyUnequipSwitch:Show()
+	end
 	if DeadpoolGlobal_shownModel then
 		dpShowModel(DeadpoolGlobal_shownModel.char)
 	end

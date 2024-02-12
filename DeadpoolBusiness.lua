@@ -745,7 +745,7 @@ function loadReceivedDeadpoolData(messageType)
 	end
 	if playerTrulyUnequipValueChanged then
 		setUnequipItemsValue(playerTrulyUnequipValueChanged == "true")
-	elseif someoneProposedTrulyUnequip then
+	elseif someoneProposedTrulyUnequip and not DeadpoolOptionsData["NeverUnequip"] then
 		StaticPopup_Show("TRULY_UNEQUIP_ITEMS", someoneProposedTrulyUnequip)
 	end
 	generateDeadpoolTable()

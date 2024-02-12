@@ -75,11 +75,11 @@ function loadDeadpoolOptions()
 				args = {
 					unequipItems = {
 						type = "toggle", order = 1,
-						width = "double",
+						width = 1.5,
 						name = L["ENABLE_TRULY_UNEQUIP_ITEMS"],
 						desc = L["ENABLE_TRULY_UNEQUIP_ITEMS_DESC"],
 						disabled = function()
-							return DeadpoolTrulyUnequipSwitch.Cooldown:GetCooldownDuration() ~= 0
+							return DeadpoolOptionsData["NeverUnequip"] or DeadpoolTrulyUnequipSwitch.Cooldown:GetCooldownDuration() ~= 0
 						end,
 						set = function(info, val)
 							setUnequipItemsValue(val)
@@ -89,8 +89,28 @@ function loadDeadpoolOptions()
 							return val and val == "true"
 						end
 					},
-					savingDataAfterLeavingGroup = {
+					neverUnequipItems = {
 						type = "toggle", order = 2,
+						name = "|cFFFF0000"..Deadpool_upperCase(NEVER).."|r",
+						desc = string.format(L["NEVER_TRULY_UNEQUIP_ITEMS_TOOLTIP"], L["ENABLE_TRULY_UNEQUIP_ITEMS"]),
+						disabled = function()
+							return DeadpoolTrulyUnequipSwitch:IsShown() and DeadpoolTrulyUnequipSwitch.Cooldown:GetCooldownDuration() ~= 0
+						end,
+						set = function(info, val)
+							DeadpoolOptionsData["NeverUnequip"] = val
+							if val then
+								DeadpoolTrulyUnequipSwitch:Hide()
+								setUnequipItemsValue(false)
+							else
+								DeadpoolTrulyUnequipSwitch:Show()
+							end
+						end,
+						get = function(info)
+							return DeadpoolOptionsData["NeverUnequip"]
+						end
+					},
+					savingDataAfterLeavingGroup = {
+						type = "toggle", order = 3,
 						width = "double",
 						name = L["ENABLE_SAVING_DATA_AFTER_LEAVING_GROUP"],
 						desc = L["ENABLE_SAVING_DATA_AFTER_LEAVING_GROUP_DESC"],

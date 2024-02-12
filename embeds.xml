@@ -1332,42 +1332,6 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<Frame parentKey="SearchIcon" hidden="true">
-				<Size x="63" y="63"/>
-				<Anchors>
-					<Anchor point="CENTER" relativeKey="$parent.Icon" relativePoint="TOPRIGHT"/>
-				</Anchors>
-				<Layers>
-					<Layer level="OVERLAY" textureSubLevel="3">
-						<Texture parentKey="Icon" atlas="talents-search-match" useAtlasSize="true"/>
-						<Texture parentKey="OverlayIcon" atlas="talents-search-match" alphaMode="ADD"/>
-						<Texture parentKey="Mouseover">
-							<Size x="18" y="18"/>
-							<Anchors>
-								<Anchor point="CENTER"/>
-							</Anchors>
-							<Color r="0" g="0" b="0" a="0"/>
-							<Scripts>
-								<OnLeave function="GameTooltip_Hide"/>
-							</Scripts>
-						</Texture>
-					</Layer>
-				</Layers>
-				<Animations>
-					<AnimationGroup parentKey="GlowAnim" looping="REPEAT" setToFinalAlpha="true">
-						<Alpha childKey="OverlayIcon" fromAlpha="0" toAlpha=".5" duration="1" order="1" smoothing="NONE"/>
-						<Alpha childKey="OverlayIcon" fromAlpha=".5" toAlpha="0" duration="1" order="2" smoothing="NONE"/>
-					</AnimationGroup>
-				</Animations>
-				<Scripts>
-					<OnShow>
-						self.GlowAnim:Play();
-					</OnShow>
-					<OnHide>
-						self.GlowAnim:Stop();
-					</OnHide>
-				</Scripts>
-			</Frame>
 			<Cooldown name="$parentCooldown" parentKey="Cooldown" inherits="CooldownFrameTemplate">
 				<SwipeTexture file="Interface\PVPFrame\PVP-Separation-Circle-Cooldown-overlay">
 					<Color r="0" g="0" b="0" a="0.8"/>
