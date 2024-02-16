@@ -1,4 +1,6 @@
-﻿- v1.14.0
+﻿- v1.14.1
+	- Fixed: Error with model when no character is selected.
+- v1.14.0
 	- Added: Dungeon follower bets.
 	- Added: 'Truly unequip items' mode.
 	- Added: Dead Pool Interface scaling option.

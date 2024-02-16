@@ -1270,17 +1270,18 @@ function DeadpoolSummaryFrame_Update()
 			hideAllDressUpModels() -- to prevent alpha reset
 
 			local deadpoolSideDressUpModelTarget = Deadpool:generateDressUpModel(nil, selectedDeadpoolCharacter, "SideDressUpModel")
-			if selectedDeadpoolCharacter and selectedDeadpoolCharacter ~= "boss" then
-				if deadpoolSideDressUpModelTarget then
+			if deadpoolSideDressUpModelTarget then
+				if selectedDeadpoolCharacter and selectedDeadpoolCharacter ~= "boss" then
 					UIFrameFadeRemoveFrame(deadpoolSideDressUpModelTarget)
 					deadpoolSideDressUpModelTarget:SetAlpha(1.0)
 					deadpoolSideDressUpModelTarget:SetParent(DeadpoolSummaryFramePlayer)
 					deadpoolSideDressUpModelTarget:ClearAllPoints()
 					deadpoolSideDressUpModelTarget:SetPoint("TOPLEFT", DeadpoolSummaryFramePlayer, "TOPLEFT", 3, -3)
 					deadpoolSideDressUpModelTarget:SetPoint("BOTTOMRIGHT", DeadpoolSummaryFramePlayer, "BOTTOMRIGHT", -3, 3)
+				else
+					deadpoolSideDressUpModelTarget:ClearModel()
+					DeadpoolSummaryFramePlayerDurabilityFrame:Hide()
 				end
-			else
-				deadpoolSideDressUpModelTarget:ClearModel()
 			end
 		else
 			hideAllDressUpModels()
@@ -1444,7 +1445,7 @@ end
 
 function Deadpool:generateDressUpModel(event, aChar, frameName)
 	local dressUpModel = deadpoolDressUpModelPool[frameName or "model"]
-	if not event or Deadpool_isPartyMember(aChar) then
+	if aChar and (not event or Deadpool_isPartyMember(aChar)) then
 		local char = aChar
 		if event then
 			char = UnitIsPlayer(aChar) and Deadpool_fullName(aChar)
