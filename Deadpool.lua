@@ -1893,15 +1893,17 @@ function Deadpool:EquipmentSwapped(event, result, setID)
 end
 
 function Deadpool_deleteDeadpoolEquipmentSet(reequipFirst)
-	local deadpoolEquipmentSetID = C_EquipmentSet.GetEquipmentSetID("Dead Pool save")
-	if deadpoolEquipmentSetID then
-		local setEquipped = true
-		if reequipFirst then
-			setEquipped = C_EquipmentSet.UseEquipmentSet(deadpoolEquipmentSetID)
-			DeadpoolTrulyUnequip_UpdateCooldown(DeadpoolTrulyUnequipSwitch)
-		end
-		if not reequipFirst or setEquipped then
-			C_EquipmentSet.DeleteEquipmentSet(deadpoolEquipmentSetID)
+	if not UnitAffectingCombat("player") then
+		local deadpoolEquipmentSetID = C_EquipmentSet.GetEquipmentSetID("Dead Pool save")
+		if deadpoolEquipmentSetID then
+			local setEquipped = true
+			if reequipFirst then
+				setEquipped = C_EquipmentSet.UseEquipmentSet(deadpoolEquipmentSetID)
+				DeadpoolTrulyUnequip_UpdateCooldown(DeadpoolTrulyUnequipSwitch)
+			end
+			if not reequipFirst or setEquipped then
+				C_EquipmentSet.DeleteEquipmentSet(deadpoolEquipmentSetID)
+			end
 		end
 	end
 end
