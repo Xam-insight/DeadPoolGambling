@@ -1,5 +1,6 @@
 ﻿- v1.14.3
 	- TOC for 10.2.7.
+	- [CustomAchiever] v1.3.16 integration.
 - v1.14.2
 	- TOC for 10.2.6.
 	- Fixed: Errors when tryying to equip/unequip items in combat.
