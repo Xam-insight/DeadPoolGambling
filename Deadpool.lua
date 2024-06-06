@@ -300,11 +300,11 @@ function Deadpool_CompartmentFuncOnEnter(addon, button)
 	
 	button:SetAttribute("tooltip", tooltip)
 	button:SetAttribute("tooltipDetail", { tooltipDetail, tooltipDetail2 })
-	CustomAchieverButtonEnter(button, "LEFT")
+	DeadpoolIconButtonEnter(button, "LEFT")
 end
 
 function Deadpool_CompartmentFuncOnLeave()
-	CustomAchieverTooltip:Hide()
+	DeadpoolTooltip:Hide()
 end
 
 function Deadpool_ToggleFrame()
