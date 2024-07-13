@@ -490,18 +490,16 @@ function deadpoolCharacterIsDead(aDeadpoolSessionId, aChar, alternativeName)
 					if uniqueGamble and uniqueGamble ~= "" then
 						if bankCredits > 0 and uniqueGamble == aChar then
 							local deadpoolBankGain = deadpoolGain(bankCredits, 1, totalUniqueGambleOnChar)
-							local garmentsBack = 0
-							if deadpoolBankGain > 39 then
-								local offItemsNumber = Deadpool_tonumberzeroonblankornil(getDeadpoolData(aSession, k1, "offItemsNumber"))
-								garmentsBack = min(floor((deadpoolBankGain - 20) / DEADPOOL_GARMENT_REWARD), DEADPOOL_GARMENT_NUMBER)
-								if garmentsBack > offItemsNumber then 
-									garmentsBack = garmentsBack - offItemsNumber
+							local possibleGarmentsBack = 0
+							if deadpoolBankGain > 2*DEADPOOL_INITIAL_MONEY-1 then
+								local offItemsNumber = Deadpool_tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, k1, "offItemsNumber"))
+								possibleGarmentsBack = min(floor((deadpoolBankGain - DEADPOOL_INITIAL_MONEY) / DEADPOOL_GARMENT_REWARD), offItemsNumber)
+								possibleGarmentsBack = max(0,possibleGarmentsBack) -- to prevent les than 0 value
+								if possibleGarmentsBack > 0 then
+									setDeadpoolData(aDeadpoolSessionId, k1, "offItemsNumber", offItemsNumber - possibleGarmentsBack)
+									--setDeadpoolData(aDeadpoolSessionId, k1, DEADPOOL_LOSTITEMS, offItemsNumber - garmentsBack)
 								end
-								if garmentsBack > 0 then
-									setDeadpoolData(aDeadpoolSessionId, k1, "offItemsNumber", offItemsNumber - garmentsBack)
-									setDeadpoolData(aDeadpoolSessionId, k1, "DEADPOOL_LOSTITEMS", offItemsNumber - garmentsBack)
-								end
-								deadpoolBankGain = deadpoolBankGain - garmentsBack * DEADPOOL_GARMENT_REWARD
+								deadpoolBankGain = deadpoolBankGain - possibleGarmentsBack * DEADPOOL_GARMENT_REWARD
 							end
 
 							deadpoolLog = shortName..L["DEADPOOLLOGS_WINS"]..deadpoolBankGain..string.format(L["DEADPOOLLOGS_BANKCHIPS"], deadpoolChipTextureString)
@@ -540,8 +538,8 @@ function deadpoolCharacterIsDead(aDeadpoolSessionId, aChar, alternativeName)
 				end
 			end
 			-- Winner popup
-			setDeadpoolData(DeadpoolGlobal_SessionId, DEADPOOL_WINNER, "achiever", winner)
-			setDeadpoolData(DeadpoolGlobal_SessionId, DEADPOOL_WINNER, "value", winnerValue)
+			setDeadpoolData(aDeadpoolSessionId, DEADPOOL_WINNER, "achiever", winner)
+			setDeadpoolData(aDeadpoolSessionId, DEADPOOL_WINNER, "value", winnerValue)
 		end
 		if bankLoses then
 			bankCredits = 0
@@ -659,7 +657,7 @@ end
 function DeadpoolBetsOddsInfoEnter(self)
 	local character = self:GetAttribute("Character")
 	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, character, DEADPOOL_TRULYUNEQUIP)
-	local tooltipDetailPurple = trulyUnequipItems and trulyUnequipItems == "true" and L["ENABLE_TRULY_UNEQUIP_ITEMS_ENABLED"].."#"..(getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_LOSTITEMS) or "0")
+	local tooltipDetailPurple = trulyUnequipItems and trulyUnequipItems == "true" and L["ENABLE_TRULY_UNEQUIP_ITEMS_ENABLED"].."#"..(getDeadpoolData(DeadpoolGlobal_SessionId, character, "offItemsNumber") or "0")
 	if tooltipDetailPurple then
 		self:SetAttribute("tooltipDetailPurple",
 			{
@@ -733,9 +731,9 @@ function DeadpoolShowResults(force)
 		if parentFrame:IsShown() then
 			DeadpoolResultsTooltip:SetOwner(parentFrame, "ANCHOR_BOTTOM", 0, -12 + yStep)
 		else
-			local lastFrame = StaticPopup_DisplayedFrames[#StaticPopup_DisplayedFrames]
+			local lastFrame = StaticPopup_DisplayedFrames and StaticPopup_DisplayedFrames[#StaticPopup_DisplayedFrames]
 			if ( lastFrame ) then
-				DeadpoolResultsTooltip:SetOwner(StaticPopup_DisplayedFrames[#StaticPopup_DisplayedFrames], "ANCHOR_BOTTOM", 0, -35)
+				DeadpoolResultsTooltip:SetOwner(lastFrame, "ANCHOR_BOTTOM", 0, -35)
 			else
 				DeadpoolResultsTooltip:SetOwner(UIParent, "ANCHOR_TOP", 0, -201)
 			end
@@ -769,9 +767,9 @@ function DeadpoolShowResults(force)
 		if parentFrame:IsShown() then
 			DeadpoolWinnerTooltip:SetOwner(parentFrame, "ANCHOR_TOP", 0, 0 - yStep)
 		else
-			local lastFrame = StaticPopup_DisplayedFrames[#StaticPopup_DisplayedFrames]
+			local lastFrame = StaticPopup_DisplayedFrames and StaticPopup_DisplayedFrames[#StaticPopup_DisplayedFrames]
 			if ( lastFrame ) then
-				DeadpoolWinnerTooltip:SetOwner(StaticPopup_DisplayedFrames[#StaticPopup_DisplayedFrames], "ANCHOR_BOTTOM", 0, 0)
+				DeadpoolWinnerTooltip:SetOwner(lastFrame, "ANCHOR_BOTTOM", 0, 0)
 			else
 				DeadpoolWinnerTooltip:SetOwner(UIParent, "ANCHOR_TOP", 0, -135)
 			end
@@ -1343,7 +1341,7 @@ function dpShowModel(deadpoolCharacter, parentFrame)
 			elseif DeadpoolWinnerTooltip:IsShown() then
 				parentFrame = DeadpoolWinnerTooltip
 			else
-				local lastFrame = StaticPopup_DisplayedFrames[#StaticPopup_DisplayedFrames]
+				local lastFrame = StaticPopup_DisplayedFrames and StaticPopup_DisplayedFrames[#StaticPopup_DisplayedFrames]
 				if ( lastFrame ) then
 					parentFrame = lastFrame
 				else
@@ -1736,61 +1734,63 @@ local mouseOverFrame
 local lastMouseOver
 function Deadpool:DeadpoolMouseOverUnit()
 	if not UnitAffectingCombat("player") and not DeadpoolOptionsData["BetButtonDisabled"] then
-		local unitFrame = GetMouseFocus()
-		local unitFrameName = unitFrame:GetName()
-		if not unitFrameName then
-			unitFrameName = unitFrame:GetParent():GetName()
-		end
-		if not unitFrameName then
-			unitFrame = unitFrame:GetParent()
-			unitFrameName = unitFrame:GetParent():GetName()
-		end
+		local unitFrame = EZBlizzUiPop_GetMouseFocus()
+		if unitFrame then
+			local unitFrameName = unitFrame:GetName()
+			if not unitFrameName then
+				unitFrameName = unitFrame:GetParent():GetName()
+			end
+			if not unitFrameName then
+				unitFrame = unitFrame:GetParent()
+				unitFrameName = unitFrame:GetParent():GetName()
+			end
 
-		local differentUnit = unitFrameName ~= mouseOverFrame
-		local dropDownMenuWasShown = _G["L_DropDownList1"]:IsShown()
-		if differentUnit then
-			DeadpoolBetButton:Hide()
-			DeadpoolDropDown_Hide()
-			mouseOverFrame = unitFrameName
-		end
-	
-		if unitFrameName then
-			local unitid = unitFrame.unit
-			if unitid and Deadpool_isPartyMember(unitid) and not UnitAffectingCombat(unitid) then
-				local playerId = UnitIsPlayer(unitid) and Deadpool_fullName(unitid)
-				if not playerId then
-					_, _, _, _, _, playerId = strsplit("-", UnitGUID(unitid))
-				end
-				if playerId then
-					DeadpoolBetButton:SetParent(unitFrame)
-					DeadpoolBetButton:SetFrameStrata("MEDIUM")
-					DeadpoolBetButton:SetPoint("CENTER", unitFrame, "TOPRIGHT", -1, -1)
-					DeadpoolBetButton:SetAttribute("Character", playerId)
-					DeadpoolBetButton:SetAttribute("stopFadeOutTimer", true)
-					UIFrameFadeRemoveFrame(DeadpoolBetButton)
-					DeadpoolBetButton:SetAlpha(1.0)
-					DeadpoolBetButton:Show()
-					
-					C_Timer.After(3, function()
-						DeadpoolBetButton:SetAttribute("stopFadeOutTimer", nil)
-					end)
-					
-					C_Timer.After(4, function()
-						if not DeadpoolBetButton:GetAttribute("stopFadeOutTimer") then
-							DPTooltips_FadeOut(DeadpoolBetButton, 0.0)
-						end
-					end)
-					
-					if differentUnit and dropDownMenuWasShown then
-						if lastMouseOver and lastMouseOver + 1 >= time() then
-							DeadpoolDropDown:SetAttribute("Character", unitName)
-							LibDD:ToggleDropDownMenu(1, nil, DeadpoolDropDown, "DeadpoolBetButton")
+			local differentUnit = unitFrameName ~= mouseOverFrame
+			local dropDownMenuWasShown = _G["L_DropDownList1"]:IsShown()
+			if differentUnit then
+				DeadpoolBetButton:Hide()
+				DeadpoolDropDown_Hide()
+				mouseOverFrame = unitFrameName
+			end
+		
+			if unitFrameName then
+				local unitid = unitFrame.unit
+				if unitid and Deadpool_isPartyMember(unitid) and not UnitAffectingCombat(unitid) then
+					local playerId = UnitIsPlayer(unitid) and Deadpool_fullName(unitid)
+					if not playerId then
+						_, _, _, _, _, playerId = strsplit("-", UnitGUID(unitid))
+					end
+					if playerId then
+						DeadpoolBetButton:SetParent(unitFrame)
+						DeadpoolBetButton:SetFrameStrata("MEDIUM")
+						DeadpoolBetButton:SetPoint("CENTER", unitFrame, "TOPRIGHT", -1, -1)
+						DeadpoolBetButton:SetAttribute("Character", playerId)
+						DeadpoolBetButton:SetAttribute("stopFadeOutTimer", true)
+						UIFrameFadeRemoveFrame(DeadpoolBetButton)
+						DeadpoolBetButton:SetAlpha(1.0)
+						DeadpoolBetButton:Show()
+						
+						C_Timer.After(3, function()
+							DeadpoolBetButton:SetAttribute("stopFadeOutTimer", nil)
+						end)
+						
+						C_Timer.After(4, function()
+							if not DeadpoolBetButton:GetAttribute("stopFadeOutTimer") then
+								DPTooltips_FadeOut(DeadpoolBetButton, 0.0)
+							end
+						end)
+						
+						if differentUnit and dropDownMenuWasShown then
+							if lastMouseOver and lastMouseOver + 1 >= time() then
+								DeadpoolDropDown:SetAttribute("Character", unitName)
+								LibDD:ToggleDropDownMenu(1, nil, DeadpoolDropDown, "DeadpoolBetButton")
+							end
 						end
 					end
 				end
 			end
+			lastMouseOver = time()
 		end
-		lastMouseOver = time()
 	else
 		DeadpoolBetButton:Hide()
 		DeadpoolDropDown_Hide()

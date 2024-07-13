@@ -274,3 +274,27 @@ end
 function dpCloseMenuHelpTip(helpTip)
 	DeadpoolHelpTip:Hide(L_DropDownList1, helpTip)
 end
+
+function DeadpoolHelpTipTemplate_OnHide(self)
+	self:UnregisterEvent("UI_SCALE_CHANGED");
+	self:UnregisterEvent("DISPLAY_SIZE_CHANGED");
+
+	local info = self.info;
+	local appendFrame = info.appendFrame;
+	if appendFrame then
+		appendFrame:Hide();
+		appendFrame:ClearAllPoints();
+		appendFrame:SetParent(UIParent);
+	end
+
+	if info.onHideCallback then
+		info.onHideCallback(self.acknowledged, info.callbackArg);
+	end
+	if not self.acknowledged and info.acknowledgeOnHide then
+		self:HandleAcknowledge();
+	end
+	if self.acknowledged and info.onAcknowledgeCallback then
+		info.onAcknowledgeCallback(info.callbackArg);
+	end
+	--HelpTip:Release(self);
+end

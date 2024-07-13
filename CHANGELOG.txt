@@ -1,4 +1,7 @@
-﻿- v1.14.4
+﻿- v1.15
+	- TOC and fixes for 11.0.0.
+	- Fixed: Unique Gamble calculation.
+- v1.14.4
 	- Fixed: Error on screen top right addon menu.
 - v1.14.3
 	- TOC for 10.2.7.
