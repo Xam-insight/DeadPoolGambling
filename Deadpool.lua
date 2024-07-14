@@ -1744,7 +1744,7 @@ function Deadpool:DeadpoolMouseOverUnit()
 				unitFrame = unitFrame:GetParent()
 				unitFrameName = unitFrame:GetParent():GetName()
 			end
-
+	
 			local differentUnit = unitFrameName ~= mouseOverFrame
 			local dropDownMenuWasShown = _G["L_DropDownList1"]:IsShown()
 			if differentUnit then
@@ -1856,15 +1856,15 @@ function Deadpool:BossKill(event, encounterID, encounterName)
 	end
 end
 
+local DeadPoolSaveSetName = "Dead Pool save"
 function Deadpool:UnequipLostItems(event)
 	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), DEADPOOL_TRULYUNEQUIP)
 	if trulyUnequipItems and trulyUnequipItems == "true" then
 		DeadpoolTrulyUnequip_Glow(DeadpoolTrulyUnequipSwitch)
-		local deadpoolEquipmentSetID = C_EquipmentSet.GetEquipmentSetID("Dead Pool save")
+		local deadpoolEquipmentSetID = C_EquipmentSet.GetEquipmentSetID(DeadPoolSaveSetName)
 		if not deadpoolEquipmentSetID then
-			local setname = "Dead Pool save"
 			local setIcon = 237272
-			C_EquipmentSet.CreateEquipmentSet(setname, setIcon)
+			C_EquipmentSet.CreateEquipmentSet(DeadPoolSaveSetName, setIcon)
 		end		
 		self:RegisterEvent("EQUIPMENT_SWAP_FINISHED", "EquipmentSwapped")
 		
@@ -1885,7 +1885,7 @@ function Deadpool:ReequipLostItems()
 end
 
 function Deadpool:EquipmentSwapped(event, result, setID)
-	local deadpoolEquipmentSetID = C_EquipmentSet.GetEquipmentSetID("Dead Pool save")
+	local deadpoolEquipmentSetID = C_EquipmentSet.GetEquipmentSetID(DeadPoolSaveSetName)
 	if deadpoolEquipmentSetID and setID ~= deadpoolEquipmentSetID then
 		Deadpool_deleteDeadpoolEquipmentSet(false)
 		self:UnregisterEvent("EQUIPMENT_SWAP_FINISHED")
@@ -1893,8 +1893,8 @@ function Deadpool:EquipmentSwapped(event, result, setID)
 end
 
 function Deadpool_deleteDeadpoolEquipmentSet(reequipFirst)
-	if not UnitAffectingCombat("player") then
-		local deadpoolEquipmentSetID = C_EquipmentSet.GetEquipmentSetID("Dead Pool save")
+	if not UnitAffectingCombat("player") and not UnitIsDeadOrGhost("player") then
+		local deadpoolEquipmentSetID = C_EquipmentSet.GetEquipmentSetID(DeadPoolSaveSetName)
 		if deadpoolEquipmentSetID then
 			local setEquipped = true
 			if reequipFirst then

@@ -117,13 +117,7 @@ end
 
 function lib:UIDropDownMenuButton_ShouldShowIconTooltip(self)
 	if self.Icon and (self.iconTooltipTitle or self.iconTooltipText) and (self.icon or self.mouseOverIcon) then
-		if wowversion >= 110000 then
-			local region = GetMouseFoci()
-			local frame = region[1]
-		else
-			local frame = GetMouseFocus()
-		end
-		return frame == self.Icon;
+		return GetMouseFocus() == self.Icon;
 	end
 	return false;
 end

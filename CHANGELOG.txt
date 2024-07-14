@@ -1,5 +1,9 @@
-﻿- v1.15
+﻿- v1.15.2
 	- TOC and fixes for 11.0.0.
+- v1.15.1
+	- Fixed: Problem with EquipmentSets when player is dead.
+- v1.15
+	- Fixed: Model display error.
 	- Fixed: Unique Gamble calculation.
 - v1.14.4
 	- Fixed: Error on screen top right addon menu.
