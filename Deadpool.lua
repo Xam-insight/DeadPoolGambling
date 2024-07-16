@@ -1477,19 +1477,19 @@ function Deadpool:generateDressUpModel(event, aChar, frameName)
 			end
 			if isPlayer then -- Allways returns nil -- or modelCanDraw then
 				if groupRank then
-					dressUpModel:SetUnit(groupRank)
+					dressUpModel:SetUnit(groupRank, event ~= nil)
 				end
 			else
 				if groupRank then
 					NotifyInspect(groupRank)
 				end
-				if UnitIsPlayer(groupRank) and modelCanSet then
-					dressUpModel:SetUnit(groupRank, false, shouldUseNativeFormInModelScene == "true")
+				if UnitIsPlayer(groupRank) and UnitIsConnected(groupRank) and modelCanSet then
+					dressUpModel:SetUnit(groupRank, event ~= nil, shouldUseNativeFormInModelScene == "true")
 					if shouldUseNativeFormInModelScene[dressUpModel:GetModelFileID()] then
-						dressUpModel:SetUnit(groupRank, false, true)
+						dressUpModel:SetUnit(groupRank, event ~= nil, true)
 					end
 				elseif not event then
-					dressUpModel:SetUnit("player")
+					dressUpModel:SetUnit("player", event ~= nil)
 					--dressUpModel:SetBarberShopAlternateForm()
 					--dressUpModel:SetCustomRace(
 					--	getDeadpoolCharInfo(char, "race"), getDeadpoolCharInfo(char, "gender"))

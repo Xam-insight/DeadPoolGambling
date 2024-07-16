@@ -42,6 +42,8 @@ ignore:
 	- art/PNG
 	- sound/OLD
 	- ../Deadpool_CustomAchiever/CustomAchiever.toc
+	- Libs/EZBlizzardUiPopups/EZBlizzardUiPopups.toc
+	- Libs/EZBlizzardUiPopups/CHANGELOG.txt
 
 move-folders:
 	Deadpool/Deadpool_CustomAchiever_toc: ../Deadpool_CustomAchiever

@@ -1,5 +1,7 @@
-﻿- v1.15.2
+﻿- v1.15.3
 	- TOC and fixes for 11.0.0.
+- v1.15.2
+	- Fixed: Crash on UndressSlot when player just disconnected.
 - v1.15.1
 	- Fixed: Problem with EquipmentSets when player is dead.
 - v1.15
