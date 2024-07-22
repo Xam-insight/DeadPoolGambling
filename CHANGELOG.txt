@@ -1,5 +1,5 @@
 ﻿- v1.15.3
-	- TOC and fixes for 11.0.0.
+	- TOC for 11.0.0.
 - v1.15.2
 	- Fixed: Crash on UndressSlot when player just disconnected.
 - v1.15.1
