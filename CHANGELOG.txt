@@ -1,4 +1,6 @@
-﻿- v1.15.3
+﻿- v1.15.4
+	- [CustomAchiever] Fixed: Click on hyperlink KO for inherited CustomAchiever addons.
+- v1.15.3
 	- TOC for 11.0.0.
 - v1.15.2
 	- Fixed: Crash on UndressSlot when player just disconnected.
