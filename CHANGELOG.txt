@@ -1,4 +1,6 @@
-﻿- v1.15.4
+﻿- v1.15.5
+	- [CustomAchiever] v1.4.4 integration.
+- v1.15.4
 	- [CustomAchiever] Fixed: Error on closing Helptips.
 - v1.15.3
 	- TOC for 11.0.0.
