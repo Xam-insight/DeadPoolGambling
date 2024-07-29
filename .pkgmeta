@@ -41,7 +41,8 @@ ignore:
 	- embeds_classic.xml
 	- art/PNG
 	- sound/OLD
-	- Deadpool_CustomAchiever/CustomAchiever.toc
+	- Deadpool_CustomAchiever/CustomAchiever_Mainline.toc
+	- Deadpool_CustomAchiever/CustomAchiever_Cata.toc
 	- Libs/EZBlizzardUiPopups/EZBlizzardUiPopups.toc
 	- Libs/EZBlizzardUiPopups/CHANGELOG.txt
 	- Deadpool_CustomAchiever/Libs/EZBlizzardUiPopups/EZBlizzardUiPopups.toc
