@@ -4,7 +4,7 @@
 ## AddonCompartmentFunc: Deadpool_CompartmentFunc
 ## AddonCompartmentFuncOnEnter: Deadpool_CompartmentFuncOnEnter
 ## AddonCompartmentFuncOnLeave: Deadpool_CompartmentFuncOnLeave
-## Version: 1.15.6
+## Version: 1.15.7
 ## Notes: Gambling minigame
 ## Author: Xam_insight
 ## SavedVariables: DeadpoolGlobal_SessionId, DeadpoolData, DeadpoolOptionsData, DeadpoolMIcon, DeadpoolTuto, DeadpoolWindow

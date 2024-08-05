@@ -1,4 +1,6 @@
-﻿- v1.15.6
+﻿- v1.15.7
+	- [CustomAchiever] v1.4.7 integration.
+- v1.15.6
 	- [CustomAchiever] v1.4.5 integration.
 - v1.15.5
 	- [CustomAchiever] v1.4.4 integration.
