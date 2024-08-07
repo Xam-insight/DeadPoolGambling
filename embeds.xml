@@ -981,21 +981,6 @@
 	<GameTooltip name="DeadpoolResultsTooltip" inherits="DeadpoolResultsTooltipTemplate" />
 	<GameTooltip name="DeadpoolWinnerTooltip" inherits="DeadpoolResultsTooltipTemplate" />
 
-	<PlayerModel name="BossModel" parent="UIParent" inherits="ModelWithZoomTemplate">
-		<Anchors>
-			<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="-100" y="-100"/>
-			<Anchor point="BOTTOMRIGHT" relativeTo="$parent" relativePoint="TOPLEFT" x="-10" y="10"/>
-		</Anchors>
-		<Scripts>
-			<OnLoad>
-				Model_OnLoad(self, MODELFRAME_MAX_PLAYER_ZOOM)
-				self:SetFacing(-math.pi/8)
-			</OnLoad>
-			<OnAnimFinished>
-				self:SetAnimation(0)
-			</OnAnimFinished>
-		</Scripts>
-	</PlayerModel>
 	<DressUpModel name="DPDressUpModel" parent="UIParent" virtual="true" inherits="ModelWithZoomTemplate">
 		<Anchors>
 			<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="-100" y="-100"/>
@@ -1006,9 +991,6 @@
 				Model_OnLoad(self, MODELFRAME_MAX_PLAYER_ZOOM)
 				self:SetFacing(-math.pi/8)
 			</OnLoad>
-			<OnAnimFinished>
-				self:SetAnimation(0)
-			</OnAnimFinished>
 			<OnEnter function="DPDressUpModel_OnEnter" />
 			<OnLeave function="DPDressUpModel_OnLeave" />
 		</Scripts>

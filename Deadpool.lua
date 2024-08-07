@@ -579,9 +579,9 @@ function deadpoolUndressModel(modelFrame, offItemsNumber)
 	if modelFrame and modelFrame:GetObjectType() == "DressUpModel" then
 		modelFrame:UndressSlot(INVSLOT_TABARD)
 		modelFrame:UndressSlot(INVSLOT_BACK)
-		modelFrame:UndressSlot(INVSLOT_MAINHAND)
-		modelFrame:UndressSlot(INVSLOT_OFFHAND)
-		modelFrame:UndressSlot(INVSLOT_RANGED)
+		--modelFrame:UndressSlot(INVSLOT_MAINHAND) -- causes crashes when player is disconnected or phased
+		--modelFrame:UndressSlot(INVSLOT_OFFHAND)
+		--modelFrame:UndressSlot(INVSLOT_RANGED)
 
 		local durabilityFrame = "DeadpoolSummaryFramePlayerDurabilityFrame"
 		if modelFrame:GetParent() ~= DeadpoolSummaryFramePlayer then
@@ -1325,6 +1325,19 @@ local shouldUseNativeFormInModelScene = {
 	[4207724] = true  -- Female Dracthyr form
 }
 
+function dpSetAnimation(model, animationId)
+	if model and animationId and model.currentAnimation ~= animationId then
+		model:SetAnimation(animationId)
+		model.currentAnimation = animationId
+		if animationId ~= 0 then
+			model:SetScript("OnAnimFinished", function(self)
+				dpSetAnimation(self, 0, "OnAnimFinished")
+				self:SetScript("OnAnimFinished", nil)
+			end)
+		end
+	end
+end
+
 DeadpoolGlobal_shownModel = nil
 function dpShowModel(deadpoolCharacter, parentFrame)
 	if not DeadpoolOptionsData["DeadpoolModelPopupDisabled"] then
@@ -1382,9 +1395,9 @@ function dpShowModel(deadpoolCharacter, parentFrame)
 					deadpoolDressUpModel:SetParent(UIParent)
 					deadpoolDressUpModel:SetParent(DeadpoolSummaryFramePlayer)
 					C_Timer.After(0, function()
-						deadpoolDressUpModel:SetAnimation(83)
+						dpSetAnimation(deadpoolDressUpModel, 83)
 						if deadpoolDressUpModelPool["SideDressUpModel"] and deadpoolDressUpModel.char == deadpoolDressUpModelPool["SideDressUpModel"].char then
-							deadpoolDressUpModelPool["SideDressUpModel"]:SetAnimation(83)
+							dpSetAnimation(deadpoolDressUpModelPool["SideDressUpModel"], 83)
 						end
 					end)
 				end
@@ -1414,7 +1427,7 @@ function DPModel_FadeIn(frame, alpha)
 	fadeInfo.timeToFade = 1
 	fadeInfo.startAlpha = 0
 	fadeInfo.endAlpha = alpha
-	fadeInfo.finishedFunc = function() frame:SetAnimation(83) end
+	fadeInfo.finishedFunc = function() dpSetAnimation(frame, 83) end
 	UIFrameFade(frame, fadeInfo)
 end
 
@@ -1483,8 +1496,8 @@ function Deadpool:generateDressUpModel(event, aChar, frameName)
 				if groupRank then
 					NotifyInspect(groupRank)
 				end
-				if UnitIsPlayer(groupRank) and UnitIsConnected(groupRank) and modelCanSet then
-					dressUpModel:SetUnit(groupRank, event ~= nil, shouldUseNativeFormInModelScene == "true")
+				if groupRank and UnitIsPlayer(groupRank) and modelCanSet then
+					dressUpModel:SetUnit(groupRank, event ~= nil)
 					if shouldUseNativeFormInModelScene[dressUpModel:GetModelFileID()] then
 						dressUpModel:SetUnit(groupRank, event ~= nil, true)
 					end
@@ -1519,7 +1532,7 @@ function hideDressUpModel(model)
 		model:SetPoint("TOPLEFT", UIParent, "TOPLEFT", -100, 100)
 		model:SetPoint("BOTTOMRIGHT", UIParent, "TOPLEFT", -10, 10)
 		model:SetAlpha(1.0)
-		model:SetAnimation(0)
+		dpSetAnimation(model, 0)
 	end
 end
 
