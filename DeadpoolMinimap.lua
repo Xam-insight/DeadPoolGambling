@@ -40,7 +40,7 @@ eventFrame:SetScript("OnEvent", function(self, event, addon)
 			end
 		end,
 		OnTooltipShow = function(tooltip)
-			tooltip:AddLine(GetAddOnMetadata("Deadpool", "Title"), 1.0, 1.0, 1.0)
+			tooltip:AddLine(C_AddOns.GetAddOnMetadata("Deadpool", "Title"), 1.0, 1.0, 1.0)
 			tooltip:AddLine(L["MINIMAP_TOOLTIP1"])
 			tooltip:AddLine(L["MINIMAP_TOOLTIP2"])
 		end,

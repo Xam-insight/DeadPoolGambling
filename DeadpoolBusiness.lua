@@ -151,7 +151,7 @@ function initDeadpoolBusinessObjects()
 	elseif DeadpoolData[DeadpoolGlobal_SessionId] and not DeadpoolData[DeadpoolGlobal_SessionId][name] then
 		playerJoinsDeadpoolSession(DeadpoolGlobal_SessionId)
 	else
-		setDeadpoolPlayerData(DeadpoolGlobal_SessionId, name, GetAddOnMetadata("Deadpool", "Version"))
+		setDeadpoolPlayerData(DeadpoolGlobal_SessionId, name, C_AddOns.GetAddOnMetadata("Deadpool", "Version"))
 	end
 
 	-- DeadpoolOptionsData
@@ -227,7 +227,7 @@ function getDeadpoolRosterInfo()
 	deadpoolCharInfo[DEADPOOL_BANKER]["isAPlayer"] = false
 
 	local deadpoolPlayerCharacter = Deadpool_playerCharacter() or UNKNOWN
-	local deadpoolPlayerVersion = getDeadpoolMainVersion(GetAddOnMetadata("Deadpool", "Version"))
+	local deadpoolPlayerVersion = getDeadpoolMainVersion(C_AddOns.GetAddOnMetadata("Deadpool", "Version"))
 
 	addCharInList(deadpoolCharInfo, "player", deadpoolPlayerCharacter)
 
@@ -593,7 +593,7 @@ end
 function setInitialDeadpoolPlayerData(aSession, aChar)
 	setDeadpoolData(aSession, aChar, "credits", DEADPOOL_INITIAL_MONEY)
 	setDeadpoolData(aSession, aChar, DEADPOOL_TRULYUNEQUIP, nil)
-	setDeadpoolData(aSession, aChar, DEADPOOLDATA_VERSION, GetAddOnMetadata("Deadpool", "Version"))
+	setDeadpoolData(aSession, aChar, DEADPOOLDATA_VERSION, C_AddOns.GetAddOnMetadata("Deadpool", "Version"))
 end
 
 --[[function isEveryoneDisconnected(aDeadpoolSessionId)

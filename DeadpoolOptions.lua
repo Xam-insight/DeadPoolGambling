@@ -16,7 +16,7 @@ local sidesSorting = {
 function loadDeadpoolOptions()
 	local DeadpoolOptions = {
 		type = "group",
-		name = format("%s |cffADFF2Fv%s|r", "Dead Pool", GetAddOnMetadata("Deadpool", "Version")),
+		name = format("%s |cffADFF2Fv%s|r", "Dead Pool", C_AddOns.GetAddOnMetadata("Deadpool", "Version")),
 		args = {
 			general = {
 				type = "group", order = 1,

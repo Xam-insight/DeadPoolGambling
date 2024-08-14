@@ -130,5 +130,5 @@ function checkDeadpoolVersion()
 end
 
 function sendDeadpoolVersion(aSender)
-	Deadpool:SendCommMessage(DeadpoolGlobal_CommPrefix, "Version#"..tostring(Deadpool_getTimeUTCinMS()).."#"..GetAddOnMetadata("Deadpool", "Version"), "WHISPER", aSender)
+	Deadpool:SendCommMessage(DeadpoolGlobal_CommPrefix, "Version#"..tostring(Deadpool_getTimeUTCinMS()).."#"..C_AddOns.GetAddOnMetadata("Deadpool", "Version"), "WHISPER", aSender)
 end

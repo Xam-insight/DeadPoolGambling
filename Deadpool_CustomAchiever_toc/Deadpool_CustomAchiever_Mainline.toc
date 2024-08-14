@@ -1,10 +1,10 @@
-## Interface: 110000
+## Interface: 110002
 ## Title: Deadpool_CustomAchiever
 ## IconTexture: Interface\Icons\inv_inscription_tradeskill01.blp
 # AddonCompartmentFunc: CustomAchiever_CompartmentFunc
 # AddonCompartmentFuncOnEnter: CustomAchiever_CompartmentFuncOnEnter
 # AddonCompartmentFuncOnLeave: CustomAchiever_CompartmentFuncOnLeave
-## Version: 1.4.7
+## Version: 1.4.8
 ## Notes: Custom Achievements creator
 ## Author: Xam_insight
 ## SavedVariables: CustomAchieverData, CustomAchieverDataBackup, CustomAchieverOptionsData, CustomAchieverLastManualCall

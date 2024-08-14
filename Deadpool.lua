@@ -161,7 +161,7 @@ function Deadpool:OnEnable()
 
 	if not CustomAchiever then
 		CustAcAddon = "Deadpool_CustomAchiever"
-		LoadAddOn(CustAcAddon)
+		C_AddOns.LoadAddOn(CustAcAddon)
 	end
 	if CustomAchiever then
 		CustAc_CreateOrUpdateCategory("Deadpool", nil, "Dead Pool Gambling")
@@ -294,7 +294,7 @@ function Deadpool_CompartmentFunc(addon, clickButton)
 end
 
 function Deadpool_CompartmentFuncOnEnter(addon, button)
-	local tooltip = GetAddOnMetadata("Deadpool", "Title")
+	local tooltip = C_AddOns.GetAddOnMetadata("Deadpool", "Title")
 	local tooltipDetail = L["MINIMAP_TOOLTIP1"]
 	local tooltipDetail2 = L["MINIMAP_TOOLTIP2"]
 	

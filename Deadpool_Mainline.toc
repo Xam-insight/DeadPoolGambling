@@ -1,10 +1,10 @@
-## Interface: 110000
+## Interface: 110002
 ## Title: Dead Pool |T137008:16|t |cffffffffG|r|cff666666a|r|cffffffffm|r|cff666666b|r|cffffffffl|r|cff666666i|r|cffffffffn|r|cff666666g|r
 ## IconTexture: Interface\AddOns\Deadpool\art\chip.blp
 ## AddonCompartmentFunc: Deadpool_CompartmentFunc
 ## AddonCompartmentFuncOnEnter: Deadpool_CompartmentFuncOnEnter
 ## AddonCompartmentFuncOnLeave: Deadpool_CompartmentFuncOnLeave
-## Version: 1.15.8
+## Version: 1.15.9
 ## Notes: Gambling minigame
 ## Author: Xam_insight
 ## SavedVariables: DeadpoolGlobal_SessionId, DeadpoolData, DeadpoolOptionsData, DeadpoolMIcon, DeadpoolTuto, DeadpoolWindow
