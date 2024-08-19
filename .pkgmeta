@@ -49,7 +49,7 @@ ignore:
 	- ../Deadpool_CustomAchiever/Libs/EZBlizzardUiPopups/CHANGELOG.txt
 
 move-folders:
-	Deadpool/Deadpool_CustomAchiever_toc: ../Deadpool_CustomAchiever
+	Deadpool/Deadpool_CustomAchiever_toc: Deadpool_CustomAchiever
 	
 manual-changelog:
 	filename: CHANGELOG.txt
