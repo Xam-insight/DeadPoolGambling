@@ -36,6 +36,24 @@ StaticPopupDialogs["TRULY_UNEQUIP_ITEMS"] = {
 	preferredIndex = 3,  -- avoid some UI taint, see http://www.wowace.com/announcements/how-to-avoid-some-ui-taint/
 }
 
+StaticPopupDialogs["DEADPOOL_SELL_ITEM_WARNING"] = {
+    text = Deadpool_logo.."|n|n"..L["DEADPOOL_SELL_ITEM_WARNING"],
+    button1 = YES,
+    button2 = NO,
+    OnAccept = function(self, data)
+        -- Quit DEADPOOL_TRULYUNEQUIP mode
+		setDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), DEADPOOL_TRULYUNEQUIP, nil)
+		Deadpool:UnequipLostItems(event)
+    end,
+    OnCancel = function()
+        -- Do nothing
+    end,
+    timeout = 0,
+    whileDead = true,
+    hideOnEscape = true,
+    preferredIndex = 3,
+}
+
 deadpoolUndressingOrder = {
 	[1] = { ["slot"] = INVSLOT_HEAD,      ["slotLabel"] = "Head"      },
 	[2] = { ["slot"] = INVSLOT_WAIST,     ["slotLabel"] = "Waist"     },

@@ -56,6 +56,10 @@ function Deadpool:OnInitialize()
 	hooksecurefunc("UnitFrame_UpdateTooltip", function()
 		Deadpool:DeadpoolMouseOverUnit()
 	end)
+
+	hooksecurefunc("MerchantFrame_UpdateMerchantInfo", function()
+		Deadpool:MerchantFrameUpdate()
+	end)
 end
 
 function Deadpool:OnEnable()
@@ -1917,6 +1921,17 @@ function Deadpool_deleteDeadpoolEquipmentSet(reequipFirst)
 			if not reequipFirst or setEquipped then
 				C_EquipmentSet.DeleteEquipmentSet(deadpoolEquipmentSetID)
 			end
+		end
+	end
+end
+
+function Deadpool:MerchantFrameUpdate()
+	if getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), DEADPOOL_TRULYUNEQUIP) then
+		local buybackName = GetBuybackItemInfo(GetNumBuybackItems())
+		
+		if buybackName and Deadpool_isItemInSet(buybackName, DeadPoolSaveSetName) then
+			BuybackItem(GetNumBuybackItems())
+			StaticPopup_Show("DEADPOOL_SELL_ITEM_WARNING")
 		end
 	end
 end

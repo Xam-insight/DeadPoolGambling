@@ -1314,3 +1314,23 @@ function isInstanceAtLevel(level)
 	end
 	return false
 end
+
+-- Fonction to check if item is in set
+function Deadpool_isItemInSet(givenItemName, setName)
+    local equipmentSetIDs = C_EquipmentSet.GetEquipmentSetIDs()
+    for _, setID in ipairs(equipmentSetIDs) do
+        local name = C_EquipmentSet.GetEquipmentSetInfo(setID)
+        if name == setName then
+            local items = C_EquipmentSet.GetItemIDs(setID)
+            for _, itemID in pairs(items) do
+                if itemID then
+					itemName = GetItemInfo(itemID, givenItemName)
+                    if givenItemName == itemName then
+                        return true
+                    end
+                end
+            end
+        end
+    end
+    return false
+end

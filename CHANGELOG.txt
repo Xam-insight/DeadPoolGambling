@@ -1,5 +1,5 @@
-﻿- packager_alpha7
-	- testing packager / do not install
+﻿- v1.15.10
+	- Added: You cannot sell an item removed by the 'Truly unequip items' mode.
 - v1.15.9
 	- TOC for 11.0.2.
 	- Fixed: Deprecated calls.
