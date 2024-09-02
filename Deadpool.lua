@@ -1929,9 +1929,25 @@ function Deadpool:MerchantFrameUpdate()
 	if getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), DEADPOOL_TRULYUNEQUIP) then
 		local buybackName = GetBuybackItemInfo(GetNumBuybackItems())
 		
-		if buybackName and Deadpool_isItemInSet(buybackName, DeadPoolSaveSetName) then
-			BuybackItem(GetNumBuybackItems())
-			StaticPopup_Show("DEADPOOL_SELL_ITEM_WARNING")
+		if buybackName then
+			local itemID = Deadpool_isItemInSet(buybackName, DeadPoolSaveSetName)
+			if itemID then
+				BuybackItem(GetNumBuybackItems())
+				
+				local itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, itemSellPrice = GetItemInfo(itemID)
+				local rColor, gColor, bColor = GetItemQualityColor(itemRarity)
+				local data = {
+					texture = itemTexture,
+					name = itemName,
+					color = {rColor, gColor, bColor, 1},
+					link = itemLink,
+					itemFrameOnEnter = StaticPopupItemOnEnter,
+					isItemBound = true,
+					costString = itemSellPrice,
+				};
+				
+				StaticPopup_Show("DEADPOOL_SELL_ITEM_WARNING", nil, nil, data)
+			end
 		end
 	end
 end

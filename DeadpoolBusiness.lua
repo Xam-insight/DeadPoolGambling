@@ -1324,9 +1324,9 @@ function Deadpool_isItemInSet(givenItemName, setName)
             local items = C_EquipmentSet.GetItemIDs(setID)
             for _, itemID in pairs(items) do
                 if itemID then
-					itemName = GetItemInfo(itemID, givenItemName)
+					itemName = GetItemInfo(itemID)
                     if givenItemName == itemName then
-                        return true
+                        return itemID
                     end
                 end
             end

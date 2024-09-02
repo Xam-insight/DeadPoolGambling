@@ -1,4 +1,6 @@
-﻿- v1.15.10
+﻿- v1.15.11
+	- Added: Showing the item in the alert when trying to sell an item removed by the 'Truly unequip items' mode.
+- v1.15.10
 	- Added: You cannot sell an item removed by the 'Truly unequip items' mode.
 - v1.15.9
 	- TOC for 11.0.2.
