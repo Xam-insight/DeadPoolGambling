@@ -1,4 +1,4 @@
-﻿- v1.15.12
+﻿- v1.16.0
 	- Added: Nerub-ar Palace support.
 - v1.15.11
 	- Added: Showing the item in the alert when trying to sell an item removed by the 'Truly unequip items' mode.
