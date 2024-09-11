@@ -65,6 +65,7 @@ raceID["MagharOrc"] = raceID["Mag'har Orc"]
 -- https://wowpedia.fandom.com/wiki/InstanceID
 -- https://wowpedia.fandom.com/wiki/DifficultyID
 -- https://wowpedia.fandom.com/wiki/LfgDungeonID
+-- https://wago.tools/db2/Map
 
 --[[
 function getDpInstanceIDList()--/run tpotest()
@@ -131,6 +132,7 @@ local dpInstanceIDList = {
 	[2522] = 70, -- Vault of the Incarnates
 	[2569] = 70, -- Aberrus, the Shadowed Crucible
 	[2549] = 70, -- Amirdrassil, the Dream's Hope
+	[2657] = 80, -- Nerub-ar Palace
 }
 
 local willPlay, soundHandle
