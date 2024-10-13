@@ -1264,10 +1264,10 @@ function Deadpool_PlaySound(soundID, channel, forcePlay)
 end
 
 function Deadpool_PlaySoundFile(soundFile, channel, forcePlay)
-	if soundHandle then
-		StopSound(soundHandle)
-	end
 	if forcePlay or not DeadpoolOptionsData or not DeadpoolOptionsData["DeadpoolSoundsDisabled"] or not (DeadpoolOptionsData["DeadpoolSoundsDisabled"] == true) then
+		if soundHandle then
+			StopSound(soundHandle)
+		end
 		willPlay, soundHandle = PlaySoundFile("Interface\\AddOns\\Deadpool\\sound\\"..soundFile.."_"..GetLocale()..".ogg", channel, _, true)
 		if not willPlay then
 			willPlay, soundHandle = PlaySoundFile("Interface\\AddOns\\Deadpool\\sound\\"..soundFile..".ogg", channel, _, true)
@@ -1277,18 +1277,20 @@ function Deadpool_PlaySoundFile(soundFile, channel, forcePlay)
 end
 
 function Deadpool_PlaySoundFileId(soundFileId, channel, forcePlay)
-	if soundHandle then
-		StopSound(soundHandle)
-	end
 	if forcePlay or not DeadpoolOptionsData or not DeadpoolOptionsData["DeadpoolSoundsDisabled"] or not (DeadpoolOptionsData["DeadpoolSoundsDisabled"] == true) then
-		PlaySoundFile(soundFileId, channel)
+		if soundHandle then
+			StopSound(soundHandle)
+		end
+		willPlay, soundHandle = PlaySoundFile(soundFileId, channel)
 	end
 	return soundHandle
 end
 
 function Deadpool_PlayRandomSound(soundFileIdBank, channel, forcePlay)
-	local sound = math.random(1, #soundFileIdBank)
-	return Deadpool_PlaySoundFileId(soundFileIdBank[sound], channel)
+	if forcePlay or not DeadpoolOptionsData or not DeadpoolOptionsData["DeadpoolSoundsDisabled"] or not (DeadpoolOptionsData["DeadpoolSoundsDisabled"] == true) then
+		local sound = math.random(1, #soundFileIdBank)
+		return Deadpool_PlaySoundFileId(soundFileIdBank[sound], channel, forcePlay)
+	end
 end
 
 function Deadpool_isPartyMember(unitId)

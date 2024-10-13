@@ -52,6 +52,7 @@ function Deadpool:TestBuildFakePlayers()
 			["groupRole"] = "DAMAGER",
 			["gender"] = 1,
 			["groupRank"] = "raid1",
+			["localName"] = "Xamhunter",
 		},
 		["Xamwarlock"] = {
 			["classFileName"] = "WARLOCK",
@@ -59,6 +60,7 @@ function Deadpool:TestBuildFakePlayers()
 			["groupRole"] = "DAMAGER",
 			["gender"] = 0,
 			["groupRank"] = "raid2",
+			["localName"] = "Xamwarlock",
 		},
 		["Xampriest"] = {
 			["classFileName"] = "PRIEST",
@@ -66,6 +68,7 @@ function Deadpool:TestBuildFakePlayers()
 			["groupRole"] = "HEALER",
 			["gender"] = 1,
 			["groupRank"] = "raid3",
+			["localName"] = "Xampriest",
 		},
 		["Xampaladin"] = {
 			["classFileName"] = "PALADIN",
@@ -73,6 +76,7 @@ function Deadpool:TestBuildFakePlayers()
 			["groupRole"] = "TANK",
 			["gender"] = 0,
 			["groupRank"] = "raid4",
+			["localName"] = "Xampaladin",
 			},
 		["Xammage"] = {
 			["classFileName"] = "MAGE",
@@ -80,6 +84,7 @@ function Deadpool:TestBuildFakePlayers()
 			["groupRole"] = "DAMAGER",
 			["gender"] = 1,
 			["groupRank"] = "raid5",
+			["localName"] = "Xammage",
 			},
 		["Xamrogue"] = {
 			["classFileName"] = "ROGUE",
@@ -87,6 +92,7 @@ function Deadpool:TestBuildFakePlayers()
 			["groupRole"] = "DAMAGER",
 			["gender"] = 0,
 			["groupRank"] = "raid6",
+			["localName"] = "Xamrogue",
 		},
 		["Xamdruid"] = {
 			["classFileName"] = "DRUID",
@@ -94,6 +100,7 @@ function Deadpool:TestBuildFakePlayers()
 			["groupRole"] = "HEALER",
 			["gender"] = 1,
 			["groupRank"] = "raid7",
+			["localName"] = "Xamdruid",
 		},
 		["Xamshaman"] = {
 			["classFileName"] = "SHAMAN",
@@ -101,6 +108,7 @@ function Deadpool:TestBuildFakePlayers()
 			["groupRole"] = "DAMAGER",
 			["gender"] = 0,
 			["groupRank"] = "raid1",
+			["localName"] = "Xamshaman",
 		},
 		["Xamwarriora"] = {
 			["classFileName"] = "WARRIOR",
@@ -108,6 +116,7 @@ function Deadpool:TestBuildFakePlayers()
 			["groupRole"] = "TANK",
 			["gender"] = 1,
 			["groupRank"] = "raid8",
+			["localName"] = "Xamwarriora",
 		},
 		["Xamwarriorb"] = {
 			["classFileName"] = "WARRIOR",
@@ -115,6 +124,7 @@ function Deadpool:TestBuildFakePlayers()
 			["groupRole"] = "DAMAGER",
 			["gender"] = 0,
 			["groupRank"] = "raid9",
+			["localName"] = "Xamwarriorb",
 		},
 		["Xamdeathknight"] = {
 			["classFileName"] = "DEATHKNIGHT",
@@ -122,6 +132,7 @@ function Deadpool:TestBuildFakePlayers()
 			["groupRole"] = "DAMAGER",
 			["gender"] = 1,
 			["groupRank"] = "raid10",
+			["localName"] = "Xamdeathknight",
 		},
 		["Xamevokera"] = {
 			["classFileName"] = "EVOKER",
@@ -129,6 +140,7 @@ function Deadpool:TestBuildFakePlayers()
 			["groupRole"] = "DAMAGER",
 			["gender"] = 0,
 			["groupRank"] = "raid11",
+			["localName"] = "Xamevokera",
 		},
 		["Xamevokerh"] = {
 			["classFileName"] = "EVOKER",
@@ -136,6 +148,7 @@ function Deadpool:TestBuildFakePlayers()
 			["groupRole"] = "DAMAGER",
 			["gender"] = 1,
 			["groupRank"] = "raid12",
+			["localName"] = "Xamevokerh",
 		},
 	}
 end
