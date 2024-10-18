@@ -1,4 +1,6 @@
-﻿- v1.16.2
+﻿- v1.17
+	- Added: Blackrock Depths support.
+- v1.16.2
 	- TOC for 11.0.5.
 - v1.16.0
 	- Added: Nerub-ar Palace support.

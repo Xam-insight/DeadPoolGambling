@@ -133,6 +133,7 @@ local dpInstanceIDList = {
 	[2569] = 70, -- Aberrus, the Shadowed Crucible
 	[2549] = 70, -- Amirdrassil, the Dream's Hope
 	[2657] = 80, -- Nerub-ar Palace
+	[2792] = 80, -- Blackrock Depths
 }
 
 local willPlay, soundHandle
