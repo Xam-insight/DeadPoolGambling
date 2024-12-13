@@ -1,4 +1,7 @@
-﻿- v1.17
+﻿- v1.18
+	- TOC for 11.0.7.
+	- Fixed: Persistant menu with no entries on raid portraits.
+- v1.17
 	- Added: Blackrock Depths support.
 - v1.16.2
 	- TOC for 11.0.5.

@@ -5,6 +5,9 @@ local betSliderInitialValue = 5
 
 function DeadpoolDropDown_Update(self)
 	local betChar = self:GetAttribute("Character")
+	if not betChar then
+		return
+	end
 	local betTuto = L["DEADPOOLTUTO_BET"]
 	if betChar == "boss" then
 		betTuto = L["DEADPOOLTUTO_BOSS"]
