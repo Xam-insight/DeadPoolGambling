@@ -1,4 +1,4 @@
-﻿- v1.18
+﻿- v1.19
 	- TOC for 11.0.7.
 	- Fixed: Persistant menu with no entries on raid portraits.
 - v1.17
