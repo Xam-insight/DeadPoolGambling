@@ -1,4 +1,7 @@
-﻿- v1.19
+﻿- v1.20
+	- TOC for 11.1.0.
+	- Added: Undermine Depths support.
+- v1.19
 	- TOC for 11.0.7.
 	- Fixed: Persistant menu with no entries on raid portraits.
 - v1.17

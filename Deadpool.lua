@@ -163,11 +163,11 @@ function Deadpool:OnEnable()
 		Deadpool:Print(L["DEADPOOL_WELCOME"])
     end
 
-	if not CustomAchiever then
+	if not CustomAchieverData then
 		CustAcAddon = "Deadpool_CustomAchiever"
 		C_AddOns.LoadAddOn(CustAcAddon)
 	end
-	if CustomAchiever then
+	if CustomAchieverData then
 		CustAc_CreateOrUpdateCategory("Deadpool", nil, "Dead Pool Gambling")
 		for k,v in pairs(deadpoolAchievements) do
 			if k ~= DEADPOOL_WINNER then
@@ -854,7 +854,7 @@ function createDeadpoolLine(aDeadpoolSessionId, indexCharac, fullName, deadpoolL
 		xValue = roleButton:GetWidth() + 2*betweenObjectsGap
 	end
 
-	local fontstringLabel = miniLabel.."PlayerLabel"
+	local fontstringLabel = miniLabel.."DPPlayerLabel"
 	local fontstring = getFontStringFromDeadpoolFramePool(indexCharac, fontstringLabel, "DeadpoolPlayerLabelTemplate", deadpoolLine)
 	local color = RAID_CLASS_COLORS[(getDeadpoolCharInfo(fullName, "classFileName") or "ROGUE")]
 	fontstring:SetTextColor(color.r, color.g, color.b, 1.0)

@@ -134,6 +134,7 @@ local dpInstanceIDList = {
 	[2549] = 70, -- Amirdrassil, the Dream's Hope
 	[2657] = 80, -- Nerub-ar Palace
 	[2792] = 80, -- Blackrock Depths
+	[2872] = 80, -- Undermine
 }
 
 local willPlay, soundHandle
@@ -658,7 +659,7 @@ function loadReceivedDeadpoolData(messageType)
 							if noNotif then
 								Deadpool:Print(string.format(L["NEW_TITLE_FOR"], achievementChar)..L["SPACE_BEFORE_DOT"]..": "..deadpoolAchievements[index]["label"])
 							end
-							if CustomAchiever and Deadpool_isPlayerCharacter(achievementChar) then
+							if CustomAchieverData and Deadpool_isPlayerCharacter(achievementChar) then
 								CustAc_CompleteAchievement(index, nil, noNotif, DeadpoolOptionsData["DeadpoolSoundsDisabled"])
 							elseif not noNotif then
 								EZBlizzUiPop_ToastFakeAchievementNew(Deadpool, deadpoolAchievements[index]["label"], 3456, not DeadpoolOptionsData["DeadpoolSoundsDisabled"], 4, string.format(L["NEW_TITLE_FOR"], achievementChar), function()  Deadpool:DeadpoolShow()  end)
@@ -1041,7 +1042,7 @@ function Deadpool_updateStat(aDeadpoolSessionId, aChar, aStat, aValue)
 					if noNotif then
 						Deadpool:Print(string.format(L["NEW_TITLE_FOR"], aChar)..L["SPACE_BEFORE_DOT"]..": "..deadpoolAchievements[aStat]["label"])
 					end
-					if CustomAchiever and Deadpool_isPlayerCharacter(aChar) then
+					if CustomAchieverData and Deadpool_isPlayerCharacter(aChar) then
 						CustAc_CompleteAchievement(aStat, nil, noNotif, DeadpoolOptionsData["DeadpoolSoundsDisabled"])
 					elseif not noNotif then
 						EZBlizzUiPop_ToastFakeAchievementNew(Deadpool, deadpoolAchievements[aStat]["label"], 3456, not DeadpoolOptionsData["DeadpoolSoundsDisabled"], 4, string.format(L["NEW_TITLE_FOR"], aChar), function()  Deadpool:DeadpoolShow()  end)

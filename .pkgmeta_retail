@@ -15,25 +15,25 @@ externals:
 	Libs/LibDataBroker-1.1: https://repos.wowace.com/wow/libdatabroker-1-1
 	Libs/LibDBIcon-1.0: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
 	Libs/UTF8: https://repos.wowace.com/wow/utf8/trunk
-	Libs/LibUIDropDownMenu: https://repos.wowace.com/wow/libuidropdownmenu/trunk/LibUIDropDownMenu
+	#Libs/LibUIDropDownMenu: https://repos.wowace.com/wow/libuidropdownmenu/trunk/LibUIDropDownMenu
 	Libs/EZBlizzardUiPopups: https://github.com/Xam-insight/EZBlizzardUiPopups
-	../Deadpool_CustomAchiever: https://github.com/Xam-insight/CustomAchiever
-	../Deadpool_CustomAchiever/Libs/Ace3/AceAddon-3.0: https://repos.wowace.com/wow/ace3/trunk/AceAddon-3.0
-	../Deadpool_CustomAchiever/Libs/Ace3/AceComm-3.0: https://repos.wowace.com/wow/ace3/trunk/AceComm-3.0
-	../Deadpool_CustomAchiever/Libs/Ace3/AceConfig-3.0: https://repos.wowace.com/wow/ace3/trunk/AceConfig-3.0
-	../Deadpool_CustomAchiever/Libs/Ace3/AceConsole-3.0: https://repos.wowace.com/wow/ace3/trunk/AceConsole-3.0
-	../Deadpool_CustomAchiever/Libs/Ace3/AceDB-3.0: https://repos.wowace.com/wow/ace3/trunk/AceDB-3.0
-	../Deadpool_CustomAchiever/Libs/Ace3/AceEvent-3.0: https://repos.wowace.com/wow/ace3/trunk/AceEvent-3.0
-	../Deadpool_CustomAchiever/Libs/Ace3/AceGUI-3.0: https://repos.wowace.com/wow/ace3/trunk/AceGUI-3.0
-	../Deadpool_CustomAchiever/Libs/Ace3/AceLocale-3.0: https://repos.wowace.com/wow/ace3/trunk/AceLocale-3.0
-	../Deadpool_CustomAchiever/Libs/Ace3/AceSerializer-3.0: https://repos.wowace.com/wow/ace3/trunk/AceSerializer-3.0
-	../Deadpool_CustomAchiever/Libs/Ace3/CallbackHandler-1.0: https://repos.wowace.com/wow/ace3/trunk/CallbackHandler-1.0
-	../Deadpool_CustomAchiever/Libs/Ace3/LibStub: https://repos.wowace.com/wow/ace3/trunk/LibStub
-	../Deadpool_CustomAchiever/Libs/LibDataBroker-1.1: https://repos.wowace.com/wow/libdatabroker-1-1
-	../Deadpool_CustomAchiever/Libs/LibDBIcon-1.0: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
-	../Deadpool_CustomAchiever/Libs/UTF8: https://repos.wowace.com/wow/utf8/trunk
-	../Deadpool_CustomAchiever/Libs/LibUIDropDownMenu: https://repos.wowace.com/wow/libuidropdownmenu/trunk/LibUIDropDownMenu
-	../Deadpool_CustomAchiever/Libs/EZBlizzardUiPopups: https://github.com/Xam-insight/EZBlizzardUiPopups
+	../CustomAchiever: https://github.com/Xam-insight/CustomAchiever
+	../CustomAchiever/Libs/Ace3/AceAddon-3.0: https://repos.wowace.com/wow/ace3/trunk/AceAddon-3.0
+	../CustomAchiever/Libs/Ace3/AceComm-3.0: https://repos.wowace.com/wow/ace3/trunk/AceComm-3.0
+	../CustomAchiever/Libs/Ace3/AceConfig-3.0: https://repos.wowace.com/wow/ace3/trunk/AceConfig-3.0
+	../CustomAchiever/Libs/Ace3/AceConsole-3.0: https://repos.wowace.com/wow/ace3/trunk/AceConsole-3.0
+	../CustomAchiever/Libs/Ace3/AceDB-3.0: https://repos.wowace.com/wow/ace3/trunk/AceDB-3.0
+	../CustomAchiever/Libs/Ace3/AceEvent-3.0: https://repos.wowace.com/wow/ace3/trunk/AceEvent-3.0
+	../CustomAchiever/Libs/Ace3/AceGUI-3.0: https://repos.wowace.com/wow/ace3/trunk/AceGUI-3.0
+	../CustomAchiever/Libs/Ace3/AceLocale-3.0: https://repos.wowace.com/wow/ace3/trunk/AceLocale-3.0
+	../CustomAchiever/Libs/Ace3/AceSerializer-3.0: https://repos.wowace.com/wow/ace3/trunk/AceSerializer-3.0
+	../CustomAchiever/Libs/Ace3/CallbackHandler-1.0: https://repos.wowace.com/wow/ace3/trunk/CallbackHandler-1.0
+	../CustomAchiever/Libs/Ace3/LibStub: https://repos.wowace.com/wow/ace3/trunk/LibStub
+	../CustomAchiever/Libs/LibDataBroker-1.1: https://repos.wowace.com/wow/libdatabroker-1-1
+	../CustomAchiever/Libs/LibDBIcon-1.0: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
+	../CustomAchiever/Libs/UTF8: https://repos.wowace.com/wow/utf8/trunk
+	#CustomAchiever/Libs/LibUIDropDownMenu: https://repos.wowace.com/wow/libuidropdownmenu/trunk/LibUIDropDownMenu
+	../CustomAchiever/Libs/EZBlizzardUiPopups: https://github.com/Xam-insight/EZBlizzardUiPopups
 
 ignore:
 	- .pkgmeta_classic
@@ -41,10 +41,11 @@ ignore:
 	- embeds_classic.xml
 	- art/PNG
 	- sound/OLD
+	- Libs/EZBlizzardUiPopups/EZBlizzardUiPopups.toc
+	- Libs/EZBlizzardUiPopups/CHANGELOG.txt
+	- ../CustomAchiever/Libs/EZBlizzardUiPopups/EZBlizzardUiPopups.toc
+	- ../CustomAchiever/Libs/EZBlizzardUiPopups/CHANGELOG.txt
 
-move-folders:
-	Deadpool/Deadpool_CustomAchiever_toc: ../Deadpool_CustomAchiever
-	
 manual-changelog:
 	filename: CHANGELOG.txt
 	markup-type: markdown
