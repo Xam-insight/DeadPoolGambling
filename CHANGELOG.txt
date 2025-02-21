@@ -1,4 +1,6 @@
-﻿- v1.20
+﻿- v1.20.1
+	- [CustomAchiever] v1.5 integration.
+- v1.20
 	- TOC for 11.1.0.
 	- Added: Undermine Depths support.
 - v1.19
