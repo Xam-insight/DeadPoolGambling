@@ -646,7 +646,7 @@ function loadReceivedDeadpoolData(messageType)
 				elseif deadpoolAchievements[index]
 					and DeadpoolReceivedData[DeadpoolGlobal_SessionId][index]
 						and DeadpoolReceivedData[DeadpoolGlobal_SessionId][index]["achiever"] then
-					local achievementChar = getDeadpoolData(DeadpoolGlobal_SessionId, index, "achiever", DeadpoolReceivedData) or UNKNOWN
+					local achievementChar, achievementTime = getDeadpoolData(DeadpoolGlobal_SessionId, index, "achiever", DeadpoolReceivedData)
 					local precAchievementChar = getDeadpoolData(DeadpoolGlobal_SessionId, index, "achiever")
 					if not precAchievementChar or precAchievementChar == "" then
 						if not deadpoolAchievements[index][DEADPOOL_ISBESTACHIVERACHIEVEMENT] then
@@ -656,18 +656,20 @@ function loadReceivedDeadpoolData(messageType)
 								--if not noNotif then
 								--	EZBlizzUiPop_ToastFakeAchievementNew(Deadpool, deadpoolAchievements[index]["label"], 3456, true, 15, string.format(L["NEW_TITLE_FOR"], achievementChar), function()  Deadpool:DeadpoolShow()  end)
 								--end
-							if noNotif then
+							if achievementChar and noNotif then
 								Deadpool:Print(string.format(L["NEW_TITLE_FOR"], achievementChar)..L["SPACE_BEFORE_DOT"]..": "..deadpoolAchievements[index]["label"])
 							end
 							if CustomAchieverData and Deadpool_isPlayerCharacter(achievementChar) then
 								CustAc_CompleteAchievement(index, nil, noNotif, DeadpoolOptionsData["DeadpoolSoundsDisabled"])
-							elseif not noNotif then
+							elseif not noNotif and achievementTime and achievementTime + 60 > time() then -- If earned in the past minute
 								EZBlizzUiPop_ToastFakeAchievementNew(Deadpool, deadpoolAchievements[index]["label"], 3456, not DeadpoolOptionsData["DeadpoolSoundsDisabled"], 4, string.format(L["NEW_TITLE_FOR"], achievementChar), function()  Deadpool:DeadpoolShow()  end)
 							end
 						else
 							setDeadpoolData(DeadpoolGlobal_SessionId, index, "value", getDeadpoolData(DeadpoolGlobal_SessionId, index, "value", DeadpoolReceivedData))
 						end
-						setDeadpoolData(DeadpoolGlobal_SessionId, index, "achiever", achievementChar)
+						if achievementChar then
+							setDeadpoolData(DeadpoolGlobal_SessionId, index, "achiever", achievementChar)
+						end
 					end
 					DeadpoolReceivedData[DeadpoolGlobal_SessionId][index] = nil
 				else -- Update characters list data
