@@ -1,4 +1,6 @@
-﻿- v1.20.2
+﻿- v1.20.3
+	- Russian localization by ZamestoTV. Спасибо!
+- v1.20.2
 	- Fixed: No more toasting old achievements from other players when joining a group.
 - v1.20.1
 	- [CustomAchiever] v1.5 integration.
