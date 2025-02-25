@@ -17,6 +17,9 @@ function deadpoolMiniFrame()
 
 	MiniDeadpoolFrame.Lock:SetAttribute("tooltip", L["LOCKBUTTON_TOOLTIP"])
 	MiniDeadpoolFrame.Lock:SetAttribute("tooltipDetail", { L["LOCKBUTTON_TOOLTIPDETAIL"] })
+	
+	local deadpoolOptionsButton = createDeadpoolOptionsButton(MiniDeadpoolFrame)
+	deadpoolOptionsButton:SetScale(0.7)
 
 	for i = 1, DEADPOOL_NUM_LINES do
 		local line = CreateFrame("Button", "MiniDeadpoolLine"..i, MiniDeadpoolFrame.Inset, "DeadpoolLineTemplate")

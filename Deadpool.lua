@@ -1331,13 +1331,17 @@ local shouldUseNativeFormInModelScene = {
 
 function dpSetAnimation(model, animationId)
 	if model and animationId and model.currentAnimation ~= animationId then
+		model:SetDoBlend(true)
 		model:SetAnimation(animationId)
 		model.currentAnimation = animationId
 		if animationId ~= 0 then
 			model:SetScript("OnAnimFinished", function(self)
-				dpSetAnimation(self, 0, "OnAnimFinished")
+				self:SetAnimation(0)
+				self.currentAnimation = 0
 				self:SetScript("OnAnimFinished", nil)
 			end)
+		else
+			model:SetScript("OnAnimFinished", nil)
 		end
 	end
 end
