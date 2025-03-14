@@ -134,7 +134,7 @@ local dpInstanceIDList = {
 	[2549] = 70, -- Amirdrassil, the Dream's Hope
 	[2657] = 80, -- Nerub-ar Palace
 	[2792] = 80, -- Blackrock Depths
-	[2872] = 80, -- Undermine
+	[2769] = 80, -- Undermine
 }
 
 local willPlay, soundHandle

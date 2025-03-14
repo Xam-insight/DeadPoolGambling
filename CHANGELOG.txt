@@ -1,4 +1,6 @@
-﻿- v1.20.4
+﻿- v1.21
+	- Fixed: Undermine Depths support.
+- v1.20.4
 	- Option button on mini frame.
 	- Fixed: Animations blending is now working right on player models.
 	- Russian localization by ZamestoTV. Спасибо!
