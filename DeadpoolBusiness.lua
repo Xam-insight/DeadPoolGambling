@@ -150,6 +150,9 @@ function initDeadpoolBusinessObjects()
 	if not DeadpoolData then
 		DeadpoolData = {}
 	end
+	if not DeadpoolData.DATA_ERROR then
+		DeadpoolData.DATA_ERROR = {}
+	end
 	if not DeadpoolGlobal_SessionId then
 		playerJoinsDeadpoolSession("DeadpoolSession_"..name, true, true)
 	elseif DeadpoolData[DeadpoolGlobal_SessionId] and not DeadpoolData[DeadpoolGlobal_SessionId][name] then
@@ -290,18 +293,27 @@ function getDeadpoolRosterInfo()
 		if DeadpoolData[DeadpoolGlobal_SessionId] then
 			for index,value in pairs(DeadpoolData[DeadpoolGlobal_SessionId]) do
 				if "Bank" ~= index and "DeadpoolSessionId" ~= index and not deadpoolAchievements[index] then
-					if not deadpoolCharInfo[index] and DEADPOOL_BANKER ~= index then
-						setDeadpoolData(DeadpoolGlobal_SessionId, index, "inCombat", "false")
-						saveBets(DeadpoolGlobal_SessionId, index)
-						if index == selectedDeadpoolCharacter then
-							selectedDeadpoolLine = nil
-							selectedDeadpoolCharacter = nil
+					if type(value) ~= "table" then
+						-- Data corruption analysis
+						DeadpoolData.DATA_ERROR[index] = {}
+						DeadpoolData.DATA_ERROR[index].session = DeadpoolGlobal_SessionId
+						DeadpoolData.DATA_ERROR[index].date = date("%m/%d/%Y %I:%M %p")
+						DeadpoolData.DATA_ERROR[index].value = value
+						DeadpoolData[DeadpoolGlobal_SessionId][index] = nil
+					else
+						if not deadpoolCharInfo[index] and DEADPOOL_BANKER ~= index then
+							setDeadpoolData(DeadpoolGlobal_SessionId, index, "inCombat", "false")
+							saveBets(DeadpoolGlobal_SessionId, index)
+							if index == selectedDeadpoolCharacter then
+								selectedDeadpoolLine = nil
+								selectedDeadpoolCharacter = nil
+							end
 						end
-					end
-					if value["bets"] then
-						for index2,value2 in pairs(value["bets"]) do
-							if not deadpoolCharInfo[index2] and value2 and Deadpool_tonumberzeroonblankornil(value2["nextDeathBet"]) > 0 then
-								saveBets(DeadpoolGlobal_SessionId, index, index2)
+						if value["bets"] then
+							for index2,value2 in pairs(value["bets"]) do
+								if not deadpoolCharInfo[index2] and value2 and Deadpool_tonumberzeroonblankornil(value2["nextDeathBet"]) > 0 then
+									saveBets(DeadpoolGlobal_SessionId, index, index2)
+								end
 							end
 						end
 					end

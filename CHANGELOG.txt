@@ -1,4 +1,6 @@
-﻿- v1.21
+﻿- v1.21.1
+	- Workaround: Data corruption problem.
+- v1.21
 	- Fixed: Undermine Depths support.
 - v1.20.4
 	- Option button on mini frame.
