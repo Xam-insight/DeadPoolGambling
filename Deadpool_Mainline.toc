@@ -6,6 +6,7 @@
 ## AddonCompartmentFuncOnLeave: Deadpool_CompartmentFuncOnLeave
 ## Version: 1.21.1
 ## Notes: Gambling minigame
+## Author: Xam_insight
 ## Category-enUS: Minigames
 ## Category-deDE: Minispiele
 ## Category-esES: Minijuegos
@@ -17,7 +18,6 @@
 ## Category-ruRU: Мини-игры
 ## Category-zhCN: 迷你游戏
 ## Category-zhTW: 迷你遊戲
-## Author: Xam_insight
 ## SavedVariables: DeadpoolGlobal_SessionId, DeadpoolData, DeadpoolOptionsData, DeadpoolMIcon, DeadpoolTuto, DeadpoolWindow
 ## SavedVariables: Deadpool_CustomAchieverData, Deadpool_CustomAchieverOptionsData
 
