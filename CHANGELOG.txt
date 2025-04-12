@@ -1,4 +1,6 @@
-﻿- v1.21.1
+﻿- v1.21.2
+	- Fixed: Addons updater clients now recognize Dead Pool again.
+- v1.21.1
 	- Workaround: Data corruption problem.
 - v1.21
 	- Fixed: Undermine Depths support.
