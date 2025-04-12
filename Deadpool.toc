@@ -1,5 +1,7 @@
 ## Interface: 110100,110105
+## Title: Dead Pool
 ## Version: 1.21.2
+## Notes: This file exists only to support packaging systems.
+## LoadOnDemand: 1
 
-#@include-if-retail
-Deadpool_Mainline.toc
+# On retail, the game loads Deadpool_Mainline.toc instead.
