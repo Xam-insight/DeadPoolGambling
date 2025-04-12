@@ -1,5 +1,7 @@
 ﻿- v1.21.2
+	- Added: Option to disable notifications during Mythic+ Dungeons.
 	- Fixed: Addons updater clients now recognize Dead Pool again.
+	- Fixed: Deprecated Deadpool_CustomAchiever addon is no longer loaded.
 - v1.21.1
 	- Workaround: Data corruption problem.
 - v1.21

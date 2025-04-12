@@ -664,7 +664,7 @@ function loadReceivedDeadpoolData(messageType)
 						if not deadpoolAchievements[index][DEADPOOL_ISBESTACHIVERACHIEVEMENT] then
 							local noNotif = (not DeadpoolOptionsData and not DeadpoolOptionsData["DeadpoolAchievementAnnounceDisabled"] and not (DeadpoolOptionsData["DeadpoolAchievementAnnounceDisabled"] == true))
 								or (UnitGUID("boss1") and DeadpoolOptionsData["DeadpoolNotificationsInBossFightsDisabled"])
-
+									or (C_ChallengeMode.IsChallengeModeActive() and not DeadpoolOptionsData["DeadpoolNotificationsInMythicPlus"])
 								--if not noNotif then
 								--	EZBlizzUiPop_ToastFakeAchievementNew(Deadpool, deadpoolAchievements[index]["label"], 3456, true, 15, string.format(L["NEW_TITLE_FOR"], achievementChar), function()  Deadpool:DeadpoolShow()  end)
 								--end
@@ -1050,6 +1050,7 @@ function Deadpool_updateStat(aDeadpoolSessionId, aChar, aStat, aValue)
 				if statValue >= deadpoolAchievements[aStat]["value"] then
 					local noNotif = (not DeadpoolOptionsData and not DeadpoolOptionsData["DeadpoolAchievementAnnounceDisabled"] and not (DeadpoolOptionsData["DeadpoolAchievementAnnounceDisabled"] == true))
 						or (UnitGUID("boss1") and DeadpoolOptionsData["DeadpoolNotificationsInBossFightsDisabled"])
+							or (C_ChallengeMode.IsChallengeModeActive() and not DeadpoolOptionsData["DeadpoolNotificationsInMythicPlus"])
 						--if not noNotif then
 							--EZBlizzUiPop_ToastFakeAchievementNew(Deadpool, deadpoolAchievements[aStat]["label"], 3456, true, 15, string.format(L["NEW_TITLE_FOR"], aChar), function()  Deadpool:DeadpoolShow()  end)
 						--end

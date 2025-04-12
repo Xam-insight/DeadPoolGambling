@@ -163,10 +163,11 @@ function Deadpool:OnEnable()
 		Deadpool:Print(L["DEADPOOL_WELCOME"])
     end
 
-	if not CustomAchieverData then
-		CustAcAddon = "Deadpool_CustomAchiever"
-		C_AddOns.LoadAddOn(CustAcAddon)
-	end
+	--Deadpool_CustomAchiever is deprecated
+	--if not CustomAchieverData then
+	--	CustAcAddon = "Deadpool_CustomAchiever"
+	--	C_AddOns.LoadAddOn(CustAcAddon)
+	--end
 	if CustomAchieverData then
 		CustAc_CreateOrUpdateCategory("Deadpool", nil, "Dead Pool Gambling")
 		for k,v in pairs(deadpoolAchievements) do
@@ -456,7 +457,8 @@ function deadpoolCharacterIsDead(aDeadpoolSessionId, aChar, alternativeName)
 			local deathAchievementPopped = Deadpool_updateStat(aDeadpoolSessionId, aChar, DEADPOOL_FIRSTDEATH, 1)
 			if not deathAchievementPopped then
 				if not DeadpoolOptionsData or not DeadpoolOptionsData["DeadpoolDeathAnnounceDisabled"] or not (DeadpoolOptionsData["DeadpoolDeathAnnounceDisabled"] == true) then
-					local noNotif = UnitGUID("boss1") and DeadpoolOptionsData["DeadpoolNotificationsInBossFightsDisabled"]
+					local noNotif = (UnitGUID("boss1") and DeadpoolOptionsData["DeadpoolNotificationsInBossFightsDisabled"])
+						or (C_ChallengeMode.IsChallengeModeActive() and not DeadpoolOptionsData["DeadpoolNotificationsInMythicPlus"])
 					if not noNotif then
 						EZBlizzUiPop_ToastFakeAchievementNew(Deadpool, deadpoolLog, 3456, false, 4, "Dead Pool", function()  Deadpool:DeadpoolShow()  end)
 					end

@@ -130,7 +130,6 @@ function loadDeadpoolOptions()
 				args = {
 					enableInBossFights = {
 						type = "toggle", order = 1,
-						width = "full",
 						name = L["ENABLE_NOTIFICATIONS_IN_BOSS_FIGHTS"],
 						desc = L["ENABLE_NOTIFICATIONS_IN_BOSS_FIGHTS_DESC"],
 						set = function(info, val) 
@@ -144,8 +143,20 @@ function loadDeadpoolOptions()
 							return enabled
 						end
 					},
-					enableSound = {
+					enableInMythicPlus = {
 						type = "toggle", order = 2,
+						width = "double",
+						name = string.format(L["ENABLE_NOTIFICATIONS_IN_MYTHIC_PLUS"], CHALLENGES),
+						desc = string.format(L["ENABLE_NOTIFICATIONS_IN_MYTHIC_PLUS_DESC"], CHALLENGES),
+						set = function(info, val) 
+							DeadpoolOptionsData["DeadpoolNotificationsInMythicPlus"] = val
+						end,
+						get = function(info)
+							return DeadpoolOptionsData["DeadpoolNotificationsInMythicPlus"]
+						end
+					},
+					enableSound = {
+						type = "toggle", order = 3,
 						name = L["ENABLE_SOUND"],
 						desc = L["ENABLE_SOUND_DESC"],
 						set = function(info, val) 
@@ -160,7 +171,7 @@ function loadDeadpoolOptions()
 						end
 					},
 					enableReminder = {
-						type = "toggle", order = 3,
+						type = "toggle", order = 4,
 						width = "double",
 						name = L["ENABLE_REMINDER"],
 						desc = L["ENABLE_REMINDER_DESC"],
@@ -171,7 +182,7 @@ function loadDeadpoolOptions()
 							return DeadpoolOptionsData["DeadpoolBetReminder"]
 						end
 					},enableDeathAnnounce = {
-						type = "toggle", order = 4,
+						type = "toggle", order = 5,
 						name = L["ENABLE_DEATH_ANNOUNCE"],
 						desc = L["ENABLE_DEATH_ANNOUNCE_DESC"],
 						set = function(info, val) 
@@ -186,7 +197,7 @@ function loadDeadpoolOptions()
 						end
 					},
 					enableDeathQuotes = {
-						type = "toggle", order = 5,
+						type = "toggle", order = 6,
 						name = L["ENABLE_DEATH_QUOTES"],
 						desc = L["ENABLE_DEATH_QUOTES_DESC"],
 						set = function(info, val) 
@@ -206,7 +217,7 @@ function loadDeadpoolOptions()
 						end
 					},
 					enableAchievementAnnounce = {
-						type = "toggle", order = 6,
+						type = "toggle", order = 7,
 						name = L["ENABLE_ACHIEVEMENT_ANNOUNCE"],
 						desc = L["ENABLE_ACHIEVEMENT_ANNOUNCE_DESC"],
 						set = function(info, val) 
@@ -221,7 +232,7 @@ function loadDeadpoolOptions()
 						end
 					},
 					enableModelPopup = {
-						type = "toggle", order = 7,
+						type = "toggle", order = 8,
 						name = L["ENABLE_MODEL_POPUP"],
 						desc = L["ENABLE_MODEL_POPUP_DESC"],
 						set = function(info, val) 
@@ -236,7 +247,7 @@ function loadDeadpoolOptions()
 						end
 					},
 					modelPopupSide = {
-						type = "select", order = 8,
+						type = "select", order = 9,
 						name = L["MODEL_POPUP_SIDE"],
 						desc = L["MODEL_POPUP_SIDE_DESC"],
 						disabled = function()
