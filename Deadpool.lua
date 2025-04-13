@@ -438,7 +438,7 @@ function deadpoolCharacterIsDead(aDeadpoolSessionId, aChar, alternativeName)
 					Deadpool_PlayRandomSound(deathQuotes, "Dialog")
 				end
 			else
-				Deadpool_PlaySound(41361, "SFX")
+				Deadpool_PlaySound(41361, "SFX") -- For after TWW: PlaySound(283499)
 			end
 		end
 		local bankWins = true
