@@ -1,4 +1,6 @@
-﻿- v1.21.2
+﻿- v1.21.3
+	- Added: The results frame and other players model prompt now respect the 'NotificationsInBossFights' and 'NotificationsInMythicPlus' settings.
+- v1.21.2
 	- TOC for 11.1.5.
 	- Added: Option to disable notifications during Mythic+ Dungeons.
 	- Fixed: Addons updater clients now recognize Dead Pool again.

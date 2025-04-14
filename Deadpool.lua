@@ -569,7 +569,8 @@ function deadpoolCharacterIsDead(aDeadpoolSessionId, aChar, alternativeName)
 		DeadpoolResultsTooltip:SetAttribute("tooltipDetail", tooltipDetail)
 		DeadpoolResultsTooltip:SetAttribute("tooltipDetailGreen", tooltipDetailGreen)
 		DeadpoolResultsTooltip:SetAttribute("tooltipDetailRed", tooltipDetailRed)
-		DeadpoolShowResults(true)
+		DeadpoolShowResults((not UnitGUID("boss1") or not DeadpoolOptionsData["DeadpoolNotificationsInBossFightsDisabled"])
+						and (not C_ChallengeMode.IsChallengeModeActive() or DeadpoolOptionsData["DeadpoolNotificationsInMythicPlus"]))
 	end
 	generateDeadpoolTable()
 end
@@ -1850,7 +1851,8 @@ function Deadpool:DeadpoolPlayerLeavesCombat(event)
 	DeadpoolBetButton:Hide()
 	if dpCharacterDied then
 		dpCharacterDied = nil
-		DeadpoolShowResults(true)
+		DeadpoolShowResults((not UnitGUID("boss1") or not DeadpoolOptionsData["DeadpoolNotificationsInBossFightsDisabled"])
+			and (not C_ChallengeMode.IsChallengeModeActive() or DeadpoolOptionsData["DeadpoolNotificationsInMythicPlus"]))
 	end
 end
 

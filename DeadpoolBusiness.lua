@@ -713,7 +713,10 @@ function loadReceivedDeadpoolData(messageType)
 								if actualData == nil or actualData ~= newData then
 									--Deadpool:Print(time().." - Processing new data.", index2, newData)
 									if index2 == "offItemsNumber" and (not actualData or newData > actualData) then
-										dpShowModel(index)
+										if ((not UnitGUID("boss1") or not DeadpoolOptionsData["DeadpoolNotificationsInBossFightsDisabled"])
+												and (not C_ChallengeMode.IsChallengeModeActive() or DeadpoolOptionsData["DeadpoolNotificationsInMythicPlus"])) then
+											dpShowModel(index)
+										end
 									end
 									
 									local playerCharacter = Deadpool_playerCharacter()
