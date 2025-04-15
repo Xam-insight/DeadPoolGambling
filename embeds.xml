@@ -300,10 +300,38 @@
 						Deadpool_PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX", true)
 						Deadpool:DeadpoolShow()
 					</OnClick>
+					<OnEnter>
+						self:GetParent().CloseButton:Show()
+					</OnEnter>
+					<OnLeave>
+						self:GetParent().CloseButton:Hide()
+					</OnLeave>
 				</Scripts>
 				<NormalTexture file="Interface\Buttons\UI-Panel-BiggerButton-Up"/>
 				<PushedTexture file="Interface\Buttons\UI-Panel-BiggerButton-Down"/>
 				<DisabledTexture file="Interface\Buttons\UI-Panel-BiggerButton-Disabled"/>
+				<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+			</Button>
+			<Button name="$parentCloseButton" parentKey="CloseButton" inherits="UIPanelCloseButtonNoScripts" hidden="true">
+				<Size x="24" y="24"/>
+				<Anchors>
+					<Anchor point="LEFT" relativeKey="$parent.MaximizeMinimizeFrame" relativePoint="RIGHT" x="-7" y="0"/>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						Deadpool_PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX", true)
+						MiniDeadpoolFrame:Hide()
+					</OnClick>
+					<OnEnter>
+						self:Show()
+					</OnEnter>
+					<OnLeave>
+						self:Hide()
+					</OnLeave>
+				</Scripts>
+				<NormalTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Up"/>
+				<PushedTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Down"/>
+				<DisabledTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Disabled"/>
 				<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
 			</Button>
 			<CheckButton name="$parentLock" parentKey="Lock" inherits="DeadpoolLockTemplate">
