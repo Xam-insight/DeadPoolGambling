@@ -717,6 +717,18 @@ function DeadpoolIconButtonEnter(self)
 	end
 end
 
+local function DeadpoolGetLastPopup()
+	local lastPopup
+	for i = STATICPOPUP_NUMDIALOGS, 1, -1 do
+		local frame = _G["StaticPopup"..i]
+		if frame and frame:IsShown() then
+			lastPopup = frame
+			break
+		end
+	end
+	return lastPopup
+end
+
 function DeadpoolShowResults(force)
 	local parentFrame = DeadpoolFrame
 	local yStep = 0
@@ -738,7 +750,7 @@ function DeadpoolShowResults(force)
 		if parentFrame:IsShown() then
 			DeadpoolResultsTooltip:SetOwner(parentFrame, "ANCHOR_BOTTOM", 0, -12 + yStep)
 		else
-			local lastFrame = StaticPopup_DisplayedFrames and StaticPopup_DisplayedFrames[#StaticPopup_DisplayedFrames]
+			local lastFrame = DeadpoolGetLastPopup()
 			if ( lastFrame ) then
 				DeadpoolResultsTooltip:SetOwner(lastFrame, "ANCHOR_BOTTOM", 0, -35)
 			else
@@ -774,7 +786,7 @@ function DeadpoolShowResults(force)
 		if parentFrame:IsShown() then
 			DeadpoolWinnerTooltip:SetOwner(parentFrame, "ANCHOR_TOP", 0, 0 - yStep)
 		else
-			local lastFrame = StaticPopup_DisplayedFrames and StaticPopup_DisplayedFrames[#StaticPopup_DisplayedFrames]
+			local lastFrame = DeadpoolGetLastPopup()
 			if ( lastFrame ) then
 				DeadpoolWinnerTooltip:SetOwner(lastFrame, "ANCHOR_BOTTOM", 0, 0)
 			else
@@ -1365,7 +1377,7 @@ function dpShowModel(deadpoolCharacter, parentFrame)
 			elseif DeadpoolWinnerTooltip:IsShown() then
 				parentFrame = DeadpoolWinnerTooltip
 			else
-				local lastFrame = StaticPopup_DisplayedFrames and StaticPopup_DisplayedFrames[#StaticPopup_DisplayedFrames]
+				local lastFrame = DeadpoolGetLastPopup()
 				if ( lastFrame ) then
 					parentFrame = lastFrame
 				else

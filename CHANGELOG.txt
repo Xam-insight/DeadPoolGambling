@@ -1,4 +1,6 @@
-﻿- v1.21.3
+﻿- v1.21.4
+	- Fixed: The score display no longer appears behind the death popup.
+- v1.21.3
 	- Added: The results frame and other players model prompt now respect the 'NotificationsInBossFights' and 'NotificationsInMythicPlus' settings.
 - v1.21.2
 	- TOC for 11.1.5.
