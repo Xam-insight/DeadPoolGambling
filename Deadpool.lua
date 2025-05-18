@@ -163,11 +163,6 @@ function Deadpool:OnEnable()
 		Deadpool:Print(L["DEADPOOL_WELCOME"])
     end
 
-	--Deadpool_CustomAchiever is deprecated
-	--if not CustomAchieverData then
-	--	CustAcAddon = "Deadpool_CustomAchiever"
-	--	C_AddOns.LoadAddOn(CustAcAddon)
-	--end
 	if CustomAchieverData then
 		CustAc_CreateOrUpdateCategory("Deadpool", nil, "Dead Pool Gambling")
 		for k,v in pairs(deadpoolAchievements) do
