@@ -1,4 +1,6 @@
-﻿- v1.21.6
+﻿- v1.21.7
+	- Fixed: The DATA_ERROR trash collector does not causes nil lua errors anymore.
+- v1.21.6
 	- TOC for 11.1.7.
 - v1.21.5
 	- Added: A new close button in minimized mode, which appears when hovering over the maximize button.

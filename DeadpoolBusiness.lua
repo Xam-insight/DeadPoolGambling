@@ -583,6 +583,7 @@ function playerJoinsDeadpoolSession(aSession, isCreator, keepPlayerData)
 		end
 		DeadpoolGlobal_SessionId = aSession
 		DeadpoolData = {}
+		DeadpoolData.DATA_ERROR = {}
 		setInitialDeadpoolPlayerData(aSession, playerCharacter)
 		setDeadpoolData(aSession, DEADPOOL_BANKER, "credits", DEADPOOL_INITIAL_MONEY)
 		DeadpoolData[aSession]["DeadpoolSessionId"] = aSession
@@ -840,6 +841,9 @@ function setDeadpoolData(aSession, aChar, anInfo, aValue)
 		if not DeadpoolData then
 			DeadpoolData = {}
 		end
+		if not DeadpoolData.DATA_ERROR then
+			DeadpoolData.DATA_ERROR = {}
+		end
 		if not DeadpoolData[aSession] then
 			DeadpoolData[aSession] = {}
 		end
@@ -957,6 +961,9 @@ function howManyGarmentToLose(aSession, aChar, aBetChar, aNextDeathBet)
 	local nextDeathBet = Deadpool_tonumberzeroonblankornil(aNextDeathBet)
 	if not DeadpoolData then
 		DeadpoolData = {}
+	end
+	if not DeadpoolData.DATA_ERROR then
+		DeadpoolData.DATA_ERROR = {}
 	end
 	if not DeadpoolData[aSession] then
 		DeadpoolData[aSession] = {}
