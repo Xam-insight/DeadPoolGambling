@@ -1,4 +1,8 @@
-﻿- v1.21.7
+﻿- v1.22
+	- TOC for 11.2.0.
+	- Added: Manaforge Omega support.
+	- Added: Earthen support.
+- v1.21.7
 	- Fixed: The DATA_ERROR trash collector does not causes nil lua errors anymore.
 - v1.21.6
 	- TOC for 11.1.7.

@@ -41,7 +41,9 @@ local raceID = {
    ["Mag'har Orc"] = 36,
    ["Mechagnome"] = 37,
    ["Dracthyr"] = 52,
-   ["Dracthyr"] = 70
+   ["Dracthyr"] = 70,
+   ["Earthen"] = 84,
+   ["Earthen"] = 85,
 }
 
 -- UnitRace returns differently for the following races, so need to include exceptions
@@ -135,6 +137,7 @@ local dpInstanceIDList = {
 	[2657] = 80, -- Nerub-ar Palace
 	[2792] = 80, -- Blackrock Depths
 	[2769] = 80, -- Undermine
+	[2810] = 80, -- Manaforge Omega
 }
 
 local willPlay, soundHandle
