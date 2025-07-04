@@ -1942,14 +1942,16 @@ end
 
 function Deadpool:MerchantFrameUpdate()
 	if getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), DEADPOOL_TRULYUNEQUIP) then
-		local buybackName = GetBuybackItemInfo(GetNumBuybackItems())
+		local buybackIndex = GetNumBuybackItems()
+		local buybackItemID = C_MerchantFrame.GetBuybackItemID(buybackIndex)
 		
-		if buybackName then
-			local itemID = Deadpool_isItemInSet(buybackName, DeadPoolSaveSetName)
-			if itemID then
-				BuybackItem(GetNumBuybackItems())
+		if buybackItemID then
+			if Deadpool_isItemInSet(buybackItemID, DeadPoolSaveSetName) then
+				BuybackItem(buybackIndex)
 				
-				local itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, itemSellPrice = GetItemInfo(itemID)
+				local itemName, itemTexture, itemSellPrice, _, _, _, isBound = GetBuybackItemInfo(buybackIndex)
+				local itemLink = GetBuybackItemLink(buybackIndex)
+				local _, _, itemRarity = GetItemInfo(itemLink)
 				local rColor, gColor, bColor = GetItemQualityColor(itemRarity)
 				local data = {
 					texture = itemTexture,
@@ -1957,7 +1959,7 @@ function Deadpool:MerchantFrameUpdate()
 					color = {rColor, gColor, bColor, 1},
 					link = itemLink,
 					itemFrameOnEnter = StaticPopupItemOnEnter,
-					isItemBound = true,
+					isItemBound = isBound,
 					costString = itemSellPrice,
 				};
 				

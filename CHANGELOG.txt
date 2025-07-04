@@ -1,4 +1,6 @@
-﻿- v1.22
+﻿- v1.22.1
+	- Fixed: Items removed by the 'Really unequip items' mode can no longer be sold, even if they are upgraded versions of the original item.
+- v1.22
 	- TOC for 11.2.0.
 	- Added: Manaforge Omega support.
 	- Added: Earthen support.
