@@ -225,8 +225,44 @@ deathQuotes = {
 	1124067, -- iskar
 	1124380, -- velhar
 	1124453, -- archimonde
-	558409   -- hputricide
-	--167115, -- Vesiphone -- WoWHead value -- WoWTools value: 3749977
-	--167116,   -- WoWHead value -- WoWTools value: 3749978
-	--167119    -- WoWHead value -- WoWTools value: 3749981
+	558409,  -- hputricide
+	3749977, -- Vesiphone KO
+	3749978, -- KO
+	3749981, -- KO
+	5778825, -- queen_ansurek KO
+	6183810, -- vexie_fullthrottle
+	6213556, -- mugzee
+	6213585,
+	6213587,
+	6183842, -- chrome_king_gallywix
+	6183847,
+	6727548, -- plexus_sentinel
+	6727550,
+	6727765, -- nexus-king salhadaar
+	6727766,
+	6728215, -- dimensius
+	6729191,
+	--/run Deadpool_PlaySoundFileId(6213556) /run PlaySoundFile("sound\\creature\\dimensius\\vo_1120_dimensius_6729194.ogg")
 }
+
+--[[
+function testSoundFile(setID) -- /run testSoundFile(3749977)
+	willPlay, soundHandle = PlaySoundFile(setID, "MASTER")
+	if willPlay then
+		print(willPlay, soundHandle, setID)
+	end
+end
+
+function testSoundFileDeathId(setID, timer)
+	if deathQuotes[setID] then
+		testSoundFile(deathQuotes[setID])
+		C_Timer.After(timer, function()
+			testSoundFileDeathId(setID + 1, timer)
+		end)
+	end
+end
+
+function testSoundFiles(timer) -- /run testSoundFiles(5)
+	testSoundFileDeathId(1, timer)
+end
+--]]
