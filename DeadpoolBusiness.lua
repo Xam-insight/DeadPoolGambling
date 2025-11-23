@@ -327,13 +327,28 @@ function getDeadpoolRosterInfo()
 	return deadpoolCharInfo
 end
 
+-- Returns the "main version" number or 0 on invalid input.
 function getDeadpoolMainVersion(version)
-	local mainVersion = 0
-	if version then
-		local v1, v2, v3 = strsplit(".", version)
-		mainVersion = tonumber(v1) * 100 + v2
-	end
-	return mainVersion
+    -- Validate the input first
+    if type(version) ~= "string" or version == "" then
+        return 0
+    end
+
+    -- Extract components safely
+    local v1, v2, v3 = strsplit(".", version)
+
+    -- Convert string parts to numbers
+    local n1 = tonumber(v1)
+    local n2 = tonumber(v2)
+
+    -- If any required part is missing or not numeric, return 0
+    if not n1 or not n2 then
+        return 0
+    end
+
+    -- Compute the main version safely
+    -- Note: multiply by 100 assuming format: major * 100 + minor
+    return n1 * 100 + n2
 end
 
 local function loadPlayerBets(playerId)

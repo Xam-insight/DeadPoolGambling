@@ -1,4 +1,7 @@
-﻿- v1.22.2
+﻿- v1.22.3
+	- Fixed: Lua error on getting players Dead Pool version.
+	- Fixed: Lua error due to the deprecated STATICPOPUP_NUMDIALOGS global variable.
+- v1.22.2
 	- TOC for 11.2.5.
 - v1.22.1
 	- Fixed: Items removed by the 'Really unequip items' mode can no longer be sold, even if they are upgraded versions of the original item.

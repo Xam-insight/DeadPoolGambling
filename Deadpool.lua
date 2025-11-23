@@ -713,15 +713,19 @@ function DeadpoolIconButtonEnter(self)
 end
 
 local function DeadpoolGetLastPopup()
-	local lastPopup
-	for i = STATICPOPUP_NUMDIALOGS, 1, -1 do
-		local frame = _G["StaticPopup"..i]
-		if frame and frame:IsShown() then
-			lastPopup = frame
-			break
-		end
-	end
-	return lastPopup
+    local lastPopup = nil
+
+    -- Iterate over all currently shown static popups.
+    StaticPopup_ForEachShownDialog(function(dialog)
+        -- `dialog` is a StaticPopup frame that is currently visible.
+        -- The iteration order is not officially documented, so we simply
+        -- keep assigning the latest one encountered.
+        if dialog:IsShown() then
+            lastPopup = dialog
+        end
+    end)
+
+    return lastPopup
 end
 
 function DeadpoolShowResults(force)
