@@ -455,7 +455,7 @@ function deadpoolCharacterIsDead(aDeadpoolSessionId, aChar, alternativeName)
 					local noNotif = (UnitGUID("boss1") and DeadpoolOptionsData["DeadpoolNotificationsInBossFightsDisabled"])
 						or (C_ChallengeMode.IsChallengeModeActive() and not DeadpoolOptionsData["DeadpoolNotificationsInMythicPlus"])
 					if not noNotif then
-						EZBlizzUiPop_ToastFakeAchievementNew(Deadpool, deadpoolLog, 3456, false, 4, "Dead Pool", function()  Deadpool:DeadpoolShow()  end)
+						EZBlizzUiPop_ToastFakeAchievement(Deadpool, false, 4, nil, deadpoolLog, 0, 2065621, false, "Dead Pool", true, function()  Deadpool:DeadpoolShow()  end)
 					end
 				end
 			end
