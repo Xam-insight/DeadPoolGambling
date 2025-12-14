@@ -16,6 +16,7 @@ externals:
 	Libs/LibDBIcon-1.0: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
 	Libs/UTF8: https://repos.wowace.com/wow/utf8/trunk
 	#Libs/LibUIDropDownMenu: https://repos.wowace.com/wow/libuidropdownmenu/trunk/LibUIDropDownMenu
+	Libs/XamInsightToolKit: https://github.com/Xam-insight/XamInsightToolKit
 	Libs/EZBlizzardUiPopups: https://github.com/Xam-insight/EZBlizzardUiPopups
 	../CustomAchiever: https://github.com/Xam-insight/CustomAchiever
 	../CustomAchiever/Libs/Ace3/AceAddon-3.0: https://repos.wowace.com/wow/ace3/trunk/AceAddon-3.0
@@ -33,18 +34,20 @@ externals:
 	../CustomAchiever/Libs/LibDBIcon-1.0: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
 	../CustomAchiever/Libs/UTF8: https://repos.wowace.com/wow/utf8/trunk
 	#CustomAchiever/Libs/LibUIDropDownMenu: https://repos.wowace.com/wow/libuidropdownmenu/trunk/LibUIDropDownMenu
+	../CustomAchiever/Libs/XamInsightToolKit: https://github.com/Xam-insight/XamInsightToolKit
 	../CustomAchiever/Libs/EZBlizzardUiPopups: https://github.com/Xam-insight/EZBlizzardUiPopups
 
 ignore:
-	- .pkgmeta_classic
-	- .pkgmeta_retail
-	- embeds_classic.xml
 	- art/PNG
 	- sound/OLD
+	- Libs/XamInsightToolKit/XamInsightToolKit.toc
 	- Libs/EZBlizzardUiPopups/EZBlizzardUiPopups.toc
 	- Libs/EZBlizzardUiPopups/CHANGELOG.txt
+	- Libs/EZBlizzardUiPopups/wow_lua_to_csv.py
+	- ../CustomAchiever/Libs/XamInsightToolKit/XamInsightToolKit.toc
 	- ../CustomAchiever/Libs/EZBlizzardUiPopups/EZBlizzardUiPopups.toc
 	- ../CustomAchiever/Libs/EZBlizzardUiPopups/CHANGELOG.txt
+	- ../CustomAchiever/Libs/EZBlizzardUiPopups/wow_lua_to_csv.py
 
 manual-changelog:
 	filename: CHANGELOG.txt
