@@ -1,5 +1,6 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("Deadpool", true)
 local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
+local XITK = LibStub("XamInsightToolKit")
 
 local betSliderInitialValue = 5
 
@@ -12,10 +13,10 @@ function DeadpoolDropDown_Update(self)
 	if betChar == "boss" then
 		betTuto = L["DEADPOOLTUTO_BOSS"]
 	end
-	local isPlayer = Deadpool_isPlayerCharacter(betChar)
+	local isPlayer = XITK.isPlayerCharacter(betChar)
 
-	local playerOffItemsNumber = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "offItemsNumber"))
-	local playerCredits = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "credits"))
+	local playerOffItemsNumber = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, XITK.playerCharacter(), "offItemsNumber"))
+	local playerCredits = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, XITK.playerCharacter(), "credits"))
 
 	if not L_DropDownList1.customFrames then
 		L_DropDownList1.customFrames = {}
@@ -46,7 +47,7 @@ function DeadpoolDropDown_Update(self)
 		else
 			local charItemsToLost = DEADPOOL_GARMENT_NUMBER - playerOffItemsNumber
 			local maxBetToAdd = playerCredits + charItemsToLost * DEADPOOL_GARMENT_REWARD
-			local playerBetOnChar, _, playerTotalBets, _ = getDeadpoolBets(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), betChar)
+			local playerBetOnChar, _, playerTotalBets, _ = getDeadpoolBets(DeadpoolGlobal_SessionId, XITK.playerCharacter(), betChar)
 			local totalPlayerCredit = maxBetToAdd + playerTotalBets
 
 			buttonId = buttonId + 1
@@ -77,7 +78,7 @@ function DeadpoolDropDown_Update(self)
 			if maxBetToAdd > 4 then
 				if maxBetToAdd > 5 then
 					local sliderStep = DeadpoolDropDownButtonBet5.BetSlider:GetValueStep()
-					DeadpoolDropDownButtonBet5.BetSlider:SetMinMaxValues(5, min(SimpleRound(playerCredits + 20, sliderStep), maxBetToAdd))
+					DeadpoolDropDownButtonBet5.BetSlider:SetMinMaxValues(5, min(XITK.SimpleRound(playerCredits + 20, sliderStep), maxBetToAdd))
 					DeadpoolDropDownButtonBet5.BetSlider:Show()
 				else
 					DeadpoolDropDownButtonBet5.BetSlider:Hide()
@@ -118,7 +119,7 @@ function DeadpoolDropDown_Update(self)
 			end
 			DeadpoolDownMenu_AddButton(info, buttonId, removeValue, L["DEADPOOLTUTO_BETREMOVE"])
 
-			local bankCredits = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, "Bank", "credits"))
+			local bankCredits = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, "Bank", "credits"))
 			if totalPlayerCredit < 1 then
 				buttonId = buttonId + 1
 				
@@ -302,11 +303,11 @@ function DeadpoolDropDown_Hide()
 end
 
 function DeadpoolDropDown_Bet(self, char, bet)
-	addDeadpoolBets(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), char, bet)
+	addDeadpoolBets(DeadpoolGlobal_SessionId, XITK.playerCharacter(), char, bet)
 end
 
 function DeadpoolDropDown_SliderBet(self, char)
-	addDeadpoolBets(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), char, DeadpoolDropDownButtonBet5.BetSlider:GetAttribute("betToAdd"))
+	addDeadpoolBets(DeadpoolGlobal_SessionId, XITK.playerCharacter(), char, DeadpoolDropDownButtonBet5.BetSlider:GetAttribute("betToAdd"))
 end
 
 function DeadpoolDropDown_BankerBet(self, aDeadpoolSessionId, deadpoolList)
@@ -403,7 +404,7 @@ function DeadpoolDropDownButtonTuto_OnClick(self)
 end
 
 function DeadpoolDropDownButtonBet5BetSlider_OnValueChanged(self, value)
-	local newValue = SimpleRound(value, self:GetValueStep())
+	local newValue = XITK.SimpleRound(value, self:GetValueStep())
 	self:SetValue(newValue)
 	self:GetParent().ShortcutText:SetText(newValue..deadpoolChipTextureString)
 	self:SetAttribute("betToAdd", tostring(newValue))

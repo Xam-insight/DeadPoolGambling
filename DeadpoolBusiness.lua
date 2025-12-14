@@ -1,5 +1,7 @@
 deadpoolCharInfo = {}
 local L = LibStub("AceLocale-3.0"):GetLocale("Deadpool", true)
+local XITK = LibStub("XamInsightToolKit")
+local EZBUP = LibStub("EZBlizzardUiPopups")
 
 -- https://wow.gamepedia.com/RaceId
 local raceID = {
@@ -44,6 +46,8 @@ local raceID = {
    ["Dracthyr"] = 70,
    ["Earthen"] = 84,
    ["Earthen"] = 85,
+   ["Haranir"] = 86,
+   ["Haranir"] = 91,
 }
 
 -- UnitRace returns differently for the following races, so need to include exceptions
@@ -149,7 +153,7 @@ Deadpool_WindowsOptions = "All"
 -- Initialize Deadpools Objects
 function initDeadpoolBusinessObjects()
 	-- DeadpoolData
-	local name = Deadpool_playerCharacter() or UNKNOWN
+	local name = XITK.playerCharacter() or UNKNOWN
 	if not DeadpoolData then
 		DeadpoolData = {}
 	end
@@ -221,7 +225,7 @@ local function signalDeadpoolVersion()
 	if not deadpoolVersionSignaled then
 		deadpoolVersionSignaled = true
 		C_Timer.After(5, function()
-			Deadpool_Error(string.format(L["DEADPOOL_VERSION_UPDATE"], Deadpool_logo))
+			XITK.Error(Deadpool, string.format(L["DEADPOOL_VERSION_UPDATE"], Deadpool_logo))
 			Deadpool:Print(string.format(L["DEADPOOL_VERSION_UPDATE_DESC"], Deadpool_logo))		
 		end)
 	end
@@ -236,8 +240,8 @@ function getDeadpoolRosterInfo()
 	deadpoolCharInfo[DEADPOOL_BANKER]["localName"] = DEADPOOL_BANKER_NAME
 	deadpoolCharInfo[DEADPOOL_BANKER]["isAPlayer"] = false
 
-	local deadpoolPlayerCharacter = Deadpool_playerCharacter() or UNKNOWN
-	local deadpoolPlayerVersion = getDeadpoolMainVersion(C_AddOns.GetAddOnMetadata("Deadpool", "Version"))
+	local deadpoolPlayerCharacter = XITK.playerCharacter() or UNKNOWN
+	local deadpoolPlayerVersion = XITK.getMainVersion(C_AddOns.GetAddOnMetadata("Deadpool", "Version"))
 
 	addCharInList(deadpoolCharInfo, "player", deadpoolPlayerCharacter)
 
@@ -256,7 +260,7 @@ function getDeadpoolRosterInfo()
         for i = 1, numGroupMembers do
 			local memberGroupLabel = groupLabel..i
 			if UnitExists(memberGroupLabel) then
-                local playerId = UnitIsPlayer(memberGroupLabel) and Deadpool_fullName(memberGroupLabel)
+                local playerId = UnitIsPlayer(memberGroupLabel) and XITK.fullName(memberGroupLabel)
 				if not playerId then
 					_, _, _, _, _, playerId = strsplit("-", UnitGUID(memberGroupLabel))
 				end
@@ -266,7 +270,7 @@ function getDeadpoolRosterInfo()
 						setInitialDeadpoolPlayerData(DeadpoolGlobal_SessionId, playerId)
 						isDeadpoolPlayer = true
 					end
-					local charVersion = getDeadpoolMainVersion(getDeadpoolData(DeadpoolGlobal_SessionId, playerId, DEADPOOLDATA_VERSION))
+					local charVersion = XITK.getMainVersion(getDeadpoolData(DeadpoolGlobal_SessionId, playerId, DEADPOOLDATA_VERSION))
 					local isDeadpoolPlayerUpToDate = deadpoolPlayerVersion == charVersion
 					if charVersion > deadpoolPlayerVersion then
 						signalDeadpoolVersion()
@@ -314,7 +318,7 @@ function getDeadpoolRosterInfo()
 						end
 						if value["bets"] then
 							for index2,value2 in pairs(value["bets"]) do
-								if not deadpoolCharInfo[index2] and value2 and Deadpool_tonumberzeroonblankornil(value2["nextDeathBet"]) > 0 then
+								if not deadpoolCharInfo[index2] and value2 and XITK.tonumberzeroonblankornil(value2["nextDeathBet"]) > 0 then
 									saveBets(DeadpoolGlobal_SessionId, index, index2)
 								end
 							end
@@ -327,33 +331,9 @@ function getDeadpoolRosterInfo()
 	return deadpoolCharInfo
 end
 
--- Returns the "main version" number or 0 on invalid input.
-function getDeadpoolMainVersion(version)
-    -- Validate the input first
-    if type(version) ~= "string" or version == "" then
-        return 0
-    end
-
-    -- Extract components safely
-    local v1, v2, v3 = strsplit(".", version)
-
-    -- Convert string parts to numbers
-    local n1 = tonumber(v1)
-    local n2 = tonumber(v2)
-
-    -- If any required part is missing or not numeric, return 0
-    if not n1 or not n2 then
-        return 0
-    end
-
-    -- Compute the main version safely
-    -- Note: multiply by 100 assuming format: major * 100 + minor
-    return n1 * 100 + n2
-end
-
 local function loadPlayerBets(playerId)
-	local deadpoolPlayerCharacter = Deadpool_playerCharacter() or UNKNOWN
-	if not Deadpool_isPlayerCharacter(playerId) and DeadpoolSavedBets then
+	local deadpoolPlayerCharacter = XITK.playerCharacter() or UNKNOWN
+	if not XITK.isPlayerCharacter(playerId) and DeadpoolSavedBets then
 		if DeadpoolSavedBets[deadpoolPlayerCharacter] then
 			if DeadpoolSavedBets[deadpoolPlayerCharacter][playerId] then
 				local savedBet = DeadpoolSavedBets[deadpoolPlayerCharacter][playerId]
@@ -437,7 +417,7 @@ function saveBets(aSession, aChar, aBetChar)
 		local playerBets = DeadpoolData[aSession][aChar]["bets"]
 		if playerBets then
 			for index,value in pairs(playerBets) do
-				if value and Deadpool_tonumberzeroonblankornil(value["nextDeathBet"]) > 0 then
+				if value and XITK.tonumberzeroonblankornil(value["nextDeathBet"]) > 0 then
 					if not DeadpoolSavedBets then
 						DeadpoolSavedBets = {}
 					end
@@ -445,7 +425,7 @@ function saveBets(aSession, aChar, aBetChar)
 						DeadpoolSavedBets[aChar] = {}
 					end
 					DeadpoolSavedBets[aChar][index] = value["nextDeathBet"]
-					if Deadpool_isPlayerCharacter(aChar) then
+					if XITK.isPlayerCharacter(aChar) then
 						setDeadpoolBets(aSession, aChar, index, "0")
 					else
 						setDeadpoolBetLocally(aSession, aChar, index, "0")
@@ -462,7 +442,7 @@ function saveBets(aSession, aChar, aBetChar)
 				DeadpoolSavedBets[aChar] = {}
 			end
 			DeadpoolSavedBets[aChar]["uniqueGamble"] = uniqueGamble
-			if Deadpool_isPlayerCharacter(aChar) then
+			if XITK.isPlayerCharacter(aChar) then
 				setDeadpoolUniqueGamble(aSession, aChar, "NO_ONE")
 			else
 				setDeadpoolBetLocally(aSession, aChar, "uniqueGamble", "NO_ONE")
@@ -478,7 +458,7 @@ function saveBets(aSession, aChar, aBetChar)
 				DeadpoolSavedBets[aChar] = {}
 			end
 			DeadpoolSavedBets[aChar][aBetChar] = playerBetsOnChar
-			if Deadpool_isPlayerCharacter(aChar) then
+			if XITK.isPlayerCharacter(aChar) then
 				setDeadpoolBets(aSession, aChar, aBetChar, "0")
 			else
 				setDeadpoolBetLocally(aSession, aChar, aBetChar, "0")
@@ -493,7 +473,7 @@ function saveBets(aSession, aChar, aBetChar)
 				DeadpoolSavedBets[aChar] = {}
 			end
 			DeadpoolSavedBets[aChar]["uniqueGamble"] = aBetChar
-			if Deadpool_isPlayerCharacter(aChar) then
+			if XITK.isPlayerCharacter(aChar) then
 				setDeadpoolUniqueGamble(aSession, aChar, "NO_ONE")
 			else
 				setDeadpoolBetLocally(aSession, aChar, "uniqueGamble", "NO_ONE")
@@ -509,9 +489,9 @@ function setDeadpoolBetLocally(aSession, aChar, aBetChar, aNextDeathBet)
 		local howManyGarmentToLose, afterTransactionCredits, _ = howManyGarmentToLose(aSession, aChar, aBetChar, aNextDeathBet)
 		if howManyGarmentToLose == 0 or dpFakeCharInfo then
 			local bets = nil
-			if Deadpool_tonumberzeroonblankornil(aNextDeathBet) > 0 then
+			if XITK.tonumberzeroonblankornil(aNextDeathBet) > 0 then
 				bets = {}
-				bets["dataTime"] = tostring(Deadpool_getTimeUTCinMS())
+				bets["dataTime"] = tostring(XITK.getTimeUTCinMS())
 				bets["nextDeathBet"] = aNextDeathBet
 			end
 			DeadpoolData[aSession][aChar]["bets"][aBetChar] = bets
@@ -540,37 +520,6 @@ function getDeadpoolCharInfo(aChar, anInfo)
 	return value
 end
 
-function Deadpool_addRealm(aName, aRealm)
-	if aName and not string.match(aName, "-") then
-		if aRealm and aRealm ~= "" then
-			aName = aName.."-"..aRealm
-		else
-			local realm = GetNormalizedRealmName() or UNKNOWN
-			aName = aName.."-"..realm
-		end
-	end
-	return aName
-end
-
-function Deadpool_fullName(unit)
-	local fullName = nil
-	if unit then
-		local playerName, playerRealm = UnitNameUnmodified(unit)
-		if not UnitIsPlayer(unit) then
-			return playerName
-		end
-		if playerName and playerName ~= "" and playerName ~= UNKNOWN then
-			if not playerRealm or playerRealm == "" then
-				playerRealm = GetNormalizedRealmName()
-			end
-			if playerRealm and playerRealm ~= "" then
-				fullName = playerName.."-"..playerRealm
-			end
-		end
-	end
-	return fullName
-end
-
 function playerNameOrBankerName(fullName)
 	if getDeadpoolCharInfo(fullName, "isAPlayer") then
 		return fullName
@@ -579,7 +528,7 @@ function playerNameOrBankerName(fullName)
 	elseif fullName == "boss" then
 		return RAID_BOSSES
 	else
-		local npcName = EZBlizzUiPop_GetNameFromNpcID(fullName)
+		local npcName = XITK.GetNameFromNpcID(fullName)
 		if npcName and npcName ~= "" then
 			return npcName
 		else
@@ -589,7 +538,7 @@ function playerNameOrBankerName(fullName)
 end
 
 function playerJoinsDeadpoolSession(aSession, isCreator, keepPlayerData)
-	local playerCharacter = Deadpool_playerCharacter() or UNKNOWN
+	local playerCharacter = XITK.playerCharacter() or UNKNOWN
 	if not DeadpoolGlobal_SessionId or DeadpoolGlobal_SessionId ~= aSession or isCreator then
 		local playerData = nil
 		local bankerData = nil
@@ -638,8 +587,8 @@ end
 		local i = 1
 		while everyoneDisconnected and i <= numGroupMembers do
 			local name, _, _, _, _, _, _, online, _, _, _ = GetRaidRosterInfo(i)
-			name = Deadpool_addRealm(name)
-			if name ~= Deadpool_playerCharacter() and getDeadpoolData(aDeadpoolSessionId, name, "credits") and online then
+			name = XITK.addRealm(name)
+			if name ~= XITK.playerCharacter() and getDeadpoolData(aDeadpoolSessionId, name, "credits") and online then
 				everyoneDisconnected = false
 			end
 			i = i + 1
@@ -687,10 +636,10 @@ function loadReceivedDeadpoolData(messageType)
 							if achievementChar and noNotif then
 								Deadpool:Print(string.format(L["NEW_TITLE_FOR"], achievementChar)..L["SPACE_BEFORE_DOT"]..": "..deadpoolAchievements[index]["label"])
 							end
-							if CustomAchieverData and Deadpool_isPlayerCharacter(achievementChar) then
+							if CustomAchieverData and XITK.isPlayerCharacter(achievementChar) then
 								CustAc_CompleteAchievement(index, nil, noNotif, DeadpoolOptionsData["DeadpoolSoundsDisabled"])
 							elseif not noNotif and achievementTime and achievementTime + 60 > time() then -- If earned in the past minute
-								EZBlizzUiPop_ToastFakeAchievement(Deadpool, not DeadpoolOptionsData["DeadpoolSoundsDisabled"], 4, nil, deadpoolAchievements[index]["label"], 0, nil, false, string.format(L["NEW_TITLE_FOR"], achievementChar), true, function()  Deadpool:DeadpoolShow()  end)
+								EZBUP.ToastFakeAchievement(Deadpool, not DeadpoolOptionsData["DeadpoolSoundsDisabled"], 4, nil, deadpoolAchievements[index]["label"], 0, nil, false, string.format(L["NEW_TITLE_FOR"], achievementChar), true, function()  Deadpool:DeadpoolShow()  end)
 							end
 						else
 							setDeadpoolData(DeadpoolGlobal_SessionId, index, "value", getDeadpoolData(DeadpoolGlobal_SessionId, index, "value", DeadpoolReceivedData))
@@ -735,7 +684,7 @@ function loadReceivedDeadpoolData(messageType)
 										end
 									end
 									
-									local playerCharacter = Deadpool_playerCharacter()
+									local playerCharacter = XITK.playerCharacter()
 									if index2 == DEADPOOL_TRULYUNEQUIP then
 										local receivedValue, _ = strsplit("|", newData, 2)
 										if index == playerCharacter then
@@ -767,11 +716,11 @@ function loadReceivedDeadpoolData(messageType)
 					end
 				end
 				if DeadpoolReceivedData[DeadpoolGlobal_SessionId][index] 
-					and Deadpool_countTableElements(DeadpoolReceivedData[DeadpoolGlobal_SessionId][index]) == 0 then
+					and XITK.countTableElements(DeadpoolReceivedData[DeadpoolGlobal_SessionId][index]) == 0 then
 					DeadpoolReceivedData[DeadpoolGlobal_SessionId][index] = nil
 				end
 			end
-			if Deadpool_countTableElements(DeadpoolReceivedData[DeadpoolGlobal_SessionId]) == 0 then
+			if XITK.countTableElements(DeadpoolReceivedData[DeadpoolGlobal_SessionId]) == 0 then
 				DeadpoolReceivedData[DeadpoolGlobal_SessionId] = nil
 			end
 		end
@@ -789,7 +738,7 @@ function loadReceivedDeadpoolData(messageType)
 end
 
 function checkBetsOnPlayerChanged(aDeadpoolSessionId, newDeadpoolData)
-	local player = Deadpool_playerCharacter()
+	local player = XITK.playerCharacter()
 
 	if player then
 		local _, nbNextDeathBets = getDeadpoolTotalBets(aDeadpoolSessionId, "nextDeathBet", player)
@@ -800,7 +749,7 @@ function checkBetsOnPlayerChanged(aDeadpoolSessionId, newDeadpoolData)
 
 		if nbNextDeathBets ~= newNbNextDeathBets or totalUniqueGambleOnChar ~= newTotalUniqueGambleOnChar then
 			Deadpool:Print(L["DEADPOOLUI_BETSCHANGEDONCHAR"])
-			Deadpool_PlaySound(865, "SFX")
+			XITK.PlaySound(865, "SFX", DeadpoolOptionsData["DeadpoolSoundsDisabled"])
 		end
 	end
 end
@@ -808,19 +757,9 @@ end
 function clearCharacterDeadpoolData(aFullName)
 	if aFullName and DeadpoolData and DeadpoolData[DeadpoolGlobal_SessionId]
 			and DeadpoolData[DeadpoolGlobal_SessionId][aFullName]
-				and Deadpool_countTableElements(DeadpoolData[DeadpoolGlobal_SessionId][aFullName]) == 0 then
+				and XITK.countTableElements(DeadpoolData[DeadpoolGlobal_SessionId][aFullName]) == 0 then
 		DeadpoolData[DeadpoolGlobal_SessionId][aFullName] = nil
 	end
-end
-
-function Deadpool_countTableElements(table)
-	local count = 0
-	if table then
-		for _ in pairs(table) do
-			count = count + 1
-		end
-	end
-	return count
 end
 
 function getDeadpoolData(aSession, aChar, anInfo, aDeadpoolDataObject)
@@ -866,7 +805,7 @@ function setDeadpoolData(aSession, aChar, anInfo, aValue)
 			DeadpoolData[aSession][aChar] = {}
 		end
 		if not dataTime or dataTime == "" then
-			dataTime = tostring(Deadpool_getTimeUTCinMS())
+			dataTime = tostring(XITK.getTimeUTCinMS())
 		end
 		DeadpoolData[aSession][aChar][anInfo] = value.."|"..dataTime
 	end
@@ -885,7 +824,7 @@ function getDeadpoolBets(aSession, aChar, aBetChar)
 			local bets = DeadpoolData[aSession][aChar]["bets"]
 			if bets then
 				for index,value in pairs(bets) do
-					local readBet = Deadpool_tonumberzeroonblankornil(value["nextDeathBet"])
+					local readBet = XITK.tonumberzeroonblankornil(value["nextDeathBet"])
 					if index == aBetChar then
 						bet = readBet
 						dataTime = value["dataTime"]
@@ -904,18 +843,18 @@ end
 function addDeadpoolBets(aSession, aChar, aBetChar, nextDeathBet)
 	if aChar then
 		if "unique" ~= nextDeathBet then
-			local betToSend = Deadpool_tonumberzeroonblankornil(nextDeathBet)
+			local betToSend = XITK.tonumberzeroonblankornil(nextDeathBet)
 			local playerBetsOnChar, _, _, playerBetsNumber = getDeadpoolBets(aSession, aChar, aBetChar)
 			if playerBetsOnChar == 0 and playerBetsNumber >= Deadpool_maxBets then
-				Deadpool_Error(string.format(L["DEADPOOLUI_MAXBETS"], Deadpool_maxBets))
+				XITK.Error(Deadpool, string.format(L["DEADPOOLUI_MAXBETS"], Deadpool_maxBets))
 				return
 			end
 			if not nextDeathBet then
-				betToSend = Deadpool_tonumberzeroonblankornil(getDeadpoolData(aSession, aChar, "credits"))
+				betToSend = XITK.tonumberzeroonblankornil(getDeadpoolData(aSession, aChar, "credits"))
 				if betToSend > 0 then
 					setDeadpoolBets(aSession, aChar, aBetChar, betToSend + playerBetsOnChar)
 				else
-					Deadpool_Error(L["DEADPOOLUI_NOMORECHIPS"])
+					XITK.Error(Deadpool, L["DEADPOOLUI_NOMORECHIPS"])
 				end
 			elseif nextDeathBet == "0" then
 				setDeadpoolBets(aSession, aChar, aBetChar, betToSend)
@@ -928,24 +867,18 @@ function addDeadpoolBets(aSession, aChar, aBetChar, nextDeathBet)
 	end
 end
 
-function Deadpool_Error(message)
-	local messageToPrint = "Dead Pool"..L["SPACE_BEFORE_DOT"]..": "..message
-	UIErrorsFrame:AddMessage(messageToPrint, 1.0, 0.1, 0.1)
-	Deadpool:Print("|cFFFF0000"..messageToPrint)
-end
-
 function setDeadpoolBets(aSession, aChar, aBetChar, aNextDeathBet)
 	if aSession and aChar and aBetChar and aNextDeathBet then
 		if aChar == aBetChar and not DeadpoolGlobal_Debug then
 			tellTutorialText("DEADPOOLTUTO_TUTO4")
-			Deadpool_Error(L["SELF_BET_NOT_ALLOWED"])
+			XITK.Error(Deadpool, L["SELF_BET_NOT_ALLOWED"])
 		else
 			Deadpool:CheckDeath()
 			local unitInCombat = getDeadpoolData(aSession, aBetChar, "inCombat")
 			local playerInCombat = UnitAffectingCombat("player") or UnitExists("boss1")
 			if unitInCombat == "true" or playerInCombat then
 				tellTutorialText("DEADPOOLTUTO_TUTO5")
-				Deadpool_Error(L["UNIT_IN_COMBAT"])
+				XITK.Error(Deadpool, L["UNIT_IN_COMBAT"])
 			else
 				local howManyGarmentToLose, afterTransactionCredits, nextDeathBet = howManyGarmentToLose(aSession, aChar, aBetChar, aNextDeathBet)
 				if howManyGarmentToLose > 0 then
@@ -961,7 +894,7 @@ function setDeadpoolBets(aSession, aChar, aBetChar, aNextDeathBet)
 						dialog.data["howManyGarment"] = howManyGarmentToLose
 					end
 				elseif afterTransactionCredits < 0 then
-					Deadpool_Error(L["DEADPOOLUI_NOMORECHIPS"])
+					XITK.Error(Deadpool, L["DEADPOOLUI_NOMORECHIPS"])
 				else
 					saveDeadpoolBets(aSession, aChar, aBetChar, aNextDeathBet, afterTransactionCredits)
 				end
@@ -973,7 +906,7 @@ end
 function howManyGarmentToLose(aSession, aChar, aBetChar, aNextDeathBet)
 	local howManyGarmentToLose = 0
 	local oldNextDeathBet = 0
-	local nextDeathBet = Deadpool_tonumberzeroonblankornil(aNextDeathBet)
+	local nextDeathBet = XITK.tonumberzeroonblankornil(aNextDeathBet)
 	if not DeadpoolData then
 		DeadpoolData = {}
 	end
@@ -990,18 +923,18 @@ function howManyGarmentToLose(aSession, aChar, aBetChar, aNextDeathBet)
 		DeadpoolData[aSession][aChar]["bets"] = {}
 	else
 		if DeadpoolData[aSession][aChar]["bets"][aBetChar] then
-			oldNextDeathBet = Deadpool_tonumberzeroonblankornil(DeadpoolData[aSession][aChar]["bets"][aBetChar]["nextDeathBet"])
+			oldNextDeathBet = XITK.tonumberzeroonblankornil(DeadpoolData[aSession][aChar]["bets"][aBetChar]["nextDeathBet"])
 		end
 	end
 
-	local playerCredits = Deadpool_tonumberzeroonblankornil(getDeadpoolData(aSession, aChar, "credits")) + oldNextDeathBet
+	local playerCredits = XITK.tonumberzeroonblankornil(getDeadpoolData(aSession, aChar, "credits")) + oldNextDeathBet
 	local afterTransactionCredits =  playerCredits - nextDeathBet
 
 	if afterTransactionCredits < 0 then
 		howManyGarmentToLose = -floor(afterTransactionCredits / DEADPOOL_GARMENT_REWARD)
 	end
 
-	local charLostItems = Deadpool_tonumberzeroonblankornil(getDeadpoolData(aSession, aChar, "offItemsNumber"))
+	local charLostItems = XITK.tonumberzeroonblankornil(getDeadpoolData(aSession, aChar, "offItemsNumber"))
 	if charLostItems + howManyGarmentToLose > DEADPOOL_GARMENT_NUMBER then
 		local overfull = charLostItems + howManyGarmentToLose - DEADPOOL_GARMENT_NUMBER
 		howManyGarmentToLose = DEADPOOL_GARMENT_NUMBER - charLostItems
@@ -1014,12 +947,12 @@ end
 
 function setDeadpoolUniqueGamble(aSession, aChar, aBetChar)
 	if aSession and aChar and aBetChar then
-		local bankCredits = Deadpool_tonumberzeroonblankornil(getDeadpoolData(aSession, "Bank", "credits"))
+		local bankCredits = XITK.tonumberzeroonblankornil(getDeadpoolData(aSession, "Bank", "credits"))
 		if bankCredits <= 0 then
-			Deadpool_Error(L["EMPTY_BANK"])
+			XITK.Error(Deadpool, L["EMPTY_BANK"])
 		elseif aChar == aBetChar then
 			tellTutorialText("DEADPOOLTUTO_TUTO4")
-			Deadpool_Error(L["SELF_BET_NOT_ALLOWED"])
+			XITK.Error(Deadpool, L["SELF_BET_NOT_ALLOWED"])
 		else
 			Deadpool:CheckDeath()
 			local groupRank = getDeadpoolCharInfo(aBetChar, "groupRank")
@@ -1027,17 +960,17 @@ function setDeadpoolUniqueGamble(aSession, aChar, aBetChar)
 			local playerInCombat = UnitAffectingCombat("player") or UnitExists("boss1")
 			if unitInCombat or playerInCombat then
 				tellTutorialText("DEADPOOLTUTO_TUTO5")
-				Deadpool_Error(L["UNIT_IN_COMBAT"])
+				XITK.Error(Deadpool, L["UNIT_IN_COMBAT"])
 			elseif aBetChar ~= getDeadpoolData(aSession, aChar, "uniqueGamble") then
 				DeadpoolTuto["chipPiles"] = "Done"
 				if DEADPOOL_SOLEIL == getDeadpoolCharInfo(aChar, "localName") then
-					Deadpool_Error(L["DEADPOOL_SOLEILBET"])
+					XITK.Error(Deadpool, L["DEADPOOL_SOLEILBET"])
 					Deadpool_dropAnItem(aChar, 1, true)
 					Deadpool_updateStat(aSession, aChar, DEADPOOL_SOLEILBET, 1)
 				end
 				tellTutorialText("DEADPOOLTUTO_TUTO7")
 				setDeadpoolData(aSession, aChar, "uniqueGamble", aBetChar)
-				Deadpool_PlaySound(865, "SFX")
+				XITK.PlaySound(865, "SFX", DeadpoolOptionsData["DeadpoolSoundsDisabled"])
 				prepareAndSendSimpleDeadpoolDataToRaid(DeadpoolGlobal_SessionId, aChar)
 				generateDeadpoolTable()
 			end
@@ -1047,18 +980,18 @@ end
 
 function saveDeadpoolBets(aSession, aChar, aBetChar, nextDeathBet, afterTransactionCredits)
 	if DEADPOOL_SOLEIL == getDeadpoolCharInfo(aChar, "localName") and nextDeathBet > 0 then
-		Deadpool_Error(L["DEADPOOL_SOLEILBET"])
+		XITK.Error(Deadpool, L["DEADPOOL_SOLEILBET"])
 		Deadpool_dropAnItem(aChar, 1, true)
 		Deadpool_updateStat(aSession, aChar, DEADPOOL_SOLEILBET, 1)
 	end
 	DeadpoolTuto["chipPiles"] = "Done"
 	tellTutorialText("DEADPOOLTUTO_TUTO2")
 	local bets = {}
-	bets["dataTime"] = tostring(Deadpool_getTimeUTCinMS())
+	bets["dataTime"] = tostring(XITK.getTimeUTCinMS())
 	bets["nextDeathBet"] = nextDeathBet
 	DeadpoolData[aSession][aChar]["bets"][aBetChar] = bets
 	setDeadpoolData(aSession, aChar, "credits", afterTransactionCredits)
-	Deadpool_PlaySound(865, "SFX")
+	XITK.PlaySound(865, "SFX", DeadpoolOptionsData["DeadpoolSoundsDisabled"])
 	prepareAndSendSimpleDeadpoolDataToRaid(DeadpoolGlobal_SessionId, aChar)
 	generateDeadpoolTable()
 end
@@ -1066,7 +999,7 @@ end
 function Deadpool_updateStat(aDeadpoolSessionId, aChar, aStat, aValue)
 	local isNotBoss = (aChar ~= "boss")
 	local achievementPopped = false
-	local statValue = Deadpool_tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, aChar, aStat)) + aValue
+	local statValue = XITK.tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, aChar, aStat)) + aValue
 	setDeadpoolData(aDeadpoolSessionId, aChar, aStat, statValue)
 	if isNotBoss then
 		local achiever = getDeadpoolData(aDeadpoolSessionId, aStat, "achiever")
@@ -1079,10 +1012,10 @@ function Deadpool_updateStat(aDeadpoolSessionId, aChar, aStat, aValue)
 					if noNotif then
 						Deadpool:Print(string.format(L["NEW_TITLE_FOR"], aChar)..L["SPACE_BEFORE_DOT"]..": "..deadpoolAchievements[aStat]["label"])
 					end
-					if CustomAchieverData and Deadpool_isPlayerCharacter(aChar) then
+					if CustomAchieverData and XITK.isPlayerCharacter(aChar) then
 						CustAc_CompleteAchievement(aStat, nil, noNotif, DeadpoolOptionsData["DeadpoolSoundsDisabled"])
 					elseif not noNotif then
-						EZBlizzUiPop_ToastFakeAchievement(Deadpool, not DeadpoolOptionsData["DeadpoolSoundsDisabled"], 4, nil, deadpoolAchievements[aStat]["label"], 0, nil, false, string.format(L["NEW_TITLE_FOR"], aChar), true, function()  Deadpool:DeadpoolShow()  end)
+						EZBUP.ToastFakeAchievement(Deadpool, not DeadpoolOptionsData["DeadpoolSoundsDisabled"], 4, nil, deadpoolAchievements[aStat]["label"], 0, nil, false, string.format(L["NEW_TITLE_FOR"], aChar), true, function()  Deadpool:DeadpoolShow()  end)
 					end
 					setDeadpoolData(aDeadpoolSessionId, aStat, "achiever", aChar)
 					achievementPopped = true
@@ -1104,33 +1037,33 @@ function Deadpool_prepareStats()
 	local earningsStats = ""
 	local lossesStats = ""
 	for index,value in pairs(DeadpoolData[DeadpoolGlobal_SessionId]) do
-		local stat = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, index, DEADPOOL_WINS))
+		local stat = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, index, DEADPOOL_WINS))
 		local highestStat = 0
 		local highestStatPlayer = nil
 		if stat > 0 then
 			winsStats = winsStats.."  "..playerNameOrBankerName(index)..L["SPACE_BEFORE_DOT"]..": "..stat.."|n"
 		end
-		stat = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, index, DEADPOOL_CREDITSGAIN))
+		stat = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, index, DEADPOOL_CREDITSGAIN))
 		if stat > 0 then
 			gainsStats = gainsStats.."  "..playerNameOrBankerName(index)..L["SPACE_BEFORE_DOT"]..": "..stat..deadpoolChipTextureString.."|n"
 		end
-		stat = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, index, DEADPOOL_FIRSTDEATH))
+		stat = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, index, DEADPOOL_FIRSTDEATH))
 		if stat > 0 then
 			firstDeathStats = firstDeathStats.."  "..playerNameOrBankerName(index)..L["SPACE_BEFORE_DOT"]..": "..stat.."|n"
 		end
-		stat = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, index, DEADPOOL_DEATHS))
+		stat = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, index, DEADPOOL_DEATHS))
 		if stat > 0 then
 			deathsStats = deathsStats.."  "..playerNameOrBankerName(index)..L["SPACE_BEFORE_DOT"]..": "..stat.."|n"
 		end
-		stat = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, index, DEADPOOL_DEATHSONBOSS))
+		stat = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, index, DEADPOOL_DEATHSONBOSS))
 		if stat > 0 then
 			deathsOnBossStats = deathsOnBossStats.."  "..playerNameOrBankerName(index)..L["SPACE_BEFORE_DOT"]..": "..stat.."|n"
 		end
-		stat = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, index, DEADPOOL_LOSTITEMS))
+		stat = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, index, DEADPOOL_LOSTITEMS))
 		if stat > 0 then
 			lostItemsStats = lostItemsStats.."  "..playerNameOrBankerName(index)..L["SPACE_BEFORE_DOT"]..": "..stat.."|n"
 		end
-		stat = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, index, DEADPOOL_BALANCE))
+		stat = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, index, DEADPOOL_BALANCE))
 		if stat > 0 then
 			earningsStats = earningsStats.."  "..playerNameOrBankerName(index)..L["SPACE_BEFORE_DOT"]..": "..stat..deadpoolChipTextureString.."|n"
 		end
@@ -1161,7 +1094,7 @@ end
 local InventorySlotsToUnequip = {}
 
 function Deadpool_updateInventorySlotsToUnequip()
-	local slotsToUnequipNb = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), "offItemsNumber"))
+	local slotsToUnequipNb = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, XITK.playerCharacter(), "offItemsNumber"))
 	InventorySlotsToUnequip = {}
 	for i = 1, slotsToUnequipNb do
 		tinsert(InventorySlotsToUnequip, deadpoolUndressingOrder[i]["slot"])
@@ -1176,7 +1109,7 @@ end
 -- Code by SDPhantom - https://www.wowinterface.com/forums/member.php?u=34145
 function Deadpool_UnequipItems()
 	if not UnitAffectingCombat("player") then
-		local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), DEADPOOL_TRULYUNEQUIP)
+		local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, XITK.playerCharacter(), DEADPOOL_TRULYUNEQUIP)
 		if trulyUnequipItems and trulyUnequipItems == "true" then
 			Deadpool_updateInventorySlotsToUnequip()
 				
@@ -1209,12 +1142,12 @@ end
 function Deadpool_dropAnItem(aChar, numberOfItems, getNoNewCredits)
 	local enoughItems = true
 	local newCredits = 0
-	local offItemsNumber = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, aChar, "offItemsNumber"))
+	local offItemsNumber = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, aChar, "offItemsNumber"))
 	if not offItemsNumber then
 		offItemsNumber = 0
 	end
-	if offItemsNumber + numberOfItems <= Deadpool_countTableElements(deadpoolUndressingOrder) then
-		local credits = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, aChar, "credits"))
+	if offItemsNumber + numberOfItems <= XITK.countTableElements(deadpoolUndressingOrder) then
+		local credits = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, aChar, "credits"))
 		if not getNoNewCredits then
 			newCredits = DEADPOOL_GARMENT_REWARD * numberOfItems
 		end
@@ -1225,25 +1158,13 @@ function Deadpool_dropAnItem(aChar, numberOfItems, getNoNewCredits)
 		Deadpool_updateStat(DeadpoolGlobal_SessionId, aChar, DEADPOOL_LOSTITEMS, numberOfItems)
 		setDeadpoolData(DeadpoolGlobal_SessionId, aChar, "credits", credits + newCredits)
 		DeadpoolSummaryFrame_Update()
-		Deadpool_PlaySound(1202, "SFX")
+		XITK.PlaySound(1202, "SFX", DeadpoolOptionsData["DeadpoolSoundsDisabled"])
 	else
-		Deadpool_Error(L["NOT_ENOUGH_ITEMS"])
+		XITK.Error(Deadpool, L["NOT_ENOUGH_ITEMS"])
 		enoughItems = false
 	end
 	dpShowModel(aChar)
 	return enoughItems, newCredits
-end
-
-function Deadpool_tonumberzeroonblankornil(aString)
-	if aString and aString ~= "" then
-		return tonumber(aString)
-	else
-		return 0
-	end
-end
-
-function Deadpool_getTimeUTCinMS()
-	return tostring(time(date("!*t")))
 end
 
 function Deadpool_getMostRecentTimedValue(myValueTime, newValueTime, forceNew)
@@ -1275,69 +1196,8 @@ function Deadpool_getMostRecentTimedValue(myValueTime, newValueTime, forceNew)
 	return returnedValue, myValueIsObsolete
 end
 
-function Deadpool_upperCase(aText)
-	local newText = ""
-	if aText then
-		retOK, ret = pcall(Deadpool_upperCaseBusiness, aText)
-		if retOK then
-			newText = ret
-		else
-			newText = aText
-		end
-	end
-	return newText
-end
-
-function Deadpool_upperCaseBusiness(aText)
-	return string.utf8upper(aText)
-end
-
 function Deadpool_GetLocale(key)
 	return L[key]
-end
-
-function Deadpool_PlaySound(soundID, channel, forcePlay)
-	if forcePlay or not DeadpoolOptionsData or not DeadpoolOptionsData["DeadpoolSoundsDisabled"] or not (DeadpoolOptionsData["DeadpoolSoundsDisabled"] == true) then
-		PlaySound(soundID, channel)
-	end
-end
-
-function Deadpool_PlaySoundFile(soundFile, channel, forcePlay)
-	if forcePlay or not DeadpoolOptionsData or not DeadpoolOptionsData["DeadpoolSoundsDisabled"] or not (DeadpoolOptionsData["DeadpoolSoundsDisabled"] == true) then
-		if soundHandle then
-			StopSound(soundHandle)
-		end
-		willPlay, soundHandle = PlaySoundFile("Interface\\AddOns\\Deadpool\\sound\\"..soundFile.."_"..GetLocale()..".ogg", channel, _, true)
-		if not willPlay then
-			willPlay, soundHandle = PlaySoundFile("Interface\\AddOns\\Deadpool\\sound\\"..soundFile..".ogg", channel, _, true)
-		end
-	end
-	return soundHandle
-end
-
-function Deadpool_PlaySoundFileId(soundFileId, channel, forcePlay)
-	if forcePlay or not DeadpoolOptionsData or not DeadpoolOptionsData["DeadpoolSoundsDisabled"] or not (DeadpoolOptionsData["DeadpoolSoundsDisabled"] == true) then
-		if soundHandle then
-			StopSound(soundHandle)
-		end
-		willPlay, soundHandle = PlaySoundFile(soundFileId, channel)
-	end
-	return soundHandle
-end
-
-function Deadpool_PlayRandomSound(soundFileIdBank, channel, forcePlay)
-	if forcePlay or not DeadpoolOptionsData or not DeadpoolOptionsData["DeadpoolSoundsDisabled"] or not (DeadpoolOptionsData["DeadpoolSoundsDisabled"] == true) then
-		local sound = math.random(1, #soundFileIdBank)
-		return Deadpool_PlaySoundFileId(soundFileIdBank[sound], channel, forcePlay)
-	end
-end
-
-function Deadpool_isPartyMember(unitId)
-	return unitId == "player" or UnitInParty(unitId) or UnitInRaid(unitId)
-end
-
-function SimpleRound (val, valStep)
-	return floor(val/valStep)*valStep
 end
 
 function isInstanceAtLevel(level)

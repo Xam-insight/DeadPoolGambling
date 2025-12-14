@@ -1,4 +1,5 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("Deadpool", true)
+local XITK = LibStub("XamInsightToolKit")
 
 function DeadpoolWindow_OnShow(self)
 	DeadpoolTrulyUnequipSwitch:Hide()
@@ -168,7 +169,7 @@ function DeadpoolTrulyUnequip_OnLoad(self)
 end
 
 function DeadpoolTrulyUnequip_UpdateStatus(self)
-	local player = Deadpool_playerCharacter()
+	local player = XITK.playerCharacter()
 	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, player, DEADPOOL_TRULYUNEQUIP)
 	trulyUnequipItems = trulyUnequipItems and trulyUnequipItems == "true"
 	

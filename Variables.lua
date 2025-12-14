@@ -1,4 +1,5 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("Deadpool", true)
+local XITK = LibStub("XamInsightToolKit")
 
 Deadpool_logo = "Dead Pool |T137008:16|t |cffffffffG|r|cff666666a|r|cffffffffm|r|cff666666b|r|cffffffffl|r|cff666666i|r|cffffffffn|r|cff666666g|r"
 
@@ -42,7 +43,7 @@ StaticPopupDialogs["DEADPOOL_SELL_ITEM_WARNING"] = {
     button2 = NO,
     OnAccept = function(self, data)
         -- Quit DEADPOOL_TRULYUNEQUIP mode
-		setDeadpoolData(DeadpoolGlobal_SessionId, Deadpool_playerCharacter(), DEADPOOL_TRULYUNEQUIP, nil)
+		setDeadpoolData(DeadpoolGlobal_SessionId, XITK.playerCharacter(), DEADPOOL_TRULYUNEQUIP, nil)
 		Deadpool:UnequipLostItems(event)
     end,
     OnCancel = function()
@@ -77,19 +78,10 @@ DEADPOOL_INITIAL_MONEY = 20
 DEADPOOL_SOLEIL = "Soleîl"
 
 DEADPOOL_BANKER = "GALLYWIX"
-DEADPOOL_BANKER_NAME = ""
-if EZBlizzUiPop_npcModels[DEADPOOL_BANKER] then
-	DEADPOOL_BANKER_NAME = EZBlizzUiPop_GetNameFromNpcID(EZBlizzUiPop_npcModels[DEADPOOL_BANKER]["CreatureId"])
-end
-
--- Change an entire string to Title Case
--- from http://lua-users.org/wiki/StringRecipes
-local function tchelper(first, rest)
-   return string.utf8upper(first)..string.utf8lower(rest)
-end
-
-if DEADPOOL_BANKER_NAME == "" then
-	DEADPOOL_BANKER_NAME = string.gsub(DEADPOOL_BANKER, "(%a)([%w_']*)", tchelper)
+DEADPOOL_BANKER_ID = 136683
+DEADPOOL_BANKER_NAME = XITK.GetNameFromNpcID(DEADPOOL_BANKER_ID) -- GALLYWIX
+if not DEADPOOL_BANKER_NAME or DEADPOOL_BANKER_NAME == "" or DEADPOOL_BANKER_NAME:match("^%s+$") then
+	DEADPOOL_BANKER_NAME = "Galliwix"
 end
 
 DEADPOOL_WINS         = "Wins"
@@ -242,7 +234,7 @@ deathQuotes = {
 	6727766,
 	6728215, -- dimensius
 	6729191,
-	--/run Deadpool_PlaySoundFileId(6213556) /run PlaySoundFile("sound\\creature\\dimensius\\vo_1120_dimensius_6729194.ogg")
+	--/run XITK.PlaySoundFileID(6213556) /run PlaySoundFile("sound\\creature\\dimensius\\vo_1120_dimensius_6729194.ogg")
 }
 
 --[[

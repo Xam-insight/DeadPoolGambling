@@ -38,7 +38,7 @@ end
 
 function updateMiniDeadpoolFrame()
 	if MiniDeadpoolFrame and MiniDeadpoolFrame:IsShown() then
-		local numItems = Deadpool_countTableElements(deadpoolList)
+		local numItems = XITK.countTableElements(deadpoolList)
 		if numItems > 10 then
 			miniDeadpoolLineHeight = 10
 			MiniDeadpoolFrame.Inset:SetPoint("TOPLEFT", 20, -26)

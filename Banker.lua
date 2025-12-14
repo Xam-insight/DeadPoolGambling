@@ -1,5 +1,7 @@
+local XITK = LibStub("XamInsightToolKit")
+
 function askBankerHisBet(aDeadpoolSessionId, deadpoolList)
-	local betChar = Deadpool_playerCharacter()
+	local betChar = XITK.playerCharacter()
 	local betPercentage = 30
 	local bet = 1
 	local firstDeathNumber = 0
@@ -13,7 +15,7 @@ function askBankerHisBet(aDeadpoolSessionId, deadpoolList)
 	
 	for _, value in pairs(deadpoolList) do
 		tinsert(playersIds, value)
-		local newFirstDeathNumber = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, value, DEADPOOL_FIRSTDEATH))
+		local newFirstDeathNumber = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, value, DEADPOOL_FIRSTDEATH))
 		if newFirstDeathNumber > firstDeathNumber then
 			firstDeathNumber = newFirstDeathNumber
 			firstDeathNumberCharacter = value
@@ -21,7 +23,7 @@ function askBankerHisBet(aDeadpoolSessionId, deadpoolList)
 			sameFirstDeathNumber = newFirstDeathNumber
 		end
 
-		local newDeathNumber = Deadpool_tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, value, DEADPOOL_DEATHS))
+		local newDeathNumber = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, value, DEADPOOL_DEATHS))
 		if newDeathNumber > deathNumber and value ~= "boss" then
 			deathNumber = newDeathNumber
 			deathNumberCharacter = value
@@ -31,7 +33,7 @@ function askBankerHisBet(aDeadpoolSessionId, deadpoolList)
 	end
 	
 	-- BANKER
-	local nbChips = Deadpool_tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, DEADPOOL_BANKER, "credits"))
+	local nbChips = XITK.tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, DEADPOOL_BANKER, "credits"))
 	if nbChips > 0 then
 		local totalNextDeathBetsOnChar, nbNextDeathBetsOnChar = getDeadpoolTotalBets(aDeadpoolSessionId, "nextDeathBet", DEADPOOL_BANKER)
 		if nbNextDeathBetsOnChar <=0 then
@@ -59,7 +61,7 @@ function askBankerHisBet(aDeadpoolSessionId, deadpoolList)
 	
 	-- FOLLOWERS
 	for key, value in pairs(DeadpoolFollowersId) do
-		nbChips = Deadpool_tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, value, "credits"))
+		nbChips = XITK.tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, value, "credits"))
 		if nbChips > 0 then
 			totalNextDeathBetsOnChar, nbNextDeathBetsOnChar = getDeadpoolTotalBets(aDeadpoolSessionId, "nextDeathBet", value)
 			if nbNextDeathBetsOnChar <=0 then

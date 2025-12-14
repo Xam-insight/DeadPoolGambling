@@ -1,4 +1,5 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("Deadpool", true)
+local XITK = LibStub("XamInsightToolKit")
 
 function encodeAndSendDeadpoolSessionInfo(aData, aSender, aMessageTime)
 	if aData then
@@ -11,7 +12,7 @@ function encodeAndSendDeadpoolSessionInfo(aData, aSender, aMessageTime)
 			--Deadpool:Print(time().." - Message envoye.")
 			--Deadpool:Print("Sent data to "..aSender..".")
 		else
-			local messageTime = tostring(Deadpool_getTimeUTCinMS())
+			local messageTime = tostring(XITK.getTimeUTCinMS())
 			local chat = "RAID"
 			if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
 				chat = "INSTANCE_CHAT"
@@ -25,7 +26,7 @@ end
 function encodeAndSendSimpleDeadpoolData(aData)
 	local t = aData
 	local s = Deadpool:Serialize(t)
-	local messageTime = tostring(Deadpool_getTimeUTCinMS())
+	local messageTime = tostring(XITK.getTimeUTCinMS())
 	local chat = "RAID"
 	if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
 		chat = "INSTANCE_CHAT"
@@ -37,7 +38,7 @@ function Deadpool:ReceiveDataFrame_OnEvent(prefix, message, distribution, sender
 	if prefix == DeadpoolGlobal_CommPrefix then
 		--Deadpool:Print(time().." - Received message from "..sender..".", DeadpoolGlobal_SessionId)
 		local messageType, messageTime, messageMessage, messageParam = strsplit("#", message, 4)
-		if not Deadpool_isPlayerCharacter(sender) then
+		if not XITK.isPlayerCharacter(sender) then
 			if messageType == "Data" or messageType == "SimpleData" then
 				local success, o = self:Deserialize(messageMessage)
 				if success == false then
@@ -98,7 +99,7 @@ function Deadpool:CallForDeadpoolData(event, isInitialLogin, partyGUID)
 					if partyGUID then
 						guid = "-"..partyGUID
 					end
-					local pc = Deadpool_playerCharacter() or UNKNOWN
+					local pc = XITK.playerCharacter() or UNKNOWN
 					playerJoinsDeadpoolSession("DeadpoolSession_"..pc..guid, true)
 				end
 				DEADPOOL_GROUPJOINED = true
@@ -108,7 +109,7 @@ function Deadpool:CallForDeadpoolData(event, isInitialLogin, partyGUID)
 			if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
 				chat = "INSTANCE_CHAT"
 			end
-			C_ChatInfo.SendAddonMessage(DeadpoolGlobal_CommPrefix, "Call#"..tostring(Deadpool_getTimeUTCinMS()), chat)
+			C_ChatInfo.SendAddonMessage(DeadpoolGlobal_CommPrefix, "Call#"..tostring(XITK.getTimeUTCinMS()), chat)
 		end
 	end
 end
@@ -118,7 +119,7 @@ function AnnounceDeath()
 	if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
 		chat = "INSTANCE_CHAT"
 	end
-	Deadpool:SendCommMessage(DeadpoolGlobal_CommPrefix, "Death#"..tostring(Deadpool_getTimeUTCinMS()), chat)
+	Deadpool:SendCommMessage(DeadpoolGlobal_CommPrefix, "Death#"..tostring(XITK.getTimeUTCinMS()), chat)
 end
 
 function checkDeadpoolVersion()
@@ -126,9 +127,9 @@ function checkDeadpoolVersion()
 	if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
 		chat = "INSTANCE_CHAT"
 	end
-	Deadpool:SendCommMessage(DeadpoolGlobal_CommPrefix, "VersionCall#"..tostring(Deadpool_getTimeUTCinMS()), chat)
+	Deadpool:SendCommMessage(DeadpoolGlobal_CommPrefix, "VersionCall#"..tostring(XITK.getTimeUTCinMS()), chat)
 end
 
 function sendDeadpoolVersion(aSender)
-	Deadpool:SendCommMessage(DeadpoolGlobal_CommPrefix, "Version#"..tostring(Deadpool_getTimeUTCinMS()).."#"..C_AddOns.GetAddOnMetadata("Deadpool", "Version"), "WHISPER", aSender)
+	Deadpool:SendCommMessage(DeadpoolGlobal_CommPrefix, "Version#"..tostring(XITK.getTimeUTCinMS()).."#"..C_AddOns.GetAddOnMetadata("Deadpool", "Version"), "WHISPER", aSender)
 end
