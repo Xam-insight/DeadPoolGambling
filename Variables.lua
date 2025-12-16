@@ -1,7 +1,8 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("Deadpool", true)
 local XITK = LibStub("XamInsightToolKit")
 
-Deadpool_logo = "Dead Pool |T137008:16|t |cffffffffG|r|cff666666a|r|cffffffffm|r|cff666666b|r|cffffffffl|r|cff666666i|r|cffffffffn|r|cff666666g|r"
+Deadpool_name = "Dead Pool"
+Deadpool_logo = Deadpool_name.." |T137008:16|t |cffffffffG|r|cff666666a|r|cffffffffm|r|cff666666b|r|cffffffffl|r|cff666666i|r|cffffffffn|r|cff666666g|r"
 
 StaticPopupDialogs["NOT_ENOUGH_CREDITS"] = {
 	text = Deadpool_logo.."|n|n"..L["NOT_ENOUGH_CREDITS"],

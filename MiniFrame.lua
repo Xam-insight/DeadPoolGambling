@@ -13,7 +13,7 @@ function deadpoolMiniFrame()
 	MiniDeadpoolFrame.alphaFunc = setMiniDeadpoolFrameAlpha
 	
 	local fontstring = MiniDeadpoolFrame:CreateFontString("MiniDeadpoolLabel", "ARTWORK", "DeadpoolWindowTitleTemplate")
-    fontstring:SetText("Dead Pool")
+    fontstring:SetText(Deadpool_name)
     fontstring:SetPoint("TOP", 0, -7)
 
 	MiniDeadpoolFrame.Lock:SetAttribute("tooltip", L["LOCKBUTTON_TOOLTIP"])

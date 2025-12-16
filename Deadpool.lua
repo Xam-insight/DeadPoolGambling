@@ -1,4 +1,4 @@
-Deadpool = LibStub("AceAddon-3.0"):NewAddon("Dead Pool", "AceConsole-3.0", "AceEvent-3.0", "AceComm-3.0", "AceSerializer-3.0")
+Deadpool = LibStub("AceAddon-3.0"):NewAddon(Deadpool_name, "AceConsole-3.0", "AceEvent-3.0", "AceComm-3.0", "AceSerializer-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("Deadpool", true)
 local AceGUI = LibStub("AceGUI-3.0")
 local ACD = LibStub("AceConfigDialog-3.0")
@@ -88,7 +88,7 @@ function Deadpool:OnEnable()
 		applyDeadpoolWindowOptions()
 		applyMiniDeadpoolWindowOptions()
 		
-		DeadpoolFrame.NineSlice.Text:SetText("Dead Pool");
+		DeadpoolFrame.NineSlice.Text:SetText(Deadpool_name)
 		
 		DeadpoolFrame.Lock:SetAttribute("tooltip", L["LOCKBUTTON_TOOLTIP"])
 		DeadpoolFrame.Lock:SetAttribute("tooltipDetail", { L["LOCKBUTTON_TOOLTIPDETAIL"] })
@@ -320,7 +320,7 @@ function Deadpool_ToggleFrame()
 end
 				
 function Deadpool_OpenOptions()
-	ACD:Open("Dead Pool")
+	ACD:Open(Deadpool_name)
 end
 
 function Deadpool:DeadpoolShow(noMain, mini)
@@ -457,7 +457,7 @@ function deadpoolCharacterIsDead(aDeadpoolSessionId, aChar, alternativeName)
 					local noNotif = (UnitGUID("boss1") and DeadpoolOptionsData["DeadpoolNotificationsInBossFightsDisabled"])
 						or (C_ChallengeMode.IsChallengeModeActive() and not DeadpoolOptionsData["DeadpoolNotificationsInMythicPlus"])
 					if not noNotif then
-						EZBUP.ToastFakeAchievement(Deadpool, false, 4, nil, deadpoolLog, 0, 2065621, false, "Dead Pool", true, function()  Deadpool:DeadpoolShow()  end)
+						EZBUP.ToastFakeAchievement(Deadpool, false, 4, nil, deadpoolLog, 0, 2065621, false, Deadpool_name, true, function()  Deadpool:DeadpoolShow()  end)
 					end
 				end
 			end
@@ -1098,14 +1098,6 @@ function getDeadpoolTotalUniqueGamble(aDeadpoolSessionId, aChar, aDeadpoolDataOb
 		end
 	end
 	return totalBetsOnChar, totalBets
-end
-
-local Deadpool_pc
-function XITK.playerCharacter()
-	if not Deadpool_pc then
-		Deadpool_pc = XITK.fullName("player")
-	end
-	return Deadpool_pc
 end
 
 function ValidateDeadpoolBetButton_Onclick(self)

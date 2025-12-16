@@ -17,7 +17,7 @@ local sidesSorting = {
 function loadDeadpoolOptions()
 	local DeadpoolOptions = {
 		type = "group",
-		name = format("%s |cffADFF2Fv%s|r", "Dead Pool", C_AddOns.GetAddOnMetadata("Deadpool", "Version")),
+		name = format("%s |cffADFF2Fv%s|r", Deadpool_name, C_AddOns.GetAddOnMetadata("Deadpool", "Version")),
 		args = {
 			general = {
 				type = "group", order = 1,
@@ -395,9 +395,9 @@ function loadDeadpoolOptions()
 		},
 	}
 
-	ACR:RegisterOptionsTable("Dead Pool", DeadpoolOptions)
-	ACD:AddToBlizOptions("Dead Pool", "Dead Pool")
-	ACD:SetDefaultSize("Dead Pool", 600, 675)
+	ACR:RegisterOptionsTable(Deadpool_name, DeadpoolOptions)
+	ACD:AddToBlizOptions(Deadpool_name, Deadpool_name)
+	ACD:SetDefaultSize(Deadpool_name, 600, 675)
 end
 
 function deadpoolSetTuto(on, resetTuto, menuType)
@@ -433,5 +433,5 @@ function setUnequipItemsValue(value)
 end
 
 function deadpoolNotifyChangeToOptions()
-	ACR:NotifyChange("Dead Pool")
+	ACR:NotifyChange(Deadpool_name)
 end
