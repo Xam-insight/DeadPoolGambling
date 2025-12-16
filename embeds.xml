@@ -182,7 +182,7 @@
 					end
 				end
 				DeadpoolWindow[Deadpool_WindowsOptions][self:GetParent():GetAttribute("LockOptionParam")] = locked
-				XITK.PlaySound(SOUNDKIT.UI_70_ARTIFACT_FORGE_APPEARANCE_LOCKED, "SFX")
+				PlaySound(SOUNDKIT.UI_70_ARTIFACT_FORGE_APPEARANCE_LOCKED, "SFX")
 			</OnClick>
 			<OnEnter>
 				DeadpoolIconButtonEnter(self)
@@ -299,7 +299,7 @@
 						self:SetHitRectInsets(4, 4, 4, 4)
 					</OnLoad>
 					<OnClick>
-						XITK.PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
+						PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
 						Deadpool:DeadpoolShow()
 					</OnClick>
 					<OnEnter>
@@ -321,7 +321,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						XITK.PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
+						PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
 						MiniDeadpoolFrame:Hide()
 					</OnClick>
 					<OnEnter>
@@ -484,7 +484,7 @@
 				</Layers>
 				<Scripts>
 					<OnClick>
-						XITK.PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
+						PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
 						DeadpoolFrameSummaryButton_Onclick(DeadpoolSummaryFrame:IsShown(), true)
 					</OnClick>
 				</Scripts>
@@ -549,7 +549,7 @@
 							<OnClick>
 								PanelTemplates_Tab_OnClick(self, DeadpoolSummaryFrame)
 								DeadpoolSummaryFrame_Update()
-								XITK.PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
+								PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -574,7 +574,7 @@
 							<OnClick>
 								PanelTemplates_Tab_OnClick(self, DeadpoolSummaryFrame)
 								DeadpoolSummaryFrame_Update()
-								XITK.PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
+								PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -599,7 +599,7 @@
 							<OnClick>
 								PanelTemplates_Tab_OnClick(self, DeadpoolSummaryFrame)
 								DeadpoolSummaryFrame_Update()
-								XITK.PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
+								PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -791,7 +791,7 @@
 				if DeadpoolSummaryFrame:IsShown() then
 					showDeadpoolPlayerDetails(selectedDeadpoolLine)
 				end
-				XITK.PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
+				PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
 			</OnMouseDown>
 			<OnEnter>
 				if self:GetAttribute("fullName") == "boss" then

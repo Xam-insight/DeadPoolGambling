@@ -250,7 +250,7 @@ function DeadpoolDropDown_Update(self)
 
 		local chips = nil
 		if not ((DeadpoolFrame and DeadpoolFrame:IsShown()) or (MiniDeadpoolFrame and MiniDeadpoolFrame:IsShown())) then
-			chips = L["DEADPOOLUI_CHIPS"]..L["SPACE_BEFORE_DOT"]..": "..playerCredits..deadpoolChipTextureString.."      "
+			chips = L["DEADPOOLUI_CHIPS"]..XITK.GetPunctuationSpace()..": "..playerCredits..deadpoolChipTextureString.."      "
 		end
 
 		info.text = CANCEL

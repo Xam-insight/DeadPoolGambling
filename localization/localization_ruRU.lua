@@ -4,8 +4,6 @@ if L then
 
 L["DEADPOOL_WELCOME"] = "Введите /deadpool, чтобы открыть Dead Pool."
 
-L["SPACE_BEFORE_DOT"] = ""
-
 L["GENERAL_SECTION"] = "Общие настройки"
 L["NOTIFICATIONS_SECTION"] = "Настройки уведомлений"
 L["ENABLE_NOTIFICATIONS_IN_BOSS_FIGHTS"] = "Во время боёв с боссами"

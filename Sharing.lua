@@ -78,7 +78,7 @@ function Deadpool:ReceiveDataFrame_OnEvent(prefix, message, distribution, sender
 		if messageType == "VersionCall" then
 			sendDeadpoolVersion(sender)
 		elseif messageType == "Version" then
-			Deadpool:Print(sender..L["SPACE_BEFORE_DOT"]..": "..messageMessage)
+			Deadpool:Print(sender..XITK.GetPunctuationSpace()..": "..messageMessage)
 		end
 	end
 end
