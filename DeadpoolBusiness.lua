@@ -1129,7 +1129,7 @@ function Deadpool_UnequipItems()
 					end
 		 
 					-- This pair is a complete operation, cursor is expected to be clear by the time both of these lines have run
-					PickupInventoryItem(invslot)
+					PickupInventoryItem(invslot);
 					(bag==0 and PutItemInBackpack or PutItemInBag)((C_Container or _G).ContainerIDToInventoryID(bag)) -- First set of parenthesis chooses function to run before calling it, PutItemInBackpack() doesn't accept any args, so ContainerIDToInventoryID() is safe to run regardless
 		 
 					if slotindex<#InventorySlotsToUnequip then slotindex=slotindex+1 else return end -- Increment to next index or stop when we have no more inventory slots to process
