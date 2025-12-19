@@ -1447,7 +1447,7 @@ function DPModel_FadeOut(frame)
 	local fadeInfo = {}
 	fadeInfo.mode = "OUT"
 	fadeInfo.timeToFade = 1
-	fadeInfo.startAlpha = frame:GetAlpha()
+	fadeInfo.startAlpha = (not issecretvalue(frame:GetAlpha()) and frame:GetAlpha()) or .5
 	fadeInfo.endAlpha = 0
 	fadeInfo.finishedFunc = function() hideDressUpModel(frame) end
 	UIFrameFade(frame, fadeInfo)
@@ -1458,9 +1458,9 @@ function DPTooltips_FadeOut(frame, endAlpha)
 		local fadeInfo = {}
 		fadeInfo.mode = "OUT"
 		fadeInfo.timeToFade = 1
-		fadeInfo.startAlpha = frame:GetAlpha()
+		fadeInfo.startAlpha = (not issecretvalue(frame:GetAlpha()) and frame:GetAlpha()) or .5
 		fadeInfo.endAlpha = endAlpha or 0
-		fadeInfo.finishedFunc = function(frame) if frame:GetAlpha() == 0 then frame:Hide() end end
+		fadeInfo.finishedFunc = function(frame) if issecretvalue(frame:GetAlpha()) or frame:GetAlpha() == 0 then frame:Hide() end end
 		fadeInfo.finishedArg1 = frame
 		UIFrameFade(frame, fadeInfo)
 	end
