@@ -201,11 +201,14 @@ function loadDeadpoolOptions()
 						type = "toggle", order = 6,
 						name = L["ENABLE_DEATH_QUOTES"],
 						desc = L["ENABLE_DEATH_QUOTES_DESC"],
+						disabled = function()
+							return DeadpoolOptionsData["DeadpoolSoundsDisabled"]
+						end,
 						set = function(info, val) 
 							DeadpoolOptionsData["DeadpoolDeathQuotesDisabled"] = not val
 							if val then
 								if val then
-									XITK.PlayRandomSound(deathQuotes, "Dialog")
+									XITK.PlayRandomSound(deathQuotes, "Dialog", not DeadpoolOptionsData["DeadpoolSoundsDisabled"])
 								end
 							end
 						end,

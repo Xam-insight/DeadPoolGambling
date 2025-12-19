@@ -432,7 +432,7 @@ function deadpoolCharacterIsDead(aDeadpoolSessionId, aChar, alternativeName)
 			if not quotePlayed and XITK.isPlayerCharacter(aChar) and not DeadpoolOptionsData["DeadpoolDeathQuotesDisabled"] then
 				local isInBossCombat = UnitGUID("boss1")
 				if not isInBossCombat then
-					XITK.PlayRandomSound(deathQuotes, "Dialog")
+					XITK.PlayRandomSound(deathQuotes, "Dialog", not DeadpoolOptionsData["DeadpoolSoundsDisabled"])
 				end
 			else
 				XITK.PlaySound(41361, "SFX", DeadpoolOptionsData["DeadpoolSoundsDisabled"]) -- For after TWW: PlaySound(283499)
