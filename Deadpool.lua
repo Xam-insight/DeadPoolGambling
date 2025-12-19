@@ -1866,7 +1866,7 @@ function tellTutorialText(text, force)
 	if not isInBossCombat and text and ((DeadpoolFrame and DeadpoolFrame:IsShown()) or (MiniDeadpoolFrame and MiniDeadpoolFrame:IsShown()) or force)
 		and not DeadpoolOptionsData["TutoDisabled"]
 			and (not DeadpoolTuto or not DeadpoolTuto[text]) then
-		quotePlayed = XITK.PlaySoundFile(text, "Dialog", DeadpoolOptionsData["DeadpoolSoundsDisabled"])
+		quotePlayed = XITK.PlaySoundFile("Deadpool", text, "Dialog", DeadpoolOptionsData["DeadpoolSoundsDisabled"])
 		EZBUP.npcDialog(DEADPOOL_BANKER_ID, L[text])
 		DeadpoolTuto[text] = "Done"
 	end
