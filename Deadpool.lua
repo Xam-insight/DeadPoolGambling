@@ -154,7 +154,7 @@ function Deadpool:OnEnable()
 			DeadpoolBankerButton.Label:SetJustifyH("CENTER")
 		end
 
-		local dropDownframe = LibDD:Create_UIDropDownMenu("DeadpoolDropDown", parent_frame)
+		local dropDownframe = LibDD:Create_UIDropDownMenu("DeadpoolDropDown", DeadpoolFrame)
 		dropDownframe.xOffset = 0
 		dropDownframe.yOffset = -1
 		DeadpoolDropDown.point = "TOPLEFT"
