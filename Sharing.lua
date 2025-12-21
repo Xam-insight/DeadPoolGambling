@@ -47,7 +47,7 @@ function Deadpool:ReceiveDataFrame_OnEvent(prefix, message, distribution, sender
 					if DeadpoolReceivedData
 						and DeadpoolReceivedData["CallTime"]
 							and DeadpoolReceivedData["CallTime"] == messageTime
-								and not messageType == "SimpleData" then
+								and messageType ~= "SimpleData" then
 						-- do nothing
 						--Deadpool:Print(time().." - Received already processed "..messageType.." from "..sender..".")
 					else

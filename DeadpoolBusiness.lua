@@ -150,6 +150,10 @@ Deadpool_maxBets = 1
 
 Deadpool_WindowsOptions = "All"
 
+local function setDeadpoolPlayerData(aSession, aChar, aVersion)
+	setDeadpoolData(aSession, aChar, DEADPOOLDATA_VERSION, aVersion)
+end
+
 -- Initialize Deadpools Objects
 function initDeadpoolBusinessObjects()
 	-- DeadpoolData
@@ -229,6 +233,12 @@ local function signalDeadpoolVersion()
 			Deadpool:Print(string.format(L["DEADPOOL_VERSION_UPDATE_DESC"], Deadpool_logo))		
 		end)
 	end
+end
+
+local function setInitialDeadpoolPlayerData(aSession, aChar)
+	setDeadpoolData(aSession, aChar, "credits", DEADPOOL_INITIAL_MONEY)
+	setDeadpoolData(aSession, aChar, DEADPOOL_TRULYUNEQUIP, nil)
+	setDeadpoolData(aSession, aChar, DEADPOOLDATA_VERSION, C_AddOns.GetAddOnMetadata("Deadpool", "Version"))
 end
 
 -- Get Roster Info
@@ -542,7 +552,7 @@ function playerJoinsDeadpoolSession(aSession, isCreator, keepPlayerData)
 	if not DeadpoolGlobal_SessionId or DeadpoolGlobal_SessionId ~= aSession or isCreator then
 		local playerData = nil
 		local bankerData = nil
-		local bankData = 0
+		local bankData = nil
 		if keepPlayerData and DeadpoolGlobal_SessionId and DeadpoolData[DeadpoolGlobal_SessionId] then
 			playerData = DeadpoolData[DeadpoolGlobal_SessionId][playerCharacter]
 			bankerData = DeadpoolData[DeadpoolGlobal_SessionId][DEADPOOL_BANKER]
@@ -553,11 +563,18 @@ function playerJoinsDeadpoolSession(aSession, isCreator, keepPlayerData)
 		DeadpoolData.DATA_ERROR = {}
 		setInitialDeadpoolPlayerData(aSession, playerCharacter)
 		setDeadpoolData(aSession, DEADPOOL_BANKER, "credits", DEADPOOL_INITIAL_MONEY)
+		setDeadpoolData(DeadpoolGlobal_SessionId, "Bank", "credits", 0)
 		DeadpoolData[aSession]["DeadpoolSessionId"] = aSession
-		if keepPlayerData and playerData then
-			DeadpoolData[aSession][playerCharacter] = playerData
-			DeadpoolData[aSession][DEADPOOL_BANKER] = bankerData
-			DeadpoolData[DeadpoolGlobal_SessionId]["Bank"] = bankData
+		if keepPlayerData then
+			if playerData then
+				DeadpoolData[aSession][playerCharacter] = playerData
+			end
+			if bankerData then
+				DeadpoolData[aSession][DEADPOOL_BANKER] = bankerData
+			end
+			if bankData then
+				DeadpoolData[DeadpoolGlobal_SessionId]["Bank"] = bankData
+			end
 		end
 		if not isCreator then
 			prepareAndSendSimpleDeadpoolDataToRaid(aSession, playerCharacter)
@@ -568,16 +585,6 @@ function playerJoinsDeadpoolSession(aSession, isCreator, keepPlayerData)
 		setDeadpoolPlayerData(aSession, playerCharacter)
 	end
 	Deadpool:UnequipLostItems()
-end
-
-function setDeadpoolPlayerData(aSession, aChar, aVersion)
-	setDeadpoolData(aSession, aChar, DEADPOOLDATA_VERSION, aVersion)
-end
-
-function setInitialDeadpoolPlayerData(aSession, aChar)
-	setDeadpoolData(aSession, aChar, "credits", DEADPOOL_INITIAL_MONEY)
-	setDeadpoolData(aSession, aChar, DEADPOOL_TRULYUNEQUIP, nil)
-	setDeadpoolData(aSession, aChar, DEADPOOLDATA_VERSION, C_AddOns.GetAddOnMetadata("Deadpool", "Version"))
 end
 
 --[[function isEveryoneDisconnected(aDeadpoolSessionId)
@@ -726,7 +733,7 @@ function loadReceivedDeadpoolData(messageType)
 		end
 	end
 	--Deadpool:Print(time().." - Data processed.")
-	if receivedDataWasObsolete and not messageType == "SimpleData" then
+	if receivedDataWasObsolete and messageType ~= "SimpleData" then
 		encodeAndSendDeadpoolSessionInfo(DeadpoolData[DeadpoolGlobal_SessionId], DeadpoolReceivedData["Sender"], DeadpoolReceivedData["CallTime"])
 	end
 	if playerTrulyUnequipValueChanged then

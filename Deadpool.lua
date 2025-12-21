@@ -1924,6 +1924,7 @@ function Deadpool_deleteDeadpoolEquipmentSet(reequipFirst)
 		if deadpoolEquipmentSetID then
 			local setEquipped = true
 			if reequipFirst then
+				ClearCursor() -- Make sure the cursor isn't holding anything
 				setEquipped = C_EquipmentSet.UseEquipmentSet(deadpoolEquipmentSetID)
 				DeadpoolTrulyUnequip_UpdateCooldown(DeadpoolTrulyUnequipSwitch)
 			end
