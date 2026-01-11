@@ -254,7 +254,7 @@ function getDeadpoolRosterInfo()
 	local deadpoolPlayerVersion = XITK.getMainVersion(C_AddOns.GetAddOnMetadata("Deadpool", "Version"))
 
 	addCharInList(deadpoolCharInfo, "player", deadpoolPlayerCharacter)
-
+	
 	local cancelBetsOnGonePlayers = true
 	local everyoneIsHere = true
 	local _, _, _, instanceID = UnitPosition("player")
@@ -693,22 +693,21 @@ function loadReceivedDeadpoolData(messageType)
 									
 									local playerCharacter = XITK.playerCharacter()
 									if index2 == DEADPOOL_TRULYUNEQUIP then
+										local myValue, _ = strsplit("|", getDeadpoolData(DeadpoolGlobal_SessionId, playerCharacter, DEADPOOL_TRULYUNEQUIP) or "", 2)
 										local receivedValue, _ = strsplit("|", newData, 2)
-										if index == playerCharacter then
-											playerTrulyUnequipValueChanged = receivedValue
+										if index == playerCharacter then -- Security to prevent data hacking on TRULYUNEQUIP
+											playerTrulyUnequipValueChanged = myValue
 										else
-											
-											local myValue, _ = strsplit("|", getDeadpoolData(DeadpoolGlobal_SessionId, playerCharacter, DEADPOOL_TRULYUNEQUIP) or "", 2)
-											if receivedValue == "true" then
-												if not myValue or myValue == "" then
-													someoneProposedTrulyUnequip = index
-												end
+											if not myValue or myValue == "" or myValue == "false" then
+												someoneProposedTrulyUnequip = index
 											end
 										end
 									end
 									
 									local newValue, myValueWasObsolete = Deadpool_getMostRecentTimedValue(actualData, newData, true)
-									setDeadpoolData(DeadpoolGlobal_SessionId, index, index2, newValue)
+									if index2 ~= DEADPOOL_TRULYUNEQUIP or index ~= playerCharacter then -- Security to prevent data hacking on TRULYUNEQUIP
+										setDeadpoolData(DeadpoolGlobal_SessionId, index, index2, newValue)
+									end
 									if not myValueWasObsolete and actualData ~= newData then
 										receivedDataWasObsolete = true
 									end
@@ -737,9 +736,13 @@ function loadReceivedDeadpoolData(messageType)
 		encodeAndSendDeadpoolSessionInfo(DeadpoolData[DeadpoolGlobal_SessionId], DeadpoolReceivedData["Sender"], DeadpoolReceivedData["CallTime"])
 	end
 	if playerTrulyUnequipValueChanged then
-		setUnequipItemsValue(playerTrulyUnequipValueChanged == "true")
-	elseif someoneProposedTrulyUnequip and not DeadpoolOptionsData["NeverUnequip"] then
-		StaticPopup_Show("TRULY_UNEQUIP_ITEMS", someoneProposedTrulyUnequip)
+		setUnequipItemsValue(playerTrulyUnequipValueChanged) -- Security to prevent data hacking on TRULYUNEQUIP
+	end
+	if someoneProposedTrulyUnequip and not DeadpoolOptionsData["NeverUnequip"] then
+		if not DeadpoolOptionsData["LastUnequipProposedSession"] or DeadpoolOptionsData["LastUnequipProposedSession"] ~= DeadpoolGlobal_SessionId then
+			StaticPopup_Show("TRULY_UNEQUIP_ITEMS", someoneProposedTrulyUnequip)
+			DeadpoolOptionsData["LastUnequipProposedSession"] = DeadpoolGlobal_SessionId
+		end
 	end
 	generateDeadpoolTable()
 end
