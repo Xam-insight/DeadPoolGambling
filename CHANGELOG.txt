@@ -1,7 +1,8 @@
 ﻿- v1.23
 	- TOC for 12.0.0.
-	- Code optimization.
+	- Code optimization and security.
 	- [ACE3] 12.0.0 changes integration.
+	- Added: Creator name in stats tab.
 - v1.22.5
 	- [CustomAchiever] v1.5.8 integration.
 - v1.22.4

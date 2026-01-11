@@ -250,10 +250,11 @@ function getDeadpoolRosterInfo()
 	deadpoolCharInfo[DEADPOOL_BANKER]["localName"] = DEADPOOL_BANKER_NAME
 	deadpoolCharInfo[DEADPOOL_BANKER]["isAPlayer"] = false
 
-	local deadpoolPlayerCharacter = XITK.playerCharacter() or UNKNOWN
+	local deadpoolPlayerCharacter = XITK.playerCharacter()
 	local deadpoolPlayerVersion = XITK.getMainVersion(C_AddOns.GetAddOnMetadata("Deadpool", "Version"))
 
-	addCharInList(deadpoolCharInfo, "player", deadpoolPlayerCharacter)
+	addCharInList(deadpoolCharInfo, "player", deadpoolPlayerCharacter or UNKNOWN)
+	DeadpoolGlobal_SessionCreatorIsOut = DeadpoolGlobal_SessionCreator and DeadpoolGlobal_SessionCreator ~= deadpoolPlayerCharacter
 	
 	local cancelBetsOnGonePlayers = true
 	local everyoneIsHere = true
@@ -275,6 +276,9 @@ function getDeadpoolRosterInfo()
 					_, _, _, _, _, playerId = strsplit("-", UnitGUID(memberGroupLabel))
 				end
 				if playerId then
+					if DeadpoolGlobal_SessionCreator and DeadpoolGlobal_SessionCreator == playerId then
+						DeadpoolGlobal_SessionCreatorIsOut = false
+					end
 					local isDeadpoolPlayer = getDeadpoolData(DeadpoolGlobal_SessionId, playerId, "credits")
 					if not isDeadpoolPlayer and not UnitIsPlayer(memberGroupLabel) then
 						setInitialDeadpoolPlayerData(DeadpoolGlobal_SessionId, playerId)
@@ -559,6 +563,7 @@ function playerJoinsDeadpoolSession(aSession, isCreator, keepPlayerData)
 			bankData = DeadpoolData[DeadpoolGlobal_SessionId]["Bank"]
 		end
 		DeadpoolGlobal_SessionId = aSession
+		DeadpoolGlobal_SessionCreator = DeadpoolGlobal_SessionId:match("^DeadpoolSession_([^%-]+%-%w+)") or DeadpoolGlobal_SessionId:match("^DeadpoolSession_(.+)$")
 		DeadpoolData = {}
 		DeadpoolData.DATA_ERROR = {}
 		setInitialDeadpoolPlayerData(aSession, playerCharacter)
@@ -819,6 +824,7 @@ function setDeadpoolData(aSession, aChar, anInfo, aValue)
 		end
 		DeadpoolData[aSession][aChar][anInfo] = value.."|"..dataTime
 	end
+	DeadpoolGlobal_SessionCreator = DeadpoolGlobal_SessionId:match("^DeadpoolSession_([^%-]+%-%w+)") or DeadpoolGlobal_SessionId:match("^DeadpoolSession_(.+)$")
 end
 
 function getDeadpoolBets(aSession, aChar, aBetChar)
@@ -1038,6 +1044,7 @@ function Deadpool_updateStat(aDeadpoolSessionId, aChar, aStat, aValue)
 end
 
 function Deadpool_prepareStats()
+	local creator = "  "..(DeadpoolGlobal_SessionCreator or UNKNOWN).."|n"
 	local winsStats = ""
 	local gainsStats = ""
 	local firstDeathStats = ""
@@ -1082,7 +1089,9 @@ function Deadpool_prepareStats()
 		end
 	end
 
-	local stats = "|cFF00FF00"..L["DEADPOOLCOLLUMNS_STATS_WINS"].."|r|n"
+	local stats = "|cFF00FF00"..L["DEADPOOLCOLLUMNS_STATS_CREATOR"].."|r|n"
+	stats = stats..creator
+	stats = stats.."|n|cFF00FF00"..L["DEADPOOLCOLLUMNS_STATS_WINS"].."|r|n"
 	stats = stats..winsStats
 	stats = stats.."|n|cFF00FF00"..L["DEADPOOLCOLLUMNS_STATS_CREDITSGAIN"].."|r|n"
 	stats = stats..gainsStats
