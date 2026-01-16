@@ -703,7 +703,7 @@ function loadReceivedDeadpoolData(messageType)
 										if index == playerCharacter then -- Security to prevent data hacking on TRULYUNEQUIP
 											playerTrulyUnequipValueChanged = myValue
 										else
-											if not myValue or myValue == "" or myValue == "false" then
+											if receivedValue == "true" and (not myValue or myValue == "" or myValue == "false") then
 												someoneProposedTrulyUnequip = index
 											end
 										end
