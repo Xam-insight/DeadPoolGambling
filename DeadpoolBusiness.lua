@@ -254,6 +254,7 @@ function getDeadpoolRosterInfo()
 	local deadpoolPlayerVersion = XITK.getMainVersion(C_AddOns.GetAddOnMetadata("Deadpool", "Version"))
 
 	addCharInList(deadpoolCharInfo, "player", deadpoolPlayerCharacter or UNKNOWN)
+	DeadpoolGlobal_NumRealPlayers = 1
 	DeadpoolGlobal_SessionCreatorIsOut = DeadpoolGlobal_SessionCreator and DeadpoolGlobal_SessionCreator ~= deadpoolPlayerCharacter
 	
 	local cancelBetsOnGonePlayers = true
@@ -280,6 +281,9 @@ function getDeadpoolRosterInfo()
 						DeadpoolGlobal_SessionCreatorIsOut = false
 					end
 					local isDeadpoolPlayer = getDeadpoolData(DeadpoolGlobal_SessionId, playerId, "credits")
+					if isDeadpoolPlayer and UnitIsPlayer(memberGroupLabel) then
+						DeadpoolGlobal_NumRealPlayers = DeadpoolGlobal_NumRealPlayers + 1
+					end
 					if not isDeadpoolPlayer and not UnitIsPlayer(memberGroupLabel) then
 						setInitialDeadpoolPlayerData(DeadpoolGlobal_SessionId, playerId)
 						isDeadpoolPlayer = true
@@ -520,8 +524,8 @@ function getGroupType()
         newGroupLabel = "raid"
     elseif IsInGroup() then
         newGroupLabel = "party"
-    else
-		DEADPOOL_GROUPJOINED = nil
+    --else
+		--DEADPOOL_GROUPJOINED = nil
 	end
 	return newGroupLabel
 end
@@ -745,7 +749,16 @@ function loadReceivedDeadpoolData(messageType)
 	end
 	if someoneProposedTrulyUnequip and not DeadpoolOptionsData["NeverUnequip"] then
 		if not DeadpoolOptionsData["LastUnequipProposedSession"] or DeadpoolOptionsData["LastUnequipProposedSession"] ~= DeadpoolGlobal_SessionId then
-			StaticPopup_Show("TRULY_UNEQUIP_ITEMS", someoneProposedTrulyUnequip)
+			--StaticPopup_Show("TRULY_UNEQUIP_ITEMS", someoneProposedTrulyUnequip)
+			popDeadpoolYesNoDialog(someoneProposedTrulyUnequip, L["TRULY_UNEQUIP_ITEMS"],
+				function (self)
+					setUnequipItemsValue(true)
+					DeadpoolTrulyUnequip_UpdateCooldown(DeadpoolTrulyUnequipSwitch)
+					Deadpool:UnequipLostItems()
+				end,
+				function (self)
+					setUnequipItemsValue(false)
+				end)
 			DeadpoolOptionsData["LastUnequipProposedSession"] = DeadpoolGlobal_SessionId
 		end
 	end

@@ -385,6 +385,7 @@
 					self.moving = true
 					self:SetFrameStrata("DIALOG")
 					dpSetHelpTipFramesStrata("TOOLTIP")
+					dpSetDeadpoolYesNoDialogFrameStrata("TOOLTIP")
 					self:StartMoving()
 				end
 			</OnDragStart>
@@ -394,6 +395,7 @@
 					self:StopMovingOrSizing()
 					self:SetFrameStrata("BACKGROUND")
 					dpSetHelpTipFramesStrata("LOW")
+					dpSetDeadpoolYesNoDialogFrameStrata("MEDIUM")
 					deadpoolSaveWindowPosition()
 				end
 			</OnDragStop>
@@ -444,6 +446,7 @@
 							self:GetParent().moving = true
 							self:GetParent():SetFrameStrata("DIALOG")
 							dpSetHelpTipFramesStrata("TOOLTIP")
+							dpSetDeadpoolYesNoDialogFrameStrata("TOOLTIP")
 							self:GetParent():StartSizing("BOTTOM")
 						end
 					</OnMouseDown>
@@ -453,6 +456,7 @@
 							self:GetParent():StopMovingOrSizing()
 							self:GetParent():SetFrameStrata("BACKGROUND")
 							dpSetHelpTipFramesStrata("LOW")
+							dpSetDeadpoolYesNoDialogFrameStrata("MEDIUM")
 							DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolHeight"] = self:GetParent():GetHeight()
 							Deadpool_UpdateScrollFrame(DeadpoolScrollFrame)
 							deadpoolSaveWindowPosition()
@@ -696,6 +700,7 @@
 					self.moving = true
 					self:SetFrameStrata("DIALOG")
 					dpSetHelpTipFramesStrata("TOOLTIP")
+					dpSetDeadpoolYesNoDialogFrameStrata("TOOLTIP")
 					self:StartMoving()
 				end
 			</OnDragStart>
@@ -705,6 +710,7 @@
 					self:StopMovingOrSizing()
 					self:SetFrameStrata("BACKGROUND")
 					dpSetHelpTipFramesStrata("LOW")
+					dpSetDeadpoolYesNoDialogFrameStrata("MEDIUM")
 					deadpoolSaveWindowPosition()
 				end
 			</OnDragStop>
@@ -1385,4 +1391,39 @@
 			<OnShow function="DeadpoolTrulyUnequip_OnLoad" />
 		</Scripts>
 	</Button>
+	
+	<Frame name="DeadpoolYesNoDialogTemplate" parent="UIParent" hidden="true" virtual="true">
+			<Size x="200" y="80"/>
+			<Layers>
+				<Layer level="ARTWORK">
+					<FontString parentKey="DialogLabel" inherits="GameFontHighlightSmall">
+						<Size x="175" y="0"/>
+						<Anchors>
+							<Anchor point="TOP" x="0" y="-18"/>
+						</Anchors>
+					</FontString>
+				</Layer>
+			</Layers>
+			<Frames>
+				<Frame parentKey="BG" inherits="DialogBorderDarkTemplate"/>
+				<Button parentKey="YesButton" inherits="UIPanelButtonNoTooltipTemplate" text="YES">
+					<Size x="50" y="12"/>
+					<Anchors>
+						<Anchor point="BOTTOM" x="-25" y="16"/>
+					</Anchors>
+					<NormalFont style="GameFontNormalSmall"/>
+					<HighlightFont style="GameFontHighlightSmall"/>
+					<DisabledFont style="GameFontDisableSmall"/>
+				</Button>
+				<Button parentKey="NoButton" inherits="UIPanelButtonNoTooltipTemplate" text="NO">
+					<Size x="50" y="12"/>
+					<Anchors>
+						<Anchor point="BOTTOM" x="25" y="16"/>
+					</Anchors>
+					<NormalFont style="GameFontNormalSmall"/>
+					<HighlightFont style="GameFontHighlightSmall"/>
+					<DisabledFont style="GameFontDisableSmall"/>
+				</Button>
+			</Frames>
+		</Frame>
 </Ui>

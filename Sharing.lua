@@ -97,12 +97,15 @@ function Deadpool:CallForDeadpoolData(event, isInitialLogin, partyGUID)
 					DeadpoolSavedBets = {}
 					local guid = ""
 					if partyGUID then
+						if DeadpoolOptionsData then
+							DeadpoolOptionsData.LastParty = partyGUID
+						end
 						guid = "-"..partyGUID
 					end
 					local pc = XITK.playerCharacter() or UNKNOWN
 					playerJoinsDeadpoolSession("DeadpoolSession_"..pc..guid, true)
 				end
-				DEADPOOL_GROUPJOINED = true
+				--DEADPOOL_GROUPJOINED = true
 			end
 			--Deadpool:Print(time().." - Calling data!", DeadpoolGlobal_SessionId, event)
 			local chat = "RAID"

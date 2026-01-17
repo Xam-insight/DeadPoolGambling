@@ -22,6 +22,11 @@
 			<OnClick function="DeadpoolDropDownButtonTuto_OnClick" />
 		</Scripts>
 	</Button>
+	<Button name="DeadpoolDropDownResetButton" inherits="DeadpoolDropDownButtonTemplate">
+		<Scripts>
+			<OnClick function="DeadpoolDropDownResetButton_OnClick" />
+		</Scripts>
+	</Button>
 	<Button name="DeadpoolDropDownButtonSelfBet" inherits="DeadpoolDropDownButtonTemplate" />
 	<Button name="DeadpoolDropDownButtonBet1" inherits="DeadpoolDropDownButtonTemplate" />
 	<Button name="DeadpoolDropDownButtonBet5" inherits="DeadpoolDropDownButtonTemplate">

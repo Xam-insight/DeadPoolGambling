@@ -20,23 +20,23 @@ StaticPopupDialogs["NOT_ENOUGH_CREDITS"] = {
 	preferredIndex = 3,  -- avoid some UI taint, see http://www.wowace.com/announcements/how-to-avoid-some-ui-taint/
 }
 
-StaticPopupDialogs["TRULY_UNEQUIP_ITEMS"] = {
-	text = Deadpool_logo.."|n|n"..L["TRULY_UNEQUIP_ITEMS"],
-	button1 = YES,
-	button2 = NO,
-	OnAccept = function (self)
-		setUnequipItemsValue(true)
-		DeadpoolTrulyUnequip_UpdateCooldown(DeadpoolTrulyUnequipSwitch)
-		Deadpool:UnequipLostItems()
-	end,
-	OnCancel = function (self)
-		setUnequipItemsValue(false)
-	end,
-	timeout = 0,
-	whileDead = true,
-	hideOnEscape = true,
-	preferredIndex = 3,  -- avoid some UI taint, see http://www.wowace.com/announcements/how-to-avoid-some-ui-taint/
-}
+-- StaticPopupDialogs["TRULY_UNEQUIP_ITEMS"] = {
+	-- text = Deadpool_logo.."|n|n"..L["TRULY_UNEQUIP_ITEMS"],
+	-- button1 = YES,
+	-- button2 = NO,
+	-- OnAccept = function (self)
+		-- setUnequipItemsValue(true)
+		-- DeadpoolTrulyUnequip_UpdateCooldown(DeadpoolTrulyUnequipSwitch)
+		-- Deadpool:UnequipLostItems()
+	-- end,
+	-- OnCancel = function (self)
+		-- setUnequipItemsValue(false)
+	-- end,
+	-- timeout = 0,
+	-- whileDead = true,
+	-- hideOnEscape = true,
+	-- preferredIndex = 3,  -- avoid some UI taint, see http://www.wowace.com/announcements/how-to-avoid-some-ui-taint/
+-- }
 
 StaticPopupDialogs["DEADPOOL_SELL_ITEM_WARNING"] = {
     text = Deadpool_logo.."|n|n"..L["DEADPOOL_SELL_ITEM_WARNING"],

@@ -197,3 +197,52 @@ function DeadpoolTrulyUnequip_Glow(self)
 		self:UpdateNonStateVisuals()
 	end)
 end
+
+local function wrapAndHide(func)
+	return function(...)
+		if func then
+			func(...)
+		end
+		DeadpoolYesNoDialogFrame:Hide()
+	end
+end
+
+function popDeadpoolYesNoDialog(demander, text, yesFunc, noFunc)
+	if demander and text then
+		local parentFrame = DeadpoolFrame
+		if not DeadpoolYesNoDialogFrame then
+			DeadpoolYesNoDialogFrame = CreateFrame("Frame", "DeadpoolYesNoDialogFrame", parentFrame, "DeadpoolYesNoDialogTemplate")
+		end
+		
+		DeadpoolYesNoDialogFrame.YesButton:SetScript("OnClick", wrapAndHide(yesFunc))
+		DeadpoolYesNoDialogFrame.NoButton:SetScript("OnClick", wrapAndHide(noFunc))
+		
+		if MiniDeadpoolFrame:IsShown() then
+			parentFrame = MiniDeadpoolFrame
+			DeadpoolYesNoDialogFrame:SetScale(0.8)
+		else
+			--DeadpoolResultsTooltip:SetScale(0.8)
+			--DeadpoolWinnerTooltip:SetScale(0.8)
+		end
+		DeadpoolYesNoDialogFrame:SetParent(parentFrame)
+		DeadpoolYesNoDialogFrame:ClearAllPoints()
+		DeadpoolYesNoDialogFrame:SetPoint("CENTER", parentFrame)
+		DeadpoolYesNoDialogFrame:SetFrameStrata("MEDIUM")
+		DeadpoolYesNoDialogFrame.DialogLabel:SetText(string.format(text, XITK.delRealm(demander))) -- L["RESETGAME_ASKING"]
+		local numLines = DeadpoolYesNoDialogFrame.DialogLabel:GetNumLines()
+		DeadpoolYesNoDialogFrame:SetHeight(80 + (numLines - 3) * 12)
+		DeadpoolYesNoDialogFrame:Show()
+		
+		C_Timer.After(20, function()
+			DeadpoolYesNoDialogFrame:Hide()
+		end)
+	elseif DeadpoolYesNoDialogFrame then
+		DeadpoolYesNoDialogFrame:Hide()
+	end
+end
+
+function dpSetDeadpoolYesNoDialogFrameStrata(strata)
+	if DeadpoolYesNoDialogFrame then
+		DeadpoolYesNoDialogFrame:SetFrameStrata(strata)
+	end
+end

@@ -15,8 +15,9 @@ function DeadpoolDropDown_Update(self)
 	end
 	local isPlayer = XITK.isPlayerCharacter(betChar)
 
-	local playerOffItemsNumber = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, XITK.playerCharacter(), "offItemsNumber"))
-	local playerCredits = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, XITK.playerCharacter(), "credits"))
+	local playerCharacter = XITK.playerCharacter()
+	local playerOffItemsNumber = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, playerCharacter, "offItemsNumber"))
+	local playerCredits = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, playerCharacter, "credits"))
 
 	if not L_DropDownList1.customFrames then
 		L_DropDownList1.customFrames = {}
@@ -47,7 +48,7 @@ function DeadpoolDropDown_Update(self)
 		else
 			local charItemsToLost = DEADPOOL_GARMENT_NUMBER - playerOffItemsNumber
 			local maxBetToAdd = playerCredits + charItemsToLost * DEADPOOL_GARMENT_REWARD
-			local playerBetOnChar, _, playerTotalBets, _ = getDeadpoolBets(DeadpoolGlobal_SessionId, XITK.playerCharacter(), betChar)
+			local playerBetOnChar, _, playerTotalBets, _ = getDeadpoolBets(DeadpoolGlobal_SessionId, playerCharacter, betChar)
 			local totalPlayerCredit = maxBetToAdd + playerTotalBets
 
 			buttonId = buttonId + 1
@@ -246,12 +247,30 @@ function DeadpoolDropDown_Update(self)
 		DeadpoolDownMenu_AddButton(info, buttonId)
 		_G["L_DropDownList1Button"..buttonId.."UnCheck"]:Hide()
 
-		buttonId = buttonId + 1
-
 		local chips = nil
 		if not ((DeadpoolFrame and DeadpoolFrame:IsShown()) or (MiniDeadpoolFrame and MiniDeadpoolFrame:IsShown())) then
 			chips = L["DEADPOOLUI_CHIPS"]..XITK.GetPunctuationSpace()..": "..playerCredits..deadpoolChipTextureString.."      "
 		end
+
+		if DeadpoolGlobal_SessionCreatorIsOut or DeadpoolGlobal_NumRealPlayers == 1 then
+			buttonId = buttonId + 1
+
+			info.text = RESETGAME
+			info.isTitle = nil
+			info.leftPadding = 0
+			info.notCheckable = nil
+			info.checked = false
+			info.isNotRadio = nil
+			info.func = nil
+			info.arg1 = nil
+			info.arg2 = nil
+			info.customFrame = DeadpoolDropDownResetButton
+			info.disabled = false
+			DeadpoolDownMenu_AddButton(info, buttonId, nil, L["RESETGAME_DESC"])
+			_G["L_DropDownList1Button"..buttonId.."UnCheck"]:Hide()
+		end
+
+		buttonId = buttonId + 1
 
 		info.text = CANCEL
 		info.isTitle = nil
@@ -399,7 +418,27 @@ function DeadpoolDropDownButtonTuto_OnClick(self)
 			uncheck:Hide()
 			dpShowMenuHelpTip(helpTip, true, self, 16)
 		end
+	end
+end
 
+function DeadpoolDropDownResetButton_OnClick(self)
+	DeadpoolDropDown_Hide()
+	if not getGroupType() then
+		local pc = XITK.playerCharacter() or UNKNOWN
+		playerJoinsDeadpoolSession("DeadpoolSession_"..pc, true)
+		generateDeadpoolTable()
+	elseif DeadpoolGlobal_NumRealPlayers then
+		if DeadpoolGlobal_NumRealPlayers == 1 then
+			local guid = ""
+			if DeadpoolOptionsData and DeadpoolOptionsData.LastParty then
+				guid = "-"..DeadpoolOptionsData.LastParty
+			end
+			--playerJoinsDeadpoolSession("DeadpoolSession_"..pc..guid, true)
+			generateDeadpoolTable()
+		else
+			local playerCharacter = XITK.playerCharacter()
+			prepareAndSendSimpleDeadpoolDataToRaid(DeadpoolGlobal_SessionId, playerCharacter, RESETGAME)
+		end
 	end
 end
 
