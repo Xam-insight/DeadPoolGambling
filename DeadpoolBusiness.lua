@@ -541,16 +541,19 @@ end
 function playerNameOrBankerName(fullName)
 	if getDeadpoolCharInfo(fullName, "isAPlayer") then
 		return fullName
-	elseif getDeadpoolCharInfo(fullName, "localName") then
-		return getDeadpoolCharInfo(fullName, "localName")
 	elseif fullName == "boss" then
 		return BOSSES
 	else
-		local npcName = XITK.GetNameFromNpcID(fullName)
-		if npcName and npcName ~= "" then
-			return npcName
+		local localName = getDeadpoolCharInfo(fullName, "localName")
+		if localName then
+			return localName
 		else
-			return fullName
+			local npcName = XITK.GetNameFromNpcID(fullName)
+			if npcName and npcName ~= "" then
+				return npcName
+			else
+				return fullName
+			end
 		end
 	end
 end
