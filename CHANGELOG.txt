@@ -3,6 +3,7 @@
 	- Code optimization and security.
 	- [ACE3] 12.0.0 changes integration.
 	- Added: Creator name in stats tab.
+	- Added: Reset game.
 - v1.22.5
 	- [CustomAchiever] v1.5.8 integration.
 - v1.22.4

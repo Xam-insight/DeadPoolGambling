@@ -71,6 +71,14 @@ function Deadpool:ReceiveDataFrame_OnEvent(prefix, message, distribution, sender
 				--Deadpool:Print(time().." - Received "..messageType.." from "..sender..".", DeadpoolGlobal_SessionId)
 				loadBets(DeadpoolGlobal_SessionId, sender)
 				encodeAndSendDeadpoolSessionInfo(DeadpoolData[DeadpoolGlobal_SessionId], sender, messageTime)
+			elseif messageType == RESETGAME then
+				popDeadpoolYesNoDialog(sender, L["RESETGAME_ASKING"],
+					nil,
+					function (self)
+						Deadpool:SendCommMessage(DeadpoolGlobal_CommPrefix, RESETGAME.."-KO".."#"..tostring(XITK.getTimeUTCinMS()), "WHISPER", sender)
+					end)
+			elseif messageType == RESETGAME.."-KO" then
+				DeadpoolGlobal_NumResetKO = (DeadpoolGlobal_NumResetKO and DeadpoolGlobal_NumResetKO + 1) or 1
 			--elseif messageType == "Death" then
 			--	Deadpool:CheckDeath()
 			end
@@ -97,9 +105,6 @@ function Deadpool:CallForDeadpoolData(event, isInitialLogin, partyGUID)
 					DeadpoolSavedBets = {}
 					local guid = ""
 					if partyGUID then
-						if DeadpoolOptionsData then
-							DeadpoolOptionsData.LastParty = partyGUID
-						end
 						guid = "-"..partyGUID
 					end
 					local pc = XITK.playerCharacter() or UNKNOWN
@@ -112,7 +117,7 @@ function Deadpool:CallForDeadpoolData(event, isInitialLogin, partyGUID)
 			if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
 				chat = "INSTANCE_CHAT"
 			end
-			C_ChatInfo.SendAddonMessage(DeadpoolGlobal_CommPrefix, "Call#"..tostring(XITK.getTimeUTCinMS()), chat)
+			Deadpool:SendCommMessage(DeadpoolGlobal_CommPrefix, "Call#"..tostring(XITK.getTimeUTCinMS()), chat)
 		end
 	end
 end

@@ -252,10 +252,10 @@ function DeadpoolDropDown_Update(self)
 			chips = L["DEADPOOLUI_CHIPS"]..XITK.GetPunctuationSpace()..": "..playerCredits..deadpoolChipTextureString.."      "
 		end
 
-		if DeadpoolGlobal_SessionCreatorIsOut or DeadpoolGlobal_NumRealPlayers == 1 then
+		if not UnitAffectingCombat("player") and DeadpoolGlobal_SessionCreatorIsOut or DeadpoolGlobal_NumRealPlayers == 1 then
 			buttonId = buttonId + 1
 
-			info.text = RESETGAME
+			info.text = "|cnDIM_RED_FONT_COLOR:"..RESETGAME.."|r"
 			info.isTitle = nil
 			info.leftPadding = 0
 			info.notCheckable = nil
@@ -313,7 +313,7 @@ function DeadpoolDropDown_Update(self)
 end
 
 function DeadpoolDropDown_Show(self, relativeTo)
-	PlaySound(SOUNDKIT.IG_MAINMENU_OPEN)
+	PlaySound(SOUNDKIT.IG_MAINMENU_OPEN, "SFX")
 	LibDD:ToggleDropDownMenu(1, nil, self, relativeTo)
 end
 
@@ -421,23 +421,54 @@ function DeadpoolDropDownButtonTuto_OnClick(self)
 	end
 end
 
+local timeBetweenRefusedCalls = 20 * 60
 function DeadpoolDropDownResetButton_OnClick(self)
 	DeadpoolDropDown_Hide()
 	if not getGroupType() then
-		local pc = XITK.playerCharacter() or UNKNOWN
-		playerJoinsDeadpoolSession("DeadpoolSession_"..pc, true)
-		generateDeadpoolTable()
+		popDeadpoolYesNoDialog("", L["RESETGAME_CONFIRM"],
+			function()
+				local pc = XITK.playerCharacter() or UNKNOWN
+				playerJoinsDeadpoolSession("DeadpoolSession_"..pc, true)
+				generateDeadpoolTable()
+				Deadpool:Print(L["RESETGAME_DONE"])
+			end)
 	elseif DeadpoolGlobal_NumRealPlayers then
 		if DeadpoolGlobal_NumRealPlayers == 1 then
-			local guid = ""
-			if DeadpoolOptionsData and DeadpoolOptionsData.LastParty then
-				guid = "-"..DeadpoolOptionsData.LastParty
-			end
-			--playerJoinsDeadpoolSession("DeadpoolSession_"..pc..guid, true)
-			generateDeadpoolTable()
+			popDeadpoolYesNoDialog("", L["RESETGAME_CONFIRM"],
+			function()
+				local pc = XITK.playerCharacter() or UNKNOWN
+				playerJoinsDeadpoolSession("DeadpoolSession_"..pc.."-"..XITK.getTimeUTCinMS(), true)
+				generateDeadpoolTable()
+				Deadpool:Print(L["RESETGAME_DONE"])
+			end)
 		else
-			local playerCharacter = XITK.playerCharacter()
-			prepareAndSendSimpleDeadpoolDataToRaid(DeadpoolGlobal_SessionId, playerCharacter, RESETGAME)
+			popDeadpoolYesNoDialog("", L["RESETGAME_CONFIRM"],
+			function()
+				if DeadpoolGlobal_NumResetKO or (DeadpoolOptionsData.lastRefusedResetCall and DeadpoolOptionsData.lastRefusedResetCall + timeBetweenRefusedCalls > XITK.getTimeUTCinMS()) then
+					Deadpool:Print(L["RESETGAME_TOOSOON"])
+				else
+					local chat = "RAID"
+					if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
+						chat = "INSTANCE_CHAT"
+					end
+					DeadpoolGlobal_NumResetKO = 0
+					Deadpool:SendCommMessage(DeadpoolGlobal_CommPrefix, RESETGAME.."#"..tostring(XITK.getTimeUTCinMS()), chat)
+					Deadpool:Print(L["RESETGAME_STARTVOTE"])
+					C_Timer.After(25, function()
+						if DeadpoolGlobal_NumRealPlayers and DeadpoolGlobal_NumResetKO and DeadpoolGlobal_NumResetKO < DeadpoolGlobal_NumRealPlayers / 2 then
+							local pc = XITK.playerCharacter() or UNKNOWN
+							playerJoinsDeadpoolSession("DeadpoolSession_"..pc.."-"..XITK.getTimeUTCinMS(), true)
+							encodeAndSendDeadpoolSessionInfo(DeadpoolData[DeadpoolGlobal_SessionId])
+							generateDeadpoolTable()
+							Deadpool:Print(L["RESETGAME_DONE"])
+						else
+							DeadpoolOptionsData.lastRefusedResetCall = XITK.getTimeUTCinMS()
+							Deadpool:Print(L["RESETGAME_CANCELLED"])
+						end
+						DeadpoolGlobal_NumResetKO = nil
+					end)
+				end
+			end)
 		end
 	end
 end

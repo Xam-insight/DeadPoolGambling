@@ -19,6 +19,5 @@
 ## Category-zhCN: 迷你游戏
 ## Category-zhTW: 迷你遊戲
 ## SavedVariables: DeadpoolGlobal_SessionId, DeadpoolData, DeadpoolOptionsData, DeadpoolMIcon, DeadpoolTuto, DeadpoolWindow
-## SavedVariables: Deadpool_CustomAchieverData
 
 embeds.xml

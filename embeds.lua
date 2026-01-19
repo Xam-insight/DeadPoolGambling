@@ -207,6 +207,8 @@ local function wrapAndHide(func)
 	end
 end
 
+local lastPop = XITK.getTimeUTCinMS()
+local timeBeforeHiding = 20
 function popDeadpoolYesNoDialog(demander, text, yesFunc, noFunc)
 	if demander and text then
 		local parentFrame = DeadpoolFrame
@@ -228,13 +230,21 @@ function popDeadpoolYesNoDialog(demander, text, yesFunc, noFunc)
 		DeadpoolYesNoDialogFrame:ClearAllPoints()
 		DeadpoolYesNoDialogFrame:SetPoint("CENTER", parentFrame)
 		DeadpoolYesNoDialogFrame:SetFrameStrata("MEDIUM")
-		DeadpoolYesNoDialogFrame.DialogLabel:SetText(string.format(text, XITK.delRealm(demander))) -- L["RESETGAME_ASKING"]
+		if not parentFrame:IsShown() then
+			DeadpoolYesNoDialogFrame:SetParent(UIParent)
+			text = Deadpool_logo.."|n|n"..text
+		end
+		DeadpoolYesNoDialogFrame.DialogLabel:SetText(string.format(text, XITK.delRealm(demander)))
 		local numLines = DeadpoolYesNoDialogFrame.DialogLabel:GetNumLines()
-		DeadpoolYesNoDialogFrame:SetHeight(80 + (numLines - 3) * 12)
+		DeadpoolYesNoDialogFrame:SetHeight(90 + (numLines - 3) * 10)
+		
 		DeadpoolYesNoDialogFrame:Show()
 		
-		C_Timer.After(20, function()
-			DeadpoolYesNoDialogFrame:Hide()
+		lastPop = XITK.getTimeUTCinMS()
+		C_Timer.After(timeBeforeHiding, function()
+			if lastPop + timeBeforeHiding < XITK.getTimeUTCinMS() + 1 then
+				DeadpoolYesNoDialogFrame:Hide()
+			end
 		end)
 	elseif DeadpoolYesNoDialogFrame then
 		DeadpoolYesNoDialogFrame:Hide()
