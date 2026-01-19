@@ -1,7 +1,6 @@
 ﻿- v1.23
 	- TOC for 12.0.0.
 	- Code optimization and security.
-	- [ACE3] 12.0.0 changes integration.
 	- Added: Creator name in stats tab.
 	- Added: Reset game.
 	- Fixed: "Next boss" display in English.
