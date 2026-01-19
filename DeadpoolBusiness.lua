@@ -394,18 +394,18 @@ function addCharInList(deadpoolCharInfo, groupRank, playerId)
 end
 
 function addBossInList(deadpoolCharInfo)
-	local BOSS = "boss"
-	deadpoolCharInfo[BOSS] = {}
-	deadpoolCharInfo[BOSS]["isAPlayer"] = false
-	deadpoolCharInfo[BOSS]["localName"] = RAID_BOSSES
-	--deadpoolCharInfo[BOSS]["classFileName"] = "NONE"
-	deadpoolCharInfo[BOSS]["groupRank"] = BOSS
-	deadpoolCharInfo[BOSS]["groupRole"] = "NONE"
-	deadpoolCharInfo[BOSS]["race"] = 1
-	deadpoolCharInfo[BOSS]["gender"] = 0
-	clearCharacterDeadpoolData(BOSS)
+	local bossTag = "boss"
+	deadpoolCharInfo[bossTag] = {}
+	deadpoolCharInfo[bossTag]["isAPlayer"] = false
+	deadpoolCharInfo[bossTag]["localName"] = bossTag
+	--deadpoolCharInfo[bossTag]["classFileName"] = "NONE"
+	deadpoolCharInfo[bossTag]["groupRank"] = bossTag
+	deadpoolCharInfo[bossTag]["groupRole"] = "NONE"
+	deadpoolCharInfo[bossTag]["race"] = 1
+	deadpoolCharInfo[bossTag]["gender"] = 0
+	clearCharacterDeadpoolData(bossTag)
 
-	loadPlayerBets(BOSS)
+	loadPlayerBets(bossTag)
 end
 
 function loadBets(aSession, aChar)
@@ -544,7 +544,7 @@ function playerNameOrBankerName(fullName)
 	elseif getDeadpoolCharInfo(fullName, "localName") then
 		return getDeadpoolCharInfo(fullName, "localName")
 	elseif fullName == "boss" then
-		return RAID_BOSSES
+		return BOSSES
 	else
 		local npcName = XITK.GetNameFromNpcID(fullName)
 		if npcName and npcName ~= "" then

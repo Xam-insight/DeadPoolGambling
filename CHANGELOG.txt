@@ -4,6 +4,7 @@
 	- [ACE3] 12.0.0 changes integration.
 	- Added: Creator name in stats tab.
 	- Added: Reset game.
+	- Fixed: "Next boss" display in English.
 - v1.22.5
 	- [CustomAchiever] v1.5.8 integration.
 - v1.22.4
