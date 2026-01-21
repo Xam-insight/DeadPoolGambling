@@ -9,6 +9,14 @@ local EZBUP = LibStub("EZBlizzardUiPopups")
 DeadpoolGlobal_CommPrefix = "Deadpool"
 
 --DeadpoolGlobal_Debug = true
+-- hooksecurefunc("CompactUnitFrame_UpdateAuras", function(frame, unitAuraUpdateInfo)
+    -- if frame and frame.dispels == nil then
+        -- print("Dispels NIL on", frame:GetName() or "<no name>", "unit:", tostring(frame.displayedUnit))
+        -- print(debugstack(2, 40, 40))
+    -- end
+-- end)
+
+
 
 deadpoolFramePool = {}
 local deadpoolDressUpModelPool = {}
@@ -1460,7 +1468,7 @@ function DPTooltips_FadeOut(frame, endAlpha)
 		fadeInfo.timeToFade = 1
 		fadeInfo.startAlpha = ((not issecretvalue or not issecretvalue(frame:GetAlpha())) and frame:GetAlpha()) or .5
 		fadeInfo.endAlpha = endAlpha or 0
-		fadeInfo.finishedFunc = function(frame) if (not issecretvalue or not issecretvalue(frame:GetAlpha())) or frame:GetAlpha() == 0 then frame:Hide() end end
+		fadeInfo.finishedFunc = function(frame) if (not issecretvalue or not issecretvalue(frame:GetAlpha())) and frame:GetAlpha() == 0 then frame:Hide() end end
 		fadeInfo.finishedArg1 = frame
 		UIFrameFade(frame, fadeInfo)
 	end
