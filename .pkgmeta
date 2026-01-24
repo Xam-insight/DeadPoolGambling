@@ -52,3 +52,5 @@ ignore:
 manual-changelog:
 	filename: CHANGELOG.txt
 	markup-type: markdown
+
+enable-nolib-creation: no
