@@ -1,7 +1,7 @@
 local ACR = LibStub("AceConfigRegistry-3.0")
 local ACD = LibStub("AceConfigDialog-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("Deadpool", true)
-local XITK = LibStub("XamInsightToolKit")
+local XITK = LibStub("XamInsightToolKit-2.0")
 
 local sidesValues = {
 	[0] = RESET_POSITION,
@@ -86,13 +86,13 @@ function loadDeadpoolOptions()
 							setUnequipItemsValue(val)
 						end,
 						get = function(info)
-							local val = getDeadpoolData(DeadpoolGlobal_SessionId, XITK.playerCharacter(), DEADPOOL_TRULYUNEQUIP)
+							local val = getDeadpoolData(DeadpoolGlobal_SessionId, XITK:playerCharacter(), DEADPOOL_TRULYUNEQUIP)
 							return val and val == "true"
 						end
 					},
 					neverUnequipItems = {
 						type = "toggle", order = 2,
-						name = "|cFFFF0000"..XITK.upperCase(NEVER).."|r",
+						name = "|cFFFF0000"..XITK:upperCase(NEVER).."|r",
 						desc = string.format(L["NEVER_TRULY_UNEQUIP_ITEMS_TOOLTIP"], L["ENABLE_TRULY_UNEQUIP_ITEMS"]),
 						disabled = function()
 							return DeadpoolTrulyUnequipSwitch:IsShown() and DeadpoolTrulyUnequipSwitch.Cooldown:GetCooldownDuration() ~= 0
@@ -208,7 +208,7 @@ function loadDeadpoolOptions()
 							DeadpoolOptionsData["DeadpoolDeathQuotesDisabled"] = not val
 							if val then
 								if val then
-									XITK.PlayRandomSound(deathQuotes, "Dialog", not DeadpoolOptionsData["DeadpoolSoundsDisabled"])
+									XITK:PlayRandomSound(deathQuotes, "Dialog", not DeadpoolOptionsData["DeadpoolSoundsDisabled"])
 								end
 							end
 						end,
@@ -283,7 +283,7 @@ function loadDeadpoolOptions()
 						name = L["LOCAL_WINDOW_OPTIONS"],
 						desc = L["LOCAL_WINDOW_OPTIONS_DESC"],
 						set = function(info, val)
-							local pc = XITK.playerCharacter() or UNKNOWN
+							local pc = XITK:playerCharacter() or UNKNOWN
 							if val then
 								Deadpool_WindowsOptions = pc
 								DeadpoolWindow[pc] = {}
@@ -298,7 +298,7 @@ function loadDeadpoolOptions()
 							end
 						end,
 						get = function(info)
-							local pc = XITK.playerCharacter() or UNKNOWN
+							local pc = XITK:playerCharacter() or UNKNOWN
 							return DeadpoolWindow[pc] ~= nil
 						end
 					},
@@ -423,7 +423,7 @@ function deadpoolGetTuto(menuType)
 end
 
 function setUnequipItemsValue(value)
-	local playerCharacter = XITK.playerCharacter()
+	local playerCharacter = XITK:playerCharacter()
 	setDeadpoolData(DeadpoolGlobal_SessionId, playerCharacter, DEADPOOL_TRULYUNEQUIP, value)
 	prepareAndSendSimpleDeadpoolDataToRaid(DeadpoolGlobal_SessionId, playerCharacter, DEADPOOL_TRULYUNEQUIP)
 	if value then

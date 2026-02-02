@@ -1,6 +1,6 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("Deadpool", true)
 local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
-local XITK = LibStub("XamInsightToolKit")
+local XITK = LibStub("XamInsightToolKit-2.0")
 
 local betSliderInitialValue = 5
 
@@ -13,11 +13,11 @@ function DeadpoolDropDown_Update(self)
 	if betChar == "boss" then
 		betTuto = L["DEADPOOLTUTO_BOSS"]
 	end
-	local isPlayer = XITK.isPlayerCharacter(betChar)
+	local isPlayer = XITK:isPlayerCharacter(betChar)
 
-	local playerCharacter = XITK.playerCharacter()
-	local playerOffItemsNumber = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, playerCharacter, "offItemsNumber"))
-	local playerCredits = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, playerCharacter, "credits"))
+	local playerCharacter = XITK:playerCharacter()
+	local playerOffItemsNumber = XITK:tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, playerCharacter, "offItemsNumber"))
+	local playerCredits = XITK:tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, playerCharacter, "credits"))
 
 	if not L_DropDownList1.customFrames then
 		L_DropDownList1.customFrames = {}
@@ -79,7 +79,7 @@ function DeadpoolDropDown_Update(self)
 			if maxBetToAdd > 4 then
 				if maxBetToAdd > 5 then
 					local sliderStep = DeadpoolDropDownButtonBet5.BetSlider:GetValueStep()
-					DeadpoolDropDownButtonBet5.BetSlider:SetMinMaxValues(5, min(XITK.SimpleRound(playerCredits + 20, sliderStep), maxBetToAdd))
+					DeadpoolDropDownButtonBet5.BetSlider:SetMinMaxValues(5, min(XITK:SimpleRound(playerCredits + 20, sliderStep), maxBetToAdd))
 					DeadpoolDropDownButtonBet5.BetSlider:Show()
 				else
 					DeadpoolDropDownButtonBet5.BetSlider:Hide()
@@ -120,7 +120,7 @@ function DeadpoolDropDown_Update(self)
 			end
 			DeadpoolDownMenu_AddButton(info, buttonId, removeValue, L["DEADPOOLTUTO_BETREMOVE"])
 
-			local bankCredits = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, "Bank", "credits"))
+			local bankCredits = XITK:tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, "Bank", "credits"))
 			if totalPlayerCredit < 1 then
 				buttonId = buttonId + 1
 				
@@ -249,7 +249,7 @@ function DeadpoolDropDown_Update(self)
 
 		local chips = nil
 		if not ((DeadpoolFrame and DeadpoolFrame:IsShown()) or (MiniDeadpoolFrame and MiniDeadpoolFrame:IsShown())) then
-			chips = L["DEADPOOLUI_CHIPS"]..XITK.GetPunctuationSpace()..": "..playerCredits..deadpoolChipTextureString.."      "
+			chips = L["DEADPOOLUI_CHIPS"]..XITK:GetPunctuationSpace()..": "..playerCredits..deadpoolChipTextureString.."      "
 		end
 
 		if not UnitAffectingCombat("player") and DeadpoolGlobal_SessionCreatorIsOut or DeadpoolGlobal_NumRealPlayers == 1 then
@@ -322,11 +322,11 @@ function DeadpoolDropDown_Hide()
 end
 
 function DeadpoolDropDown_Bet(self, char, bet)
-	addDeadpoolBets(DeadpoolGlobal_SessionId, XITK.playerCharacter(), char, bet)
+	addDeadpoolBets(DeadpoolGlobal_SessionId, XITK:playerCharacter(), char, bet)
 end
 
 function DeadpoolDropDown_SliderBet(self, char)
-	addDeadpoolBets(DeadpoolGlobal_SessionId, XITK.playerCharacter(), char, DeadpoolDropDownButtonBet5.BetSlider:GetAttribute("betToAdd"))
+	addDeadpoolBets(DeadpoolGlobal_SessionId, XITK:playerCharacter(), char, DeadpoolDropDownButtonBet5.BetSlider:GetAttribute("betToAdd"))
 end
 
 function DeadpoolDropDown_BankerBet(self, aDeadpoolSessionId, deadpoolList)
@@ -427,7 +427,7 @@ function DeadpoolDropDownResetButton_OnClick(self)
 	if not getGroupType() then
 		popDeadpoolYesNoDialog("", L["RESETGAME_CONFIRM"],
 			function()
-				local pc = XITK.playerCharacter() or UNKNOWN
+				local pc = XITK:playerCharacter() or UNKNOWN
 				playerJoinsDeadpoolSession("DeadpoolSession_"..pc, true)
 				generateDeadpoolTable()
 				Deadpool:Print(L["RESETGAME_DONE"])
@@ -436,15 +436,15 @@ function DeadpoolDropDownResetButton_OnClick(self)
 		if DeadpoolGlobal_NumRealPlayers == 1 then
 			popDeadpoolYesNoDialog("", L["RESETGAME_CONFIRM"],
 			function()
-				local pc = XITK.playerCharacter() or UNKNOWN
-				playerJoinsDeadpoolSession("DeadpoolSession_"..pc.."-"..XITK.getTimeUTCinMS(), true)
+				local pc = XITK:playerCharacter() or UNKNOWN
+				playerJoinsDeadpoolSession("DeadpoolSession_"..pc.."-"..XITK:getTimeUTCinMS(), true)
 				generateDeadpoolTable()
 				Deadpool:Print(L["RESETGAME_DONE"])
 			end)
 		else
 			popDeadpoolYesNoDialog("", L["RESETGAME_CONFIRM"],
 			function()
-				if DeadpoolGlobal_NumResetKO or (DeadpoolOptionsData.lastRefusedResetCall and DeadpoolOptionsData.lastRefusedResetCall + timeBetweenRefusedCalls > XITK.getTimeUTCinMS()) then
+				if DeadpoolGlobal_NumResetKO or (DeadpoolOptionsData.lastRefusedResetCall and DeadpoolOptionsData.lastRefusedResetCall + timeBetweenRefusedCalls > XITK:getTimeUTCinMS()) then
 					Deadpool:Print(L["RESETGAME_TOOSOON"])
 				else
 					local chat = "RAID"
@@ -452,17 +452,17 @@ function DeadpoolDropDownResetButton_OnClick(self)
 						chat = "INSTANCE_CHAT"
 					end
 					DeadpoolGlobal_NumResetKO = 0
-					Deadpool:SendCommMessage(DeadpoolGlobal_CommPrefix, RESETGAME.."#"..tostring(XITK.getTimeUTCinMS()), chat)
+					Deadpool:SendCommMessage(DeadpoolGlobal_CommPrefix, RESETGAME.."#"..tostring(XITK:getTimeUTCinMS()), chat)
 					Deadpool:Print(L["RESETGAME_STARTVOTE"])
 					C_Timer.After(25, function()
 						if DeadpoolGlobal_NumRealPlayers and DeadpoolGlobal_NumResetKO and DeadpoolGlobal_NumResetKO < DeadpoolGlobal_NumRealPlayers / 2 then
-							local pc = XITK.playerCharacter() or UNKNOWN
-							playerJoinsDeadpoolSession("DeadpoolSession_"..pc.."-"..XITK.getTimeUTCinMS(), true)
+							local pc = XITK:playerCharacter() or UNKNOWN
+							playerJoinsDeadpoolSession("DeadpoolSession_"..pc.."-"..XITK:getTimeUTCinMS(), true)
 							encodeAndSendDeadpoolSessionInfo(DeadpoolData[DeadpoolGlobal_SessionId])
 							generateDeadpoolTable()
 							Deadpool:Print(L["RESETGAME_DONE"])
 						else
-							DeadpoolOptionsData.lastRefusedResetCall = XITK.getTimeUTCinMS()
+							DeadpoolOptionsData.lastRefusedResetCall = XITK:getTimeUTCinMS()
 							Deadpool:Print(L["RESETGAME_CANCELLED"])
 						end
 						DeadpoolGlobal_NumResetKO = nil
@@ -474,7 +474,7 @@ function DeadpoolDropDownResetButton_OnClick(self)
 end
 
 function DeadpoolDropDownButtonBet5BetSlider_OnValueChanged(self, value)
-	local newValue = XITK.SimpleRound(value, self:GetValueStep())
+	local newValue = XITK:SimpleRound(value, self:GetValueStep())
 	self:SetValue(newValue)
 	self:GetParent().ShortcutText:SetText(newValue..deadpoolChipTextureString)
 	self:SetAttribute("betToAdd", tostring(newValue))

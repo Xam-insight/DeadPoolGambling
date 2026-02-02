@@ -41,10 +41,12 @@ ignore:
 	- art/PNG
 	- sound/OLD
 	- Libs/XamInsightToolKit/XamInsightToolKit.toc
+	- Libs/XamInsightToolKit/CHANGELOG.txt
 	- Libs/EZBlizzardUiPopups/EZBlizzardUiPopups.toc
 	- Libs/EZBlizzardUiPopups/CHANGELOG.txt
 	- Libs/EZBlizzardUiPopups/wow_lua_to_csv.py
 	- ../CustomAchiever/Libs/XamInsightToolKit/XamInsightToolKit.toc
+	- ../CustomAchiever/Libs/XamInsightToolKit/CHANGELOG.txt
 	- ../CustomAchiever/Libs/EZBlizzardUiPopups/EZBlizzardUiPopups.toc
 	- ../CustomAchiever/Libs/EZBlizzardUiPopups/CHANGELOG.txt
 	- ../CustomAchiever/Libs/EZBlizzardUiPopups/wow_lua_to_csv.py

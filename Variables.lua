@@ -1,5 +1,5 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("Deadpool", true)
-local XITK = LibStub("XamInsightToolKit")
+local XITK = LibStub("XamInsightToolKit-2.0")
 
 Deadpool_name = "Dead Pool"
 Deadpool_logo = Deadpool_name.." |T137008:16|t |cffffffffG|r|cff666666a|r|cffffffffm|r|cff666666b|r|cffffffffl|r|cff666666i|r|cffffffffn|r|cff666666g|r"
@@ -44,7 +44,7 @@ StaticPopupDialogs["DEADPOOL_SELL_ITEM_WARNING"] = {
     button2 = NO,
     OnAccept = function(self, data)
         -- Quit DEADPOOL_TRULYUNEQUIP mode
-		setDeadpoolData(DeadpoolGlobal_SessionId, XITK.playerCharacter(), DEADPOOL_TRULYUNEQUIP, nil)
+		setDeadpoolData(DeadpoolGlobal_SessionId, XITK:playerCharacter(), DEADPOOL_TRULYUNEQUIP, nil)
 		Deadpool:UnequipLostItems(event)
     end,
     OnCancel = function()
@@ -80,7 +80,7 @@ DEADPOOL_SOLEIL = "Soleîl"
 
 DEADPOOL_BANKER = "GALLYWIX"
 DEADPOOL_BANKER_ID = 136683
-DEADPOOL_BANKER_NAME = XITK.GetNameFromNpcID(DEADPOOL_BANKER_ID) -- GALLYWIX
+DEADPOOL_BANKER_NAME = XITK:GetNameFromNpcID(DEADPOOL_BANKER_ID) -- GALLYWIX
 if not DEADPOOL_BANKER_NAME or DEADPOOL_BANKER_NAME == "" or DEADPOOL_BANKER_NAME:match("^%s+$") then
 	DEADPOOL_BANKER_NAME = "Galliwix"
 end
@@ -235,7 +235,7 @@ deathQuotes = {
 	6727766,
 	6728215, -- dimensius
 	6729191,
-	--/run XITK.PlaySoundFileID(6213556) /run PlaySoundFile("sound\\creature\\dimensius\\vo_1120_dimensius_6729194.ogg")
+	--/run XITK:PlaySoundFileID(6213556) /run PlaySoundFile("sound\\creature\\dimensius\\vo_1120_dimensius_6729194.ogg")
 }
 
 --[[

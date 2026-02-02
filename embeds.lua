@@ -1,5 +1,5 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("Deadpool", true)
-local XITK = LibStub("XamInsightToolKit")
+local XITK = LibStub("XamInsightToolKit-2.0")
 
 function DeadpoolWindow_OnShow(self)
 	DeadpoolTrulyUnequipSwitch:Hide()
@@ -169,7 +169,7 @@ function DeadpoolTrulyUnequip_OnLoad(self)
 end
 
 function DeadpoolTrulyUnequip_UpdateStatus(self)
-	local player = XITK.playerCharacter()
+	local player = XITK:playerCharacter()
 	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, player, DEADPOOL_TRULYUNEQUIP)
 	trulyUnequipItems = trulyUnequipItems and trulyUnequipItems == "true"
 	
@@ -207,7 +207,7 @@ local function wrapAndHide(func)
 	end
 end
 
-local lastPop = XITK.getTimeUTCinMS()
+local lastPop = XITK:getTimeUTCinMS()
 local timeBeforeHiding = 20
 function popDeadpoolYesNoDialog(demander, text, yesFunc, noFunc)
 	if demander and text then
@@ -234,15 +234,15 @@ function popDeadpoolYesNoDialog(demander, text, yesFunc, noFunc)
 			DeadpoolYesNoDialogFrame:SetParent(UIParent)
 			text = Deadpool_logo.."|n|n"..text
 		end
-		DeadpoolYesNoDialogFrame.DialogLabel:SetText(string.format(text, XITK.delRealm(demander)))
+		DeadpoolYesNoDialogFrame.DialogLabel:SetText(string.format(text, XITK:delRealm(demander)))
 		local numLines = DeadpoolYesNoDialogFrame.DialogLabel:GetNumLines()
 		DeadpoolYesNoDialogFrame:SetHeight(90 + (numLines - 3) * 10)
 		
 		DeadpoolYesNoDialogFrame:Show()
 		
-		lastPop = XITK.getTimeUTCinMS()
+		lastPop = XITK:getTimeUTCinMS()
 		C_Timer.After(timeBeforeHiding, function()
-			if lastPop + timeBeforeHiding < XITK.getTimeUTCinMS() + 1 then
+			if lastPop + timeBeforeHiding < XITK:getTimeUTCinMS() + 1 then
 				DeadpoolYesNoDialogFrame:Hide()
 			end
 		end)

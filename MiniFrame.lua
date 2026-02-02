@@ -1,5 +1,5 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("Deadpool", true)
-local XITK = LibStub("XamInsightToolKit")
+local XITK = LibStub("XamInsightToolKit-2.0")
 
 local miniDeadpoolLines = {}
 
@@ -39,7 +39,7 @@ end
 
 function updateMiniDeadpoolFrame()
 	if MiniDeadpoolFrame and MiniDeadpoolFrame:IsShown() then
-		local numItems = XITK.countTableElements(deadpoolList)
+		local numItems = XITK:countTableElements(deadpoolList)
 		if numItems > 10 then
 			miniDeadpoolLineHeight = 10
 			MiniDeadpoolFrame.Inset:SetPoint("TOPLEFT", 20, -26)

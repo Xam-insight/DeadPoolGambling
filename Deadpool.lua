@@ -3,8 +3,8 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Deadpool", true)
 local AceGUI = LibStub("AceGUI-3.0")
 local ACD = LibStub("AceConfigDialog-3.0")
 local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
-local XITK = LibStub("XamInsightToolKit")
-local EZBUP = LibStub("EZBlizzardUiPopups")
+local XITK = LibStub("XamInsightToolKit-2.0")
+local EZBUP = LibStub("EZBlizzardUiPopups-2.0")
 
 DeadpoolGlobal_CommPrefix = "Deadpool"
 
@@ -155,7 +155,7 @@ function Deadpool:OnEnable()
 			DeadpoolBankerButton:SetPoint("TOP", DeadpoolFrameInsideFrame, "BOTTOM", 0, 0)
 			DeadpoolBankerButton.Icon:SetAtlas("groupfinder-button-dungeons")
 			DeadpoolBankerButton:SetScript("OnClick", function(self)
-				XITK.PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
+				XITK:PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
 				askBankerHisBet(DeadpoolGlobal_SessionId, deadpoolList)
 			end)
 			DeadpoolBankerButton.Label:SetAllPoints(DeadpoolBankerButton)
@@ -184,11 +184,11 @@ function Deadpool:OnEnable()
 end
 
 function Deadpool:BetReminder()
-	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, XITK.playerCharacter(), DEADPOOL_TRULYUNEQUIP)
+	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, XITK:playerCharacter(), DEADPOOL_TRULYUNEQUIP)
 	if trulyUnequipItems and trulyUnequipItems == "true" then
 		DeadpoolTrulyUnequip_Glow(DeadpoolTrulyUnequipSwitch)
 	end
-	if DeadpoolOptionsData["DeadpoolBetReminder"] and not Deadpool_hasPlayed(DeadpoolGlobal_SessionId, XITK.playerCharacter()) then
+	if DeadpoolOptionsData["DeadpoolBetReminder"] and not Deadpool_hasPlayed(DeadpoolGlobal_SessionId, XITK:playerCharacter()) then
 		if DeadpoolFrame:IsShown() then 
 			ScriptAnimationUtil.ShakeFrameRandom(DeadpoolFrame, 5, .7, .05)
 		else
@@ -201,7 +201,7 @@ function Deadpool:BetReminder()
 end
 
 function Deadpool:BetReminderClose()
-	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, XITK.playerCharacter(), DEADPOOL_TRULYUNEQUIP)
+	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, XITK:playerCharacter(), DEADPOOL_TRULYUNEQUIP)
 	if trulyUnequipItems and trulyUnequipItems == "true" then
 		DeadpoolTrulyUnequip_Glow(DeadpoolTrulyUnequipSwitch)
 	end
@@ -354,8 +354,8 @@ end
 
 function Deadpool:CheckDeath(event, unitId)
 	if unitId then
-		if XITK.isPartyMember(unitId) then
-			local playerId = UnitIsPlayer(unitId) and XITK.fullName(unitId)
+		if XITK:isPartyMember(unitId) then
+			local playerId = UnitIsPlayer(unitId) and XITK:fullName(unitId)
 			if not playerId then
 				_, _, _, _, _, playerId = strsplit("-", UnitGUID(unitId))
 			end
@@ -371,14 +371,14 @@ function Deadpool:CheckDeath(event, unitId)
 		if numGroupMembers > 0 then
 			for i = 1, numGroupMembers do
 				local name, _, _, _, _, _, _, online, isDead, _, _ = GetRaidRosterInfo(i)
-				local playerId = DeadpoolFollowersId[name] or XITK.addRealm(name)
+				local playerId = DeadpoolFollowersId[name] or XITK:addRealm(name)
 				isDead = isDead or (getDeadpoolCharInfo(playerId, "groupRank") and UnitIsGhost(getDeadpoolCharInfo(playerId, "groupRank")))
 				local isAlreadyDead = getDeadpoolData(DeadpoolGlobal_SessionId, playerId, "isAlreadyDead")
 				local groupRank = getDeadpoolCharInfo(playerId, "groupRank")
 				deadpoolUpdateStatus(playerId, groupRank, online, isDead, isAlreadyDead)
 			end
 		else
-			local playerId = XITK.playerCharacter()
+			local playerId = XITK:playerCharacter()
 			if playerId then
 				local isDead = UnitIsDeadOrGhost("player")
 				local isAlreadyDead = getDeadpoolData(DeadpoolGlobal_SessionId, playerId, "isAlreadyDead")
@@ -430,30 +430,30 @@ function deadpoolCharacterIsDead(aDeadpoolSessionId, aChar, alternativeName)
 		local deadpoolLog = nil
 		local totalNextDeathBetsOnChar, nbNextDeathBetsOnChar = getDeadpoolTotalBets(aDeadpoolSessionId, "nextDeathBet", aChar)
 		local bankCredits = getDeadpoolData(aDeadpoolSessionId, "Bank", "credits")
-		bankCredits = XITK.tonumberzeroonblankornil(bankCredits)
+		bankCredits = XITK:tonumberzeroonblankornil(bankCredits)
 
-		local _, _, totalBets = getDeadpoolBets(aDeadpoolSessionId, XITK.playerCharacter())
-		local uniqueGamble = getDeadpoolData(aDeadpoolSessionId, XITK.playerCharacter(), "uniqueGamble")
+		local _, _, totalBets = getDeadpoolBets(aDeadpoolSessionId, XITK:playerCharacter())
+		local uniqueGamble = getDeadpoolData(aDeadpoolSessionId, XITK:playerCharacter(), "uniqueGamble")
 		if (uniqueGamble and uniqueGamble ~= "")
 			or totalBets > 0 then
 			local quotePlayed = tellTutorialText("DEADPOOLTUTO_TUTO3", true)
-			if not quotePlayed and XITK.isPlayerCharacter(aChar) and not DeadpoolOptionsData["DeadpoolDeathQuotesDisabled"] then
+			if not quotePlayed and XITK:isPlayerCharacter(aChar) and not DeadpoolOptionsData["DeadpoolDeathQuotesDisabled"] then
 				local isInBossCombat = UnitGUID("boss1")
 				if not isInBossCombat then
-					XITK.PlayRandomSound(deathQuotes, "Dialog", not DeadpoolOptionsData["DeadpoolSoundsDisabled"])
+					XITK:PlayRandomSound(deathQuotes, "Dialog", not DeadpoolOptionsData["DeadpoolSoundsDisabled"])
 				end
 			else
-				XITK.PlaySound(41361, "SFX", DeadpoolOptionsData["DeadpoolSoundsDisabled"]) -- For after TWW: PlaySound(283499)
+				XITK:PlaySound(41361, "SFX", DeadpoolOptionsData["DeadpoolSoundsDisabled"]) -- For after TWW: PlaySound(283499)
 			end
 		end
 		local bankWins = true
 		local bankLoses = false
 		local playersGain = 0
-		local dataTime = tostring(XITK.getTimeUTCinMS())
+		local dataTime = tostring(XITK:getTimeUTCinMS())
 		if aDeadpoolSessionId and aChar and DeadpoolData
 			and DeadpoolData[aDeadpoolSessionId] then
 			local shortName = alternativeName or getDeadpoolCharInfo(aChar, "localName")
-			local gender = XITK.tonumberzeroonblankornil(getDeadpoolCharInfo(aChar, "gender"))
+			local gender = XITK:tonumberzeroonblankornil(getDeadpoolCharInfo(aChar, "gender"))
 			deadpoolLog = shortName..L["DEADPOOLLOGS_DIED"..gender]
 			if alternativeName then
 				deadpoolLog = alternativeName.." "..BOSS_DEAD:lower().."."
@@ -465,7 +465,7 @@ function deadpoolCharacterIsDead(aDeadpoolSessionId, aChar, alternativeName)
 					local noNotif = (UnitGUID("boss1") and DeadpoolOptionsData["DeadpoolNotificationsInBossFightsDisabled"])
 						or (C_ChallengeMode.IsChallengeModeActive() and not DeadpoolOptionsData["DeadpoolNotificationsInMythicPlus"])
 					if not noNotif then
-						EZBUP.ToastFakeAchievement(Deadpool, false, 4, nil, deadpoolLog, 0, 2065621, false, Deadpool_name, true, function()  Deadpool:DeadpoolShow()  end)
+						EZBUP:ToastFakeAchievement(Deadpool, false, 4, nil, deadpoolLog, 0, 2065621, false, Deadpool_name, true, function()  Deadpool:DeadpoolShow()  end)
 					end
 				end
 			end
@@ -479,7 +479,7 @@ function deadpoolCharacterIsDead(aDeadpoolSessionId, aChar, alternativeName)
 					local bets = DeadpoolData[aDeadpoolSessionId][k1]["bets"]
 					uniqueGamble = getDeadpoolData(aDeadpoolSessionId, k1, "uniqueGamble")
 					local playerBets = 0
-					local playerActualCredits = XITK.tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, k1, "credits"))
+					local playerActualCredits = XITK:tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, k1, "credits"))
 					local deadpoolGain_ = 0
 					if bets then
 						for k2 in pairs(bets) do
@@ -503,7 +503,7 @@ function deadpoolCharacterIsDead(aDeadpoolSessionId, aChar, alternativeName)
 							local deadpoolBankGain = deadpoolGain(bankCredits, 1, totalUniqueGambleOnChar)
 							local possibleGarmentsBack = 0
 							if deadpoolBankGain > 2*DEADPOOL_INITIAL_MONEY-1 then
-								local offItemsNumber = XITK.tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, k1, "offItemsNumber"))
+								local offItemsNumber = XITK:tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, k1, "offItemsNumber"))
 								possibleGarmentsBack = min(floor((deadpoolBankGain - DEADPOOL_INITIAL_MONEY) / DEADPOOL_GARMENT_REWARD), offItemsNumber)
 								possibleGarmentsBack = max(0,possibleGarmentsBack) -- to prevent les than 0 value
 								if possibleGarmentsBack > 0 then
@@ -532,7 +532,7 @@ function deadpoolCharacterIsDead(aDeadpoolSessionId, aChar, alternativeName)
 						Deadpool_updateStat(aDeadpoolSessionId, k1, DEADPOOL_BALANCE, balance)
 					end
 					-- Winner popup
-					local playerBalance = XITK.tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, k1, DEADPOOL_BALANCE))
+					local playerBalance = XITK:tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, k1, DEADPOOL_BALANCE))
 					if not winnerValue or playerBalance > winnerValue then
 						winner = k1
 						winnerValue = playerBalance
@@ -609,7 +609,7 @@ function deadpoolUndressModel(modelFrame, offItemsNumber)
 		DeadpoolDurability(durabilityFrame, offItemsNumber)
 
 		if offItemsNumber then
-			local numberOfSlots = XITK.countTableElements(deadpoolUndressingOrder)
+			local numberOfSlots = XITK:countTableElements(deadpoolUndressingOrder)
 			if offItemsNumber > numberOfSlots then
 				offItemsNumber = numberOfSlots
 			end
@@ -755,7 +755,7 @@ function DeadpoolShowResults(force)
 	local tooltipDetail = DeadpoolResultsTooltip:GetAttribute("tooltipDetail")
 	local tooltipDetailGreen = DeadpoolResultsTooltip:GetAttribute("tooltipDetailGreen")
 	local tooltipDetailRed = DeadpoolResultsTooltip:GetAttribute("tooltipDetailRed")
-	if tooltip and (XITK.countTableElements(tooltipDetail) > 0 or XITK.countTableElements(tooltipDetailGreen) > 0) then
+	if tooltip and (XITK:countTableElements(tooltipDetail) > 0 or XITK:countTableElements(tooltipDetailGreen) > 0) then
 		if parentFrame:IsShown() then
 			DeadpoolResultsTooltip:SetOwner(parentFrame, "ANCHOR_BOTTOM", 0, -12 + yStep)
 		else
@@ -887,7 +887,7 @@ function createDeadpoolLine(aDeadpoolSessionId, indexCharac, fullName, deadpoolL
 	if isDead == "true" then
 		local height = 14
 		if not isMiniLine then
-			height = XITK.tonumberzeroonblankornil(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolLigneHeight"]) - 8
+			height = XITK:tonumberzeroonblankornil(DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolLigneHeight"]) - 8
 		end
 		charName = charName.." |T137008:"..tostring(height).."|t"
 	end
@@ -903,7 +903,7 @@ function createDeadpoolLine(aDeadpoolSessionId, indexCharac, fullName, deadpoolL
 	
 	if not resizing then
 		xValue = xValue + _G[fontstringLabel]:GetWidth()
-		local playerCharacter = XITK.playerCharacter()
+		local playerCharacter = XITK:playerCharacter()
 		local totalNextDeathBets, nbNextDeathBets = getDeadpoolTotalBets(aDeadpoolSessionId, "nextDeathBet")
 		local totalNextDeathBetsOnChar, nbNextDeathBetsOnChar = getDeadpoolTotalBets(aDeadpoolSessionId, "nextDeathBet", fullName)
 		local playerNextDeathBetsOnChar = getDeadpoolPlayerBetsOnChar(aDeadpoolSessionId, playerCharacter, fullName)
@@ -983,9 +983,9 @@ function createDeadpoolLine(aDeadpoolSessionId, indexCharac, fullName, deadpoolL
 		end
 		oddsInfoFrame:SetAttribute("tooltipDetailBlue",
 			{
-				L["DEADPOOLCOLLUMNS_STATS_FIRSTDEATH"].."#"..XITK.tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_FIRSTDEATH)),
-				L["DEADPOOLCOLLUMNS_STATS_DEATHS"].."#"..XITK.tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_DEATHS)),
-				L["DEADPOOLCOLLUMNS_STATS_DEATHSONBOSS"].."#"..XITK.tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_DEATHSONBOSS))
+				L["DEADPOOLCOLLUMNS_STATS_FIRSTDEATH"].."#"..XITK:tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_FIRSTDEATH)),
+				L["DEADPOOLCOLLUMNS_STATS_DEATHS"].."#"..XITK:tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_DEATHS)),
+				L["DEADPOOLCOLLUMNS_STATS_DEATHSONBOSS"].."#"..XITK:tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, fullName, DEADPOOL_DEATHSONBOSS))
 			}
 		)
 
@@ -1032,7 +1032,7 @@ function getDeadpoolPlayerBetsOnChar(aDeadpoolSessionId, aPlayer, aChar)
 
 		for key,value in pairs(DeadpoolData[aDeadpoolSessionId][aPlayer]["bets"]) do
 			if key == aChar then
-				playerBetsOnChar = XITK.tonumberzeroonblankornil(value["nextDeathBet"])
+				playerBetsOnChar = XITK:tonumberzeroonblankornil(value["nextDeathBet"])
 			end
 		end
 	end
@@ -1044,7 +1044,7 @@ function Deadpool_hasPlayed(aDeadpoolSessionId, aPlayer)
 			and DeadpoolData[aDeadpoolSessionId] and DeadpoolData[aDeadpoolSessionId][aPlayer] then
 		if DeadpoolData[aDeadpoolSessionId][aPlayer]["bets"] then
 			for key,value in pairs(DeadpoolData[aDeadpoolSessionId][aPlayer]["bets"]) do
-				if XITK.tonumberzeroonblankornil(value["nextDeathBet"]) > 0 then
+				if XITK:tonumberzeroonblankornil(value["nextDeathBet"]) > 0 then
 					return key
 				end
 			end
@@ -1074,7 +1074,7 @@ function getDeadpoolTotalBets(aDeadpoolSessionId, aBetType, aChar, aDeadpoolData
 					local betCredits = bets[k2][aBetType]
 					if betCredits
 						and (not aChar or aChar == k2)then
-						local betCreditsValue = XITK.tonumberzeroonblankornil(betCredits)
+						local betCreditsValue = XITK:tonumberzeroonblankornil(betCredits)
 						totalBets = totalBets + betCreditsValue
 						if betCreditsValue > 0 then
 							nbBets = nbBets + 1
@@ -1110,7 +1110,7 @@ end
 
 function ValidateDeadpoolBetButton_Onclick(self)
 	local aSession = DeadpoolGlobal_SessionId
-	local aChar = XITK.playerCharacter()
+	local aChar = XITK:playerCharacter()
 	local aBetChar = self:GetAttribute("characteriD")
 	local aBet = DeadpoolSummaryFrameTargetNextDeathBet:GetText()
 
@@ -1263,7 +1263,7 @@ function DeadpoolSummaryFrame_Update()
 			if selectedDeadpoolCharacter then
 				DeadpoolSummaryFrameTargetTitleText:SetText(characterName)
 				ValidateBetButton:SetAttribute("characteriD", selectedDeadpoolCharacter)
-				local nextDeathBet = getDeadpoolBets(DeadpoolGlobal_SessionId, XITK.playerCharacter(), selectedDeadpoolCharacter)
+				local nextDeathBet = getDeadpoolBets(DeadpoolGlobal_SessionId, XITK:playerCharacter(), selectedDeadpoolCharacter)
 				if not GetCurrentKeyBoardFocus() or not (DeadpoolSummaryFrameTargetNextDeathBet == GetCurrentKeyBoardFocus()) then
 					DeadpoolSummaryFrameTargetNextDeathBet:SetText(nextDeathBet)
 				end
@@ -1476,10 +1476,10 @@ end
 
 function Deadpool:generateDressUpModel(event, aChar, frameName)
 	local dressUpModel = deadpoolDressUpModelPool[frameName or "model"]
-	if aChar and (not event or XITK.isPartyMember(aChar)) then
+	if aChar and (not event or XITK:isPartyMember(aChar)) then
 		local char = aChar
 		if event then
-			char = UnitIsPlayer(aChar) and XITK.fullName(aChar)
+			char = UnitIsPlayer(aChar) and XITK:fullName(aChar)
 			if not char then
 				_, _, _, _, _, char = strsplit("-", UnitGUID(aChar))
 			end
@@ -1498,7 +1498,7 @@ function Deadpool:generateDressUpModel(event, aChar, frameName)
 			dressUpModel.char = char
 
 			local groupRank = "player"
-			local isPlayer = XITK.isPlayerCharacter(char)
+			local isPlayer = XITK:isPlayerCharacter(char)
 			if not isPlayer then
 				groupRank = getDeadpoolCharInfo(char, "groupRank")
 			end
@@ -1532,7 +1532,7 @@ function Deadpool:generateDressUpModel(event, aChar, frameName)
 
 			C_Timer.After(0, function()
 				deadpoolUndressModel(dressUpModel,
-					XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, char, "offItemsNumber")))
+					XITK:tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, char, "offItemsNumber")))
 			end)
 		end
 	end
@@ -1611,11 +1611,11 @@ function generateDeadpoolTable()
 	local aFrameIsShown = (DeadpoolFrame and DeadpoolFrame:IsShown()) or (MiniDeadpoolFrame and MiniDeadpoolFrame:IsShown())
 
 	if aFrameIsShown then
-		local credits = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, XITK.playerCharacter(), "credits"))
+		local credits = XITK:tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, XITK:playerCharacter(), "credits"))
 		DeadpoolPlayerCreditsCount:SetText(credits)
 		MiniDeadpoolPlayerCreditsCount:SetText(credits)
 
-		credits = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, "Bank", "credits"))
+		credits = XITK:tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, "Bank", "credits"))
 		DeadpoolBankCreditsCount:SetText(credits)
 		MiniDeadpoolBankCreditsCount:SetText(credits)
 
@@ -1627,7 +1627,7 @@ function generateDeadpoolTable()
 	if DeadpoolFrame and DeadpoolFrame:IsShown() then
 		local searchBoxText = ""
 		if _G["DeadpoolSearchBox"] then
-			searchBoxText = XITK.upperCase(_G["DeadpoolSearchBox"]:GetText())
+			searchBoxText = XITK:upperCase(_G["DeadpoolSearchBox"]:GetText())
 		end
 
 		updateDeadpoolList(deadpoolCharInfo, searchBoxText)
@@ -1646,7 +1646,7 @@ function generateDeadpoolTable()
 
 	if DeadpoolBankerButton then
 		local bankerBet = Deadpool_hasPlayed(DeadpoolGlobal_SessionId, DEADPOOL_BANKER)
-		local bankerChips = XITK.tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, DEADPOOL_BANKER, "credits"))
+		local bankerChips = XITK:tonumberzeroonblankornil(getDeadpoolData(DeadpoolGlobal_SessionId, DEADPOOL_BANKER, "credits"))
 		if bankerBet then
 			DeadpoolBankerButton.SelectedTexture:SetShown(true)
 			local shortBankerBetName = L["NEXT_BOSS"]
@@ -1681,14 +1681,14 @@ function updateDeadpoolList(charInfo, searchBoxText)
 		local playerFirst = not DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolPlayerFirstDisabled"]
 		local charNames = {}
 		for k in pairs(charInfo) do
-			if (not playerFirst or not XITK.isPlayerCharacter(k)) and k ~= "boss" then
+			if (not playerFirst or not XITK:isPlayerCharacter(k)) and k ~= "boss" then
 				charNames[ #charNames + 1 ] = charInfo[k]["localName"].."#"..k
 			end
 		end
 		table.sort(charNames)
 
 		if playerFirst then
-			local pc = XITK.playerCharacter()
+			local pc = XITK:playerCharacter()
 			if pc then
 				deadpoolList = { pc }
 			end
@@ -1704,7 +1704,7 @@ function updateDeadpoolList(charInfo, searchBoxText)
 			local charName, charId = strsplit("#", v, 2)
 			if charId ~= DEADPOOL_BANKER 
 				and (not searchBoxText or searchBoxText == ""
-					or string.find(XITK.upperCase(charName), searchBoxText)) then -- Search box result
+					or string.find(XITK:upperCase(charName), searchBoxText)) then -- Search box result
 				table.insert(deadpoolList, charId)
 			end
 		end
@@ -1713,7 +1713,7 @@ end
 
 function Deadpool_UpdateScrollFrame(self, resizing)
 	if DeadpoolFrame and DeadpoolFrame:IsShown() then
-		local numItems = XITK.countTableElements(deadpoolList)
+		local numItems = XITK:countTableElements(deadpoolList)
 		local numLines = getPrintableLinesNumber(DeadpoolFrame:GetHeight() - 60 - 19 - 41)
 		FauxScrollFrame_Update(self, numItems, numLines, DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolLigneHeight"])
 		local offset = FauxScrollFrame_GetOffset(self)
@@ -1767,7 +1767,7 @@ local mouseOverFrame
 local lastMouseOver
 function Deadpool:DeadpoolMouseOverUnit()
 	if not UnitAffectingCombat("player") and not DeadpoolOptionsData["BetButtonDisabled"] then
-		local unitFrame = XITK.GetMouseFocus()
+		local unitFrame = XITK:GetMouseFocus()
 		if unitFrame then
 			local unitFrameName = unitFrame:GetName()
 			if not unitFrameName then
@@ -1788,8 +1788,8 @@ function Deadpool:DeadpoolMouseOverUnit()
 		
 			if unitFrameName then
 				local unitid = unitFrame.unit
-				if unitid and XITK.isPartyMember(unitid) and not UnitAffectingCombat(unitid) then
-					local playerId = UnitIsPlayer(unitid) and XITK.fullName(unitid)
+				if unitid and XITK:isPartyMember(unitid) and not UnitAffectingCombat(unitid) then
+					local playerId = UnitIsPlayer(unitid) and XITK:fullName(unitid)
 					if not playerId then
 						_, _, _, _, _, playerId = strsplit("-", UnitGUID(unitid))
 					end
@@ -1874,8 +1874,8 @@ function tellTutorialText(text, force)
 	if not isInBossCombat and text and ((DeadpoolFrame and DeadpoolFrame:IsShown()) or (MiniDeadpoolFrame and MiniDeadpoolFrame:IsShown()) or force)
 		and not DeadpoolOptionsData["TutoDisabled"]
 			and (not DeadpoolTuto or not DeadpoolTuto[text]) then
-		quotePlayed = XITK.PlaySoundFile("Deadpool", text, "Dialog", DeadpoolOptionsData["DeadpoolSoundsDisabled"])
-		EZBUP.npcDialog(DEADPOOL_BANKER_ID, L[text])
+		quotePlayed = XITK:PlaySoundFile("Deadpool", text, "Dialog", DeadpoolOptionsData["DeadpoolSoundsDisabled"])
+		EZBUP:npcDialog(DEADPOOL_BANKER_ID, L[text])
 		DeadpoolTuto[text] = "Done"
 	end
 	return quotePlayed
@@ -1892,7 +1892,7 @@ end
 
 local DeadPoolSaveSetName = "Dead Pool save"
 function Deadpool:UnequipLostItems(event)
-	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, XITK.playerCharacter(), DEADPOOL_TRULYUNEQUIP)
+	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, XITK:playerCharacter(), DEADPOOL_TRULYUNEQUIP)
 	if trulyUnequipItems and trulyUnequipItems == "true" then
 		DeadpoolTrulyUnequip_Glow(DeadpoolTrulyUnequipSwitch)
 		local deadpoolEquipmentSetID = C_EquipmentSet.GetEquipmentSetID(DeadPoolSaveSetName)
@@ -1910,7 +1910,7 @@ function Deadpool:UnequipLostItems(event)
 end
 
 function Deadpool:LeaveGroup(event)
-	setDeadpoolData(DeadpoolGlobal_SessionId, XITK.playerCharacter(), DEADPOOL_TRULYUNEQUIP, nil)
+	setDeadpoolData(DeadpoolGlobal_SessionId, XITK:playerCharacter(), DEADPOOL_TRULYUNEQUIP, nil)
 	Deadpool:UnequipLostItems(event)
 end
 
@@ -1944,7 +1944,7 @@ function Deadpool_deleteDeadpoolEquipmentSet(reequipFirst)
 end
 
 function Deadpool:MerchantFrameUpdate()
-	if getDeadpoolData(DeadpoolGlobal_SessionId, XITK.playerCharacter(), DEADPOOL_TRULYUNEQUIP) then
+	if getDeadpoolData(DeadpoolGlobal_SessionId, XITK:playerCharacter(), DEADPOOL_TRULYUNEQUIP) then
 		local buybackIndex = GetNumBuybackItems()
 		local buybackItemID = C_MerchantFrame.GetBuybackItemID(buybackIndex)
 		
