@@ -142,6 +142,9 @@ local dpInstanceIDList = {
 	[2792] = 80, -- Blackrock Depths
 	[2769] = 80, -- Undermine
 	[2810] = 80, -- Manaforge Omega
+	[2912] = 90, -- The Voidspire
+	[2939] = 90, -- The Dreamrift
+	[2913] = 90, -- March on Quel'Danas
 }
 
 local willPlay, soundHandle

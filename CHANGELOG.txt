@@ -1,4 +1,8 @@
-﻿- v1.23.4
+﻿- v1.24
+	- Added: The Voidspire support.
+	- Added: The Dreamrift support.
+	- Added: March on Quel'Danas support.
+- v1.23.4
 	- Data cleaning.
 - v1.23.3
 	- LibStub usage adjustments.
