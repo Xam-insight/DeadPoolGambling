@@ -357,8 +357,8 @@ function Deadpool:CheckDeath(event, unitId)
 		if XITK:isPartyMember(unitId) then
 			local playerId = UnitIsPlayer(unitId) and XITK:fullName(unitId)
 			if not playerId then
-				if issecretvalue(unitId) then print("issecretvalue unitId") end
-				if issecretvalue(UnitGUID(unitId)) then print("issecretvalue UnitGUID(unitId)") end
+				--debug if issecretvalue(unitId) then print("issecretvalue unitId") end
+				--debug if issecretvalue(UnitGUID(unitId)) then print("issecretvalue UnitGUID(unitId)") end
 				_, _, _, _, _, playerId = strsplit("-", UnitGUID(unitId))
 			end
 			local online = UnitIsConnected(unitId)

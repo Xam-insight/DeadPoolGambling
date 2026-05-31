@@ -1,4 +1,4 @@
-﻿- v1.24.5
+﻿- v1.24.6
 	- Secret values management.
 - v1.24.4
 	- Classic compatibility.
