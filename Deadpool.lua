@@ -16,7 +16,7 @@ DeadpoolGlobal_CommPrefix = "Deadpool"
     -- end
 -- end)
 
-
+if not RESETGAME then RESETGAME = "Reset game" end
 
 deadpoolFramePool = {}
 local deadpoolDressUpModelPool = {}
@@ -357,6 +357,8 @@ function Deadpool:CheckDeath(event, unitId)
 		if XITK:isPartyMember(unitId) then
 			local playerId = UnitIsPlayer(unitId) and XITK:fullName(unitId)
 			if not playerId then
+				if issecretvalue(unitId) then print("issecretvalue unitId") end
+				if issecretvalue(UnitGUID(unitId)) then print("issecretvalue UnitGUID(unitId)") end
 				_, _, _, _, _, playerId = strsplit("-", UnitGUID(unitId))
 			end
 			local online = UnitIsConnected(unitId)
@@ -880,7 +882,7 @@ function createDeadpoolLine(aDeadpoolSessionId, indexCharac, fullName, deadpoolL
 
 	local fontstringLabel = miniLabel.."DPPlayerLabel"
 	local fontstring = getFontStringFromDeadpoolFramePool(indexCharac, fontstringLabel, "DeadpoolPlayerLabelTemplate", deadpoolLine)
-	local color = RAID_CLASS_COLORS[(getDeadpoolCharInfo(fullName, "classFileName") or "ROGUE")]
+	local color = RAID_CLASS_COLORS[(getDeadpoolCharInfo(fullName, "classFileName") or "ROGUE")] or RAID_CLASS_COLORS["ROGUE"]
 	fontstring:SetTextColor(color.r, color.g, color.b, 1.0)
 	local charName = getDeadpoolCharInfo(fullName, "localName")
 	local isDead = getDeadpoolData(aDeadpoolSessionId, fullName, "isDead")

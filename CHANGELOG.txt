@@ -1,4 +1,6 @@
-﻿- v1.24.1
+﻿- v1.24.2
+	- Classic compatibility.
+- v1.24.1
 	- TOC for 12.0.5.
 - v1.24
 	- Added: The Voidspire support.

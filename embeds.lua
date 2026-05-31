@@ -172,12 +172,28 @@ function DeadpoolTrulyUnequip_UpdateStatus(self)
 	local player = XITK:playerCharacter()
 	local trulyUnequipItems = getDeadpoolData(DeadpoolGlobal_SessionId, player, DEADPOOL_TRULYUNEQUIP)
 	trulyUnequipItems = trulyUnequipItems and trulyUnequipItems == "true"
-	
+
 	self:SetAttribute("value", trulyUnequipItems)
 	if trulyUnequipItems then
-		self:ApplyVisualState(TalentButtonUtil.BaseVisualState.Normal)
+		if WoWRetail then
+			self:ApplyVisualState(TalentButtonUtil.BaseVisualState.Normal)
+		else
+			self.Icon:SetDesaturated(false)
+			self.Icon:SetAlpha(1)
+			if self.DisabledOverlay then
+				self.DisabledOverlay:Hide()
+			end
+		end
 	else
-		self:ApplyVisualState(TalentButtonUtil.BaseVisualState.Disabled)
+		if WoWRetail then
+			self:ApplyVisualState(TalentButtonUtil.BaseVisualState.Disabled)
+		else
+			self.Icon:SetDesaturated(true)
+			self.Icon:SetAlpha(0.5)
+			if self.DisabledOverlay then
+				self.DisabledOverlay:Show()
+			end
+		end
 	end
 end
 
@@ -190,12 +206,20 @@ function DeadpoolTrulyUnequip_UpdateCooldown(self)
 end
 
 function DeadpoolTrulyUnequip_Glow(self)
-	self.shouldGlow = true;
-	self:UpdateNonStateVisuals()
-	C_Timer.After(1.44, function()
-		self.shouldGlow = false
+	if WoWRetail then
+		self.shouldGlow = true;
 		self:UpdateNonStateVisuals()
-	end)
+		C_Timer.After(1.44, function()
+			self.shouldGlow = false
+			self:UpdateNonStateVisuals()
+		end)
+	else
+		self.Glow:Show()
+		self.Glow:SetAlpha(0)
+	
+		self.Glow.GlowAnim:Stop()
+		self.Glow.GlowAnim:Play()
+	end
 end
 
 local function wrapAndHide(func)

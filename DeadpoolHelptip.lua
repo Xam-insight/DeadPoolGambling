@@ -280,21 +280,23 @@ function DeadpoolHelpTipTemplate_OnHide(self)
 	self:UnregisterEvent("DISPLAY_SIZE_CHANGED");
 
 	local info = self.info;
-	local appendFrame = info.appendFrame;
-	if appendFrame then
-		appendFrame:Hide();
-		appendFrame:ClearAllPoints();
-		appendFrame:SetParent(UIParent);
-	end
+	if info then
+		local appendFrame = info.appendFrame;
+		if appendFrame then
+			appendFrame:Hide();
+			appendFrame:ClearAllPoints();
+			appendFrame:SetParent(UIParent);
+		end
 
-	if info.onHideCallback then
-		info.onHideCallback(self.acknowledged, info.callbackArg);
-	end
-	if not self.acknowledged and info.acknowledgeOnHide then
-		self:HandleAcknowledge();
-	end
-	if self.acknowledged and info.onAcknowledgeCallback then
-		info.onAcknowledgeCallback(info.callbackArg);
+		if info.onHideCallback then
+			info.onHideCallback(self.acknowledged, info.callbackArg);
+		end
+		if not self.acknowledged and info.acknowledgeOnHide then
+			self:HandleAcknowledge();
+		end
+		if self.acknowledged and info.onAcknowledgeCallback then
+			info.onAcknowledgeCallback(info.callbackArg);
+		end
 	end
 	--HelpTip:Release(self);
 end

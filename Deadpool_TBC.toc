@@ -1,4 +1,4 @@
-## Interface: 120005,120007
+## Interface: 20505
 ## Title: Dead Pool |T137008:16|t |cffffffffG|r|cff999999a|r|cffffffffm|r|cff999999b|r|cffffffffl|r|cff999999i|r|cffffffffn|r|cff999999g|r
 ## IconTexture: Interface\AddOns\Deadpool\art\chip.blp
 ## AddonCompartmentFunc: Deadpool_CompartmentFunc
@@ -20,4 +20,6 @@
 ## Category-zhTW: 迷你遊戲
 ## SavedVariables: DeadpoolGlobal_SessionId, DeadpoolData, DeadpoolOptionsData, DeadpoolMIcon, DeadpoolTuto, DeadpoolWindow
 
-embeds.xml
+Classic\embeds_classic.xml
+Classic\HelpTip.lua
+Classic\HelpTip.xml

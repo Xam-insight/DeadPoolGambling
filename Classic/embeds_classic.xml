@@ -1,0 +1,1325 @@
+<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="Libs\Ace3\LibStub\LibStub.lua" />
+	<Include file="Libs\Ace3\AceLocale-3.0\AceLocale-3.0.xml" />
+	<Script file="Libs\XamInsightToolKit\XamInsightToolKit.lua" />
+	<Script file="Libs\EZBlizzardUiPopups\EZBlizzardUiPopups_db.lua" />
+	<Script file="Libs\EZBlizzardUiPopups\EZBlizzardUiPopups.lua" />
+	<Include file="Libs\Ace3\CallbackHandler-1.0\CallbackHandler-1.0.xml" />
+	<Include file="Libs\Ace3\AceAddon-3.0\AceAddon-3.0.xml" />
+	<Include file="Libs\Ace3\AceConsole-3.0\AceConsole-3.0.xml" />
+	<Include file="Libs\Ace3\AceEvent-3.0\AceEvent-3.0.xml" />
+	<Include file="Libs\Ace3\AceGUI-3.0\AceGUI-3.0.xml" />
+	<Include file="Libs\Ace3\AceDB-3.0\AceDB-3.0.xml" />
+	<Include file="Libs\Ace3\AceConfig-3.0\AceConfigRegistry-3.0\AceConfigRegistry-3.0.xml" />
+	<Include file="Libs\Ace3\AceConfig-3.0\AceConfigDialog-3.0\AceConfigDialog-3.0.xml" />
+	<Include file="Libs\Ace3\AceComm-3.0\AceComm-3.0.xml" />
+	<Include file="Libs\Ace3\AceSerializer-3.0\AceSerializer-3.0.xml" />
+	<Include file="Libs\LibUIDropDownMenu\LibUIDropDownMenu.xml" />
+	<Script file="Libs\UTF8\utf8data.lua" />
+	<Script file="Libs\UTF8\utf8.lua" />
+	<Script file="Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua" />
+	<Script file="Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua" />
+	<Script file="localization\localization.lua" />
+	<Script file="localization\localization_frFR.lua" />
+	<Script file="localization\localization_ruRU.lua" />
+	<Script file="embeds.lua" />
+	<Script file="Variables.lua" />
+	<Script file="Deadpool.lua" />
+	<Script file="DeadpoolBusiness.lua" />
+	<Script file="DeadpoolMinimap.lua" />
+	<Script file="DeadpoolOptions.lua" />
+	<Script file="Sharing.lua" />
+	<Script file="Banker.lua" />
+	<Script file="MiniFrame.lua" />
+	<Include file="DeadpoolDropDown.xml" />
+	<Include file="DeadpoolHelpTip.xml" />
+	<Script file="DeadpoolTests.lua" />
+	<Texture name="TANKDeadpoolRoleTextureTemplate" virtual="true" file="Interface\LFGFRAME\UI-LFG-ICON-PORTRAITROLES" alphaMode="ADD">
+		<Size>
+			<AbsDimension x="16" y="16" />
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="0" />
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<TexCoords left="0" right="0.3" top="0.33" bottom="0.63" />
+	</Texture>
+	<Texture name="HEALERDeadpoolRoleTextureTemplate" virtual="true" file="Interface\LFGFRAME\UI-LFG-ICON-PORTRAITROLES" alphaMode="ADD">
+		<Size>
+			<AbsDimension x="16" y="16" />
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="0" />
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<TexCoords left="0.3" right="0.6" top="0" bottom="0.3" />
+	</Texture>
+	<Texture name="DAMAGERDeadpoolRoleTextureTemplate" virtual="true" file="Interface\LFGFRAME\UI-LFG-ICON-PORTRAITROLES" alphaMode="ADD">
+		<Size>
+			<AbsDimension x="16" y="16" />
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="0" />
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<TexCoords left="0.3" right="0.6" top="0.33" bottom="0.63" />
+	</Texture>
+	<Texture name="NONEDeadpoolRoleTextureTemplate" virtual="true" file="Interface\LFGFRAME\UI-LFG-ICON-PORTRAITROLES" alphaMode="ADD">
+		<Size>
+			<AbsDimension x="16" y="16" />
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="0" />
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<TexCoords left="0" right="0.3" top="0" bottom="0.3" />
+	</Texture>
+	<Texture name="DeadpoolChipPileTemplate" hidden="true" virtual="true">
+		<Size>
+			<AbsDimension x="20" y="20"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER" />
+		</Anchors>
+	</Texture>
+	<Button name="PortraitButtonTemplate" virtual="true">
+		<Size x="28" y="28" />
+		<Layers>
+			<Layer level="BORDER">
+				<Texture parentKey="CircleGlow" alpha="0.4" alphaMode="ADD" atlas="ComboPoints-FX-Circle" hidden="true">
+					<Size>
+						<AbsDimension x="38" y="38"/>
+					</Size>
+					<Anchors>
+						<Anchor point="CENTER" x="0" y="1"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnEnter>
+				DeadpoolIconButtonEnter(self)
+			</OnEnter>
+			<OnLeave>
+				DeadpoolIconButtonLeave(self)
+			</OnLeave>
+		</Scripts>
+	</Button>
+	<Button name="DeadpoolRoleButtonTemplate" virtual="true">
+		<Size x="16" y="16" />
+	</Button>
+	<Button name="AnnounceDeadpoolSessionButtonTemplate" virtual="true">
+		<Size x="16" y="16" />
+		<Scripts>
+			<OnClick>
+				AnnounceDeadpoolSessionButton_OnClick()
+			</OnClick>
+			<OnEnter>
+				DeadpoolIconButtonEnter(self)
+			</OnEnter>
+			<OnLeave>
+				DeadpoolIconButtonLeave(self)
+			</OnLeave>
+		</Scripts>
+		<NormalTexture file="Interface\BUTTONS\UI-GuildButton-MOTD-Up" setAllPoints="true"/>
+	</Button>
+	<Button name="DeadpoolOptionsButtonTemplate" virtual="true">
+		<Size x="16" y="16" />
+		<Scripts>
+			<OnClick>
+				DeadpoolOptionsButtonClick(self)
+			</OnClick>
+			<OnEnter>
+				DeadpoolIconButtonEnter(self)
+			</OnEnter>
+			<OnLeave>
+				DeadpoolIconButtonLeave(self)
+			</OnLeave>
+		</Scripts>
+		<NormalTexture file="Interface\GossipFrame\BinderGossipIcon" setAllPoints="true"/>
+	</Button>
+	<CheckButton name="DeadpoolLockTemplate" virtual="true">
+		<Size x="16" y="16"/>
+		<Anchors>
+			<Anchor point="RIGHT" relativeKey="$parent.MaximizeMinimizeFrame" relativePoint="LEFT" x="0" y="1"/>
+		</Anchors>
+		<Scripts>
+			<OnLoad>
+				local locked = DeadpoolWindow[Deadpool_WindowsOptions][self:GetParent():GetAttribute("LockOptionParam")]
+				self:SetChecked(locked)
+				self:GetParent().canMove = not locked
+				DPEnableMouse(self:GetParent(), not locked)
+				if self:GetParent().SizeDown then
+					if locked then
+						self:GetParent().SizeDown:Hide()
+					else
+						self:GetParent().SizeDown:Show()
+					end
+				end
+			</OnLoad>
+			<OnClick>
+				local locked = self:GetChecked()
+				self:GetParent().canMove = not locked
+				DPEnableMouse(self:GetParent(), not locked)
+				self:GetParent().alphaFunc()
+				if self:GetParent().SizeDown then
+					if locked then
+						self:GetParent().SizeDown:Hide()
+					else
+						self:GetParent().SizeDown:Show()
+					end
+				end
+				DeadpoolWindow[Deadpool_WindowsOptions][self:GetParent():GetAttribute("LockOptionParam")] = locked
+				PlaySound(SOUNDKIT.UI_70_ARTIFACT_FORGE_APPEARANCE_LOCKED, "SFX")
+			</OnClick>
+			<OnEnter>
+				DeadpoolIconButtonEnter(self)
+			</OnEnter>
+			<OnLeave>
+				DeadpoolIconButtonLeave(self)
+			</OnLeave>
+		</Scripts>
+		<NormalTexture file="Interface\AddOns\Deadpool\art\lock" setAllPoints="true">
+			<TexCoords left=".5" right="1" top="0" bottom="1" />
+		</NormalTexture>
+		<PushedTexture file="Interface\AddOns\Deadpool\art\lock" setAllPoints="true">
+			<TexCoords left="0" right=".5" top="0" bottom="1" />
+		</PushedTexture>
+		<CheckedTexture file="Interface\AddOns\Deadpool\art\lock" setAllPoints="true">
+			<TexCoords left="0" right=".5" top="0" bottom="1" />
+		</CheckedTexture>
+	</CheckButton>
+	<Button name="DeadpoolCreditsTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="109" y="17"/>
+		</Size>
+		<Layers>
+			<Layer level="BORDER">
+				<Texture name="$parentIcon" file="Interface\AddOns\Deadpool\art\chip">
+					<Size>
+						<AbsDimension x="15" y="15"/>
+					</Size>
+					<Anchors>
+						<Anchor point="RIGHT" >
+							<Offset x="-2" y="0"/>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString name="$parentCount" inherits="GameFontHighlightRight">
+					<Anchors>
+						<Anchor point="RIGHT" relativeTo="$parentIcon" relativePoint="LEFT">
+							<Offset x="-2" y="0"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentName" inherits="GameFontHighlightLeft">
+					<Size>
+						<AbsDimension x="210" y="11"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset x="2" y="0"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnEnter>
+				DeadpoolIconButtonEnter(self)
+			</OnEnter>
+			<OnLeave>
+				DeadpoolIconButtonLeave(self)
+			</OnLeave>
+		</Scripts>
+		<NormalFont style="GameFontNormal"/>
+	</Button>
+	<Button name="MiniDeadpoolCreditsTemplate" inherits="DeadpoolCreditsTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="68" y="9"/>
+		</Size>
+	</Button>
+	<FontString name="DeadpoolWindowTitleTemplate" inherits="GameFontNormal" virtual="true">
+		<Size x="400" y="20" />
+	</FontString>
+	<FontString name="DeadpoolLabelTemplate" inherits="GameFontNormal" virtual="true">
+		<Size x="200" y="20" />
+	</FontString>
+	<FontString name="DeadpoolPlayerLabelTemplate" inherits="GameFontHighlightSmall" virtual="true" justifyH="LEFT">
+		<Size x="85" y="20" />
+	</FontString>
+	<Frame name="DeadpoolSearchingSpinnerTemplate" toplevel="true" inherits="LoadingSpinnerTemplate" virtual="true">
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+	</Frame>
+	<Frame name="MiniDeadpoolFrameTemplate" virtual="true" hidden="true" movable="true" resizable="true" clampedToScreen="true" frameStrata="BACKGROUND">
+		<Size x="210" y="210" />
+		<Attributes>
+			<Attribute name="LockOptionParam" value="MiniDeadpoolWindowLocked"/>
+		</Attributes>
+		<Anchors>
+			<Anchor point="CENTER" x="0" y="0" />
+		</Anchors>
+		<Frames>
+			<Frame parentKey="SearchingSpinner" inherits="DeadpoolSearchingSpinnerTemplate">
+				<Size x="32" y="32" />
+			</Frame>
+			<Frame name="$parentInset" parentKey="Inset">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="4" y="-26"/>
+					<Anchor point="BOTTOMRIGHT" x="-6" y="26"/>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND" textureSubLevel="-5">
+						<!-- TODO: Convert this to atlas -->
+						<Texture parentKey="Bg" file="Interface\FrameGeneral\UI-Background-Marble" horizTile="true" vertTile="true" setAllPoints="true"/>
+					</Layer>
+				</Layers>
+			</Frame>
+			<Button name="$parentMaximize" parentKey="MaximizeMinimizeFrame">
+				<Size x="24" y="24"/>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeKey="$parent.Inset" relativePoint="TOPRIGHT" x="5" y="-2"/>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						self:SetHitRectInsets(4, 4, 4, 4)
+					</OnLoad>
+					<OnClick>
+						PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
+						Deadpool:DeadpoolShow()
+					</OnClick>
+					<OnEnter>
+						self:GetParent().CloseButton:Show()
+					</OnEnter>
+					<OnLeave>
+						self:GetParent().CloseButton:Hide()
+					</OnLeave>
+				</Scripts>
+				<NormalTexture file="Interface\Buttons\UI-Panel-BiggerButton-Up"/>
+				<PushedTexture file="Interface\Buttons\UI-Panel-BiggerButton-Down"/>
+				<DisabledTexture file="Interface\Buttons\UI-Panel-BiggerButton-Disabled"/>
+				<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+			</Button>
+			<Button name="$parentCloseButton" parentKey="CloseButton" inherits="UIPanelCloseButtonNoScripts" hidden="true">
+				<Size x="24" y="24"/>
+				<Anchors>
+					<Anchor point="LEFT" relativeKey="$parent.MaximizeMinimizeFrame" relativePoint="RIGHT" x="-7" y="0"/>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
+						MiniDeadpoolFrame:Hide()
+					</OnClick>
+					<OnEnter>
+						self:Show()
+					</OnEnter>
+					<OnLeave>
+						self:Hide()
+					</OnLeave>
+				</Scripts>
+				<NormalTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Up"/>
+				<PushedTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Down"/>
+				<DisabledTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Disabled"/>
+				<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+			</Button>
+			<CheckButton name="$parentLock" parentKey="Lock" inherits="DeadpoolLockTemplate">
+				<Size x="12" y="12"/>
+			</CheckButton>
+			<Button name="MiniDeadpoolPlayerCredits" parentKey="PlayerCredits" inherits="MiniDeadpoolCreditsTemplate">
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" x="4" y="12" />
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						DeadpoolCredits_OnLoad(self, "DEADPOOLUI_CHIPS", true)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="MiniDeadpoolBankCredits" parentKey="BankCredits" inherits="MiniDeadpoolCreditsTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="MiniDeadpoolPlayerCredits" relativePoint="RIGHT" x="1" y="0" />
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						DeadpoolCredits_OnLoad(self, "DEADPOOLUI_BANK", true)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="MiniDeadpoolBetsCredits" parentKey="BetsCredits" inherits="MiniDeadpoolCreditsTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="MiniDeadpoolBankCredits" relativePoint="RIGHT" x="1" y="0" />
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						DeadpoolCredits_OnLoad(self, "DEADPOOLUI_BETS", true)
+					</OnLoad>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				self:RegisterForDrag("LeftButton")
+			</OnLoad>
+			<OnShow>
+				showDeadpoolFrameAfterCombat = false
+				applyMiniDeadpoolWindowOptions()
+				DeadpoolWindow_OnShow(self)
+			</OnShow>
+			<OnHide function="DeadpoolWindow_OnHide" />
+			<OnDragStart>
+				if(self.canMove) then
+					self.moving = true
+					self:SetFrameStrata("DIALOG")
+					dpSetHelpTipFramesStrata("TOOLTIP")
+					dpSetDeadpoolYesNoDialogFrameStrata("TOOLTIP")
+					self:StartMoving()
+				end
+			</OnDragStart>
+			<OnDragStop>
+				if( self.canMove and self.moving ) then
+					self.moving = false
+					self:StopMovingOrSizing()
+					self:SetFrameStrata("BACKGROUND")
+					dpSetHelpTipFramesStrata("LOW")
+					dpSetDeadpoolYesNoDialogFrameStrata("MEDIUM")
+					deadpoolSaveWindowPosition()
+				end
+			</OnDragStop>
+		</Scripts>
+	</Frame>
+	<Frame name="DeadpoolFrameTemplate" inherits="SettingsFrameTemplate" virtual="true" hidden="true" movable="true" resizable="true" clampedToScreen="true" frameStrata="BACKGROUND">
+		<Size x="600" y="360" />
+		<Attributes>
+			<Attribute name="LockOptionParam" value="DeadpoolWindowLocked"/>
+		</Attributes>
+		<Anchors>
+			<Anchor point="CENTER" x="0" y="0" />
+		</Anchors>
+		<Frames>
+			<Button name="DPTutorialButton" parentKey="TutorialButton" inherits="MainHelpPlateButton">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeKey="$parent" x="-20" y="20" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						DPTutorialButton_OnClick()
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Frame name="$parentMinimize" parentKey="MaximizeMinimizeFrame" inherits="MaximizeMinimizeButtonFrameTemplate">
+				<Anchors>
+					<Anchor point="RIGHT" relativeKey="$parent.ClosePanelButton" relativePoint="LEFT" x="0" y="0"/>
+				</Anchors>
+				<Scripts>
+					<OnLoad function="DeadpoolFrameMaximizeMinimizeButton_OnLoad" inherit="append"/>
+					<OnShow>
+						self.MaximizeButton:Hide();
+						self.MinimizeButton:Show();
+						if IsClassic then
+							self:SetPoint("RIGHT", self:GetParent().ClosePanelButton, "LEFT", 10, 0)
+						end
+					</OnShow>
+				</Scripts>
+			</Frame>
+			<Button name="$parentSizeDown" parentKey="SizeDown">
+				<Size x="32" y="16"/>
+				<Anchors>
+					<Anchor point="TOP" relativePoint="BOTTOM" x="0" y="5"/>
+				</Anchors>
+				<Scripts>
+					<OnMouseDown>
+						if(self:GetParent().canMove) then
+							self:GetParent().moving = true
+							self:GetParent():SetFrameStrata("DIALOG")
+							dpSetHelpTipFramesStrata("TOOLTIP")
+							dpSetDeadpoolYesNoDialogFrameStrata("TOOLTIP")
+							self:GetParent():StartSizing("BOTTOM")
+						end
+					</OnMouseDown>
+					<OnMouseUp>
+						if( self:GetParent().canMove and self:GetParent().moving ) then
+							self:GetParent().moving = false
+							self:GetParent():StopMovingOrSizing()
+							self:GetParent():SetFrameStrata("BACKGROUND")
+							dpSetHelpTipFramesStrata("LOW")
+							dpSetDeadpoolYesNoDialogFrameStrata("MEDIUM")
+							DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolHeight"] = self:GetParent():GetHeight()
+							Deadpool_UpdateScrollFrame(DeadpoolScrollFrame)
+							deadpoolSaveWindowPosition()
+						end
+					</OnMouseUp>
+					<OnEnter>
+						DeadpoolFrameTemplate_OnEnter(self:GetParent())
+					</OnEnter>
+					<OnLeave>
+						DeadpoolFrameTemplate_OnLeave(self:GetParent())
+					</OnLeave>
+				</Scripts>
+				<NormalTexture file="Interface\RaidFrame\Raid-Move-Down"/>
+			</Button>
+			<CheckButton name="$parentLock" parentKey="Lock" inherits="DeadpoolLockTemplate"/>
+			<Button name="$parentSummaryButton">
+				<Size x="22" y="22" />
+				<Layers>
+					<Layer level="OVERLAY" >
+						<Texture name="$parentArrow-Right" file="Interface\Glues\CharacterCreate\UI-CharacterCreatePatchwerk">
+							<Size x="33" y="44"/>
+							<TexCoords left="0.81250000" right="0.87695313" top="0.43359375" bottom="0.47656250"/>
+						</Texture>
+						<Texture name="$parentArrow-Left" file="Interface\Glues\CharacterCreate\UI-CharacterCreatePatchwerk" hidden="true">
+							<Size x="33" y="44"/>
+							<TexCoords left="0.54492188" right="0.60937500" top="0.53710938" bottom="0.58007813"/>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
+						DeadpoolFrameSummaryButton_Onclick(DeadpoolSummaryFrame:IsShown(), true)
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Frame name="$parentInsideFrame" inherits="InsetFrameTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="7" y="-46" />
+					<Anchor point="BOTTOMLEFT" x="0" y="64" />
+				</Anchors>
+			</Frame>
+			<Button name="DeadpoolPlayerCredits" parentKey="PlayerCredits" inherits="DeadpoolCreditsTemplate">
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" x="8" y="4" />
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						DeadpoolCredits_OnLoad(self, "DEADPOOLUI_CHIPS")
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="DeadpoolBankCredits" parentKey="BankCredits" inherits="DeadpoolCreditsTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="DeadpoolPlayerCredits" relativePoint="RIGHT" x="1" y="0" />
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						DeadpoolCredits_OnLoad(self, "DEADPOOLUI_BANK")
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="DeadpoolBetsCredits" parentKey="BetsCredits" inherits="DeadpoolCreditsTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="DeadpoolBankCredits" relativePoint="RIGHT" x="1" y="0" />
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						DeadpoolCredits_OnLoad(self, "DEADPOOLUI_BETS")
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Frame name="DeadpoolSummaryFrame" hidden="true" inherits="InsetFrameTemplate">
+				<Size x="193" />
+				<Anchors>
+					<Anchor point="TOPRIGHT" x="-3" y="-46"/>
+					<Anchor point="BOTTOMRIGHT" y="4"/>
+				</Anchors>
+				<Frames>
+					<Button name="DeadpoolSummaryFrameTab1" inherits="PanelTopTabButtonTemplate" id="1">
+						<Anchors>
+							<Anchor point="TOPLEFT" x="0" y="32"/>
+						</Anchors>
+						<Scripts>
+							<OnShow>
+								self:SetText(Deadpool_GetLocale("DEADPOOLCOLLUMNS_BET"))
+								self:SetHitRectInsets(0, 0, 10, 0)
+								if IsClassic then
+									PanelTemplates_TabResize(self, 0, nil, 20)
+								else
+									PanelTemplates_TabResize(self, 0, nil, 62)
+								end
+							</OnShow>
+							<OnClick>
+								PanelTemplates_Tab_OnClick(self, DeadpoolSummaryFrame)
+								DeadpoolSummaryFrame_Update()
+								PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="DeadpoolSummaryFrameTab2" inherits="PanelTopTabButtonTemplate" id="2">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="DeadpoolSummaryFrameTab1" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="0" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnShow>
+								self:SetText(Deadpool_GetLocale("DEADPOOLCOLLUMNS_MODEL"))
+								self:SetHitRectInsets(0, 0, 10, 0)
+								if IsClassic then
+									PanelTemplates_TabResize(self, 0, nil, 20)
+								else
+									PanelTemplates_TabResize(self, 0, nil, 62)
+								end
+							</OnShow>
+							<OnClick>
+								PanelTemplates_Tab_OnClick(self, DeadpoolSummaryFrame)
+								DeadpoolSummaryFrame_Update()
+								PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="DeadpoolSummaryFrameTab3" inherits="PanelTopTabButtonTemplate" id="3">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="DeadpoolSummaryFrameTab2" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="0" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnShow>
+								self:SetText(Deadpool_GetLocale("DEADPOOLCOLLUMNS_STATS"))
+								self:SetHitRectInsets(0, 0, 10, 0)
+								if IsClassic then
+									PanelTemplates_TabResize(self, 0, nil, 20)
+								else
+									PanelTemplates_TabResize(self, 0, nil, 62)
+								end
+							</OnShow>
+							<OnClick>
+								PanelTemplates_Tab_OnClick(self, DeadpoolSummaryFrame)
+								DeadpoolSummaryFrame_Update()
+								PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Frame name="DeadpoolSummaryFramePlayer" setAllPoints="true">
+						<Frames>
+							<Frame name="$parentDurabilityFrame" frameStrata="HIGH" hidden="true" inherits="DPDurabilityFrameTemplate">
+								<Anchors>
+									<Anchor point="BOTTOMRIGHT" x="-15" y="1"/>
+								</Anchors>
+							</Frame>
+						</Frames>
+					</Frame>
+					<Frame name="DeadpoolSummaryFrameTarget" hidden="true" setAllPoints="true">
+						<Layers>
+							<Layer level="BORDER">
+								<FontString name="$parentTitleText" inherits="GameFontHighlight">
+									<Anchors>
+										<Anchor point="TOP" x="0" y="-8" />
+									</Anchors>
+								</FontString>
+							</Layer>
+							<Layer level="OVERLAY">
+								<FontString name="$parentNextDeathBetLabel" inherits="GameFontHighlightSmall" justifyH="LEFT">
+									<Size x="70" />
+									<Anchors>
+										<Anchor point="TOPLEFT" x="10" y="-28" />
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Frames>
+							<EditBox name="$parentNextDeathBet" inherits="DeadpoolGoldInputTemplate">
+								<Anchors>
+									<Anchor point="TOPRIGHT" x="-10" y="-28" />
+								</Anchors>
+							</EditBox>
+							<Button name="ValidateBetButton" inherits="UIPanelButtonTemplate" text="ACCEPT">
+								<Size x="115" y="22" />
+								<Anchors>
+									<Anchor point="TOP" x="0" y="-52" />
+								</Anchors>
+								<Scripts>
+									<OnClick function="ValidateDeadpoolBetButton_Onclick" />
+								</Scripts>
+							</Button>
+						</Frames>
+					</Frame>
+					<Frame name="DeadpoolSummaryFrameStats" hidden="true" setAllPoints="true">
+						<Frames>
+							<ScrollFrame parentKey="ScrollFrame" inherits="UIPanelScrollFrameTemplate" >
+								<Anchors>
+									<Anchor point="TOPLEFT" x="5" y="-5"/>
+									<Anchor point="BOTTOMRIGHT" x="-26" y="5"/>
+								</Anchors>
+								<ScrollChild>
+									<EditBox parentKey="Text" multiLine="true" letters="4000" autoFocus="false">
+										<Size x="165" y="194"/>
+										<Scripts>
+											<OnLoad function="ScrollingEdit_OnLoad"/>
+											<OnCursorChanged function="ScrollingEdit_OnCursorChanged"/>
+											<OnUpdate>
+												ScrollingEdit_OnUpdate(self, elapsed, self:GetParent())
+											</OnUpdate>
+											<OnEditFocusGained>
+												self:HighlightText(0)
+											</OnEditFocusGained>
+											<OnEscapePressed function="EditBox_ClearFocus"/>
+										</Scripts>
+										<FontString inherits="GameFontHighlightSmall"/>
+									</EditBox>
+								</ScrollChild>
+							</ScrollFrame>
+						</Frames>
+					</Frame>
+				</Frames>
+				<Scripts>
+					<OnLoad>
+						PanelTemplates_SetNumTabs(self, 3)
+						PanelTemplates_SetTab(self, 1)
+					</OnLoad>
+					<OnShow>
+						DeadpoolWindow[Deadpool_WindowsOptions]["DeadpoolSummaryFrameShown"] = true
+					</OnShow>
+				</Scripts>
+			</Frame>
+			<Frame parentKey="SearchingSpinner" toplevel="true" inherits="DeadpoolSearchingSpinnerTemplate"/>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				self:RegisterForDrag("LeftButton")
+			</OnLoad>
+			<OnDragStart>
+				if(self.canMove) then
+					self.moving = true
+					self:SetFrameStrata("DIALOG")
+					dpSetHelpTipFramesStrata("TOOLTIP")
+					dpSetDeadpoolYesNoDialogFrameStrata("TOOLTIP")
+					self:StartMoving()
+				end
+			</OnDragStart>
+			<OnDragStop>
+				if( self.canMove and self.moving ) then
+					self.moving = false
+					self:StopMovingOrSizing()
+					self:SetFrameStrata("BACKGROUND")
+					dpSetHelpTipFramesStrata("LOW")
+					dpSetDeadpoolYesNoDialogFrameStrata("MEDIUM")
+					deadpoolSaveWindowPosition()
+				end
+			</OnDragStop>
+			<OnShow>
+				MiniDeadpoolFrame:Hide()
+				DeadpoolWindow[Deadpool_WindowsOptions]["MiniDeadpoolShown"] = nil
+				DeadpoolWindow_OnShow(self)
+			</OnShow>
+			<OnHide>
+				dpHideAllHelpTips()
+				DeadpoolWindow_OnHide()
+			</OnHide>
+			<OnSizeChanged>
+				Deadpool_UpdateScrollFrame(DeadpoolScrollFrame, true)
+			</OnSizeChanged>
+			<OnEnter function="DeadpoolFrameTemplate_OnEnter" />
+			<OnLeave function="DeadpoolFrameTemplate_OnLeave" />
+		</Scripts>
+	</Frame>
+	<Button name="DeadpoolColumnHeaderTemplate" virtual="true">
+		<Size x="10" y="24" />
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture parentKey="Left" name="$parentLeft" file="Interface\FriendsFrame\WhoFrame-ColumnTabs">
+					<Size x="5" y="24"/>
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+					</Anchors>
+					<TexCoords left="0" right="0.078125" top="0" bottom="0.75"/>
+				</Texture>
+				<Texture parentKey="Middle" name="$parentMiddle" file="Interface\FriendsFrame\WhoFrame-ColumnTabs">
+					<Size x="53" y="24"/>
+					<Anchors>
+						<Anchor point="LEFT" relativeKey="$parent.Left" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.078125" right="0.90625" top="0" bottom="0.75"/>
+				</Texture>
+				<Texture parentKey="Right" name="$parentRight" file="Interface\FriendsFrame\WhoFrame-ColumnTabs">
+					<Size x="4" y="24" />
+					<Anchors>
+						<Anchor point="LEFT" relativeKey="$parent.Middle" relativePoint="RIGHT" />
+					</Anchors>
+					<TexCoords left="0.90625" right="0.96875" top="0" bottom="0.75" />
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				self:Disable()
+			</OnLoad>
+		</Scripts>
+		<ButtonText>
+			<Anchors>
+				<Anchor point="LEFT" x="8" y="0"/>
+			</Anchors>
+		</ButtonText>
+		<NormalFont style="GameFontHighlightSmall"/>
+		<HighlightTexture parentKey="HighlightTexture" name="$parentHighlightTexture" file="Interface\PaperDollInfoFrame\UI-Character-Tab-Highlight" alphaMode="ADD">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeKey="$parent.Left" x="-2" y="5"/>
+				<Anchor point="BOTTOMRIGHT" relativeKey="$parent.Right" x="2" y="-7"/>
+			</Anchors>
+		</HighlightTexture>
+	</Button>
+	<Button name="DeadpoolLineTemplate" virtual="true">
+		<Layers>
+			<Layer level="OVERLAY">
+				<Texture parentKey="Selected" atlas="groupfinder-highlightbar-yellow" alpha="0.4" alphaMode="ADD" setAllPoints="true" hidden="true"/>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnMouseDown>
+				if selectedDeadpoolLine then
+					selectedDeadpoolLine.Selected:Hide()
+				end
+				if self ~= selectedDeadpoolLine then
+					self.Selected:Show()
+					selectedDeadpoolLine = self
+					selectedDeadpoolCharacter = self:GetAttribute("fullName")
+				else
+					selectedDeadpoolLine = nil
+					selectedDeadpoolCharacter = nil
+				end
+				if DeadpoolSummaryFrame:IsShown() then
+					showDeadpoolPlayerDetails(selectedDeadpoolLine)
+				end
+				PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX")
+			</OnMouseDown>
+			<OnEnter>
+				if self:GetAttribute("fullName") == "boss" then
+					dpShowHelpTip("DEADPOOLTUTO_BOSS", nil, self)
+				end
+			</OnEnter>
+		</Scripts>
+		<HighlightTexture file="Interface\FriendsFrame\UI-FriendsFrame-HighlightBar-Blue" alpha="0.4" alphaMode="ADD" setAllPoints="true"/>
+	</Button>
+	<EditBox name="DeadpoolSearchBoxTemplate" inherits="SearchBoxTemplate" parentKey="searchBox" letters="40" virtual="true">
+		<Size x="100" y="20" />
+		<Scripts>
+			<OnTextChanged>
+				InputBoxInstructions_OnTextChanged(self)
+				generateDeadpoolTable()
+			</OnTextChanged>
+		</Scripts>
+	</EditBox>
+	<EditBox name="DeadpoolGoldInputTemplate" inherits="DeadpoolGoldInfoTemplate" numeric="true" virtual="true">
+		<Size>
+			<AbsDimension x="70" y="20"/>
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentLeft" file="Interface\Common\Common-Input-Border">
+					<Size>
+						<AbsDimension x="8" y="20" />
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="-5" y="0" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0" right="0.0625" top="0" bottom="0.625" />
+				</Texture>
+				<Texture name="$parentRight" file="Interface\Common\Common-Input-Border">
+					<Size>
+						<AbsDimension x="8" y="20" />
+					</Size>
+					<Anchors>
+						<Anchor point="RIGHT">
+							<Offset>
+								<AbsDimension x="0" y="0" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.9375" right="1.0" top="0" bottom="0.625"/>
+				</Texture>
+				<Texture name="$parentMiddle" file="Interface\Common\Common-Input-Border">
+					<Size>
+						<AbsDimension x="10" y="20" />
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT" />
+						<Anchor point="RIGHT" relativeTo="$parentRight" relativePoint="LEFT" />
+					</Anchors>
+					<TexCoords left="0.0625" right="0.9375" top="0" bottom="0.625" />
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnEscapePressed>
+				EditBox_ClearFocus(self)
+			</OnEscapePressed>
+			<OnEditFocusLost>
+				EditBox_ClearHighlight(self)
+			</OnEditFocusLost>
+			<OnEditFocusGained>
+				EditBox_HighlightText(self)
+			</OnEditFocusGained>
+			<OnLoad>
+				self:Enable()
+			</OnLoad>
+		</Scripts>
+	</EditBox>
+	<EditBox name="DeadpoolGoldInfoTemplate" letters="7" historyLines="0" autoFocus="false" virtual="true">
+		<Size>
+			<AbsDimension x="70" y="20"/>
+		</Size>
+		<Layers>
+			<Layer level="OVERLAY">
+				<Texture parentKey="texture" file="Interface\AddOns\Deadpool\art\chip">
+					<Size>
+						<AbsDimension x="13" y="13"/>
+					</Size>
+					<Anchors>
+						<Anchor point="RIGHT">
+							<Offset>
+								<AbsDimension x="-4" y="-1"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				self:Disable()
+			</OnLoad>
+		</Scripts>
+		<FontString inherits="ChatFontNormal"/>
+	</EditBox>
+	<Button name="DeadpoolBetsOddsInfoTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="40" y="40"/>
+		</Size>
+		<Layers>
+			<Layer level="OVERLAY">
+				<Texture name="$parent_ChipPile" parentKey="texture" inherits="DeadpoolChipPileTemplate" setAllPoints="true" file="Interface\AddOns\Deadpool\art\ChipPile"/>
+				<Texture name="$parentFlash" file="Interface\Hud\UIActionBar" alphaMode="BLEND" setAllPoints="true" parentKey="Flash" hidden="true">
+					<TexCoords left="0.71875" right="0.87109375" top="0.630859375" bottom="0.668945313"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnEnter>
+				DeadpoolBetsOddsInfoEnter(self)
+				DeadpoolIconButtonEnter(self)
+			</OnEnter>
+			<OnLeave>
+				DeadpoolIconButtonLeave(self)
+			</OnLeave>
+			<OnClick>
+				DeadpoolDropDown:SetAttribute("Character", self:GetAttribute("Character"))
+				DeadpoolDropDown_Show(DeadpoolDropDown, self:GetName())
+			</OnClick>
+		</Scripts>
+		<Animations>
+			<AnimationGroup parentKey="FlashAnim" looping="BOUNCE">
+				<Alpha childKey="Flash" fromAlpha="0.75" toAlpha="0" duration="1.0" smoothing="IN_OUT" order="1"/>
+			</AnimationGroup>
+		</Animations>
+	</Button>
+	<Frame name="DeadpoolBetCountTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="32" y="32" />
+		</Size>
+		<Layers>
+			<Layer level="OVERLAY">
+				<Texture name="$parentTexture" parentKey="texture" alpha="1" setAllPoints="true" alphaMode="BLEND" file="Interface\AddOns\Deadpool\art\count"/>
+				<Texture name="$parentMiniTexture" parentKey="Minitexture" alpha="1" setAllPoints="true" alphaMode="BLEND" file="Interface\AddOns\Deadpool\art\countmini" hidden="true"/>
+			</Layer>
+		</Layers>
+	</Frame>
+	<Button name="DeadpoolBetButton">
+		<Size>
+			<AbsDimension x="18" y="18"/>
+		</Size>
+		<Layers>
+			<Layer level="OVERLAY">
+				<Texture file="Interface\AddOns\Deadpool\art\Chip" setAllPoints="true" />
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnEnter>
+				DeadpoolIconButtonEnter(self)
+			</OnEnter>
+			<OnLeave>
+				DeadpoolIconButtonLeave(self)
+			</OnLeave>
+			<OnClick>
+				DeadpoolDropDown:SetAttribute("Character", self:GetAttribute("Character"))
+				DeadpoolDropDown_Show(DeadpoolDropDown, self:GetName())
+			</OnClick>
+		</Scripts>
+	</Button>
+	<Button name="LFGListCategoryTemplateClassic" virtual="true">
+		<Size x="300" y="46"/>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture parentKey="Icon" atlas="groupfinder-button-battlegrounds" useAtlasSize="true">
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<Texture parentKey="Cover" atlas="groupfinder-button-cover" useAtlasSize="true">
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture parentKey="SelectedTexture" file="Interface\PVPFrame\PvPMegaQueue" alphaMode="ADD" hidden="true">
+					<Size x="290" y="36"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<TexCoords left="0.00195313" right="0.63867188" top="0.76953125" bottom="0.83007813"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<HighlightTexture parentKey="HighlightTexture" file="Interface\PVPFrame\PvPMegaQueue" alphaMode="ADD">
+			<Size x="290" y="36"/>
+			<Anchors>
+				<Anchor point="CENTER"/>
+			</Anchors>
+			<TexCoords left="0.00195313" right="0.63867188" top="0.70703125" bottom="0.76757813"/>
+		</HighlightTexture>
+		<ButtonText parentKey="Label" inherits="GameFontNormal" justifyH="LEFT">
+			<Anchors>
+				<Anchor point="LEFT" relativeKey="$parent" relativePoint="LEFT" x="20" y="0"/>
+			</Anchors>
+		</ButtonText>
+	</Button>
+	<GameTooltip name="DeadpoolTooltip" frameStrata="TOOLTIP" hidden="true" parent="UIParent" inherits="GameTooltipTemplate" />
+	<GameTooltip name="DeadpoolResultsTooltipTemplate" frameStrata="HIGH" hidden="true" parent="UIParent" inherits="GameTooltipTemplate" virtual="true">
+		<Scripts>
+			<OnMouseDown function="DeadpoolResultsTooltip_OnMouseDown" />
+			<OnShow function="DeadpoolResultsTooltip_OnShow" />
+			<OnEnter function="DeadpoolResultsTooltip_OnEnter" />
+			<OnLeave function="DeadpoolResultsTooltip_OnLeave" />
+		</Scripts>
+	</GameTooltip>
+	<GameTooltip name="DeadpoolResultsTooltip" inherits="DeadpoolResultsTooltipTemplate" />
+	<GameTooltip name="DeadpoolWinnerTooltip" inherits="DeadpoolResultsTooltipTemplate" />
+
+	<DressUpModel name="DPDressUpModel" parent="UIParent" virtual="true" inherits="ModelWithZoomTemplate">
+		<Anchors>
+			<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="-100" y="-100"/>
+			<Anchor point="BOTTOMRIGHT" relativeTo="$parent" relativePoint="TOPLEFT" x="-10" y="10"/>
+		</Anchors>
+		<Scripts>
+			<OnLoad>
+				Model_OnLoad(self, MODELFRAME_MAX_PLAYER_ZOOM)
+				self:SetFacing(-math.pi/8)
+			</OnLoad>
+			<OnEnter function="DPDressUpModel_OnEnter" />
+			<OnLeave function="DPDressUpModel_OnLeave" />
+		</Scripts>
+		<Frames>
+			<Button parentKey="CloseButton" inherits="UIPanelCloseButtonNoScripts" hidden="true">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT">
+						<Offset x="5" y="5"/>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick function="DPDressUpModelCloseButton_OnClick" />
+					<OnLeave function="DPDressUpModelCloseButton_OnLeave" />
+				</Scripts>
+			</Button>
+		</Frames>
+	</DressUpModel>
+	<Frame name="DPDurabilityFrameTemplate" frameStrata="HIGH" toplevel="true" virtual="true">
+		<Size>
+			<AbsDimension x="60" y="75"/>
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentHead" file="Interface\Durability\UI-Durability-Icons">
+					<Size>
+						<AbsDimension x="18" y="22"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPRIGHT"/>
+					</Anchors>
+					<TexCoords left="0" right="0.140625" top="0" bottom="0.171875"/>
+				</Texture>
+				<Texture name="$parentShoulders" file="Interface\Durability\UI-Durability-Icons">
+					<Size>
+						<AbsDimension x="48" y="22"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="$parentHead" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="16"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.140625" right="0.515625" top="0" bottom="0.171875"/>
+				</Texture>
+				<Texture name="$parentChest" file="Interface\Durability\UI-Durability-Icons">
+					<Size>
+						<AbsDimension x="20" y="22"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="$parentShoulders" relativePoint="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-7"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.515625" right="0.6640625" top="0" bottom="0.171875"/>
+				</Texture>
+				<Texture name="$parentWrists" file="Interface\Durability\UI-Durability-Icons">
+					<Size>
+						<AbsDimension x="44" y="22"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="$parentShoulders" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="7"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.6640625" right="1.0" top="0" bottom="0.171875"/>
+				</Texture>
+				<Texture name="$parentHands" file="Interface\Durability\UI-Durability-Icons">
+					<Size>
+						<AbsDimension x="42" y="18"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="$parentWrists" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="15"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0" right="0.328125" top="0.171875" bottom="0.3046875"/>
+				</Texture>
+				<Texture name="$parentWaist" file="Interface\Durability\UI-Durability-Icons">
+					<Size>
+						<AbsDimension x="16" y="5"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="$parentChest" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="6"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.328125" right="0.46875" top="0.171875" bottom="0.203125"/>
+				</Texture>
+				<Texture name="$parentLegs" file="Interface\Durability\UI-Durability-Icons">
+					<Size>
+						<AbsDimension x="29" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="$parentWaist" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.46875" right="0.6875" top="0.171875" bottom="0.3203125"/>
+				</Texture>
+				<Texture name="$parentFeet" file="Interface\Durability\UI-Durability-Icons">
+					<Size>
+						<AbsDimension x="41" y="32"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="$parentLegs" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="8"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.6875" right="1.0" top="0.171875" bottom="0.4140625"/>
+				</Texture>
+			</Layer>
+		</Layers>
+	</Frame>
+	<Frame name="DPDurabilityFrame" parent="UIParent" hidden="true" frameStrata="HIGH" inherits="DPDurabilityFrameTemplate">
+		<Anchors>
+			<Anchor point="BOTTOMRIGHT" relativeTo="$parent" relativePoint="TOPLEFT" x="-10" y="10"/>
+		</Anchors>
+	</Frame>
+	<Frame name="DPMenuDurabilityFrame" parent="UIParent" hidden="true" frameStrata="HIGH" inherits="UIDropDownCustomMenuEntryTemplate">
+		<Size>
+			<AbsDimension x="60" y="75"/>
+		</Size>
+		<Anchors>
+			<Anchor point="BOTTOMRIGHT" relativeTo="$parent" relativePoint="TOPLEFT" x="-10" y="10"/>
+		</Anchors>
+		<Frames>
+			<Frame name="DPMenuDurabilityArmor" frameStrata="HIGH" inherits="DPDurabilityFrameTemplate" setAllPoints="true"/>
+		</Frames>
+	</Frame>
+	<Button name="BankIconFrame" parent="UIParent" hidden="true" inherits="UIDropDownCustomMenuEntryTemplate">
+		<Size>
+			<AbsDimension x="28" y="28"/>
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentIcon" alpha="1" alphaMode="BLEND" setAllPoints="true" file="Interface\AddOns\Deadpool\art\bank">
+					<Size x="64" y="64"/>
+					<Anchors>
+						<Anchor point="RIGHT" x="-10" y="10"/>
+					</Anchors>
+				</Texture>
+				<FontString name="$parentCount" inherits="NumberFontNormal">
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT" x="-2" y="2"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+	</Button>
+	<Frame name="DeadpoolChipTemplate" frameStrata="MEDIUM" alpha="1" hidden="true" virtual="true">
+		<Size x="32" y="32"/>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Layers>
+			<Layer level="OVERLAY">
+				<FontString parentKey="ChipValue" inherits="GameFontHighlightSmall" justifyH="CENTER" text="20">
+					<Size x="16" />
+					<Anchors>
+						<Anchor point="CENTER" />
+					</Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="ARTWORK">
+				<Texture parentKey="ChipTexture" alpha="1" alphaMode="BLEND" setAllPoints="true" file="Interface\AddOns\Deadpool\art\dpc-1"/>
+				<Texture parentKey="FlippingChipTexture" alpha="1" alphaMode="BLEND" file="Interface\AddOns\Deadpool\art\dpc-flip" setAllPoints="true" hidden="true"/>
+			</Layer>
+		</Layers>
+		<Animations>
+			<AnimationGroup parentKey="FlippingChipLoopAnim" looping="REPEAT" setToFinalAlpha="true">
+				<FlipBook smoothing="NONE" childKey="FlippingChipTexture" duration="1" order="1" flipBookRows="1" flipBookColumns="8" flipBookFrames="8" flipBookFrameWidth="0" flipBookFrameHeight="0"/>
+			</AnimationGroup>
+		</Animations>
+	</Frame>
+	
+	<Button name="DeadpoolTrulyUnequipTemplate" virtual="true">
+		<Size x="40" y="40"/>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture parentKey="Icon" file="Interface/AddOns/Deadpool/Classic/art/inv_10_specialization_tailoring2_outerwear_color2">
+					<Size x="34" y="34"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="Glow" file="Interface/AddOns/Deadpool/Classic/art/glow" hidden="true">
+					<Size x="68" y="68"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<Animations>
+						<AnimationGroup parentKey="GlowAnim" looping="NONE">
+							<!-- Pulse 1 ON -->
+							<Alpha order="1" fromAlpha="0" toAlpha="1" duration="0.5"/>
+							<!-- OFF -->
+							<Alpha order="2" fromAlpha="1" toAlpha="0" duration="0.5"/>
+							<!-- Pulse 2 ON -->
+							<Alpha order="3" fromAlpha="0" toAlpha="1" duration="0.5"/>
+							<!-- OFF -->
+							<Alpha order="4" fromAlpha="1" toAlpha="0" duration="0.5"/>
+						</AnimationGroup>
+					</Animations>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Cooldown name="$parentCooldown" parentKey="Cooldown" inherits="CooldownFrameTemplate">
+				<SwipeTexture file="Interface\PVPFrame\PVP-Separation-Circle-Cooldown-overlay">
+					<Color r="0" g="0" b="0" a="0.8"/>
+				</SwipeTexture>
+				<Scripts>
+					<OnCooldownDone>
+						C_Timer.After(1.5, function()
+							deadpoolNotifyChangeToOptions()
+						end)
+					</OnCooldownDone>
+				</Scripts>
+			</Cooldown>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				self:RegisterForClicks("LeftButtonUp")
+			</OnLoad>
+			<OnEnter>
+				DeadpoolIconButtonEnter(self)
+			</OnEnter>
+			<OnLeave>
+				DeadpoolIconButtonLeave(self)
+			</OnLeave>
+			<OnClick>
+				if self.Cooldown:GetCooldownDuration() == 0 then
+					setUnequipItemsValue(not self:GetAttribute("value"))
+					DeadpoolTrulyUnequip_UpdateCooldown(self)
+				end
+			</OnClick>
+		</Scripts>
+	</Button>
+
+	<Button name="DeadpoolTrulyUnequipSwitch" parent="UIParent" inherits="DeadpoolTrulyUnequipTemplate" hidden="true">
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Scripts>
+			<OnShow function="DeadpoolTrulyUnequip_OnLoad" />
+		</Scripts>
+	</Button>
+	
+	<Frame name="DeadpoolYesNoDialogTemplate" parent="UIParent" hidden="true" virtual="true">
+			<Size x="200" y="80"/>
+			<Layers>
+				<Layer level="ARTWORK">
+					<FontString parentKey="DialogLabel" inherits="GameFontHighlightSmall">
+						<Size x="175" y="0"/>
+						<Anchors>
+							<Anchor point="TOP" x="0" y="-18"/>
+						</Anchors>
+					</FontString>
+				</Layer>
+			</Layers>
+			<Frames>
+				<Frame parentKey="BG" inherits="DialogBorderDarkTemplate"/>
+				<Button parentKey="YesButton" inherits="UIPanelButtonNoTooltipTemplate" text="YES">
+					<Size x="50" y="12"/>
+					<Anchors>
+						<Anchor point="BOTTOM" x="-25" y="16"/>
+					</Anchors>
+					<NormalFont style="GameFontNormalSmall"/>
+					<HighlightFont style="GameFontHighlightSmall"/>
+					<DisabledFont style="GameFontDisableSmall"/>
+				</Button>
+				<Button parentKey="NoButton" inherits="UIPanelButtonNoTooltipTemplate" text="NO">
+					<Size x="50" y="12"/>
+					<Anchors>
+						<Anchor point="BOTTOM" x="25" y="16"/>
+					</Anchors>
+					<NormalFont style="GameFontNormalSmall"/>
+					<HighlightFont style="GameFontHighlightSmall"/>
+					<DisabledFont style="GameFontDisableSmall"/>
+				</Button>
+			</Frames>
+		</Frame>
+</Ui>
