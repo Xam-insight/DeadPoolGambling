@@ -175,7 +175,7 @@ function DeadpoolTrulyUnequip_UpdateStatus(self)
 
 	self:SetAttribute("value", trulyUnequipItems)
 	if trulyUnequipItems then
-		if WoWRetail then
+		if XITK.WoWRetail then
 			self:ApplyVisualState(TalentButtonUtil.BaseVisualState.Normal)
 		else
 			self.Icon:SetDesaturated(false)
@@ -185,7 +185,7 @@ function DeadpoolTrulyUnequip_UpdateStatus(self)
 			end
 		end
 	else
-		if WoWRetail then
+		if XITK.WoWRetail then
 			self:ApplyVisualState(TalentButtonUtil.BaseVisualState.Disabled)
 		else
 			self.Icon:SetDesaturated(true)
@@ -206,7 +206,7 @@ function DeadpoolTrulyUnequip_UpdateCooldown(self)
 end
 
 function DeadpoolTrulyUnequip_Glow(self)
-	if WoWRetail then
+	if XITK.WoWRetail then
 		self.shouldGlow = true;
 		self:UpdateNonStateVisuals()
 		C_Timer.After(1.44, function()
