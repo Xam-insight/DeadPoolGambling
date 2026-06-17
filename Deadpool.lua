@@ -359,7 +359,7 @@ function Deadpool:CheckDeath(event, unitId)
 			if not playerId then
 				--debug if issecretvalue(unitId) then print("issecretvalue unitId") end
 				--debug if issecretvalue(UnitGUID(unitId)) then print("issecretvalue UnitGUID(unitId)") end
-				_, _, _, _, _, playerId = (not issecretvalue or not issecretvalue(unitId)) and strsplit("-", UnitGUID(unitId))
+				_, _, _, _, _, playerId = (not issecretvalue or (not issecretvalue(unitId) and not issecretvalue(UnitGUID(unitId)))) and strsplit("-", UnitGUID(unitId))
 			end
 			local online = UnitIsConnected(unitId)
 			local isDead = UnitIsDeadOrGhost(unitId)
