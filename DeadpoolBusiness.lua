@@ -145,6 +145,7 @@ local dpInstanceIDList = {
 	[2912] = 90, -- The Voidspire
 	[2939] = 90, -- The Dreamrift
 	[2913] = 90, -- March on Quel'Danas
+	[1592] = 90, -- Sporefall
 }
 
 local willPlay, soundHandle

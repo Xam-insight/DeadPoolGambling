@@ -1,4 +1,7 @@
-﻿- v1.24.7
+﻿- v1.25
+	- Secret values management.
+	- Added: Sporefall support.
+- v1.24.7
 	- Classic 5.5.4 compatibility.
 - v1.24.6
 	- Secret values management.
