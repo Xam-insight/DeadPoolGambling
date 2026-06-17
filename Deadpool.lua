@@ -1483,9 +1483,9 @@ function Deadpool:generateDressUpModel(event, aChar, frameName)
 		if event then
 			char = UnitIsPlayer(aChar) and XITK:fullName(aChar)
 			if not char then
-				_, _, _, _, _, char = strsplit("-", UnitGUID(aChar))
+				_, _, _, _, _, char = (not issecretvalue or (not issecretvalue(aChar) and not issecretvalue(UnitGUID(aChar)))) strsplit("-", UnitGUID(aChar))
 			end
-			if dressUpModel and dressUpModel.char ~= char then
+			if char and dressUpModel and dressUpModel.char ~= char then
 				char = nil
 			end
 		end
