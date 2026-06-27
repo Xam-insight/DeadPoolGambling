@@ -276,9 +276,10 @@ function getDeadpoolRosterInfo()
         for i = 1, numGroupMembers do
 			local memberGroupLabel = groupLabel..i
 			if UnitExists(memberGroupLabel) then
-                local playerId = UnitIsPlayer(memberGroupLabel) and XITK:fullName(memberGroupLabel)
-				if not playerId then
-					_, _, _, _, _, playerId = strsplit("-", UnitGUID(memberGroupLabel))
+				local isPlayer = UnitIsPlayer(memberGroupLabel)
+                local playerId = isPlayer and XITK:fullName(memberGroupLabel)
+				if not isPlayer then
+					playerId = UnitNameUnmodified(memberGroupLabel)
 				end
 				if playerId then
 					if DeadpoolGlobal_SessionCreator and DeadpoolGlobal_SessionCreator == playerId then
@@ -806,7 +807,8 @@ function getDeadpoolData(aSession, aChar, anInfo, aDeadpoolDataObject)
 	end
 
 	if aSession and aChar and anInfo then
-		if aDeadpoolDataObject 
+		-- Workaround secret value, could cause inconsistensy
+		if (not issecretvalue or not issecretvalue(aChar)) and aDeadpoolDataObject 
 			and aDeadpoolDataObject[aSession]
 				and aDeadpoolDataObject[aSession][aChar] then
 			value = aDeadpoolDataObject[aSession][aChar][anInfo]
@@ -825,7 +827,8 @@ function getDeadpoolData(aSession, aChar, anInfo, aDeadpoolDataObject)
 end
 
 function setDeadpoolData(aSession, aChar, anInfo, aValue)
-	if aSession and aChar and anInfo then
+	-- Workaround secret value, could cause inconsistensy
+	if (not issecretvalue or not issecretvalue(aChar)) and aSession and aChar and anInfo then
 		local value, dataTime = strsplit("|", tostring(aValue), 2)
 		if not DeadpoolData then
 			DeadpoolData = {}

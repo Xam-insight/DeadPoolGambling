@@ -355,15 +355,14 @@ end
 function Deadpool:CheckDeath(event, unitId)
 	if unitId then
 		if XITK:isPartyMember(unitId) then
-			local playerId = UnitIsPlayer(unitId) and XITK:fullName(unitId)
-			if not playerId then
-				--debug if issecretvalue(unitId) then print("issecretvalue unitId") end
-				--debug if issecretvalue(UnitGUID(unitId)) then print("issecretvalue UnitGUID(unitId)") end
-				_, _, _, _, _, playerId = (not issecretvalue or (not issecretvalue(unitId) and not issecretvalue(UnitGUID(unitId)))) and strsplit("-", UnitGUID(unitId))
+			local isPlayer = UnitIsPlayer(unitId)
+			local playerId = isPlayer and XITK:fullName(unitId)
+			if not isPlayer then
+				playerId = UnitNameUnmodified(unitId)
 			end
-			local online = UnitIsConnected(unitId)
-			local isDead = UnitIsDeadOrGhost(unitId)
 			if playerId then
+				local online = UnitIsConnected(unitId)
+				local isDead = UnitIsDeadOrGhost(unitId)
 				local isAlreadyDead = getDeadpoolData(DeadpoolGlobal_SessionId, playerId, "isAlreadyDead")
 				deadpoolUpdateStatus(playerId, unitId, online, isDead, isAlreadyDead)
 			end
@@ -1482,9 +1481,6 @@ function Deadpool:generateDressUpModel(event, aChar, frameName)
 		local char = aChar
 		if event then
 			char = UnitIsPlayer(aChar) and XITK:fullName(aChar)
-			if not char then
-				_, _, _, _, _, char = (not issecretvalue or (not issecretvalue(aChar) and not issecretvalue(UnitGUID(aChar)))) strsplit("-", UnitGUID(aChar))
-			end
 			if char and dressUpModel and dressUpModel.char ~= char then
 				char = nil
 			end
@@ -1791,9 +1787,10 @@ function Deadpool:DeadpoolMouseOverUnit()
 			if unitFrameName then
 				local unitid = unitFrame.unit
 				if unitid and XITK:isPartyMember(unitid) and not UnitAffectingCombat(unitid) then
-					local playerId = UnitIsPlayer(unitid) and XITK:fullName(unitid)
-					if not playerId then
-						_, _, _, _, _, playerId = strsplit("-", UnitGUID(unitid))
+					local isPlayer = UnitIsPlayer(unitid)
+					local playerId = isPlayer and XITK:fullName(unitid)
+					if not isPlayer then
+						playerId = UnitNameUnmodified(unitid)
 					end
 					if playerId then
 						DeadpoolBetButton:SetParent(unitFrame)

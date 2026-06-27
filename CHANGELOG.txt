@@ -1,4 +1,6 @@
-﻿- v1.25.2
+﻿- v1.26
+	- Secret values management.
+- v1.25.2
 	- Secret values management.
 	- Added: Sporefall support.
 - v1.24.7
