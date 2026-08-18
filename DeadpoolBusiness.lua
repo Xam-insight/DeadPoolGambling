@@ -146,6 +146,8 @@ local dpInstanceIDList = {
 	[2939] = 90, -- The Dreamrift
 	[2913] = 90, -- March on Quel'Danas
 	[1592] = 90, -- Sporefall
+	[3004] = 90, -- The Venomous Abyss
+	[2987] = 90, -- The Tidebound Grotto
 }
 
 local willPlay, soundHandle
@@ -1036,7 +1038,7 @@ function saveDeadpoolBets(aSession, aChar, aBetChar, nextDeathBet, afterTransact
 end
 
 function Deadpool_updateStat(aDeadpoolSessionId, aChar, aStat, aValue)
-	local isNotBoss = (aChar ~= "boss")
+	local isNotBoss = (not issecretvalue or not issecretvalue(aChar)) and (aChar ~= "boss")
 	local achievementPopped = false
 	local statValue = XITK:tonumberzeroonblankornil(getDeadpoolData(aDeadpoolSessionId, aChar, aStat)) + aValue
 	setDeadpoolData(aDeadpoolSessionId, aChar, aStat, statValue)

@@ -1,4 +1,8 @@
-﻿- v1.26
+﻿- v1.27
+	- TOC for 12.1.0 and 2.5.6.
+	- Added: The Venomous Abyss support.
+	- Added: The Tidebound Grotto support.
+- v1.26
 	- Secret values management.
 - v1.25.2
 	- Secret values management.
