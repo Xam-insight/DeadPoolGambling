@@ -1,4 +1,4 @@
-﻿- v1.27
+﻿- v1.27.1
 	- TOC for 12.1.0 and 2.5.6.
 	- Added: The Venomous Abyss support.
 	- Added: The Tidebound Grotto support.
