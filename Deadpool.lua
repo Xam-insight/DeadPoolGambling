@@ -8,7 +8,7 @@ local EZBUP = LibStub("EZBlizzardUiPopups-2.0")
 
 DeadpoolGlobal_CommPrefix = "Deadpool"
 
---DeadpoolGlobal_Debug = true
+DeadpoolGlobal_Debug = false
 -- hooksecurefunc("CompactUnitFrame_UpdateAuras", function(frame, unitAuraUpdateInfo)
     -- if frame and frame.dispels == nil then
         -- print("Dispels NIL on", frame:GetName() or "<no name>", "unit:", tostring(frame.displayedUnit))
@@ -1756,7 +1756,7 @@ function setDeadpoolFrameAlpha()
 end
 				
 function DeadpoolFrameTemplate_OnLeave(self)
-	if not MouseIsOver(self) and not MouseIsOver(DeadpoolFrameLock) and not MouseIsOver(DeadpoolFrame.ClosePanelButton) then
+	if not XITK:MouseIsOver(self) and not XITK:MouseIsOver(DeadpoolFrameLock) and not XITK:MouseIsOver(DeadpoolFrame.ClosePanelButton) then
 		setDeadpoolFrameAlpha()
 	end
 end

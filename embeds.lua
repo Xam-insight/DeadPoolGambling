@@ -103,7 +103,7 @@ function DPDressUpModel_OnEnter(self)
 end
 
 function DPDressUpModel_OnLeave(self)
-	if self and self.CloseButton:IsShown() and not MouseIsOver(self.CloseButton) then
+	if self and self.CloseButton:IsShown() and not XITK:MouseIsOver(self.CloseButton) then
 		self.CloseButton:Hide()
 	end
 end
@@ -114,7 +114,7 @@ function DPDressUpModelCloseButton_OnClick(self)
 end
 
 function DPDressUpModelCloseButton_OnLeave(self)
-	if self and not MouseIsOver(self:GetParent()) then
+	if self and not XITK:MouseIsOver(self:GetParent()) then
 		self:Hide()
 	end
 end
