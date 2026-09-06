@@ -1515,7 +1515,7 @@ function Deadpool:generateDressUpModel(event, aChar, frameName)
 					NotifyInspect(groupRank)
 				end
 				if groupRank and UnitIsPlayer(groupRank) and modelCanSet then
-					dressUpModel:SetUnit(groupRank, event ~= nil)
+					dressUpModel:SetUnit(groupRank, event ~= nil, false)
 					if shouldUseNativeFormInModelScene[dressUpModel:GetModelFileID()] then
 						dressUpModel:SetUnit(groupRank, event ~= nil, true)
 					end

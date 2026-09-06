@@ -1,4 +1,6 @@
-﻿- v1.27.2
+﻿- v1.27.3
+	- Fixed: Issue with Visage form model.
+- v1.27.2
 	- Fixed: Lua error due to the deprecated MouseIsOver function.
 - v1.27.1
 	- TOC for 12.1.0 and 2.5.6.
