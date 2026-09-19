@@ -810,7 +810,6 @@ function getDeadpoolData(aSession, aChar, anInfo, aDeadpoolDataObject)
 
 	if aSession and aChar and anInfo then
 		-- Workaround secret value, could cause inconsistensy
-		if issecretvalue(aChar) then print(aChar, issecretvalue(aChar), anInfo) end
 		if (not issecretvalue or not issecretvalue(aChar)) and aDeadpoolDataObject 
 			and aDeadpoolDataObject[aSession]
 				and aDeadpoolDataObject[aSession][aChar] then
@@ -831,7 +830,6 @@ end
 
 function setDeadpoolData(aSession, aChar, anInfo, aValue)
 	-- Workaround secret value, could cause inconsistensy
-	if issecretvalue(aChar) then print(aChar, issecretvalue(aChar), anInfo, aValue) end
 	if (not issecretvalue or not issecretvalue(aChar)) and aSession and aChar and anInfo then
 		local value, dataTime = strsplit("|", tostring(aValue), 2)
 		if not DeadpoolData then
