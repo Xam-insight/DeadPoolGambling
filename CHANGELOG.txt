@@ -1,4 +1,6 @@
-﻿- v1.27.3
+﻿- v1.27.4
+	- [LibUIDropDownMenu] v4.27 integration.
+- v1.27.3
 	- Fixed: Issue with Visage form model.
 - v1.27.2
 	- Fixed: Lua error due to the deprecated MouseIsOver function.

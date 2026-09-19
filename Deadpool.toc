@@ -1,6 +1,6 @@
 ## Interface: 20506,50504,120100
 ## Title: Dead Pool
-## Version: 1.27.3
+## Version: 1.27.4
 ## Notes: This file exists only to support packaging systems.
 ## LoadOnDemand: 1
 

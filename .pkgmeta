@@ -15,7 +15,7 @@ externals:
 	Libs/LibDataBroker-1.1: https://repos.wowace.com/wow/libdatabroker-1-1
 	Libs/LibDBIcon-1.0: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
 	Libs/UTF8: https://repos.wowace.com/wow/utf8/trunk
-	#Libs/LibUIDropDownMenu: https://repos.wowace.com/wow/libuidropdownmenu/trunk/LibUIDropDownMenu
+	Libs/LibUIDropDownMenu: https://repos.wowace.com/wow/libuidropdownmenu/trunk/LibUIDropDownMenu
 	Libs/XamInsightToolKit: https://github.com/Xam-insight/XamInsightToolKit
 	Libs/EZBlizzardUiPopups: https://github.com/Xam-insight/EZBlizzardUiPopups
 	../CustomAchiever: https://github.com/Xam-insight/CustomAchiever
@@ -33,18 +33,20 @@ externals:
 	../CustomAchiever/Libs/LibDataBroker-1.1: https://repos.wowace.com/wow/libdatabroker-1-1
 	../CustomAchiever/Libs/LibDBIcon-1.0: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
 	../CustomAchiever/Libs/UTF8: https://repos.wowace.com/wow/utf8/trunk
-	#CustomAchiever/Libs/LibUIDropDownMenu: https://repos.wowace.com/wow/libuidropdownmenu/trunk/LibUIDropDownMenu
+	../CustomAchiever/Libs/LibUIDropDownMenu: https://repos.wowace.com/wow/libuidropdownmenu/trunk/LibUIDropDownMenu
 	../CustomAchiever/Libs/XamInsightToolKit: https://github.com/Xam-insight/XamInsightToolKit
 	../CustomAchiever/Libs/EZBlizzardUiPopups: https://github.com/Xam-insight/EZBlizzardUiPopups
 
 ignore:
 	- art/PNG
 	- sound/OLD
+	- Libs/LibUIDropDownMenu/LibEasyMenu.lua
 	- Libs/XamInsightToolKit/XamInsightToolKit.toc
 	- Libs/XamInsightToolKit/CHANGELOG.txt
 	- Libs/EZBlizzardUiPopups/EZBlizzardUiPopups.toc
 	- Libs/EZBlizzardUiPopups/CHANGELOG.txt
 	- Libs/EZBlizzardUiPopups/wow_lua_to_csv.py
+	- ../CustomAchiever/Libs/LibUIDropDownMenu/LibEasyMenu.lua
 	- ../CustomAchiever/Libs/XamInsightToolKit/XamInsightToolKit.toc
 	- ../CustomAchiever/Libs/XamInsightToolKit/CHANGELOG.txt
 	- ../CustomAchiever/Libs/EZBlizzardUiPopups/EZBlizzardUiPopups.toc
