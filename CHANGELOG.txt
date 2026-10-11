@@ -1,4 +1,7 @@
-﻿- v1.27.4
+﻿- v1.28
+	- TOC for 12.1.0 and 12.1.5.
+	- Added: The Unbinding of Kith'ix support.
+- v1.27.4
 	- [LibUIDropDownMenu] v4.27 integration.
 - v1.27.3
 	- Fixed: Issue with Visage form model.

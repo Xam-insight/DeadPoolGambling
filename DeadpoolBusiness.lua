@@ -148,6 +148,7 @@ local dpInstanceIDList = {
 	[1592] = 90, -- Sporefall
 	[3004] = 90, -- The Venomous Abyss
 	[2987] = 90, -- The Tidebound Grotto
+	[3095] = 90, -- The Unbinding of Kith'ix
 }
 
 local willPlay, soundHandle
